@@ -11,182 +11,65 @@
   <link rel="icon" href="logo.png" type="image/png">
   <link rel="preload" href="Cycladic-Regular.otf" as="font" type="font/otf" crossorigin>
 
-  <!-- Open Graph Meta Tags -->
-  <meta property="og:title" content="Tinos Treasures | Luxury Seaside Apartments in Tinos, Greece">
-  <meta property="og:description" content="Seaside luxurious 70sqm family-friendly apartments with hotel-like services, located in Isternia Bay, Tinos.">
-  <meta property="og:image" content="https://tinostreasures.gr/poster.jpg">
-  <meta property="og:url" content="https://tinostreasures.gr">
-  <meta property="og:type" content="website">
-
-  <!-- Twitter Card Meta Tags -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Tinos Treasures | Luxury Seaside Apartments">
-  <meta name="twitter:description" content="Stay by the beach at Isternia Bay, Tinos — crafted for care and memories.">
-  <meta name="twitter:image" content="https://tinostreasures.gr/poster.jpg">
-
   <style>
     @font-face {
       font-family: 'Cycladic';
       src: url('Cycladic-Regular.otf') format('opentype');
       font-display: swap;
     }
-
     html, body {
       margin: 0; padding: 0; height: 100%; width: 100%;
-      font-family: 'Cycladic', sans-serif;
-      color: #f5f5f5;
-      background: #000;
-      overflow: hidden;
+      font-family: 'Cycladic', sans-serif; color: #f5f5f5; background: #000; overflow: hidden;
     }
-
     .video-background {
-      position: fixed;
-      inset: 0;
-      overflow: hidden;
-      z-index: -3;
-    }
-
-    .video-background iframe {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 177.78vh;
-      height: 100vh;
-      min-width: 100vw;
-      min-height: 56.25vw;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-    }
-
-    body.no-video::before {
-      content: "";
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0; overflow: hidden; z-index: -3;
       background: url('poster.jpg') center center / cover no-repeat;
-      z-index: -2;
     }
-
+    .video-background iframe {
+      position: absolute; top: 50%; left: 50%; width: 177.78vh; height: 100vh;
+      min-width: 100vw; min-height: 56.25vw; transform: translate(-50%, -50%);
+      pointer-events: none; opacity: 0; transition: opacity 2s ease-in-out;
+    }
+    .video-background iframe.loaded { opacity: 1; }
     body::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.45);
-      z-index: -1;
+      content: ""; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: -1;
     }
-
     .container {
-      height: 100vh;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 40px;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      gap: 25px;
+      height: 100vh; max-width: 900px; margin: 0 auto; padding: 40px;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; gap: 25px;
     }
-
-    header img {
-      width: clamp(140px, 15vw, 220px);
-      filter: brightness(0) invert(1);
-    }
-
-    h1 {
-      font-size: clamp(32px, 5vw, 56px);
-      margin: 10px 0;
-      background: linear-gradient(180deg, #fff, #ddd);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .tagline {
-      font-size: clamp(16px, 2vw, 18px);
-      color: #e0e0e0;
-      line-height: 1.5;
-      margin: 0 auto 20px;
-      max-width: 700px;
-    }
-
+    header img { width: clamp(140px, 15vw, 220px); filter: brightness(0) invert(1); }
+    h1 { font-size: clamp(32px, 5vw, 56px); margin: 10px 0; background: linear-gradient(180deg, #fff, #ddd);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .tagline { font-size: clamp(16px, 2vw, 18px); color: #e0e0e0; line-height: 1.5; margin: 0 auto 20px; max-width: 700px; }
     .cta {
-      display: inline-block;
-      padding: 14px 40px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: clamp(16px, 2vw, 18px);
-      letter-spacing: 0.02em;
-      text-decoration: none;
-      color: #fff;
-      background: transparent;
-      border: 2px solid #fff;
-      transition: all 0.3s ease;
+      display: inline-block; padding: 14px 40px; border-radius: 8px; font-weight: 600;
+      font-size: clamp(16px, 2vw, 18px); letter-spacing: 0.02em; text-decoration: none;
+      color: #fff; background: transparent; border: 2px solid #fff; transition: all 0.3s ease;
       margin: 40px 0;
     }
-
-    .cta:hover {
-      background: rgba(255,255,255,0.1);
-      transform: translateY(-2px);
-    }
-
-    .social {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 30px;
-    }
-
-    .social svg {
-      width: 28px;
-      height: 28px;
-      stroke: #fff;
-      fill: none;
-      stroke-width: 2;
-      opacity: 0.9;
-      transition: all 0.2s ease;
-    }
-
-    .social a:hover svg {
-      opacity: 1;
-      transform: scale(1.1);
-    }
-
+    .cta:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+    .social { display: flex; gap: 20px; justify-content: center; align-items: center; margin-bottom: 30px; }
+    .social svg { width: 28px; height: 28px; stroke: #fff; fill: none; stroke-width: 2; opacity: 0.9; transition: all 0.2s ease; }
+    .social a:hover svg { opacity: 1; transform: scale(1.1); }
     .contact {
-      font-size: 0.8em;
-      color: #ccc;
-      line-height: 1.4;
-      margin-top: 10px;
-      background: rgba(255,255,255,0.05);
-      padding: 10px 18px;
-      border-radius: 10px;
-      display: inline-block;
-      text-align: left;
+      font-size: 0.8em; color: #ccc; line-height: 1.4; margin-top: 10px;
+      background: rgba(255,255,255,0.05); padding: 10px 18px; border-radius: 10px;
+      display: inline-block; text-align: left;
     }
-
-    .contact a {
-      color: #fff;
-      text-decoration: none;
-    }
-
-    .footer {
-      margin-top: 20px;
-      font-size: 0.8em;
-      color: #999;
-    }
+    .contact a { color: #fff; text-decoration: none; }
+    .footer { margin-top: 20px; font-size: 0.8em; color: #999; }
   </style>
 </head>
-
 <body>
   <div class="video-background">
     <iframe id="yt-bg"
-      src="https://www.youtube.com/embed/T6KgbqxMZv0?autoplay=1&mute=1&loop=1&playlist=T6KgbqxMZv0&controls=0&showinfo=0&modestbranding=1&playsinline=1"
+      src="https://www.youtube.com/embed/T6KgbqxMZv0?autoplay=1&mute=1&loop=1&playlist=T6KgbqxMZv0&controls=0&showinfo=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=https://tinostreasures.gr"
       frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
   </div>
-
   <div class="container">
     <header><img src="logo.png" alt="Tinos Treasures logo" /></header>
-
     <main>
       <h1>Tinos Treasures</h1>
       <div class="tagline">
@@ -194,9 +77,7 @@
         <p>situated by the beach at Isternia bay in Tinos, Greece.</p>
         <p>Crafted with care, designed for memories.</p>
       </div>
-
       <a class="cta" href="https://tinostreasures.reserve-online.net/" target="_blank" rel="noopener">Book now!</a>
-
       <div class="social">
         <a href="https://www.instagram.com/tinostreasures_/" target="_blank" aria-label="Instagram">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.5" cy="6.5" r="1"/></svg>
@@ -214,19 +95,17 @@
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
         </a>
       </div>
-
       <div class="contact">
         <p>Ormos Isternion<br>Tinos, 84200 — Cyclades, Greece<br><a href="mailto:info@tinostreasures.gr">info@tinostreasures.gr</a><br><a href="tel:+306976596001">+30 697 659 6001</a></p>
       </div>
-
       <div class="footer">© <span id="year"></span> Tinos Treasures. All rights reserved.</div>
     </main>
   </div>
-
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-    document.getElementById('yt-bg').addEventListener('error', () => document.body.classList.add('no-video'));
+    const yt = document.getElementById('yt-bg');
+    yt.addEventListener('load', () => yt.classList.add('loaded'));
+    yt.addEventListener('error', () => document.body.classList.add('no-video'));
   </script>
 </body>
 </html>
-

@@ -43,27 +43,50 @@
       overflow: hidden;
     }
 
-    .video-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: -1; /* behind all other content */
-  }
+.video-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+  background: #000; /* fallback color */
+}
 
   #bg-video {
     position: absolute;
     top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%);
     min-width: 100%;
     min-height: 100%;
     width: auto;
     height: auto;
-    transform: translate(-50%, -50%);
     object-fit: cover;
+    object-position: center;
   }
+
+  /* --- MOBILE OPTIMIZATIONS --- */
+
+  /* On small screens, let the video fit height instead of width */
+  @media (max-aspect-ratio: 9/16) {
+  #bg-video {
+    width: 100%;
+    height: auto;
+    min-width: auto;
+    min-height: 100%;
+    object-fit: contain; /* less cropping on tall screens */
+    background: #000;
+  }
+  }
+
+/* iOS Safari fix to ensure fullscreen background covers safe area */
+  @supports (-webkit-touch-callout: none) {
+    .video-background {
+    height: -webkit-fill-available;
+  }
+}
 
     /* Poster fallback if video fails */
     body.no-video::before {
@@ -194,7 +217,7 @@
 </head>
 <body>
 <div class="video-background">
-  <video autoplay muted loop playsinline id="bg-video">
+  <video autoplay muted loop playsinline id="bg-video" poster="fallback.jpg">
     <source src="tinos_treasures_background.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>

@@ -271,52 +271,32 @@
     #nav-toggle:checked + label .hamburger span { opacity: 0; }
     #nav-toggle:checked + label .hamburger::after { transform: translateY(-10px) rotate(-45deg); }
 
-/* === MOBILE MENU — perfectly matches navbar color, always blurred === */
+/* MOBILE MENU — matches navbar color exactly; always blurred */
 .nav-mobile {
   display: none;
-  position: absolute;
-  top: 64px;
-  left: 0;
-  right: 0;
+  position: absolute;          /* positioned relative to the fixed .nav */
+  top: 64px; left: 0; right: 0;
   padding: 14px 18px;
   border-bottom: 1px solid var(--glass-border);
-  transition: background 0.3s ease, backdrop-filter 0.3s ease;
-  
-  /* Always blurred — inherit visual tone from navbar */
-  backdrop-filter: blur(10px);
+  z-index: 10000;              /* ensure it sits above page content */
+  backdrop-filter: blur(10px); /* always blurred */
   -webkit-backdrop-filter: blur(10px);
+  transition: background 0.3s ease, backdrop-filter 0.3s ease;
 }
 
-/* When navbar is at top (transparent) → menu is transparent (but blurred) */
-.nav:not(.scrolled) + .nav-mobile,
-.nav:not(.scrolled) ~ .nav-mobile {
+/* ✔ when navbar is at the top (transparent) → menu is transparent too (blur only) */
+.nav:not(.scrolled) .nav-mobile {
   background: transparent;
 }
 
-/* When navbar is scrolled → menu matches navbar’s darker tone */
-.nav.scrolled + .nav-mobile,
-.nav.scrolled ~ .nav-mobile {
+/* ✔ when navbar is scrolled (dark/glass) → menu uses the same tone */
+.nav.scrolled .nav-mobile {
   background: var(--glass-bg-scrolled);
 }
 
-/* Show menu when hamburger checked */
+/* show the menu when the hamburger is checked */
 #nav-toggle:checked ~ .nav-mobile {
   display: block;
-}
-
-/* Menu links (unchanged) */
-.nav-mobile a {
-  display: block;
-  color: #fff;
-  text-decoration: none;
-  padding: 10px 0;
-  font-size: 16px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  opacity: 0.95;
-  transition: opacity 0.2s ease;
-}
-.nav-mobile a:hover {
-  opacity: 1;
 }
 
 

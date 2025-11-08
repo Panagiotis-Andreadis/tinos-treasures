@@ -272,40 +272,36 @@
     #nav-toggle:checked + label .hamburger::after { transform: translateY(-10px) rotate(-45deg); }
 
 /* === MOBILE MENU — always blurred, always matches navbar tone === */
+/* === MOBILE MENU — outside nav; always blurred; matches nav tone === */
 .nav-mobile {
   display: none;
-  position: absolute;          
+  position: fixed;              /* fixed to the viewport, below the nav */
   top: 64px; left: 0; right: 0;
   padding: 14px 18px;
   border-bottom: 1px solid var(--glass-border);
-  z-index: 10000;
-  transition: background 0.3s ease, backdrop-filter 0.3s ease;
+  z-index: 10001;               /* above the nav and page content */
 
-  /* ✅ Always blurred */
+  /* Always blur the backdrop */
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-}
 
-/* When navbar is transparent (top) → transparent background, but still blurred */
-.nav:not(.scrolled) .nav-mobile {
+  /* Default: when nav is transparent at top */
   background: transparent;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+
+  transition: background 0.3s ease, backdrop-filter 0.3s ease;
 }
 
-/* When navbar is scrolled → same darker glass tone, still blurred */
-.nav.scrolled .nav-mobile {
+/* When navbar darkens on scroll, match its tone */
+.nav.scrolled + .nav-mobile {
   background: var(--glass-bg-scrolled);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
 
-/* Show menu when hamburger is toggled */
-#nav-toggle:checked ~ .nav-mobile {
+/* Show the menu when we add a class to <body> (see JS below) */
+body.menu-open .nav-mobile {
   display: block;
 }
 
-/* Links */
+/* Menu links (unchanged) */
 .nav-mobile a {
   display: block;
   color: #fff;
@@ -316,9 +312,8 @@
   opacity: 0.95;
   transition: opacity 0.2s ease;
 }
-.nav-mobile a:hover {
-  opacity: 1;
-}
+.nav-mobile a:hover { opacity: 1; }
+
 
 
     /* Switch nav text color on white sections (after scroll) */
@@ -669,7 +664,10 @@ body.intro-active .video-background video {
       <label for="nav-toggle" aria-label="Menu">
         <div class="hamburger"><span></span></div>
       </label>
-      <div class="nav-mobile">
+     
+    </div>
+  </nav>
+ <div class="nav-mobile">
         <a href="#home" onclick="document.getElementById('nav-toggle').checked=false;">Home</a>
         <a href="#apartments" onclick="document.getElementById('nav-toggle').checked=false;">Apartments</a>
         <div class="mobile-sub">
@@ -682,9 +680,6 @@ body.intro-active .video-background video {
         <a href="#contact" onclick="document.getElementById('nav-toggle').checked=false;">Contact Us</a>
         <a href="https://tinostreasures.reserve-online.net/" target="_blank" rel="noopener">Book now!</a>
       </div>
-    </div>
-  </nav>
-
   <!-- HOME / HERO -->
   <section id="home" class="anchor-offset">
     <div class="container">
@@ -942,6 +937,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const reflow = () => positionMenuAndBridge();
     window.addEventListener('resize', reflow, { passive: true });
     window.addEventListener('scroll',  reflow, { passive: true });
+  })();
+</script>
+<script>
+  (function () {
+    const cb = document.getElementById('nav-toggle');
+    if (!cb) return;
+
+    function syncMenu() {
+      document.body.classList.toggle('menu-open', cb.checked);
+    }
+
+    window.closeMenu = function () {
+      cb.checked = false;
+      syncMenu();
+    };
+
+    cb.addEventListener('change', syncMenu);
+    // Ensure correct state on load
+    syncMenu();
   })();
 </script>
 

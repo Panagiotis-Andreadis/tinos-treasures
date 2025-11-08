@@ -271,16 +271,50 @@
     #nav-toggle:checked + label .hamburger span { opacity: 0; }
     #nav-toggle:checked + label .hamburger::after { transform: translateY(-10px) rotate(-45deg); }
 
-    .nav-mobile {
-      display: none;
-      position: absolute;
-      top: 64px; left: 0; right: 0;
-      background: rgba(0,0,0,0.9);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--glass-border);
-      padding: 14px 18px;
-    }
+    /* === MOBILE MENU — matches navbar in both states === */
+.nav-mobile {
+  display: none;
+  position: absolute;
+  top: 64px; left: 0; right: 0;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--glass-border);
+  transition: background 0.3s ease, backdrop-filter 0.3s ease;
+
+  /* ✅ Default (top of page): subtle translucent glass */
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* ✅ When scrolled: same darker tone as navbar */
+.nav.scrolled + .nav-mobile,
+.nav.scrolled ~ .nav-mobile {
+  background: var(--glass-bg-scrolled);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* ✅ Show menu when hamburger is toggled */
+#nav-toggle:checked ~ .nav-mobile {
+  display: block;
+}
+
+/* Optional: make menu items look consistent */
+.nav-mobile a {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 0;
+  font-size: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  opacity: 0.95;
+  transition: opacity 0.2s ease;
+}
+
+.nav-mobile a:hover {
+  opacity: 1;
+}
+
     #nav-toggle:checked ~ .nav-mobile { display: block; }
 
     .nav-mobile a {

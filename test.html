@@ -1,4 +1,4 @@
-<!-- Tinos Treasures — Final One-Page with Sticky Glass Navbar & Sections -->
+<!-- Tinos Treasures — One-Page with Sticky Glass Navbar, Hero, and Snap-Full-Viewport Slides -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,594 +44,478 @@
       --container-w: 1100px;
       --section-pad: clamp(60px, 8vw, 100px);
       --fade-duration: 0.8s;
+      --nav-h: 64px;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
+    html { scroll-behavior: auto; }
     html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      width: 100%;
-      font-family: 'Cycladic', sans-serif;
-      color: #f5f5f5;
+      margin: 0; padding: 0; height: 100%; width: 100%;
+      font-family: 'Cycladic', sans-serif; color: #f5f5f5;
     }
 
-    /* Allow page to scroll (hero is full-height, sections follow) */
-    body { overflow-y: auto; background: #000; }
+    body { overflow-y: auto; background: #000; scroll-snap-type: y mandatory; }
 
     /* ---------------- NAVBAR ---------------- */
     .nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      z-index: 9999;
-      padding: 0 16px;
+      position: fixed; top: 0; left: 0; right: 0; height: 64px;
+      display: flex; align-items: center; z-index: 9999; padding: 0 16px;
       transition: background 300ms ease, border-color 300ms ease;
-      background: transparent; /* transparent at top */
+      background: transparent;
     }
-
     .nav.scrolled {
       background: var(--glass-bg-scrolled);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--glass-border);
     }
-
-.nav-inner {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: none; /* remove fixed container width */
-  padding: 0 3vw;  /* relative padding */
-}
-
- .nav-left { flex: 0 0 auto; }
-.nav-right { flex: 0 0 auto; }
-
-    .nav-logo {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--white);
+    .nav-inner {
+      width: 100%; display: flex; justify-content: space-between; align-items: center;
+      max-width: none; padding: 0 3vw;
     }
+    .nav-left { flex: 0 0 auto; }
+    .nav-right { flex: 0 0 auto; }
 
-    .nav-logo img {
-      width: 34px; height: 34px; object-fit: contain;
-      filter: brightness(0) invert(1);
-    }
+    .nav-logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--white); }
+    .nav-logo img { width: 34px; height: 34px; object-fit: contain; filter: brightness(0) invert(1); }
+    .nav-logo span { font-size: 16px; letter-spacing: 0.06em; }
 
-    .nav-logo span {
-      font-size: 16px;
-      letter-spacing: 0.06em;
-    }
-
-.nav-center {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  gap: clamp(20px, 5vw, 80px); /* gaps scale by screen width */
-}
+    .nav-center { flex: 1; display: flex; justify-content: center; gap: clamp(20px, 5vw, 80px); }
     .nav-link, .nav-drop-toggle {
-      text-decoration: none;
-      font-size: 14px;
-      letter-spacing: 0.06em;
-      transition: opacity 200ms ease;
-      opacity: 0.95;
-      color: var(--white);
+      text-decoration: none; font-size: 14px; letter-spacing: 0.06em; transition: opacity 200ms ease;
+      opacity: 0.95; color: var(--white);
     }
-
     .nav-link:hover, .nav-drop-toggle:hover { opacity: 1; }
 
-/* --- Apartments dropdown (stable, seamless, no double-dark seam) --- */
-.nav-dropdown { position: relative; }
-
-/* Keep the menu in the DOM (no display:none) to avoid hover gaps */
-.nav-dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  display: flex;                 /* keep layout stable */
-  flex-direction: column;
-  min-width: 200px;
-  padding: 8px 0;
-  margin-top: 0;                 /* no gap that causes flicker */
-  z-index: 1000;
-
-  /* Base: navbar is transparent → dropdown is truly transparent (no blur/tint) */
-  background: transparent;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-
-  /* Show/hide via opacity + pointer-events, so hover is solid */
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.25s ease, background 0.25s ease;
-}
-
-/* Open only when hovering "Apartments" OR the menu itself */
-/* Persist open via a class (set by JS) to avoid hover gap flicker */
-/* Default hidden: prevent any flash before we position it */
-.nav-dropdown-menu {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity 0.18s ease;
-}
-
-/* Opened by class (set by JS) — shows only after we've positioned it */
-.nav.dropdown-open .nav-dropdown-menu {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
-
-/* When navbar is glassy/dark (scrolled): match tone, avoid double blur
-   *** MODIFIED: render the menu BELOW the navbar, not overlapping it ***
-*/
-/* When the navbar is glassy (scrolled), render the menu BELOW the bar (no overlap) */
-.nav.scrolled .nav-dropdown-menu {
-  position: fixed;
-  /* top is set inline by JS to nav's exact bottom (no subpixel gaps) */
-  z-index: 10000;
-  background: var(--glass-bg-scrolled);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  border-top: 1px solid var(--glass-border);
-}
-
-
-
-/* If you use a light-state navbar, keep tones consistent */
-.nav.light .nav-dropdown-menu {
-  background: rgba(255,255,255,0.6);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  border-top: 1px solid rgba(0,0,0,0.08);
-}
-
-/* Links: exactly match your .nav-link styling */
-.nav-dropdown-menu a {
-  display: block;
-  padding: 10px 20px;
-  text-decoration: none;
-  color: inherit;                 /* follow nav link color (white in dark) */
-  font-family: 'Cycladic', sans-serif;
-  font-size: 14px;                /* same as .nav-link */
-  letter-spacing: 0.06em;
-  opacity: 0.95;
-  white-space: nowrap;
-  transition: opacity 0.2s ease, background 0.2s ease;
-}
-.nav-dropdown-menu a:hover {
-  opacity: 1;
-  background: rgba(255,255,255,0.12);
-}
-.nav.light .nav-dropdown-menu a:hover {
-  background: rgba(0,0,0,0.06);
-}
-
-/* (REMOVED the old overlap/translateY rules to avoid any overlap) */
-
-/* When the dropdown is open, you can keep or remove this.
-   We keep it as-is to match your original code. */
-.nav.scrolled.dropdown-open {
-  border-bottom-color: transparent;
-}
-
-
-    .nav-right {
-      display: flex;
-      justify-content: end;
+    /* --- Apartments dropdown --- */
+    .nav-dropdown { position: relative; }
+    .nav-dropdown-menu {
+      position: absolute; top: 100%; left: 0;
+      display: flex; flex-direction: column; min-width: 200px; padding: 8px 0; margin-top: 0; z-index: 1000;
+      background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none;
+      opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.18s ease, background 0.25s ease;
     }
+    .nav.dropdown-open .nav-dropdown-menu { opacity: 1; visibility: visible; pointer-events: auto; }
+    .nav.scrolled .nav-dropdown-menu {
+      position: fixed; z-index: 10000; background: var(--glass-bg-scrolled);
+      backdrop-filter: none; -webkit-backdrop-filter: none; border-top: 1px solid var(--glass-border);
+    }
+    .nav.light .nav-dropdown-menu {
+      background: rgba(255,255,255,0.6); border-top: 1px solid rgba(0,0,0,0.08);
+    }
+    .nav-dropdown-menu a {
+      display: block; padding: 10px 20px; text-decoration: none; color: inherit;
+      font-size: 14px; letter-spacing: 0.06em; opacity: 0.95; white-space: nowrap; transition: opacity 0.2s ease, background 0.2s ease;
+    }
+    .nav-dropdown-menu a:hover { opacity: 1; background: rgba(255,255,255,0.12); }
+    .nav.light .nav-dropdown-menu a:hover { background: rgba(0,0,0,0.06); }
+    .nav.scrolled.dropdown-open { border-bottom-color: transparent; }
 
+    .nav-right { display: flex; justify-content: end; }
     .nav-cta {
-      display: inline-block;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 14px;
-      letter-spacing: 0.02em;
-      text-decoration: none;
-      color: #fff;
-      background: transparent;
-      border: 2px solid #fff;
-      transition: all 0.3s ease;
-      white-space: nowrap;
+      display: inline-block; padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; letter-spacing: 0.02em;
+      text-decoration: none; color: #fff; background: transparent; border: 2px solid #fff; transition: all 0.3s ease; white-space: nowrap;
     }
     .nav-cta:hover { background: rgba(255,255,255,0.1); transform: translateY(-1px); }
 
     /* Mobile hamburger */
-    .hamburger {
-      display: none;
-      width: 28px; height: 22px;
-      position: relative;
-      cursor: pointer;
-    }
+    .hamburger { display: none; width: 28px; height: 22px; position: relative; cursor: pointer; }
     .hamburger span, .hamburger::before, .hamburger::after {
-      content: "";
-      position: absolute;
-      left: 0; right: 0;
-      height: 2px;
-      background: #fff;
-      transition: transform 250ms ease, opacity 200ms ease;
+      content: ""; position: absolute; left: 0; right: 0; height: 2px; background: #fff; transition: transform 250ms ease, opacity 200ms ease;
     }
-    .hamburger span { top: 10px; }
-    .hamburger::before { top: 0; }
-    .hamburger::after { bottom: 0; }
-
+    .hamburger span { top: 10px; } .hamburger::before { top: 0; } .hamburger::after { bottom: 0; }
     #nav-toggle { display: none; }
     #nav-toggle:checked + label .hamburger::before { transform: translateY(10px) rotate(45deg); }
     #nav-toggle:checked + label .hamburger span { opacity: 0; }
     #nav-toggle:checked + label .hamburger::after { transform: translateY(-10px) rotate(-45deg); }
 
-/* === MOBILE MENU — always blurred, always matches navbar tone === */
-/* === MOBILE MENU — outside nav; always blurred; matches nav tone === */
-.nav-mobile {
-  display: none;
-  position: fixed;              /* fixed to the viewport, below the nav */
-  top: 64px; left: 0; right: 0;
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--glass-border);
-  z-index: 10001;               /* above the nav and page content */
+    /* === MOBILE MENU === */
+    .nav-mobile {
+      display: none; position: fixed; top: 64px; left: 0; right: 0; padding: 14px 18px;
+      border-bottom: 1px solid var(--glass-border); z-index: 10001;
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      background: transparent; transition: background 0.3s ease, backdrop-filter 0.3s ease;
+    }
+    .nav.scrolled + .nav-mobile { background: var(--glass-bg-scrolled); }
+    body.menu-open .nav-mobile { display: block; }
+    .nav-mobile a {
+      display: block; color: #fff; text-decoration: none; padding: 10px 0; font-size: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.08); opacity: 0.95; transition: opacity 0.2s ease;
+    }
+    .nav-mobile a:hover { opacity: 1; }
 
-  /* Always blur the backdrop */
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-
-  /* Default: when nav is transparent at top */
-  background: transparent;
-
-  transition: background 0.3s ease, backdrop-filter 0.3s ease;
-}
-
-/* When navbar darkens on scroll, match its tone */
-.nav.scrolled + .nav-mobile {
-  background: var(--glass-bg-scrolled);
-}
-
-/* Show the menu when we add a class to <body> (see JS below) */
-body.menu-open .nav-mobile {
-  display: block;
-}
-
-/* Menu links (unchanged) */
-.nav-mobile a {
-  display: block;
-  color: #fff;
-  text-decoration: none;
-  padding: 10px 0;
-  font-size: 16px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  opacity: 0.95;
-  transition: opacity 0.2s ease;
-}
-.nav-mobile a:hover { opacity: 1; }
-
-
-
-    /* Switch nav text color on white sections (after scroll) */
-    .nav.scrolled .nav-link,
-    .nav.scrolled .nav-drop-toggle,
-    .nav.scrolled .nav-logo span { color: #f5f5f5; }
+    .nav.scrolled .nav-link, .nav.scrolled .nav-drop-toggle, .nav.scrolled .nav-logo span { color: #f5f5f5; }
 
     /* ---------------- HERO (HOME) ---------------- */
-    .video-background {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      overflow: hidden;
-      z-index: -1;
-      background: #000; /* fallback color */
-    }
-
+    .video-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: -1; background: #000; }
     #bg-video {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      min-width: 100%; min-height: 100%;
-      width: auto; height: auto;
-      object-fit: cover;
-      object-position: center;
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      min-width: 100%; min-height: 100%; width: auto; height: auto; object-fit: cover; object-position: center;
+      opacity: 0; transition: opacity .35s ease;
     }
+    #bg-video.is-ready { opacity: 1; }
 
-    @media (max-aspect-ratio: 9/16) {
-      #bg-video {
-        width: 100%; height: auto;
-        min-width: auto; min-height: 100%;
-        object-fit: contain;
-        background: #000;
-      }
-    }
-
-    @supports (-webkit-touch-callout: none) {
-      .video-background { height: -webkit-fill-available; }
-    }
-
+    @media (max-aspect-ratio: 9/16) { #bg-video { width: 100%; height: auto; min-width: auto; min-height: 100%; object-fit: contain; background: #000; } }
+    @supports (-webkit-touch-callout: none) { .video-background { height: -webkit-fill-available; } }
     body.no-video::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: url('poster.jpg') center center / cover no-repeat;
-      z-index: -2;
+      content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: url('poster.jpg') center center / cover no-repeat; z-index: -2;
     }
-
- 
 
     .container {
-      display: flex; flex-direction: column;
-      justify-content: center; align-items: center;
-      gap: 20px;
-      min-height: 100vh;
-      max-width: 900px;
-      margin: auto;
-      padding: 40px;
-      text-align: center;
-      box-sizing: border-box;
-    }
+      display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px;
+      min-height: 100vh; max-width: 900px; margin: auto; padding: 40px; text-align: center; box-sizing: border-box;
+    } 
 
     header img {
-      width: clamp(140px, 15vw, 220px);
-      height: auto; max-height: 25vh;
-      object-fit: contain;
-      image-rendering: crisp-edges;
+      width: clamp(140px, 15vw, 220px); height: auto; max-height: 25vh; object-fit: contain; image-rendering: crisp-edges;
       filter: brightness(0) invert(1) contrast(1.4) drop-shadow(0 3px 8px rgba(0,0,0,0.7));
     }
 
-/* Base tagline: allow full width and no clipping */
-.tagline {
-  position: absolute;
-  bottom: 6vh;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 96vw;             /* use almost the full viewport */
-  max-width: none;         /* don't cap width on desktop */
-  text-align: center;
-  color: #f5f5f5;
-  line-height: 1.35;
-  opacity: 0;              /* revealed by .visible */
-  transition: opacity 1.4s ease;
-  overflow: visible;       /* IMPORTANT: no clipping */
-  word-break: keep-all;
-  hyphens: none;
-}
+    /* Tagline */
+    .tagline {
+      position: absolute; bottom: 6vh; left: 50%; transform: translateX(-50%);
+      width: 96vw; max-width: none; text-align: center; color: #f5f5f5; line-height: 1.35;
+      opacity: 0; transition: opacity 1.4s ease; overflow: visible; word-break: keep-all; hyphens: none;
+    }
+    .tagline p { margin: 0 4px; display: inline; white-space: nowrap; font-size: clamp(12px, 0.9vw, 22px); letter-spacing: -0.01em; }
+    @media (min-width: 1025px) {
+      .tagline { white-space: nowrap; width: 98vw; bottom: 7vh; }
+      .tagline p { display: inline; white-space: nowrap; font-size: clamp(12px, 0.9vw, 22px); }
+    }
+    @media (max-width: 1024px) {
+      .tagline { white-space: normal; width: 94vw; bottom: 5vh; }
+      .tagline p { display: block; white-space: normal; font-size: clamp(11px, 3.4vw, 18px); letter-spacing: 0; }
+    }
+    .tagline.visible { opacity: 1; }
+    #home { position: relative; }
 
-.tagline p {
-  margin: 0 4px;           /* tighter spacing between parts */
-  display: inline;
-  white-space: nowrap;
-  /* Scales down more aggressively so it fits in one line */
-  font-size: clamp(12px, 0.9vw, 22px);
-  letter-spacing: -0.01em; /* tiny tightening for fit */
-}
-
-/* Desktop: enforce one line across full width */
-@media (min-width: 1025px) {
-  .tagline {
-    white-space: nowrap;   /* keep it on one line */
-    width: 98vw;           /* give it almost the full screen */
-    bottom: 7vh;
-  }
-  .tagline p {
-    display: inline;
-    white-space: nowrap;
-    font-size: clamp(12px, 0.9vw, 22px); /* stronger downscale */
-  }
-}
-
-/* Tablet & mobile: three stacked lines (unchanged behavior) */
-@media (max-width: 1024px) {
-  .tagline {
-    white-space: normal;
-    width: 94vw;
-    bottom: 5vh;
-  }
-  .tagline p {
-    display: block;        /* stack the three lines */
-    white-space: normal;
-    font-size: clamp(11px, 3.4vw, 18px);
-    letter-spacing: 0;
-  }
-}
-
-/* Show after video starts */
-.tagline.visible { opacity: 1; }
-
-
-
-    /* Title scales proportionally to tagline */
     h1 {
       font-size: calc(clamp(12px, 1.8vw, 18px) * 3.2);
-      margin: 10px 0 12px;
-      background: linear-gradient(180deg, #fff, #ddd);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      margin: 10px 0 12px; background: linear-gradient(180deg, #fff, #ddd);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       animation: fadeInUp var(--fade-duration) ease both 0.1s;
     }
 
     .cta {
-      display: inline-block;
-      padding: 14px 40px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: clamp(16px, 2vw, 18px);
-      letter-spacing: 0.02em;
-      text-decoration: none;
-      color: #fff;
-      background: transparent;
-      border: 2px solid #fff;
-      transition: all 0.3s ease;
-      margin: 40px 0;
-      animation: fadeInUp var(--fade-duration) ease both 0.4s;
+      display: inline-block; padding: 14px 40px; border-radius: 8px; font-weight: 600; font-size: clamp(16px, 2vw, 18px);
+      letter-spacing: 0.02em; text-decoration: none; color: #fff; background: transparent; border: 2px solid #fff;
+      transition: all 0.3s ease; margin: 40px 0; animation: fadeInUp var(--fade-duration) ease both 0.4s;
     }
     .cta:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
 
-    .social {
-      display: flex; gap: 20px; justify-content: center; align-items: center;
-      margin-bottom: 30px;
-      animation: fadeInUp var(--fade-duration) ease both 0.55s;
+    /* ---------- APTS ---------- */
+    .apt {
+      display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(18px, 3vw, 32px); align-items: center;
+      margin: clamp(28px, 4vw, 40px) 0;
     }
-    .social svg {
-      width: 28px; height: 28px; stroke: #fff; fill: none; stroke-width: 2;
-      opacity: 0.9; transition: all 0.2s ease;
-    }
-    .social a:hover svg { opacity: 1; transform: scale(1.1); }
+    .apt:nth-child(even) { grid-template-columns: 1fr 1.1fr; }
+    .apt > img { border-radius: 0; box-shadow: none; }
 
-    .footer {
-      margin-top: 20px;
-      font-size: clamp(12px, 1.5vw, 14px);
-      color: #ccc;
-      animation: fadeInUp var(--fade-duration) ease both 0.7s;
+    .apt h3 { margin: 0 0 10px 0; font-size: clamp(18px, 3vw, 26px); letter-spacing: 0.04em; }
+    .apt p { margin: 0; }
+    @media (max-width: 900px) { .apt, .apt:nth-child(even) { grid-template-columns: 1fr; } }
+
+    /* ---------- Rotator ---------- */
+    .rotator {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/10;
+      overflow: hidden;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
     }
-    .footer a { color: white; text-decoration: none; }
-    .footer a:hover { color: lightgray; }
+    .apt .rotator img,
+    .apt .rotator video {
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+
+    .rotator img {
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: contain !important;
+      background: transparent !important;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+    .rotator img.is-top { opacity: 1; }
+
+    .rotator video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: transparent;
+      z-index: 2;
+      transition: opacity 0.6s ease;
+    }
+    .rotator video.hidden {
+      opacity: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .rotator * { border-radius: 0 !important; box-shadow: none !important; }
+    .rotator img.standby { opacity: 0 !important; }
+
+    .rotator .controls {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px; opacity: 0; pointer-events: none; transition: opacity .2s ease;
+    }
+    .rotator.slideshow .controls { pointer-events: auto; }
+    @media (hover:hover) {
+      .rotator.slideshow:hover .controls { opacity: 1; }
+    }
+    @media (hover:none), (max-width: 900px) { .rotator.slideshow .controls { opacity: 1; } }
+
+    .rotator .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px; border: none; border-radius: 8px;
+      background: rgba(0,0,0,0.45); color: #fff; cursor: pointer;
+      backdrop-filter: blur(4px);
+      transition: transform .15s ease, opacity .15s ease;
+      font-size: 18px; user-select: none;
+    }
+    .rotator .btn:hover { transform: scale(1.06); }
+    .rotator .btn.center { position: absolute; left: 50%; bottom: 10px; transform: translateX(-50%); width: 40px; height: 40px; font-size: 18px; padding: 0; }
 
     /* ---------------- SECTIONS ---------------- */
-    section.section {
-      background: #fff; color: #000;
-      padding: var(--section-pad) 20px;
-    }
-    .section .wrap {
-      max-width: var(--container-w);
-      margin: 0 auto;
-    }
-    .section h2 {
-      font-size: clamp(24px, 4vw, 40px);
-      margin: 0 0 22px 0;
-      letter-spacing: 0.04em;
-    }
+    section.section { background: #fff; color: #000; padding-block: var(--section-pad); padding-inline: 0; width: 100vw; }
+    .section .wrap { max-width: none; margin: 0; width: 100%; padding-inline: clamp(12px, 2.5vw, 40px); }
+    .section h2 { font-size: clamp(24px, 4vw, 40px); margin: 0 0 22px 0; letter-spacing: 0.04em; }
     .section p { color: #333; font-size: clamp(14px, 1.4vw, 18px); line-height: 1.6; }
 
     .fade-in { opacity: 0; transform: translateY(26px); animation: fadeInUp 0.9s ease forwards; }
     .fade-in.delay-1 { animation-delay: 0.15s; }
     .fade-in.delay-2 { animation-delay: 0.3s; }
     .fade-in.delay-3 { animation-delay: 0.45s; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Apartments layout (image left / text right; alternate) */
-    .apt {
-      display: grid;
-      grid-template-columns: 1.1fr 1fr;
-      gap: clamp(18px, 3vw, 32px);
-      align-items: center;
-      margin: clamp(28px, 4vw, 40px) 0;
-    }
-    .apt:nth-child(even) { grid-template-columns: 1fr 1.1fr; }
-    .apt img {
-      width: 100%; height: auto; border-radius: 12px; display: block;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-    }
-    .apt h3 {
-      margin: 0 0 10px 0;
-      font-size: clamp(18px, 3vw, 26px);
-      letter-spacing: 0.04em;
-    }
-    .apt p { margin: 0; }
-
-    @media (max-width: 900px) {
-      .apt { grid-template-columns: 1fr; }
-      .apt:nth-child(even) { grid-template-columns: 1fr; }
-    }
-
-    /* Spacing around anchors so content isn't hidden behind fixed nav */
     .anchor-offset { scroll-margin-top: 80px; }
 
-    /* Mobile tweaks */
     @media (max-width: 900px) {
       .nav-center { display: none; }
       .nav-right { display: none; }
       .hamburger { display: inline-block; }
       .nav-inner { grid-template-columns: 1fr auto; }
     }
-/* Intro animation */
-#intro {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: #000;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 99999;
-  animation: introFadeOut 3.5s ease forwards;
-}
 
-#intro img {
-  width: clamp(140px, 15vw, 220px);
-  filter: brightness(0) invert(1);
-  animation: fadeInOut 3.5s ease forwards;
-}
+    /* Intro */
+    #intro { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; flex-direction: column;
+      justify-content: center; align-items: center; z-index: 99999; animation: introFadeOut 3.5s ease forwards; }
+    #intro img { width: clamp(140px, 15vw, 220px); filter: brightness(0) invert(1); animation: fadeInOut 3.5s ease forwards; }
+    #intro h1 { font-family: 'Cycladic', sans-serif; font-size: clamp(28px, 5vw, 48px); color: #fff; margin-top: 20px; animation: fadeInOut 3.5s ease forwards; }
+    @keyframes fadeInOut { 0%{opacity:0;} 20%{opacity:1;} 60%{opacity:1;} 100%{opacity:0;} }
+    @keyframes introFadeOut { 0%{opacity:1;visibility:visible;} 90%{opacity:0;visibility:visible;} 100%{opacity:0;visibility:hidden;display:none;} }
+    body.intro-active #bg-video { opacity: 0 !important; }
+	
+    .social{display:flex;gap:20px;justify-content:center;align-items:center;margin-bottom:30px}
+    .section .social a{color:#000;text-decoration:none;background:transparent;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;transition:transform .18s ease,color .18s ease,opacity .18s ease}
+    .section .social a:hover{color:#333;transform:translateY(-1px) scale(1.03)}
+    .social svg{width:28px;height:28px;fill:currentColor;stroke:none;opacity:.98;transition:opacity .18s ease}
 
-#intro h1 {
-  font-family: 'Cycladic', sans-serif;
-  font-size: clamp(28px, 5vw, 48px);
-  color: #fff;
-  margin-top: 20px;
-  animation: fadeInOut 3.5s ease forwards;
-}
+    #contact .wrap{justify-items:start;text-align:left}
+    #contact .social{justify-content:flex-start;margin-top:clamp(20px,calc(8vh/3),34px);margin-bottom:clamp(20px,calc(8vh/3),34px);gap:28px}
+    #contact h2,#contact p{text-align:left}
+    #contact a{color:#000;text-decoration:none}
+    #contact a:hover{color:#333;text-decoration:underline}
 
-@keyframes fadeInOut {
-  0% { opacity: 0; }
-  20% { opacity: 1; }
-  60% { opacity: 1; }
-  100% { opacity: 0; }
-}
+    .footer-bottom {
+      text-align: center; padding: 30px 0; font-size: clamp(12px, 1.5vw, 14px);
+      color: #ccc; background: #000; border-top: 1px solid rgba(255,255,255,0.1);
+    }
 
-@keyframes introFadeOut {
-  0% { opacity: 1; visibility: visible; }
-  90% { opacity: 0; visibility: visible; }
-  100% { opacity: 0; visibility: hidden; display: none; }
-}
-/* Show fallback only if video fails */
-body.no-video::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: url('poster.jpg') center center / cover no-repeat;
-  z-index: -2;
-}
+    /* No horizontal scroll + safe grids */
+    html, body { overflow-x: hidden; }
+    *, *::before, *::after { box-sizing: border-box; }
+    section.section, body, html { width: 100%; }
+    .apt { grid-template-columns: minmax(0,1.1fr) minmax(0,1fr); }
+    .apt:nth-child(even) { grid-template-columns: minmax(0,1fr) minmax(0,1.1fr); }
+    .apt > div { min-width: 0; }
+    .apt h3, .apt p { overflow-wrap: anywhere; word-break: normal; }
+    .section .wrap { width: 100%; max-width: none; padding-inline: clamp(12px, 2.5vw, 40px); }
+    .rotator, .apt > img { max-width: 100%; overflow: hidden; }
 
-/* During intro, hide everything behind black */
-body.intro-active .video-background video {
-  opacity: 0;
-}
-.footer-bottom {
-  text-align: center;
-  padding: 30px 0;
-  font-size: clamp(12px, 1.5vw, 14px);
-  color: #ccc;
-  background: #000; /* matches your site background */
-  border-top: 1px solid rgba(255,255,255,0.1);
-}
+    /* ===== NAV GLASS OVERRIDES ===== */
+    .nav {
+      transition:
+        background 420ms cubic-bezier(.22,.61,.36,1),
+        border-color 420ms cubic-bezier(.22,.61,.36,1),
+        backdrop-filter 480ms cubic-bezier(.22,.61,.36,1) 60ms,
+        -webkit-backdrop-filter 480ms cubic-bezier(.22,.61,.36,1) 60ms;
+    }
+    .nav.scrolled {
+      background: var(--glass-bg-scrolled);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .nav-mobile {
+      display: none; position: fixed; top: 64px; left: 0; right: 0; padding: 14px 18px; z-index: 10001;
+      background: transparent; border-bottom: 1px solid var(--glass-border);
+      backdrop-filter: none; -webkit-backdrop-filter: none;
+      transition:
+        background 420ms cubic-bezier(.22,.61,.36,1),
+        backdrop-filter 480ms cubic-bezier(.22,.61,.36,1) 60ms,
+        -webkit-backdrop-filter 480ms cubic-bezier(.22,.61,.36,1) 60ms;
+    }
+    .nav.scrolled + .nav-mobile { background: var(--glass-bg-scrolled); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    .nav .nav-dropdown-menu {
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity .18s ease, background .25s ease, backdrop-filter .25s ease;
+    }
+    .nav.scrolled .nav-dropdown-menu { background: var(--glass-bg-scrolled); border-top: 1px solid var(--glass-border); }
+    .nav.dropdown-open .nav-dropdown-menu { opacity: 1; visibility: visible; pointer-events: auto; }
 
+    /* ===== SNAP & FULL-VIEWPORT SLIDES ===== */
+    .snap { scroll-snap-align: start; scroll-snap-stop: always; }
 
+    /* Apartments container: remove padding so slides are edge-to-edge */
+    #apartments.section { padding-block: 0; }
+
+    /* Apartments as slides */
+    .apt.apt-section {
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      align-items: center;
+      background: #fff; color: #000;
+    }
+
+    @media (min-width: 901px) {
+      .apt.apt-section { grid-template-columns: 1fr 1fr; }
+      .apt.apt-section .rotator,
+      .apt.apt-section > img {
+        height: 100vh;
+        width: 100%;
+        object-fit: contain;
+        background: transparent;
+      }
+      .apt.apt-section .apt-text {
+        height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: clamp(16px, 3vw, 48px);
+        background: #fff; color: #000;
+      }
+    }
+    @media (max-width: 900px) {
+      .apt.apt-section { display: flex; flex-direction: column; }
+      .apt.apt-section .rotator,
+      .apt.apt-section > img {
+        height: 100vh; width: 100%; object-fit: contain; background: transparent;
+      }
+      .apt.apt-section .apt-text {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: clamp(18px, 6vw, 40px);
+        background: #fff; color: #000; text-align: left;
+      }
+    }
+
+    /* Generic slide for Hero, Location, Contact */
+    /* IMPORTANT: make slides transparent by default so hero shows video */
+    .slide-section { min-height: 100vh; background: transparent; }
+
+    /* Location + Contact: remove default section padding (already white via .section) */
+    #location.section.slide-section,
+    #contact.section.slide-section { padding-block: 0; }
+
+    /* ===== LOCATION + CONTACT: Fullscreen, no internal scroll, left aligned ===== */
+    #location.section.slide-section,
+    #contact.section.slide-section {
+      height: calc(100svh - var(--nav-h));
+      min-height: calc(100svh - var(--nav-h)) !important;
+      max-height: calc(100svh - var(--nav-h));
+      overflow: clip;
+      padding: 0;
+      padding-top: var(--nav-h);
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    #location.section.slide-section .wrap,
+    #contact.section.slide-section .wrap {
+      height: 100%;
+      min-height: 0;
+      display: grid;
+      align-content: center;
+      justify-items: start;
+      text-align: left;
+      padding-inline: clamp(12px, 2.5vw, 40px);
+      overflow: clip;
+    }
+
+    #location .wrap h2, #location .wrap p,
+    #contact  .wrap h2, #contact  .wrap p { margin: 0; }
+
+    #contact .social {
+      justify-content: flex-start;
+      gap: 28px;
+      margin-top: 16px !important;
+      margin-bottom: 16px !important;
+      max-width: 100%;
+      flex-wrap: wrap;
+    }
+
+    .footer-bottom { scroll-snap-align: end; scroll-snap-stop: always; }
+    #location.section.slide-section, #contact.section.slide-section { min-block-size: calc(100svh - var(--nav-h)); }
+
+    @supports (-webkit-touch-callout: none) {
+      #location.section.slide-section,
+      #contact.section.slide-section {
+        height: calc(-webkit-fill-available - var(--nav-h));
+        min-height: calc(-webkit-fill-available - var(--nav-h)) !important;
+        max-height: calc(-webkit-fill-available - var(--nav-h));
+      }
+    }
+
+    /* ======== GHOST VIDEO FIX: DO NOT FADE WHOLE SLIDES ======== */
+    .apt.apt-section,
+    .slide-section {
+      opacity: 1 !important;
+      transition: none !important;
+    }
+
+    /* Fade only inner content when a slide becomes active */
+    #location .wrap,
+    #contact .wrap,
+    #apigania .apt-text, #apigania .rotator,
+    #vathi .apt-text,   #vathi img,
+    #livada img,        #livada .apt-text,
+    #ammos .apt-text,   #ammos img {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .45s ease, transform .45s ease;
+      will-change: opacity, transform;
+    }
+    #location.is-active .wrap,
+    #contact.is-active .wrap,
+    #apigania.is-active .apt-text, #apigania.is-active .rotator,
+    #vathi.is-active .apt-text,    #vathi.is-active img,
+    #livada.is-active img,         #livada.is-active .apt-text,
+    #ammos.is-active .apt-text,    #ammos.is-active img {
+      opacity: 1;
+      transform: none;
+    }
   </style>
 </head>
-<body>
 
-<div id="intro">
-  <img src="logo.png" alt="Tinos Treasures logo">
-  <h1>Tinos Treasures</h1>
-</div>
+<body>
+  <div id="intro">
+    <img src="logo.png" alt="Tinos Treasures logo">
+    <h1>Tinos Treasures</h1>
+  </div>
 
   <!-- Background video -->
   <div class="video-background">
-      <video autoplay muted loop playsinline id="bg-video">
+    <video id="bg-video" muted loop playsinline preload="auto">
       <source src="tinos_treasures_background.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
     </video>
   </div>
 
@@ -664,57 +548,36 @@ body.intro-active .video-background video {
       <label for="nav-toggle" aria-label="Menu">
         <div class="hamburger"><span></span></div>
       </label>
-     
     </div>
   </nav>
- <div class="nav-mobile">
-        <a href="#home" onclick="document.getElementById('nav-toggle').checked=false;">Home</a>
-        <a href="#apartments" onclick="document.getElementById('nav-toggle').checked=false;">Apartments</a>
-        <div class="mobile-sub">
-          <a href="#apigania" onclick="document.getElementById('nav-toggle').checked=false;">— Apigania</a>
-          <a href="#vathi" onclick="document.getElementById('nav-toggle').checked=false;">— Vathi</a>
-          <a href="#livada" onclick="document.getElementById('nav-toggle').checked=false;">— Livada</a>
-          <a href="#ammos" onclick="document.getElementById('nav-toggle').checked=false;">— Ammos</a>
-        </div>
-        <a href="#location" onclick="document.getElementById('nav-toggle').checked=false;">The Location</a>
-        <a href="#contact" onclick="document.getElementById('nav-toggle').checked=false;">Contact Us</a>
-        <a href="https://tinostreasures.reserve-online.net/" target="_blank" rel="noopener">Book now!</a>
-      </div>
+
+  <div id="nav-sentinel" style="position:fixed;top:0;left:0;width:0;height:0;pointer-events:none;"></div>
+
+  <div class="nav-mobile">
+    <a href="#home" onclick="document.getElementById('nav-toggle').checked=false;">Home</a>
+    <a href="#apartments" onclick="document.getElementById('nav-toggle').checked=false;">Apartments</a>
+    <div class="mobile-sub">
+      <a href="#apigania" onclick="document.getElementById('nav-toggle').checked=false;">— Apigania</a>
+      <a href="#vathi" onclick="document.getElementById('nav-toggle').checked=false;">— Vathi</a>
+      <a href="#livada" onclick="document.getElementById('nav-toggle').checked=false;">— Livada</a>
+      <a href="#ammos" onclick="document.getElementById('nav-toggle').checked=false;">— Ammos</a>
+    </div>
+    <a href="#location" onclick="document.getElementById('nav-toggle').checked=false;">The Location</a>
+    <a href="#contact" onclick="document.getElementById('nav-toggle').checked=false;">Contact Us</a>
+    <a href="https://tinostreasures.reserve-online.net/" target="_blank" rel="noopener">Book now!</a>
+  </div>
+
   <!-- HOME / HERO -->
-  <section id="home" class="anchor-offset">
+  <section id="home" class="anchor-offset snap slide-section">
     <div class="container">
-     
-
       <main>
-        
-<div class="tagline" id="tagline">
-  <p>Seaside luxurious 70sqm serviced apartments,</p>
-  <p>By the beach at Isternia bay in Tinos, Greece.</p>
-  <p>Crafted with care, designed for memories.</p>
-</div>
-
-
-      
-
-        <div class="social">
-          <a href="https://www.instagram.com/tinostreasures_/" target="_blank" aria-label="Instagram">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.5" cy="6.5" r="1"/></svg>
-          </a>
-          <a href="https://www.facebook.com/Tinos.Treasures/" target="_blank" aria-label="Facebook">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 8H7v4h2v12h5V12h3.642L18 8h-4V6c0-1.084.218-1.5 1.273-1.5H18V0h-3.818C9.818 0 9 1.818 9 5v3z" /></svg>
-          </a>
-          <a href="https://www.google.com/search?q=Tinos+Treasures+Apart-Hotel" target="_blank" aria-label="Google Search">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.35 11.1h-9.17v2.9h5.64c-.24 1.48-1.7 4.34-5.64 4.34a6.53 6.53 0 0 1 0-13.06 5.84 5.84 0 0 1 4.09 1.59l2.79-2.69A9.63 9.63 0 0 0 12.18 0a10.18 10.18 0 1 0 9.17 11.1z"/></svg>
-          </a>
-          <a href="https://www.youtube.com/@tinostreasures" target="_blank" aria-label="YouTube">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 15l5.19-3L10 9v6zm11.5-8.5s-.2-1.43-.82-2.06c-.78-.82-1.65-.83-2.05-.88C15.35 3.5 12 3.5 12 3.5h-.01s-3.35 0-6.63.06c-.4.05-1.27.06-2.05.88C2.7 5.07 2.5 6.5 2.5 6.5S2.5 8.27 2.5 10.04v1.92c0 1.77.02 3.54.02 3.54s.2 1.43.82 2.06c.78.82 1.8.8 2.26.89 1.64.15 6.4.18 6.4.18s3.35 0 6.63-.06c.4-.05 1.27-.06 2.05-.88.62-.63.82-2.06.82-2.06s.02-1.77.02-3.54V10.04c0-1.77-.02-3.54-.02-3.54z" /></svg>
-          </a>
-          <a href="https://maps.app.goo.gl/VVLBkF2q8XZqKbU38" target="_blank" aria-label="Google Maps">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
-          </a>
+        <div class="tagline" id="tagline">
+          <p>Seaside luxurious 70sqm serviced apartments,</p>
+          <p>By the beach at Isternia bay in Tinos, Greece.</p>
+          <p>Crafted with care, designed for memories.</p>
         </div>
-
-        
+      </main>
+    </div>
   </section>
 
   <!-- APARTMENTS -->
@@ -722,143 +585,228 @@ body.intro-active .video-background video {
     <div class="wrap">
       <h2 class="fade-in">Apartments</h2>
 
-      <div id="apigania" class="apt fade-in delay-1">
-        <img src="apigania.jpg" alt="Apigania apartment placeholder">
-        <div>
+      <!-- APIGANIA (video then slideshow) -->
+      <div id="apigania" class="apt apt-section fade-in delay-1 snap">
+        <div class="rotator" id="apigania-rotator">
+          <video id="apigania-video" muted playsinline preload="auto">
+            <source src="media/apigania_fast/apigania.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+
+          <img id="apigania-a" alt="Apigania gallery image A" class="standby" src="media/apigania_fast/Apigania_LivingRoom_f_1_1400.webp">
+          <img id="apigania-b" alt="Apigania gallery image B" class="standby" src="media/apigania_fast/Apigania_LivingRoom_f_2_1400.webp">
+
+          <div class="controls" aria-label="Gallery controls">
+            <button class="btn prev"  type="button" aria-label="Previous" title="Previous">❮</button>
+            <button class="btn center toggle" type="button" aria-label="Pause" title="Pause">
+              <span class="ico ico-pause">❚❚</span>
+              <span class="ico ico-play" style="display:none">▶</span>
+            </button>
+            <button class="btn next"  type="button" aria-label="Next" title="Next">❯</button>
+          </div>
+        </div>
+
+        <div class="apt-text">
           <h3>Apigania</h3>
           <p>Spacious 70sqm seaside apartment with serene tones, curated decor, and hotel-like comforts perfect for families or couples.</p>
         </div>
       </div>
 
-      <div id="vathi" class="apt fade-in delay-2">
-        <div>
+      <!-- VATHI -->
+      <div id="vathi" class="apt apt-section fade-in delay-2 snap">
+        <div class="apt-text">
           <h3>Vathi</h3>
           <p>Bright, air-filled interiors with soft textures and a calming palette designed for slow mornings and sunset views.</p>
         </div>
-        <img src="vathi.jpg" alt="Vathi apartment placeholder">
+        <img src="media/vathi/vathi1.jpg" alt="Vathi apartment placeholder">
       </div>
 
-      <div id="livada" class="apt fade-in delay-3">
-        <img src="livada.jpg" alt="Livada apartment placeholder">
-        <div>
+      <!-- LIVADA -->
+      <div id="livada" class="apt apt-section fade-in delay-3 snap">
+        <img src="media/livada/livada1.jpg" alt="Livada apartment placeholder">
+        <div class="apt-text">
           <h3>Livada</h3>
           <p>Cycladic simplicity meets comfort: thoughtful details, generous living space, and a relaxing ambience near the bay.</p>
         </div>
       </div>
 
-      <div id="ammos" class="apt fade-in delay-3">
-        <div>
+      <!-- AMMOS -->
+      <div id="ammos" class="apt apt-section fade-in delay-3 snap">
+        <div class="apt-text">
           <h3>Ammos</h3>
           <p>Minimal yet warm retreat with crafted finishes and a layout tailored for long stays and memorable gatherings.</p>
         </div>
-        <img src="ammos.jpg" alt="Ammos apartment placeholder">
+        <img src="media/ammos/ammos1.jpg" alt="Ammos apartment placeholder">
       </div>
     </div>
   </section>
 
   <!-- LOCATION -->
-  <section id="location" class="section anchor-offset">
+  <section id="location" class="section anchor-offset snap slide-section">
     <div class="wrap">
-      <h2 class="fade-in">The Location</h2>
-      <p class="fade-in delay-1">
-        Set on Isternia Bay, Tinos Treasures places you steps from the sea and a short drive from traditional villages,
-        local tavernas, and untouched landscapes. Experience Cycladic light, gentle breezes, and a slower rhythm of life.
-      </p>
+      <div>
+        <h2 class="fade-in">The Location</h2>
+        <p class="fade-in delay-1">
+          Set on Isternia Bay, Tinos Treasures places you steps from the sea and a short drive from traditional villages,
+          local tavernas, and untouched landscapes. Experience Cycladic light, gentle breezes, and a slower rhythm of life.
+        </p>
+      </div>
     </div>
   </section>
 
   <!-- CONTACT -->
-  <section id="contact" class="section anchor-offset">
+  <section id="contact" class="section anchor-offset snap slide-section">
     <div class="wrap">
-      <h2 class="fade-in">Contact Us</h2>
-      <p class="fade-in delay-1">
-        Ormos Isternion — Tinos, 84200 — Cyclades, Greece<br>
-        <a href="mailto:info@tinostreasures.gr">info@tinostreasures.gr</a> ·
-        <a href="tel:+306976596001">+30 697 659 6001</a>
-      </p>
-      <p class="fade-in delay-2" style="margin-top:20px;">
-        <a href="https://www.instagram.com/tinostreasures_/" target="_blank" rel="noopener">Instagram</a> ·
-        <a href="https://www.facebook.com/Tinos.Treasures/" target="_blank" rel="noopener">Facebook</a> ·
-        <a href="https://www.youtube.com/@tinostreasures" target="_blank" rel="noopener">YouTube</a> ·
-        <a href="https://maps.app.goo.gl/VVLBkF2q8XZqKbU38" target="_blank" rel="noopener">Google Maps</a>
-      </p>
+      <div>
+        <h2 class="fade-in">Contact Us</h2>
+        <p class="fade-in delay-1 contact-info">
+          Ormos Isternion — Tinos, 84200 — Cyclades, Greece<br>
+          <a href="mailto:info@tinostreasures.gr">info@tinostreasures.gr</a> ·
+          <a href="tel:+306976596001">+30 697 659 6001</a>
+        </p>
+
+        <div class="social fade-in delay-2" aria-label="Social links">
+          <a class="instagram" href="https://www.instagram.com/tinostreasures_/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill-rule="evenodd" clip-rule="evenodd">
+              <path d="M7,2h10a5,5,0,0,1,5,5V17a5,5,0,0,1-5,5H7A5,5,0,0,1,2,17V7A5,5,0,0,1,7,2Zm0,2A3,3,0,0,0,4,7V17a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V7a3,3,0,0,0-3-3ZM12,7.5A4.5,4.5,0,1,1,7.5,12,4.5,4.5,0,0,1,12,7.5Zm0,2A2.5,2.5,0,1,0,14.5,12,2.5,2.5,0,0,0,12,9.5ZM17.5,6A1,1,0,1,1,16.5,7,1,1,0,0,1,17.5,6Z"/>
+            </svg>
+          </a>
+          <a class="facebook" href="https://www.facebook.com/Tinos.Treasures/" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M13.5 21v-7h2.5l.5-3h-3V8.5c0-.87.29-1.5 1.65-1.5H16V4.3C15.76 4.27 14.93 4.2 13.98 4.2 11.9 4.2 10.5 5.4 10.5 7.9V11H8v3h2.5v7h3z"/>
+            </svg>
+          </a>
+          <a class="google" href="https://www.google.com/search?q=Tinos+Treasures+Apart-Hotel" target="_blank" rel="noopener" aria-label="Google Search">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M21.6 12.23c0-.64-.06-1.26-.17-1.86H12v3.52h5.4a4.62 4.62 0 0 1-2 3.03v2.5h3.2c1.87-1.72 2.96-4.25 2.96-7.19zM12 22c2.7 0 4.96-.9 6.61-2.43l-3.2-2.5c-.9.6-2.07.95-3.41.95-2.62 0-4.83-1.77-5.62-4.15H3.06v2.6A9.99 9.99 0 0 0 12 22zm-5.62-6.13A5.99 5.99 0 0 1 6 8.13V5.5H3.06A10 10 0 0 0 2 12c0 1.61.39 3.13 1.06 4.47l3.32-2.6zM12 4.02c1.47 0 2.8.5 3.85 1.48l2.88-2.88A9.98 9.98 0 0 0 12 2C8.06 2 4.68 4.23 3.06 7.53L6 10.13A6 6 0 0 1 12 4.02z"/>
+            </svg>
+          </a>
+          <a class="youtube" href="https://www.youtube.com/@tinostreasures" target="_blank" rel="noopener" aria-label="YouTube">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill-rule="evenodd" clip-rule="evenodd">
+              <path d="M21.6 7.2a2.6 2.6 0 0 0-1.83-1.84C18.3 5 12 5 12 5s-6.3 0-7.77.36A2.6 2.6 0 0 0 2.4 7.2 27.9 27.9 0 0 0 2 12c0 1.62.12 3.18.4 4.8.23.86.92 1.54 1.83 1.84C5.7 19 12 19 12 19s6.3 0 7.77-.36c.91-.3 1.6-.98 1.83-1.84.28-1.62.4-3.18.4-4.8 0-1.62-.12-3.18-.4-4.8ZM10 15V9l5.5 3-5.5 3Z"/>
+            </svg>
+          </a>
+          <a class="maps" href="https://maps.app.goo.gl/VVLBkF2q8XZqKbU38" target="_blank" rel="noopener" aria-label="Google Maps">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill-rule="evenodd" clip-rule="evenodd">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7Zm0 9.5A2.5 2.5 0 1 1 14.5 9 2.5 2.5 0 0 1 12 11.5Z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
-<script>
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-document.addEventListener('DOMContentLoaded', () => {
-  // ✅ Footer year
-  const yearEl = document.getElementById('year');
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-  // ✅ Navbar scroll behavior
-  const nav = document.getElementById('nav');
-  const onScroll = () => {
-    if (window.scrollY > 80) nav.classList.add('scrolled');
-    else nav.classList.remove('scrolled');
-  };
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  // ✅ Intro animation + video reveal
-  const intro = document.getElementById('intro');
-  const video = document.getElementById('bg-video');
-  const tagline = document.getElementById('tagline');
-
-  document.body.classList.add('intro-active');
-  if (video) video.pause();
-
-  setTimeout(() => {
-    if (intro) intro.style.display = 'none';
-    document.body.classList.remove('intro-active');
-
-    if (video) {
-      video.play().then(() => tagline?.classList.add('visible'))
-                  .catch(() => {
-                    document.body.classList.add('no-video');
-                    tagline?.classList.add('visible');
-                  });
-    } else {
-      tagline?.classList.add('visible');
+    /* Navbar IntersectionObserver */
+    const nav = document.getElementById('nav');
+    const sentinel = document.getElementById('nav-sentinel');
+    if (nav && sentinel && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          const e = entries[0];
+          if (e.isIntersecting) nav.classList.remove('scrolled');
+          else nav.classList.add('scrolled');
+        },
+        { root: null, threshold: 0, rootMargin: '-64px 0px 0px 0px' }
+      );
+      io.observe(sentinel);
     }
-  }, 2500);
-});
-</script>
+    const onScroll = () => { if (window.scrollY > 4) nav.classList.add('scrolled'); else nav.classList.remove('scrolled'); };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
 
+    /* Intro + background video reveal */
+    const intro   = document.getElementById('intro');
+    const videoBg = document.getElementById('bg-video');
+    const tagline = document.getElementById('tagline');
 
+    document.body.classList.add('intro-active');
+    if (videoBg) videoBg.pause();
 
-</script>
-<script>
-  // Dropdown: position BEFORE showing; glue the gap with a bridge pinned to nav's exact bottom
-  (function () {
-    const nav    = document.getElementById('nav');
-    const drop   = nav?.querySelector('.nav-dropdown');
-    const toggle = drop?.querySelector('.nav-drop-toggle');
-    const menu   = drop?.querySelector('.nav-dropdown-menu');
-    if (!nav || !drop || !toggle || !menu) return;
-
-    let closeTimer = null;
-    let bridge = null;
-
-    function navBottom() {
-      // exact device-pixel position of the navbar bottom
-      return nav.getBoundingClientRect().bottom;
+    let videoReady = false;
+    if (videoBg) {
+      const markReady = () => { videoReady = true; };
+      videoBg.addEventListener('loadeddata', markReady, { once: true });
+      videoBg.addEventListener('canplay',    markReady, { once: true });
+      videoBg.addEventListener('error', () => {
+        document.body.classList.add('no-video');
+        videoBg.setAttribute('poster', 'poster.jpg');
+      });
     }
 
-    function computeRect() {
-      return toggle.getBoundingClientRect();
-    }
+    setTimeout(() => {
+      if (intro) intro.style.display = 'none';
+      document.body.classList.remove('intro-active');
 
-    function ensureBridge() {
-      if (!bridge) {
+      if (videoBg) {
+        videoBg.play()
+          .then(() => {
+            if (videoReady) videoBg.classList.add('is-ready');
+            tagline?.classList.add('visible');
+          })
+          .catch(() => {
+            document.body.classList.add('no-video');
+            videoBg.setAttribute('poster', 'poster.jpg');
+            videoBg.classList.add('is-ready');
+            tagline?.classList.add('visible');
+          });
+      } else {
+        tagline?.classList.add('visible');
+      }
+    }, 2500);
+
+    /* Slide activation (adds .is-active) */
+    const slides = Array.from(document.querySelectorAll('.apt.apt-section, .slide-section'));
+    if ('IntersectionObserver' in window && slides.length) {
+      const fadeIO = new IntersectionObserver((entries) => {
+        let best = null, bestRatio = 0;
+        entries.forEach(e => { if (e.intersectionRatio > bestRatio) { best = e.target; bestRatio = e.intersectionRatio; } });
+        if (best) slides.forEach(s => s.classList.toggle('is-active', s === best));
+      }, { threshold: [0.25, 0.5, 0.75, 0.95] });
+
+      slides.forEach(s => fadeIO.observe(s));
+
+      const init = () => {
+        let best = null, bestVisible = 0;
+        const vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+        slides.forEach(s => {
+          const r = s.getBoundingClientRect();
+          const visible = Math.max(0, Math.min(r.bottom, vh) - Math.max(r.top, 0)) / vh;
+          if (visible > bestVisible) { bestVisible = visible; best = s; }
+        });
+        slides.forEach(s => s.classList.toggle('is-active', s === best));
+      };
+      init();
+      window.addEventListener('load', init, { once: true });
+    }
+  });
+  </script>
+
+  <script>
+    /* Dropdown positioning with bridge */
+    (function () {
+      const nav = document.getElementById('nav');
+      const drop = nav?.querySelector('.nav-dropdown');
+      const theToggle = drop?.querySelector('.nav-drop-toggle');
+      const menu = drop?.querySelector('.nav-dropdown-menu');
+      if (!nav || !drop || !theToggle || !menu) return;
+
+      let closeTimer = null, bridge = null;
+      function navBottom() { return nav.getBoundingClientRect().bottom; }
+      function toggleRect() { return theToggle.getBoundingClientRect(); }
+
+      function ensureBridge() {
+        if (bridge) return;
         bridge = document.createElement('div');
         bridge.style.position = 'fixed';
         bridge.style.pointerEvents = 'auto';
-        bridge.style.background = 'rgba(0,0,0,0)'; // invisible
-        bridge.style.zIndex = 10001; // above menu so it can hold hover
+        bridge.style.background = 'rgba(0,0,0,0)';
+        bridge.style.zIndex = 10001;
         document.body.appendChild(bridge);
-
         const enter = () => openMenu();
         const leave = (e) => {
           const to = e.relatedTarget;
@@ -868,102 +816,302 @@ document.addEventListener('DOMContentLoaded', () => {
         bridge.addEventListener('mouseenter', enter);
         bridge.addEventListener('mouseleave', leave);
       }
-    }
 
-    function positionMenuAndBridge() {
-      if (!(nav.classList.contains('scrolled') && nav.classList.contains('dropdown-open'))) return;
+      function positionMenuAndBridge() {
+        if (!nav.classList.contains('dropdown-open')) return;
+        const r = toggleRect();
+        const nb = navBottom();
+        menu.style.position = 'fixed';
+        menu.style.top = nb + 'px';
+        menu.style.left = r.left + 'px';
+        menu.style.minWidth = Math.max(r.width, 200) + 'px';
+        menu.style.zIndex = 10002;
 
-      const r = computeRect();
-      const nb = navBottom(); // precise top for both elements
-
-      // Position menu inline (so first visible frame is correct)
-      menu.style.top = nb + 'px';
-      menu.style.left = r.left + 'px';
-      menu.style.minWidth = r.width + 'px';
-
-      // Position/size the hover bridge to remove any dead zone
-      ensureBridge();
-      bridge.style.top = (nb - 1) + 'px';          // overlap 1px for safety
-      const menuWidth = menu.offsetWidth || r.width;
-      bridge.style.left = r.left + 'px';
-      bridge.style.width = Math.max(r.width, menuWidth) + 'px';
-      bridge.style.height = '16px';                // a bit taller = no dead area
-    }
-
-    function openMenu() {
-      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
-
-      // Pre-position (prevents any flash/jump)
-      if (nav.classList.contains('scrolled')) {
-        positionMenuAndBridge();
+        ensureBridge();
+        const menuWidth = (menu.offsetWidth || r.width);
+        bridge.style.top = (nb - 1) + 'px';
+        bridge.style.left = r.left + 'px';
+        bridge.style.width = Math.max(r.width, menuWidth) + 'px';
+        bridge.style.height = '18px';
       }
 
-      // Next frame: actually reveal
-      requestAnimationFrame(() => {
-        nav.classList.add('dropdown-open');
-        positionMenuAndBridge();
+      function openMenu() {
+        if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+        requestAnimationFrame(() => {
+          nav.classList.add('dropdown-open');
+          positionMenuAndBridge();
+        });
+      }
+
+      function scheduleClose() {
+        if (closeTimer) return;
+        closeTimer = setTimeout(() => {
+          nav.classList.remove('dropdown-open');
+          closeTimer = null;
+          menu.style.removeProperty('position');
+          menu.style.removeProperty('top');
+          menu.style.removeProperty('left');
+          menu.style.removeProperty('min-width');
+          menu.style.removeProperty('z-index');
+          if (bridge && bridge.parentNode) bridge.parentNode.removeChild(bridge);
+          bridge = null;
+        }, 160);
+      }
+
+      function safeLeave(e) {
+        const to = e.relatedTarget;
+        if (to && (drop.contains(to) || menu.contains(to) || to === bridge)) return;
+        scheduleClose();
+      }
+
+      drop.addEventListener('mouseenter', openMenu);
+      menu.addEventListener('mouseenter', openMenu);
+      drop.addEventListener('mouseleave', safeLeave);
+      menu.addEventListener('mouseleave', safeLeave);
+
+      const reflow = () => positionMenuAndBridge();
+      window.addEventListener('resize', reflow, { passive: true });
+      window.addEventListener('scroll',  reflow, { passive: true });
+    })();
+  </script>
+
+  <script>
+  /* APIGANIA: restart video/slideshow when leaving & re-entering the section */
+  (function(){
+    const sources = [
+      "media/apigania_fast/Apigania_LivingRoom_f_1_1400.webp",
+      "media/apigania_fast/Apigania_LivingRoom_f_2_1400.webp",
+      "media/apigania_fast/Apigania_LivingRoom_f_3_1400.webp",
+      "media/apigania_fast/Apigania_Outdoor_f_1_1400.webp",
+      "media/apigania_fast/Apigania_Outdoor_f_2_1400.webp",
+      "media/apigania_fast/Apigania_Outdoor_f_3_1400.webp",
+      "media/apigania_fast/Apigania_Kichen_f_1_1400.webp",
+      "media/apigania_fast/Apigania_Kichen_f_2_1400.webp",
+      "media/apigania_fast/Apigania_Kichen_f_3_1400.webp",
+      "media/apigania_fast/Apigania_MainBedroom_f_1_1400.webp",
+      "media/apigania_fast/Apigania_MainBedroom_f_2_1400.webp",
+      "media/apigania_fast/Apigania_MainBedroom_f_3_1400.webp",
+      "media/apigania_fast/Apigani_SecondBedroom_f_1_1400.webp",
+      "media/apigania_fast/Apigani_SecondBedroom_f_2_1400.webp",
+      "media/apigania_fast/Apigani_SecondBedroom_f_3_1400.webp",
+      "media/apigania_fast/Apigania_Bathroom_f_1_1400.webp",
+      "media/apigania_fast/Apigania_Bathroom_f_2_1400.webp",
+      "media/apigania_fast/Apigania_Bathroom_f_3_1400.webp"
+    ];
+
+    const rotator = document.getElementById('apigania-rotator');
+    const video   = document.getElementById('apigania-video');
+    const a       = document.getElementById('apigania-a');
+    const b       = document.getElementById('apigania-b');
+
+    if (!rotator || !video || !a || !b) return;
+
+    const prevBtn    = rotator.querySelector('.btn.prev');
+    const nextBtn    = rotator.querySelector('.btn.next');
+    const toggleBtn  = rotator.querySelector('.btn.toggle');
+    const icoPause   = toggleBtn.querySelector('.ico-pause');
+    const icoPlay    = toggleBtn.querySelector('.ico-play');
+
+    sources.forEach(src => { const im = new Image(); im.src = src; });
+
+    let idx = 2;
+    let topIsA = true;
+    const HOLD_MS = 1500;
+    let slideTimer = null;
+    let safetyTimer = null;
+    let startedVideo = false;
+    let startedSlides = false;
+    let paused = false;
+
+    function clearTimers() {
+      if (slideTimer) { clearTimeout(slideTimer); slideTimer = null; }
+      if (safetyTimer) { clearTimeout(safetyTimer); safetyTimer = null; }
+    }
+
+    function setPaused(p){
+      paused = p;
+      if (startedSlides) {
+        icoPause.style.display = paused ? 'none' : 'inline';
+        icoPlay.style.display  = paused ? 'inline' : 'none';
+        toggleBtn.setAttribute('aria-label', paused ? 'Play' : 'Pause');
+        toggleBtn.title = paused ? 'Play' : 'Pause';
+      } else {
+        const isVideoPaused = video.paused;
+        icoPause.style.display = isVideoPaused ? 'none' : 'inline';
+        icoPlay.style.display  = isVideoPaused ? 'inline' : 'none';
+        toggleBtn.setAttribute('aria-label', isVideoPaused ? 'Play' : 'Pause');
+        toggleBtn.title = isVideoPaused ? 'Play' : 'Pause';
+      }
+    }
+
+    function whenDecodable(img){
+      const p = (img.decode ? img.decode() : Promise.resolve());
+      return p.catch(()=>{});
+    }
+
+    function showInitialFrames(){
+      a.classList.remove('standby');
+      b.classList.remove('standby');
+      a.classList.add('is-top');
+      b.classList.remove('is-top');
+      topIsA = true;
+      idx = 2;
+    }
+
+    function scheduleNext(){
+      if (!paused) slideTimer = setTimeout(nextFrame, HOLD_MS);
+    }
+
+    function nextFrame(){
+      const top = topIsA ? a : b;
+      const bottom = topIsA ? b : a;
+
+      bottom.src = sources[idx];
+      idx = (idx + 1) % sources.length;
+
+      whenDecodable(bottom).then(() => {
+        requestAnimationFrame(() => {
+          top.classList.remove('is-top');
+          requestAnimationFrame(() => {
+            bottom.classList.add('is-top');
+            topIsA = !topIsA;
+            scheduleNext();
+          });
+        });
       });
     }
 
-    function scheduleClose() {
-      if (closeTimer) return;
-      closeTimer = setTimeout(() => {
-        nav.classList.remove('dropdown-open');
-        closeTimer = null;
-        // Clean up after close (prevents mid-hover snaps)
-        menu.style.removeProperty('top');
-        menu.style.removeProperty('left');
-        menu.style.removeProperty('min-width');
-        if (bridge && bridge.parentNode) bridge.parentNode.removeChild(bridge);
-        bridge = null;
-      }, 200); // slightly longer grace for slow movements
+    function startSlideshow(){
+      startedSlides = true;
+      rotator.classList.add('slideshow');
+      showInitialFrames();
+      video.classList.add('hidden');
+      setPaused(false);
+      scheduleNext();
     }
 
-    function safeLeave(e) {
-      const to = e.relatedTarget;
-      if (to && (drop.contains(to) || menu.contains(to) || to === bridge)) return;
-      scheduleClose();
+    function beginAfterVideo(){
+      if (startedSlides) return;
+      clearTimers();
+      startSlideshow();
     }
 
-    // Open on entering either the toggle or the menu
-    drop.addEventListener('mouseenter', openMenu);
-    menu.addEventListener('mouseenter', openMenu);
+    function armSafetyFallback(){
+      const rate = video.playbackRate || 1;
+      const dur  = (isFinite(video.duration) && video.duration > 0) ? video.duration : 30;
+      const budget = (dur / rate) * 1000 + 1200;
+      safetyTimer = setTimeout(() => { if (!startedSlides) beginAfterVideo(); }, budget);
+    }
 
-    // Close (delayed) when leaving both
-    drop.addEventListener('mouseleave', safeLeave);
-    menu.addEventListener('mouseleave', safeLeave);
+    function resetToBeginning(){
+      clearTimers();
+      startedVideo  = false;
+      startedSlides = false;
+      paused        = false;
+      topIsA        = true;
+      idx           = 2;
 
-    // Keep aligned while open on resize/scroll (handles sticky offset changes)
-    const reflow = () => positionMenuAndBridge();
-    window.addEventListener('resize', reflow, { passive: true });
-    window.addEventListener('scroll',  reflow, { passive: true });
+      a.classList.add('standby');  a.classList.remove('is-top');
+      b.classList.add('standby');  b.classList.remove('is-top');
+
+      rotator.classList.remove('slideshow');
+
+      video.classList.remove('hidden');
+      try { video.pause(); } catch(e){}
+      try { video.currentTime = 0; } catch(e){}
+      video.playbackRate = 0.5;
+
+      icoPause.style.display = 'inline';
+      icoPlay.style.display  = 'none';
+      toggleBtn.setAttribute('aria-label', 'Pause');
+      toggleBtn.title = 'Pause';
+    }
+
+    const io = new IntersectionObserver((entries) => {
+      const e = entries[0];
+      if (e.intersectionRatio < 0.2) {
+        resetToBeginning();
+        return;
+      }
+      if (e.isIntersecting && e.intersectionRatio >= 0.95 && !startedVideo) {
+        startedVideo = true;
+        video.playbackRate = 0.5;
+        video.addEventListener('loadedmetadata', () => {
+          video.playbackRate = 0.5;
+          armSafetyFallback();
+          setPaused(false);
+        }, { once: true });
+
+        video.play().then(armSafetyFallback).catch(beginAfterVideo);
+      }
+    }, { threshold: [0, 0.2, 0.95, 1] });
+
+    io.observe(rotator);
+
+    video.addEventListener('ended', beginAfterVideo);
+    video.addEventListener('error', beginAfterVideo);
+    video.addEventListener('timeupdate', () => {
+      if (isFinite(video.duration) && video.duration > 0 &&
+          (video.duration - video.currentTime) <= 0.05) {
+        beginAfterVideo();
+      }
+    });
+
+    prevBtn.addEventListener('click', () => {
+      clearTimers();
+      if (!startedSlides) beginAfterVideo();
+      setPaused(true);
+      const top = topIsA ? a : b;
+      const bottom = topIsA ? b : a;
+      idx = (idx - 2 + sources.length) % sources.length;
+      bottom.src = sources[idx];
+      idx = (idx + 1) % sources.length;
+      whenDecodable(bottom).then(() => {
+        top.classList.remove('is-top');
+        bottom.classList.add('is-top');
+        topIsA = !topIsA;
+        setPaused(false);
+        scheduleNext();
+      });
+    });
+
+    nextBtn.addEventListener('click', () => {
+      clearTimers();
+      if (!startedSlides) beginAfterVideo();
+      setPaused(true);
+      const top = topIsA ? a : b;
+      const bottom = topIsA ? b : a;
+      bottom.src = sources[idx];
+      idx = (idx + 1) % sources.length;
+      whenDecodable(bottom).then(() => {
+        top.classList.remove('is-top');
+        bottom.classList.add('is-top');
+        topIsA = !topIsA;
+        setPaused(false);
+        scheduleNext();
+      });
+    });
+
+    toggleBtn.addEventListener('click', () => {
+      if (!startedSlides) {
+        if (video.paused) {
+          video.playbackRate = 0.5;
+          video.play().catch(()=>{});
+        } else {
+          video.pause();
+        }
+        return;
+      }
+      setPaused(!paused);
+      if (!paused) scheduleNext();
+      else clearTimers();
+    });
   })();
-</script>
-<script>
-  (function () {
-    const cb = document.getElementById('nav-toggle');
-    if (!cb) return;
+  </script>
 
-    function syncMenu() {
-      document.body.classList.toggle('menu-open', cb.checked);
-    }
-
-    window.closeMenu = function () {
-      cb.checked = false;
-      syncMenu();
-    };
-
-    cb.addEventListener('change', syncMenu);
-    // Ensure correct state on load
-    syncMenu();
-  })();
-</script>
-
-
-
-  <!-- Footer moved to bottom -->
-  <footer class="footer-bottom">
+  <footer class="footer-bottom snap">
     © <span id="year"></span> Tinos Treasures. All rights reserved.
   </footer>
+
 </body>
 </html>

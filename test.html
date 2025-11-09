@@ -308,7 +308,7 @@
     #intro { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; flex-direction: column;
       justify-content: center; align-items: center; z-index: 99999; animation: introFadeOut 3.5s ease forwards; }
     #intro img { width: clamp(140px, 15vw, 220px); filter: brightness(0) invert(1); animation: fadeInOut 3.5s ease forwards; }
-    #intro h1 { font-family: 'Cycladic', sans-serif; font-size: clamp(28px, 5vw, 48px); color: #fff; margin-top: 20px; animation: fadeInOut 3.5s ease forwards; }
+    #intro h1 { font-size: clamp(28px, 5vw, 48px); color: #fff; margin-top: 20px; animation: fadeInOut 3.5s ease forwards; }
     @keyframes fadeInOut { 0%{opacity:0;} 20%{opacity:1;} 60%{opacity:1;} 100%{opacity:0;} }
     @keyframes introFadeOut { 0%{opacity:1;visibility:visible;} 90%{opacity:0;visibility:visible;} 100%{opacity:0;visibility:hidden;display:none;} }
     body.intro-active #bg-video { opacity: 0 !important; }
@@ -503,6 +503,23 @@
       opacity: 1;
       transform: none;
     }
+
+    /* ===== Mobile menu controller additions ===== */
+    body.menu-open {
+      overflow: hidden;
+      height: 100svh;
+      touch-action: none;
+    }
+    .menu-backdrop {
+      position: fixed;
+      inset: var(--nav-h) 0 0 0;
+      background: rgba(0,0,0,0.35);
+      -webkit-backdrop-filter: blur(2px);
+      backdrop-filter: blur(2px);
+      z-index: 10000; /* just under .nav-mobile (10001) */
+      display: none;
+    }
+    body.menu-open .menu-backdrop { display: block; }
   </style>
 </head>
 
@@ -554,16 +571,16 @@
   <div id="nav-sentinel" style="position:fixed;top:0;left:0;width:0;height:0;pointer-events:none;"></div>
 
   <div class="nav-mobile">
-    <a href="#home" onclick="document.getElementById('nav-toggle').checked=false;">Home</a>
-    <a href="#apartments" onclick="document.getElementById('nav-toggle').checked=false;">Apartments</a>
+    <a href="#home">Home</a>
+    <a href="#apartments">Apartments</a>
     <div class="mobile-sub">
-      <a href="#apigania" onclick="document.getElementById('nav-toggle').checked=false;">— Apigania</a>
-      <a href="#vathi" onclick="document.getElementById('nav-toggle').checked=false;">— Vathi</a>
-      <a href="#livada" onclick="document.getElementById('nav-toggle').checked=false;">— Livada</a>
-      <a href="#ammos" onclick="document.getElementById('nav-toggle').checked=false;">— Ammos</a>
+      <a href="#apigania">— Apigania</a>
+      <a href="#vathi">— Vathi</a>
+      <a href="#livada">— Livada</a>
+      <a href="#ammos">— Ammos</a>
     </div>
-    <a href="#location" onclick="document.getElementById('nav-toggle').checked=false;">The Location</a>
-    <a href="#contact" onclick="document.getElementById('nav-toggle').checked=false;">Contact Us</a>
+    <a href="#location">The Location</a>
+    <a href="#contact">Contact Us</a>
     <a href="https://tinostreasures.reserve-online.net/" target="_blank" rel="noopener">Book now!</a>
   </div>
 
@@ -783,6 +800,52 @@
       init();
       window.addEventListener('load', init, { once: true });
     }
+
+    /* ===== Mobile menu controller (NEW) ===== */
+    const navToggle = document.getElementById('nav-toggle');
+    const navMobile = document.querySelector('.nav-mobile');
+
+    // Create a backdrop behind the menu so tapping outside closes it
+    const backdrop = document.createElement('div');
+    backdrop.className = 'menu-backdrop';
+    document.body.appendChild(backdrop);
+
+    function applyMenuState(checked) {
+      document.body.classList.toggle('menu-open', checked);
+    }
+
+    if (navToggle) {
+      navToggle.addEventListener('change', () => {
+        applyMenuState(navToggle.checked);
+      });
+    }
+
+    // Close menu when any mobile link is tapped
+    if (navMobile) {
+      navMobile.addEventListener('click', (e) => {
+        const a = e.target.closest('a[href]');
+        if (!a) return;
+        if (navToggle) navToggle.checked = false;
+        applyMenuState(false);
+      });
+    }
+
+    // Close menu when backdrop is tapped
+    backdrop.addEventListener('click', () => {
+      if (navToggle) navToggle.checked = false;
+      applyMenuState(false);
+    });
+
+    // Reset menu state when switching to desktop widths
+    const mq = window.matchMedia('(min-width: 901px)');
+    function handleMQ(e){
+      if (e.matches) {
+        if (navToggle) navToggle.checked = false;
+        applyMenuState(false);
+      }
+    }
+    mq.addEventListener ? mq.addEventListener('change', handleMQ) : mq.addListener(handleMQ);
+    handleMQ(mq);
   });
   </script>
 

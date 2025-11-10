@@ -583,6 +583,57 @@
     padding-top: calc(var(--nav-h) + 8px); /* small breathing room */
   }
 }
+/* --- CRITICAL FIX: allow the rotator to appear on mobile --- */
+@media (max-width: 900px) {
+  .apt.apt-section {
+    /* kill the desktop fixed-height box */
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+
+    /* let content flow; don't clip the rotator below */
+    overflow: visible !important;
+
+    /* keep our mobile stacking */
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+  }
+
+  /* text block spacing under fixed navbar */
+  .apt.apt-section .apt-text {
+    order: 1;
+    transform: none !important;
+    padding-top: calc(var(--nav-h) + 8px) !important;
+    padding-right: clamp(18px, 6vw, 40px);
+    padding-bottom: clamp(18px, 6vw, 40px);
+    padding-left: clamp(18px, 6vw, 40px);
+    text-align: left;
+  }
+
+  /* rotator fills the viewport and sits below the text */
+  .apt.apt-section .rotator,
+  .apt.apt-section > img {
+    order: 2;
+    height: 100svh !important;
+    min-height: 100svh !important;
+    max-height: 100svh !important;
+    transform: none !important;
+    background: #000; /* clear visual panel while media initializes */
+  }
+
+  @supports (height: 100dvh) {
+    .apt.apt-section .rotator,
+    .apt.apt-section > img {
+      height: 100dvh !important;
+      min-height: 100dvh !important;
+      max-height: 100dvh !important;
+    }
+  }
+}
+
+/* smooth anchor jumps so titles don't hide under the navbar */
+.apt.apt-section { scroll-margin-top: var(--nav-h); }
 
   </style>
 </head>

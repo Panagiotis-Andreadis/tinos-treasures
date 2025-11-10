@@ -521,6 +521,57 @@
   .hamburger span { top: 50%; transform: translateY(-50%); } /* middle bar centered */
   .hamburger::after { bottom: 0; }
 }
+/* ================================
+   APARTMENTS: MOBILE FLOW & SIZING
+   title/text FIRST, media BELOW at 100vh
+   ================================ */
+@media (max-width: 900px) {
+  /* stack sections vertically (text first, media second) */
+  .apt.apt-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    min-height: auto;              /* let content define height */
+  }
+
+  /* text comes first; normal height & no Y-shift */
+  .apt.apt-section .apt-text {
+    order: 1;
+    height: auto;
+    transform: none !important;
+    padding: clamp(18px, 6vw, 40px);
+    text-align: left;
+  }
+
+  /* media block (rotator OR single image) comes second and fills viewport */
+  .apt.apt-section .rotator,
+  .apt.apt-section > img {
+    order: 2;
+    height: 100svh;                /* mobile viewport height */
+    min-height: 100svh;
+    max-height: 100svh;
+    transform: none !important;    /* don't offset by navbar on mobile */
+  }
+
+  /* prefer dynamic viewport unit when supported */
+  @supports (height: 100dvh) {
+    .apt.apt-section .rotator,
+    .apt.apt-section > img {
+      height: 100dvh;
+      min-height: 100dvh;
+      max-height: 100dvh;
+    }
+  }
+
+  /* ensure the rotator media stays perfectly covered inside its box */
+  .apt.apt-section .rotator img,
+  .apt.apt-section .rotator video {
+    height: 100% !important;
+    width: auto !important;
+    max-height: 100% !important;
+    max-width: none !important;
+  }
+}
 
   </style>
 </head>

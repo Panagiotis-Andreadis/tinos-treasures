@@ -469,7 +469,58 @@
     touch-action: auto !important;
   }
 }
+/* ======================================
+   MOBILE LANDSCAPE FONT BALANCING
+   ====================================== */
+@media (max-width: 900px) and (orientation: landscape) {
+  .nav-mobile a {
+    font-size: 14px !important;   /* slightly smaller text */
+    padding: 8px 0;
+  }
+  .nav-mobile {
+    padding: 10px 16px;
+  }
+}
 
+/* ======================================
+   PERFECTLY CENTER HAMBURGER ICON IN NAVBAR
+   ====================================== */
+@media (max-width: 900px) {
+  /* The wrapper label that triggers the checkbox */
+  label[for="nav-toggle"] {
+    display: flex;
+    align-items: center;           /* vertical centering */
+    justify-content: center;       /* horizontally balanced */
+    height: var(--nav-h);          /* same as navbar (64px) */
+    margin-left: auto;             /* push to right */
+    padding: 0;                    /* remove extra offset */
+    cursor: pointer;
+  }
+
+  /* The hamburger itself */
+  .hamburger {
+    display: block !important;
+    position: relative;
+    width: 28px;
+    height: 22px;
+  }
+
+  /* Perfect centering of the bars */
+  .hamburger span,
+  .hamburger::before,
+  .hamburger::after {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #fff;             /* white bars */
+    transition: transform 250ms ease, opacity 200ms ease;
+  }
+
+  .hamburger::before { top: 0; }
+  .hamburger span { top: 50%; transform: translateY(-50%); } /* middle bar centered */
+  .hamburger::after { bottom: 0; }
+}
 
   </style>
 </head>

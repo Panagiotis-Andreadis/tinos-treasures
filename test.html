@@ -379,6 +379,57 @@
       .nav-dropdown-menu a { font-size:16px; border-bottom:1px solid rgba(255,255,255,0.1); }
       .nav-dropdown-menu a:last-child { border-bottom:none; }
     }
+/* =========================
+   MOBILE: classic header (logo left, hamburger right)
+   ========================= */
+@media (max-width: 900px) {
+  /* hide desktop nav parts */
+  .nav-center,
+  .nav-right {
+    display: none !important;
+  }
+
+  /* show hamburger */
+  .hamburger {
+    display: block !important;
+    width: 28px;
+    height: 22px;
+  }
+
+  /* keep header tidy */
+  .nav-inner {
+    padding-inline: 16px;
+    gap: 12px;
+  }
+
+  /* brand stays left, hamburger on the right */
+  .nav-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  /* make the label (hamburger button) align to the far right */
+  label[for="nav-toggle"] {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 6px;
+  }
+
+  /* mobile drawer already exists; just ensure it sits below the navbar */
+  .nav-mobile {
+    top: var(--nav-h); /* 64px */
+    border-top: 1px solid var(--glass-border);
+  }
+
+  /* prevent background scroll when menu open */
+  body.menu-open {
+    overflow: hidden;
+    touch-action: none;
+  }
+}
+
   </style>
 </head>
 

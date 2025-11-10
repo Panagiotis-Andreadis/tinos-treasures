@@ -429,6 +429,47 @@
     touch-action: none;
   }
 }
+/* ======================================
+   MOBILE TWEAKS: white menu, centered icon,
+   and allow page scroll while open
+   ====================================== */
+@media (max-width: 900px) {
+  /* 1) White links inside the mobile drawer */
+  .nav-mobile {
+    background: rgba(0,0,0,0.35);
+    color: #fff !important;
+  }
+  .nav-mobile a {
+    color: #fff !important;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    text-decoration: none;
+  }
+  .nav-mobile a:last-child { border-bottom: none; }
+
+  /* 2) Center the hamburger vertically in the navbar */
+  label[for="nav-toggle"] {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;     /* <-- vertical centering */
+    justify-content: center;
+    height: var(--nav-h);    /* match navbar height */
+    padding: 0 6px;
+    cursor: pointer;
+  }
+  .hamburger {
+    display: block !important;
+    width: 28px;
+    height: 22px;
+    position: relative;
+  }
+
+  /* 3) Keep page scroll enabled when menu is open */
+  body.menu-open {
+    overflow: auto !important;
+    touch-action: auto !important;
+  }
+}
+
 
   </style>
 </head>

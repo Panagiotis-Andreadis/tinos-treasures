@@ -526,13 +526,15 @@
    title/text FIRST, media BELOW at 100vh
    ================================ */
 @media (max-width: 900px) {
+  /* stack sections vertically (text first, media second) */
   .apt.apt-section {
     display: flex;
     flex-direction: column;
     gap: 0;
-    min-height: auto;
+    min-height: auto;              /* let content define height */
   }
 
+  /* text comes first; normal height & no Y-shift */
   .apt.apt-section .apt-text {
     order: 1;
     height: auto;
@@ -541,15 +543,17 @@
     text-align: left;
   }
 
+  /* media block (rotator OR single image) comes second and fills viewport */
   .apt.apt-section .rotator,
   .apt.apt-section > img {
     order: 2;
-    height: 100svh;
+    height: 100svh;                /* mobile viewport height */
     min-height: 100svh;
     max-height: 100svh;
-    transform: none !important;
+    transform: none !important;    /* don't offset by navbar on mobile */
   }
 
+  /* prefer dynamic viewport unit when supported */
   @supports (height: 100dvh) {
     .apt.apt-section .rotator,
     .apt.apt-section > img {
@@ -559,6 +563,7 @@
     }
   }
 
+  /* ensure the rotator media stays perfectly covered inside its box */
   .apt.apt-section .rotator img,
   .apt.apt-section .rotator video {
     height: 100% !important;
@@ -567,26 +572,35 @@
     max-width: none !important;
   }
 }
+/* Keep each apartment subsection clear of the fixed navbar */
 .apt.apt-section {
-  scroll-margin-top: var(--nav-h);
+  scroll-margin-top: var(--nav-h); /* when jumping via #apigania etc. */
 }
 
+/* Mobile: push the text block down by the navbar height */
 @media (max-width: 900px) {
   .apt.apt-section .apt-text {
-    padding-top: calc(var(--nav-h) + 8px);
+    padding-top: calc(var(--nav-h) + 8px); /* small breathing room */
   }
 }
+/* --- CRITICAL FIX: allow the rotator to appear on mobile --- */
 @media (max-width: 900px) {
   .apt.apt-section {
+    /* kill the desktop fixed-height box */
     height: auto !important;
     min-height: 0 !important;
     max-height: none !important;
+
+    /* let content flow; don't clip the rotator below */
     overflow: visible !important;
+
+    /* keep our mobile stacking */
     display: flex !important;
     flex-direction: column !important;
     gap: 0 !important;
   }
 
+  /* text block spacing under fixed navbar */
   .apt.apt-section .apt-text {
     order: 1;
     transform: none !important;
@@ -597,6 +611,7 @@
     text-align: left;
   }
 
+  /* rotator fills the viewport and sits below the text */
   .apt.apt-section .rotator,
   .apt.apt-section > img {
     order: 2;
@@ -604,7 +619,7 @@
     min-height: 100svh !important;
     max-height: 100svh !important;
     transform: none !important;
-    background: #000;
+    background: #000; /* clear visual panel while media initializes */
   }
 
   @supports (height: 100dvh) {
@@ -617,11 +632,14 @@
   }
 }
 
+/* smooth anchor jumps so titles don't hide under the navbar */
 .apt.apt-section { scroll-margin-top: var(--nav-h); }
+/* DESKTOP: remove the extra offset that created the white gap */
 @media (min-width: 901px) {
   .apt.apt-section .apt-text,
   .apt.apt-section .rotator,
   .apt.apt-section > img {
+    /* fill the full viewport and DON'T push down */
     height: 100svh !important;
     transform: none !important;
   }
@@ -636,7 +654,9 @@
     }
   }
 }
+/* ===== DESKTOP: remove gap above Apigania and keep video flush under glass navbar ===== */
 @media (min-width: 901px) {
+  /* 1) Kill the old offset and fill viewport */
   .apt.apt-section .rotator,
   .apt.apt-section > img,
   .apt.apt-section .apt-text {
@@ -644,12 +664,15 @@
     transform: none !important;
   }
 
+  /* 2) The section itself shouldn't paint white behind the navbar */
   .apt.apt-section {
     background: transparent !important;
   }
 
+  /* 3) Only the text column paints white, and it starts BELOW the navbar */
   .apt.apt-section .apt-text {
     background: #fff;
+    /* top padding = navbar height + your original inner padding */
     padding-top: calc(var(--nav-h) + clamp(16px, 3vw, 48px)) !important;
     padding-right: clamp(16px, 3vw, 48px);
     padding-bottom: clamp(16px, 3vw, 48px);
@@ -657,6 +680,7 @@
   }
 }
 
+/* If your browser supports dynamic viewport units, prefer them for perfect fit */
 @supports (height: 100dvh) {
   @media (min-width: 901px) {
     .apt.apt-section .rotator,
@@ -666,13 +690,17 @@
     }
   }
 }
+/* ===== Desktop: remove the white gap under the navbar in Apartments ===== */
 @media (min-width: 901px) {
+  /* Parent section & each apt section shouldn't paint white */
   #apartments.section { background: transparent !important; }
   .apt.apt-section   { background: transparent !important; }
 
+  /* Kill padding + hide the H2 only on desktop (keep it on mobile) */
   #apartments .wrap { padding: 0 !important; }
   #apartments .wrap > h2 { display: none !important; }
 
+  /* Make only the text column white, and start it below the navbar */
   .apt.apt-section .apt-text {
     background: #fff;
     padding-top: calc(var(--nav-h) + clamp(16px, 3vw, 48px)) !important;
@@ -681,16 +709,19 @@
     padding-left: clamp(16px, 3vw, 48px);
   }
 
+  /* Ensure media panel is flush and black behind the glass nav */
   .apt.apt-section .rotator,
   .apt.apt-section > img {
-    background: #000;
+    background: #000;             /* avoids any flash of white */
     height: 100vh !important;
-    transform: none !important;
+    transform: none !important;   /* no push-down */
   }
 
+  /* Make sure the first apt starts immediately */
   #apigania.apt-section { margin-top: 0 !important; }
 }
 
+/* Prefer dynamic viewport when available */
 @supports (height: 100dvh) {
   @media (min-width: 901px) {
     .apt.apt-section .rotator,
@@ -700,6 +731,10 @@
     }
   }
 }
+
+/* ==== NEW: micro-spacing for apt titles (applies on all sizes) ==== */
+.apt .apt-text h2 { margin: 0 0 6px; }
+.apt .apt-text h3 { margin: 0 0 10px; }
 
   </style>
 </head>
@@ -781,7 +816,7 @@
   <!-- APARTMENTS -->
   <section id="apartments" class="section anchor-offset">
     <div class="wrap">
-      <!-- removed global Apartments H2 -->
+      <!-- REMOVED global <h2> -->
 
       <!-- APIGANIA -->
       <div id="apigania" class="apt apt-section snap">
@@ -801,7 +836,7 @@
           </div>
         </div>
         <div class="apt-text">
-          <h2 style="color:#000">Apartments</h2>
+          <h2>Apartments</h2>
           <h3>Apigania</h3>
           <p>Spacious 70sqm seaside apartment with serene tones, curated decor, and hotel-like comforts perfect for families or couples.</p>
         </div>
@@ -810,7 +845,7 @@
       <!-- VATHI -->
       <div id="vathi" class="apt apt-section snap">
         <div class="apt-text">
-          <h2 style="color:#000">Apartments</h2>
+          <h2>Apartments</h2>
           <h3>Vathi</h3>
           <p>Bright, air-filled interiors with soft textures and a calming palette designed for slow mornings and sunset views.</p>
         </div>
@@ -821,7 +856,7 @@
       <div id="livada" class="apt apt-section snap">
         <img src="media/livada/livada1.jpg" alt="Livada apartment placeholder">
         <div class="apt-text">
-          <h2 style="color:#000">Apartments</h2>
+          <h2>Apartments</h2>
           <h3>Livada</h3>
           <p>Cycladic simplicity meets comfort: thoughtful details, generous living space, and a relaxing ambience near the bay.</p>
         </div>
@@ -830,7 +865,7 @@
       <!-- AMMOS -->
       <div id="ammos" class="apt apt-section snap">
         <div class="apt-text">
-          <h2 style="color:#000">Apartments</h2>
+          <h2>Apartments</h2>
           <h3>Ammos</h3>
           <p>Minimal yet warm retreat with crafted finishes and a layout tailored for long stays and memorable gatherings.</p>
         </div>
@@ -872,17 +907,17 @@
         </a>
         <a class="google" href="https://www.google.com/search?q=Tinos+Treasures+Apart-Hotel" target="_blank" rel="noopener noreferrer" aria-label="Google Search">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M21.6 12.23c0-.64-.06-1.26-.17-1.86H12v3.52h5.4a4.62 4.62 0 0 1-2 3.03v2.5h3.2c1.87-1.72 2.96-4.25 2.96-7.19zM12 22c2.7 0 4.96-.9 6.61-2.43l-3.2-2.5c-.9.6-2.07.95-3.41.95-2.62 0-4.83-1.77-5.62-4.15H3.06v2.6A9.99 9.99 0 0 0 12 22zm-5.62-6.13A5.99 5.99 0  0 1 6 8.13V5.5H3.06A10 10 0  0 0 2 12c0 1.61.39 3.13 1.06 4.47l3.32-2.6zM12 4.02c1.47 0 2.8.5 3.85 1.48l2.88-2.88A9.98 9.98 0  0 0 12 2C8.06 2 4.68 4.23 3.06 7.53L6 10.13A6 6 0  0 1 12 4.02z"/>
+            <path d="M21.6 12.23c0-.64-.06-1.26-.17-1.86H12v3.52h5.4a4.62 4.62 0 0 1-2 3.03v2.5h3.2c1.87-1.72 2.96-4.25 2.96-7.19zM12 22c2.7 0 4.96-.9 6.61-2.43l-3.2-2.5c-.9.6-2.07.95-3.41.95-2.62 0-4.83-1.77-5.62-4.15H3.06v2.6A9.99 9.99 0  0 0 12 22zm-5.62-6.13A5.99 5.99 0  0 1 6 8.13V5.5H3.06A10 10 0  0 0 2 12c0 1.61.39 3.13 1.06 4.47l3.32-2.6zM12 4.02c1.47 0 2.8.5 3.85 1.48l2.88-2.88A9.98 9.98 0  0 0 12 2C8.06 2 4.68 4.23 3.06 7.53L6 10.13A6 6 0  0 1 12 4.02z"/>
           </svg>
         </a>
         <a class="youtube" href="https://www.youtube.com/@tinostreasures" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill-rule="evenodd" clip-rule="evenodd">
-            <path d="M21.6 7.2a2.6 2.6 0  0 0-1.83-1.84C18.3 5 12 5 12 5s-6.3 0-7.77.36A2.6 2.6 0  0 0 2.4 7.2 27.9 27.9 0  0 0 2 12c0 1.62.12 3.18.4 4.8.23.86.92 1.54 1.83 1.84C5.7 19 12 19 12 19s6.3 0 7.77-.36c.91-.3 1.6-.98 1.83-1.84.28-1.62.4-3.18.4-4.8 0-1.62-.12-3.18-.4-4.8ZM10 15V9l5.5 3-5.5 3Z"/>
+            <path d="M21.6 7.2a2.6 2.6 0  0 0-1.83-1.84C18.3 5 12 5 12 5s-6.3 0-7.77.36A2.6 2.6 0  0 0 2.4 7.2 27.9 27.9 0  0 0 2 12c0 1.62.12 3.18.4 4.8.23.86.92 1.54 1.83 1.84C5.7 19 12 19 12 19s6.3 0  7.77-.36c.91-.3 1.6-.98 1.83-1.84.28-1.62.4-3.18.4-4.8 0-1.62-.12-3.18-.4-4.8ZM10 15V9l5.5 3-5.5 3Z"/>
           </svg>
         </a>
         <a class="maps" href="https://maps.app.goo.gl/VVLBkF2q8XZqKbU38" target="_blank" rel="noopener noreferrer" aria-label="Google Maps">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill-rule="evenodd" clip-rule="evenodd">
-            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7Zm0 9.5A2.5 2.5 0 1 1 14.5 9 2.5 2.5 0  0 1 12 11.5Z"/>
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7Zm0 9.5A2.5 2.5 0  1 1 14.5 9 2.5 2.5 0  0 1 12 11.5Z"/>
           </svg>
         </a>
       </div>
@@ -932,13 +967,16 @@
 
   if (videoBg) {
     try { videoBg.pause(); } catch {}
+    // Try to hard-seek to 0 even before metadata; if it throws, we retry later
     try { videoBg.currentTime = 0; } catch {}
 
+    // If we couldn't seek yet, do it as soon as metadata is ready
     const onMeta = () => {
       try { videoBg.currentTime = 0; } catch {}
     };
     videoBg.addEventListener('loadedmetadata', onMeta, { once: true });
 
+    // Fallback poster on error
     videoBg.addEventListener('error', () => {
       document.body.classList.add('no-video');
       videoBg.setAttribute('poster', 'poster.jpg');
@@ -948,24 +986,31 @@
   function startFromZeroAndPlay() {
     if (!videoBg) return;
 
+    // Ensure at t=0 before starting, even on Safari/iOS
     const seekToZero = () => new Promise((resolve) => {
       let done = false;
       const finish = () => { if (!done) { done = true; resolve(); } };
 
+      // Try immediate seek
       try { videoBg.currentTime = 0; } catch {}
+      // If already near zero, continue
       if (videoBg.currentTime < 0.05) return finish();
 
+      // Wait for the seek to complete
       const onSeeked = () => { videoBg.removeEventListener('seeked', onSeeked); finish(); };
       videoBg.addEventListener('seeked', onSeeked);
+      // Safety timeout in case 'seeked' doesn't fire
       setTimeout(finish, 250);
     });
 
     seekToZero().then(() => {
+      // Now play; once it starts, reveal video
       videoBg.play()
         .then(() => {
           videoBg.classList.add('is-ready');
         })
         .catch(() => {
+          // Autoplay should work (muted), but if not, show poster
           document.body.classList.add('no-video');
           videoBg.setAttribute('poster', 'poster.jpg');
           videoBg.classList.add('is-ready');
@@ -973,10 +1018,12 @@
     });
   }
 
+  // End of intro timeline
   setTimeout(() => {
     if (intro) intro.style.display = 'none';
     document.body.classList.remove('intro-active');
 
+    // Show tagline and start hero video from the beginning
     tagline?.classList.add('visible');
     startFromZeroAndPlay();
   }, INTRO_MS);
@@ -1081,16 +1128,20 @@
         try{video.currentTime=0}catch(e){}
       }
 
+// Use more forgiving thresholds for mobile after layout change
 const io = new IntersectionObserver((entries) => {
   const e = entries[0];
 
+  // If scrolled away a lot, reset
   if (e.intersectionRatio < 0.15) {
     resetToBeginning();
     return;
   }
 
+  // Start video when at least 60% is visible (used to be 95%)
   if (e.isIntersecting && e.intersectionRatio >= 0.6) {
     video.play().catch(() => {
+      // If autoplay fails (mobile policy), fall back to slideshow immediately
       startSlideshow();
     });
   }
@@ -1128,25 +1179,3 @@ io.observe(rotator);
 
   <script>
     // Year stamp
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Pause the hero video while the footer is visible
-    (function(){
-      const video  = document.getElementById('bg-video');
-      const footer = document.querySelector('footer.footer-bottom');
-      if(!video || !footer) return;
-
-      const io = new IntersectionObserver(([e])=>{
-        if (e.isIntersecting) {
-          try { video.pause(); } catch {}
-        } else {
-          try { video.play(); } catch {}
-        }
-      }, { threshold: 0.6 });
-
-      io.observe(footer);
-    })();
-  </script>
-
-</body>
-</html>

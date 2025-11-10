@@ -572,6 +572,17 @@
     max-width: none !important;
   }
 }
+/* Keep each apartment subsection clear of the fixed navbar */
+.apt.apt-section {
+  scroll-margin-top: var(--nav-h); /* when jumping via #apigania etc. */
+}
+
+/* Mobile: push the text block down by the navbar height */
+@media (max-width: 900px) {
+  .apt.apt-section .apt-text {
+    padding-top: calc(var(--nav-h) + 8px); /* small breathing room */
+  }
+}
 
   </style>
 </head>
@@ -961,14 +972,26 @@
         try{video.currentTime=0}catch(e){}
       }
 
-      const io=new IntersectionObserver((entries)=>{
-        const e=entries[0];
-        if(e.intersectionRatio<0.2){ resetToBeginning(); return; }
-        if(e.isIntersecting && e.intersectionRatio>=0.95){
-          video.play().catch(()=>{ startSlideshow(); });
-        }
-      },{threshold:[0,0.2,0.95,1]});
-      io.observe(rotator);
+// Use more forgiving thresholds for mobile after layout change
+const io = new IntersectionObserver((entries) => {
+  const e = entries[0];
+
+  // If scrolled away a lot, reset
+  if (e.intersectionRatio < 0.15) {
+    resetToBeginning();
+    return;
+  }
+
+  // Start video when at least 60% is visible (used to be 95%)
+  if (e.isIntersecting && e.intersectionRatio >= 0.6) {
+    video.play().catch(() => {
+      // If autoplay fails (mobile policy), fall back to slideshow immediately
+      startSlideshow();
+    });
+  }
+}, { threshold: [0, 0.15, 0.6, 1] });
+io.observe(rotator);
+
 
       video.addEventListener('ended', startSlideshow, { once:true });
 

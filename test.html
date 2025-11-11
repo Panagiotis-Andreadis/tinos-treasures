@@ -39,8 +39,19 @@
     body.intro-active #bg-video{opacity:0!important}
 
     /* NAV */
-    .nav{position:fixed;top:0;left:0;right:0;height:64px;display:flex;align-items:center;z-index:9999;padding:0 16px;background:rgba(0,0,0,0.35);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--glass-border)}
-    .nav-inner{width:100%;display:flex;justify-content:space-between;align-items:center;max-width:none;padding:0 3vw}
+    .nav{
+      position:fixed;top:0;left:0;right:0;height:64px;
+      display:flex;align-items:center;z-index:9999;padding:0 16px;
+      background:rgba(0,0,0,0.35);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--glass-border);
+      /* fix: keep blur from painting into scrollbar gutter */
+      contain: paint;
+    }
+    .nav-inner{
+      width:100%;display:flex;justify-content:space-between;align-items:center;max-width:none;padding:0 3vw;
+      /* fix: avoid subpixel overflow from flex content */
+      overflow:hidden;min-width:0;
+    }
     .nav-logo{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:#000}
     .nav-logo img{width:34px;height:34px;object-fit:contain;filter:none}
     .nav-logo span{font-size:16px;letter-spacing:.06em;color:#000}
@@ -207,7 +218,6 @@
 
     /* ===== MOBILE: section grows, rotator stays 100vh ===== */
     @media (max-width:900px){
-      /* Let the entire apartment section expand */
       .apt.apt-section{
         height:auto !important;
         min-height:0 !important;
@@ -217,68 +227,31 @@
         flex-direction:column !important;
         gap:0 !important;
       }
-
-      /* Text fits content */
       .apt.apt-section .apt-text{
-        order:1 !important;
-        height:auto !important;
-        transform:none !important;
+        order:1 !important;height:auto !important;transform:none !important;
         padding-top:calc(var(--nav-h) + 8px) !important;
         padding-right:clamp(18px,6vw,40px) !important;
         padding-bottom:clamp(18px,6vw,40px) !important;
         padding-left:clamp(18px,6vw,40px) !important;
         text-align:left;
       }
-
-      /* Media panel is exactly one viewport high */
       .apt.apt-section .rotator,
       .apt.apt-section > img{
-        order:2 !important;
-        height:100svh !important;
-        min-height:100svh !important;
-        max-height:100svh !important;
-        transform:none !important;
-        background:#000;
+        order:2 !important;height:100svh !important;min-height:100svh !important;max-height:100svh !important;
+        transform:none !important;background:#000;
       }
       @supports (height:100dvh){
         .apt.apt-section .rotator,
         .apt.apt-section > img{
-          height:100dvh !important;
-          min-height:100dvh !important;
-          max-height:100dvh !important;
+          height:100dvh !important;min-height:100dvh !important;max-height:100dvh !important;
         }
       }
-
-      /* Ensure media covers the rotator box correctly */
       .apt.apt-section .rotator img,
       .apt.apt-section .rotator video{
-        height:100% !important;
-        width:auto !important;
-        max-height:100% !important;
-        max-width:none !important;
+        height:100% !important;width:auto !important;max-height:100% !important;max-width:none !important;
       }
-
-      /* RELAX snapping on the page to avoid skipping the apartments */
       html, body { scroll-snap-type: y proximity !important; }
     }
-
-    /* ===== NAVBAR overflow fix ===== */
-    .nav,
-    .nav-inner {
-      box-sizing: border-box;
-      max-width: 100vw;
-      overflow-x: hidden;
-    }
-    .nav-mobile {
-      box-sizing: border-box;
-      max-width: 100vw;
-      overflow-x: hidden;
-    }
-    /* keep page from creating horizontal scrollbars at any time */
-    body { overflow-x: hidden; }
-    /* optional: keep scrollbar width stable so blur never overlays it */
-    html { scrollbar-gutter: stable both-edges; }
-
   </style>
 </head>
 <body>
@@ -362,18 +335,11 @@
           <img id="apigania-b" alt="Apigania gallery image B" class="standby" src="media/apigania_fast/Apigania_LivingRoom_f_2_1400.webp">
           <div class="controls" aria-label="Gallery controls">
             <button class="btn prev"  type="button" aria-label="Previous" title="Previous">❮</button>
-            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause">
-              <span class="ico ico-pause">❚❚</span>
-              <span class="ico ico-play" style="display:none">▶</span>
-            </button>
+            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause"><span class="ico ico-pause">❚❚</span><span class="ico ico-play" style="display:none">▶</span></button>
             <button class="btn next"  type="button" aria-label="Next" title="Next">❯</button>
           </div>
         </div>
-        <div class="apt-text">
-          <h2>Apartments</h2>
-          <h3>Apigania</h3>
-          <p>Spacious 70sqm seaside apartment with serene tones, curated decor, and hotel-like comforts perfect for families or couples.</p>
-        </div>
+        <div class="apt-text"><h2>Apartments</h2><h3>Apigania</h3><p>Spacious 70sqm seaside apartment with serene tones, curated decor, and hotel-like comforts perfect for families or couples.</p></div>
       </div>
 
       <!-- VATHI -->
@@ -386,18 +352,11 @@
           <img id="vathi-b" alt="Vathi gallery image B" class="standby" src="media/vathi_fast/Vathi_LivingRoom_f_3_f_1_1400.webp">
           <div class="controls" aria-label="Gallery controls">
             <button class="btn prev"  type="button" aria-label="Previous" title="Previous">❮</button>
-            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause">
-              <span class="ico ico-pause">❚❚</span>
-              <span class="ico ico-play" style="display:none">▶</span>
-            </button>
+            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause"><span class="ico ico-pause">❚❚</span><span class="ico ico-play" style="display:none">▶</span></button>
             <button class="btn next"  type="button" aria-label="Next" title="Next">❯</button>
           </div>
         </div>
-        <div class="apt-text">
-          <h2>Apartments</h2>
-          <h3>Vathi</h3>
-          <p>Bright, air-filled interiors with soft textures and a calming palette designed for slow mornings and sunset views.</p>
-        </div>
+        <div class="apt-text"><h2>Apartments</h2><h3>Vathi</h3><p>Bright, air-filled interiors with soft textures and a calming palette designed for slow mornings and sunset views.</p></div>
       </div>
 
       <!-- LIVADA -->
@@ -410,18 +369,11 @@
           <img id="livada-b" alt="Livada gallery image B" class="standby" src="media/livada_fast/Livada_LivingRoom_f_2_1400.webp">
           <div class="controls" aria-label="Gallery controls">
             <button class="btn prev"  type="button" aria-label="Previous" title="Previous">❮</button>
-            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause">
-              <span class="ico ico-pause">❚❚</span>
-              <span class="ico ico-play" style="display:none">▶</span>
-            </button>
+            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause"><span class="ico ico-pause">❚❚</span><span class="ico ico-play" style="display:none">▶</span></button>
             <button class="btn next"  type="button" aria-label="Next" title="Next">❯</button>
           </div>
         </div>
-        <div class="apt-text">
-          <h2>Apartments</h2>
-          <h3>Livada</h3>
-          <p>Cycladic simplicity meets comfort: thoughtful details, generous living space, and a relaxing ambience near the bay.</p>
-        </div>
+        <div class="apt-text"><h2>Apartments</h2><h3>Livada</h3><p>Cycladic simplicity meets comfort: thoughtful details, generous living space, and a relaxing ambience near the bay.</p></div>
       </div>
 
       <!-- AMMOS -->
@@ -434,19 +386,13 @@
           <img id="ammos-b" alt="Ammos gallery image B" class="standby" src="media/ammos_fast/Ammos_LivingRoom_f_2_1400.webp">
           <div class="controls" aria-label="Gallery controls">
             <button class="btn prev"  type="button" aria-label="Previous" title="Previous">❮</button>
-            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause">
-              <span class="ico ico-pause">❚❚</span>
-              <span class="ico ico-play" style="display:none">▶</span>
-            </button>
+            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause"><span class="ico ico-pause">❚❚</span><span class="ico ico-play" style="display:none">▶</span></button>
             <button class="btn next"  type="button" aria-label="Next" title="Next">❯</button>
           </div>
         </div>
-        <div class="apt-text">
-          <h2>Apartments</h2>
-          <h3>Ammos</h3>
-          <p>Minimal yet warm retreat with crafted finishes and a layout tailored for long stays and memorable gatherings.</p>
-        </div>
+        <div class="apt-text"><h2>Apartments</h2><h3>Ammos</h3><p>Minimal yet warm retreat with crafted finishes and a layout tailored for long stays and memorable gatherings.</p></div>
       </div>
+
     </div>
   </section>
 

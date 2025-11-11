@@ -216,7 +216,6 @@
         display:flex !important;
         flex-direction:column !important;
         gap:0 !important;
-        /* NOTE: we KEEP snap on apartments; no disabling here */
       }
 
       /* Text fits content */
@@ -262,6 +261,24 @@
       /* RELAX snapping on the page to avoid skipping the apartments */
       html, body { scroll-snap-type: y proximity !important; }
     }
+
+    /* ===== NAVBAR overflow fix ===== */
+    .nav,
+    .nav-inner {
+      box-sizing: border-box;
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
+    .nav-mobile {
+      box-sizing: border-box;
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
+    /* keep page from creating horizontal scrollbars at any time */
+    body { overflow-x: hidden; }
+    /* optional: keep scrollbar width stable so blur never overlays it */
+    html { scrollbar-gutter: stable both-edges; }
+
   </style>
 </head>
 <body>

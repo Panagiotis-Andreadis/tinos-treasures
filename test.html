@@ -135,7 +135,7 @@
 
     .footer-bottom{position:relative;z-index:2;height:var(--footer-h);display:flex;align-items:center;justify-content:center;background:#000;color:#fff;text-align:center;border-top:1px solid rgba(255,255,255,.12);letter-spacing:.04em;padding:0 16px}
     .social{display:flex;align-items:center;justify-content:flex-start;gap:14px;flex-wrap:nowrap;white-space:nowrap;color:#000}
-    #contact .social a{display:inline-flex;width:28px;height:28px;line-height:0;color:#000;text-decoration:none}
+    #contact .social a{display:inline-flex;width:28px;height:28px;line-height:0;color:#000{text-decoration:none}}
     #contact .social a:hover{opacity:.8;text-decoration:none}
     #contact a{color:#000;text-decoration:none}
     #contact a:hover{text-decoration:underline;opacity:.8}
@@ -144,7 +144,7 @@
     #contact .social{color:#000}
     .footer-bottom .social{color:#fff}
     .footer-bottom a{color:#fff;text-decoration:none}
-    .footer-bottom a:hover{text-decoration:underline}
+    .footer-bottom a:hover{color:#fff;text-decoration:underline}
 
     .nav, .nav * { color:#fff!important; fill:#fff!important }
     .nav-logo img { filter:brightness(0) invert(1) }
@@ -173,68 +173,92 @@
       .hamburger::after{bottom:0}
     }
 
-    /* Apartments mobile flow */
-    @media (max-width:900px){
-      .apt.apt-section{display:flex;flex-direction:column;gap:0;min-height:auto}
-      .apt.apt-section .apt-text{order:1;height:auto;transform:none!important;padding:clamp(18px,6vw,40px);text-align:left}
-      .apt.apt-section .rotator,.apt.apt-section>img{order:2;height:100svh;min-height:100svh;max-height:100svh;transform:none!important}
-      @supports (height:100dvh){
-        .apt.apt-section .rotator,.apt.apt-section>img{height:100dvh;min-height:100dvh;max-height:100dvh}
-      }
-      .apt.apt-section .rotator img,.apt.apt-section .rotator video{height:100%!important;width:auto!important;max-height:100%!important;max-width:none!important}
-    }
-    .apt.apt-section { scroll-margin-top: var(--nav-h) }
-    @media (max-width:900px){
-      .apt.apt-section .apt-text{
-        order:1;transform:none!important;
-        padding-top:calc(var(--nav-h) + 8px)!important;
-        padding-right:clamp(18px,6vw,40px);
-        padding-bottom:clamp(18px,6vw,40px);
-        padding-left:clamp(18px,6vw,40px);
-        text-align:left
-      }
-      .apt.apt-section .rotator,.apt.apt-section>img{
-        order:2;height:100svh!important;min-height:100svh!important;max-height:100svh!important;transform:none!important;background:#000
-      }
-      @supports (height:100dvh){
-        .apt.apt-section .rotator,.apt.apt-section>img{height:100dvh!important;min-height:100dvh!important;max-height:100dvh!important}
-      }
-    }
-    .apt.apt-section { scroll-margin-top: var(--nav-h) }
-    @media (min-width:901px){
-      .apt.apt-section .apt-text,.apt.apt-section .rotator,.apt.apt-section>img{height:100svh!important;transform:none!important}
-    }
-    @supports (height:100dvh){
-      @media (min-width:901px){
-        .apt.apt-section .apt-text,.apt.apt-section .rotator,.apt.apt-section>img{height:100dvh!important}
-      }
-    }
-    @media (min-width:901px){
-      .apt.apt-section .rotator,.apt.apt-section>img,.apt.apt-section .apt-text{height:100vh!important;transform:none!important}
-      .apt.apt-section{background:transparent!important}
-      .apt.apt-section .apt-text{background:#fff;padding-top:calc(var(--nav-h) + clamp(16px,3vw,48px))!important;padding-right:clamp(16px,3vw,48px);padding-bottom:clamp(16px,3vw,48px);padding-left:clamp(16px,3vw,48px)}
-    }
-    @supports (height:100dvh){
-      @media (min-width:901px){
-        .apt.apt-section .rotator,.apt.apt-section>img,.apt.apt-section .apt-text{height:100dvh!important}
-      }
-    }
+    /* Desktop cleanup & spacing */
+    .apt .apt-text h2{margin:0 0 6px}
+    .apt .apt-text h3{margin:0 0 10px}
+
+    /* ===== DESKTOP: remove gap under navbar in Apartments ===== */
     @media (min-width:901px){
       #apartments.section{background:transparent!important}
       .apt.apt-section{background:transparent!important}
       #apartments .wrap{padding:0!important}
       #apartments .wrap>h2{display:none!important}
-      .apt.apt-section .apt-text{background:#fff;padding-top:calc(var(--nav-h) + clamp(16px,3vw,48px))!important;padding-right:clamp(16px,3vw,48px);padding-bottom:clamp(16px,3vw,48px);padding-left:clamp(16px,3vw,48px)}
-      .apt.apt-section .rotator,.apt.apt-section>img{background:#000;height:100vh!important;transform:none!important}
+      .apt.apt-section .apt-text{
+        background:#fff;
+        padding-top:calc(var(--nav-h) + clamp(16px,3vw,48px))!important;
+        padding-right:clamp(16px,3vw,48px);
+        padding-bottom:clamp(16px,3vw,48px);
+        padding-left:clamp(16px,3vw,48px)
+      }
+      .apt.apt-section .rotator,
+      .apt.apt-section>img{
+        background:#000;height:100vh!important;transform:none!important
+      }
       #apigania.apt-section{margin-top:0!important}
     }
+
     @supports (height:100dvh){
       @media (min-width:901px){
-        .apt.apt-section .rotator,.apt.apt-section>img,.apt.apt-section .apt-text{height:100dvh!important}
+        .apt.apt-section .rotator,
+        .apt.apt-section>img,
+        .apt.apt-section .apt-text{height:100dvh!important}
       }
     }
-    .apt .apt-text h2{margin:0 0 6px}
-    .apt .apt-text h3{margin:0 0 10px}
+
+    /* ===== MOBILE: section grows, rotator stays 100vh ===== */
+    @media (max-width:900px){
+      /* Let the entire apartment section expand */
+      .apt.apt-section{
+        height:auto !important;
+        min-height:0 !important;
+        max-height:none !important;
+        overflow:visible !important;
+        display:flex !important;
+        flex-direction:column !important;
+        gap:0 !important;
+        scroll-snap-align:none !important; /* smoother inner scroll */
+      }
+
+      /* Text fits content */
+      .apt.apt-section .apt-text{
+        order:1 !important;
+        height:auto !important;
+        transform:none !important;
+        padding-top:calc(var(--nav-h) + 8px) !important;
+        padding-right:clamp(18px,6vw,40px) !important;
+        padding-bottom:clamp(18px,6vw,40px) !important;
+        padding-left:clamp(18px,6vw,40px) !important;
+        text-align:left;
+      }
+
+      /* Media panel is exactly one viewport high */
+      .apt.apt-section .rotator,
+      .apt.apt-section > img{
+        order:2 !important;
+        height:100svh !important;
+        min-height:100svh !important;
+        max-height:100svh !important;
+        transform:none !important;
+        background:#000;
+      }
+      @supports (height:100dvh){
+        .apt.apt-section .rotator,
+        .apt.apt-section > img{
+          height:100dvh !important;
+          min-height:100dvh !important;
+          max-height:100dvh !important;
+        }
+      }
+
+      /* Ensure media covers the rotator box correctly */
+      .apt.apt-section .rotator img,
+      .apt.apt-section .rotator video{
+        height:100% !important;
+        width:auto !important;
+        max-height:100% !important;
+        max-width:none !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -440,7 +464,6 @@
   <!-- =================
        SCRIPTS
        ================= -->
-
   <script>
     // Mobile menu ARIA + open/close
     (function(){
@@ -462,7 +485,7 @@
   </script>
 
   <script>
-    // Intro / hero video timing (unchanged)
+    // Intro / hero video timing
     (function(){
       const intro=document.getElementById('intro');
       const videoBg=document.getElementById('bg-video');
@@ -556,7 +579,7 @@
     const b=document.getElementById('apigania-b');
     if(!rotator||!video||!a||!b) return;
 
-    // iOS-safe inline autoplay (attributes + properties)
+    // iOS-safe inline autoplay
     video.muted = true;
     video.playsInline = true;
     video.setAttribute('muted','');

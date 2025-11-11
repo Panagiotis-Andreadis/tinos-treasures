@@ -24,20 +24,21 @@
   <meta name="twitter:image" content="https://tinostreasures.gr/poster.jpg">
 
   <style>
-    /* ——— STYLES UNCHANGED FROM YOUR INPUT ABOVE ——— */
-    /* I kept your entire CSS verbatim; trimmed here for brevity in this view.
-       Paste your full CSS from the working file if needed. */
     @font-face { font-family:'Cycladic'; src:url('Cycladic-Regular.otf') format('opentype'); font-display:swap; }
     :root{ --glass-bg: rgba(0,0,0,0.35); --glass-bg-scrolled: rgba(0,0,0,0.55); --glass-border: rgba(255,255,255,0.12); --white:#fff; --dark:#111; --accent:#fff; --container-w:1100px; --section-pad:clamp(60px,8vw,100px); --fade-duration:.8s; --nav-h:64px; --footer-h:80px; }
     .visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
     html,body{margin:0;padding:0;height:100%;width:100%;font-family:'Cycladic',sans-serif;color:#f5f5f5;overflow-x:hidden}
     body{overflow-y:auto;background:#000;scroll-snap-type:y mandatory}
+
+    /* INTRO */
     #intro{position:fixed;inset:0;height:100svh;background:#000;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:99999;animation:introFadeOut 3.4s ease forwards}
     #intro img{width:clamp(140px,15vw,220px);filter:brightness(0) invert(1);animation:fadeInOut 3.4s ease forwards}
     #intro h1{font-family:'Cycladic',sans-serif;font-size:clamp(28px,5vw,48px);color:#fff;margin-top:20px;animation:fadeInOut 3.4s ease forwards}
     @keyframes fadeInOut{0%{opacity:0}20%{opacity:1}70%{opacity:1}100%{opacity:0}}
     @keyframes introFadeOut{0%{opacity:1;visibility:visible}90%{opacity:0;visibility:visible}100%{opacity:0;visibility:hidden;display:none}}
     body.intro-active #bg-video{opacity:0!important}
+
+    /* NAV */
     .nav{position:fixed;top:0;left:0;right:0;height:64px;display:flex;align-items:center;z-index:9999;padding:0 16px;background:rgba(0,0,0,0.35);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--glass-border)}
     .nav-inner{width:100%;display:flex;justify-content:space-between;align-items:center;max-width:none;padding:0 3vw}
     .nav-logo{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:#000}
@@ -61,16 +62,20 @@
     body.menu-open .nav-mobile{display:block}
     .nav-mobile a{display:block;color:#000;text-decoration:none;padding:10px 0;font-size:16px;border-bottom:1px solid rgba(0,0,0,.12);opacity:.95;transition:opacity .2s ease}
     .nav-mobile a:hover{opacity:1}
+
+    /* Background video */
     .video-background{position:fixed;top:0;left:0;width:100%;height:100%;overflow:hidden;z-index:-1;background:#000}
     #bg-video{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;object-fit:cover;object-position:center;opacity:0;transition:opacity .35s ease}
     #bg-video.is-ready{opacity:1}
     @media (max-aspect-ratio:9/16){#bg-video{width:100%;height:auto;min-width:auto;min-height:100%;object-fit:contain;background:#000}}
     @supports (-webkit-touch-callout:none){.video-background{height:-webkit-fill-available}}
     body.no-video::before{content:"";position:fixed;inset:0;background:url('poster.jpg') center center/cover no-repeat;z-index:-2}
+
     section.anchor-offset{scroll-margin-top:var(--nav-h)}
     .slide-section,.apt.apt-section{position:relative;height:100svh;min-height:100svh;max-height:100svh;overflow:hidden;scroll-snap-align:start;scroll-snap-stop:always;display:grid;grid-template-columns:1fr}
     @supports (height: 100dvh){.slide-section,.apt.apt-section{height:100dvh;min-height:100dvh;max-height:100dvh}}
     #home .container{height:100%;box-sizing:border-box;padding-top:var(--nav-h);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:20px;max-width:900px;margin:auto;padding-inline:40px;text-align:center}
+
     .tagline{position:absolute;left:50%;transform:translateX(-50%);bottom:max(20px, calc(2svh + env(safe-area-inset-bottom)));width:96vw;text-align:center;color:#f5f5f5;line-height:1.35;opacity:0;transition:opacity 1s ease}
     @supports (height: 100dvh){.tagline{bottom:max(20px, calc(2dvh + env(safe-area-inset-bottom)))} }
     .tagline.visible{opacity:1}
@@ -78,26 +83,47 @@
     @media (max-width:1024px){.tagline{width:94vw}.tagline p{display:block;white-space:normal;font-size:clamp(11px,3.4vw,18px)}}
     h1{font-size:calc(clamp(12px,1.8vw,18px) * 3.2);margin:10px 0 12px;background:linear-gradient(180deg,#fff,#ddd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:fadeInUp var(--fade-duration) ease both .1s}
     @keyframes fadeInUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+
     #apartments.section{padding-block:0;background:#fff;color:#000}
     .apt.apt-section{margin:0;background:#fff;color:#000}
-    @media (min-width:901px){.apt.apt-section{grid-template-columns:1fr 1fr;align-items:stretch}.apt.apt-section .rotator,.apt.apt-section>img,.apt.apt-section .apt-text{height:calc(100svh - var(--nav-h))}@supports (height:100dvh){.apt.apt-section .rotator,.apt.apt-section>img,.apt.apt-section .apt-text{height:calc(100dvh - var(--nav-h))}}.apt.apt-section .apt-text{display:grid;place-items:center;padding:clamp(16px,3vw,48px);transform:translateY(var(--nav-h));box-sizing:border-box}.apt.apt-section .rotator,.apt.apt-section>img{transform:translateY(var(--nav-h))}}
-    @media (max-width:900px){.apt.apt-section{grid-template-columns:1fr}.apt.apt-section .rotator,.apt.apt-section>img,.apt.apt-section .apt-text{height:calc(100svh - var(--nav-h));transform:translateY(var(--nav-h));box-sizing:border-box}@supports (height:100dvh){.apt.apt-section .rotator,.apt.apt-section>img,.apt.apt-section .apt-text{height:calc(100dvh - var(--nav-h))}}.apt.apt-section .apt-text{display:grid;place-items:center;padding:clamp(18px,6vw,40px);text-align:left}}
+    @media (min-width:901px){
+      .apt.apt-section{grid-template-columns:1fr 1fr;align-items:stretch}
+      .apt.apt-section .rotator,.apt.apt-section>img,.apt.apt-section .apt-text{height:calc(100svh - var(--nav-h))}
+      @supports (height:100dvh){
+        .apt.apt-section .rotator,.apt.apt-section>img,.apt.apt-section .apt-text{height:calc(100dvh - var(--nav-h))}
+      }
+      .apt.apt-section .apt-text{display:grid;place-items:center;padding:clamp(16px,3vw,48px);transform:translateY(var(--nav-h));box-sizing:border-box}
+      .apt.apt-section .rotator,.apt.apt-section>img{transform:translateY(var(--nav-h))}
+    }
+    @media (max-width:900px){
+      .apt.apt-section{grid-template-columns:1fr}
+      .apt.apt-section .rotator,.apt.apt-section>img,.apt.apt-section .apt-text{height:calc(100svh - var(--nav-h));transform:translateY(var(--nav-h));box-sizing:border-box}
+      @supports (height:100dvh){
+        .apt.apt-section .rotator,.apt.apt-section>img,.apt.apt-section .apt-text{height:calc(100dvh - var(--nav-h))}
+      }
+      .apt.apt-section .apt-text{display:grid;place-items:center;padding:clamp(18px,6vw,40px);text-align:left}
+    }
+
     .rotator{position:relative;width:100%;overflow:hidden;background:transparent}
     .rotator img,.rotator video{position:absolute!important;top:50%!important;left:50%!important;transform:translate(-50%,-50%)!important;height:100%!important;width:auto!important;max-height:100%!important;max-width:none!important;background:transparent!important;transition:opacity .6s ease}
     .rotator img{opacity:0}
     .rotator img.is-top{opacity:1}
     .rotator img.standby{opacity:0!important}
     .rotator video.hidden{opacity:0!important;pointer-events:none!important;z-index:0!important}
+
     .rotator .controls{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:8px;opacity:0;pointer-events:none;transition:opacity .2s ease;z-index:2}
     @media (hover:hover){.rotator.slideshow .controls{pointer-events:auto}.rotator.slideshow:hover .controls{opacity:1}}
     @media (hover:none){.rotator.slideshow .controls{opacity:1;pointer-events:auto}}
     .rotator .btn{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.25);color:#fff;padding:6px 10px;border-radius:8px;cursor:pointer;font:inherit}
     .rotator .btn:hover{background:rgba(0,0,0,.5)}
+
     #location.section.slide-section .wrap,#contact.section.slide-section .wrap{height:100%;box-sizing:border-box;padding-top:var(--nav-h);display:grid;align-content:center;justify-items:start;text-align:left;padding-inline:clamp(12px,2.5vw,40px);overflow:hidden}
     #contact.section.slide-section{height:calc(100svh - var(--footer-h));min-height:calc(100svh - var(--footer-h));max-height:calc(100svh - var(--footer-h))}
     @supports (height:100dvh){#contact.section.slide-section{height:calc(100dvh - var(--footer-h));min-height:calc(100dvh - var(--footer-h));max-height:calc(100dvh - var(--footer-h))}}
     #contact.anchor-offset{scroll-margin-top:0!important}
+
     html, body { scroll-snap-type:y mandatory; overscroll-behavior-y:contain }
+
     .nav-dropdown{position:relative}
     .nav-drop-toggle{cursor:pointer}
     .nav-dropdown-menu{position:absolute;top:100%;margin-top:-1px;left:0;min-width:220px;padding:0;margin-left:0;border:1px solid var(--glass-border);border-top:0;border-radius:0;background:rgba(0,0,0,0.35);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:none;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s ease,visibility .2s ease;z-index:10000}
@@ -106,6 +132,7 @@
     .nav-dropdown-menu a{display:block;padding:12px 18px;text-decoration:none;color:#fff;opacity:.95;transition:opacity .2s ease,background .2s ease;white-space:nowrap}
     .nav-dropdown-menu a:hover{opacity:1;background:rgba(255,255,255,.12)}
     .snap{scroll-snap-align:start;scroll-snap-stop:always}
+
     .footer-bottom{position:relative;z-index:2;height:var(--footer-h);display:flex;align-items:center;justify-content:center;background:#000;color:#fff;text-align:center;border-top:1px solid rgba(255,255,255,.12);letter-spacing:.04em;padding:0 16px}
     .social{display:flex;align-items:center;justify-content:flex-start;gap:14px;flex-wrap:nowrap;white-space:nowrap;color:#000}
     #contact .social a{display:inline-flex;width:28px;height:28px;line-height:0;color:#000;text-decoration:none}
@@ -118,144 +145,388 @@
     .footer-bottom .social{color:#fff}
     .footer-bottom a{color:#fff;text-decoration:none}
     .footer-bottom a:hover{text-decoration:underline}
+
     .nav, .nav * { color:#fff!important; fill:#fff!important }
     .nav-logo img { filter:brightness(0) invert(1) }
     .nav-cta { border-color:#fff; background:transparent; color:#fff }
     .nav-cta:hover { background:rgba(255,255,255,0.15); transform:translateY(-1px) }
     .hamburger span, .hamburger::before, .hamburger::after { background:#fff }
-    @media (max-width:900px){.nav-center,.nav-right{display:none!important}.hamburger{display:block!important;width:28px;height:22px}.nav-inner{padding-inline:16px;gap:12px}.nav-logo{display:inline-flex;align-items:center;gap:10px}label[for="nav-toggle"]{margin-left:auto;display:inline-flex;align-items:center;cursor:pointer;padding:6px}.nav-mobile{top:var(--nav-h);border-top:1px solid var(--glass-border)}body.menu-open{overflow:hidden;touch-action:none}}
-    @media (max-width:900px){.nav-mobile{background:rgba(0,0,0,0.35);color:#fff!important}.nav-mobile a{color:#fff!important;border-bottom:1px solid rgba(255,255,255,0.12);text-decoration:none}.nav-mobile a:last-child{border-bottom:none}label[for="nav-toggle"]{margin-left:auto;display:inline-flex;align-items:center;justify-content:center;height:var(--nav-h);padding:0;cursor:pointer}.hamburger{display:block!important;position:relative;width:28px;height:22px}.hamburger span,.hamburger::before,.hamburger::after{position:absolute;left:0;right:0;height:2px;background:#fff;transition:transform 250ms ease,opacity 200ms ease}.hamburger::before{top:0}.hamburger span{top:50%;transform:translateY(-50%)}.hamburger::after{bottom:0}}
-    @media (max-width:900px){.apt.apt-section{display:flex;flex-direction:column;gap:0;min-height:auto}.apt.apt-section .apt-text{order:1;height:auto;transform:none!important;padding:clamp(18px,6vw,40px);text-align:left}.apt.apt-section .rotator,.apt.apt-section>img{order:2;height:100svh;min-height:100svh;max-height:100svh;transform:none!important}@supports (height:100dvh){.apt.apt-section .rotator,.apt.apt-section>img{height:100dvh;min-height:100dvh;max-height:100dvh}}.apt.apt-section .rotator img,.apt.apt-section .rotator video{height:100%!important;width:auto!important;max-height:100%!important;max-width:none!important}}
+
+    @media (max-width:900px){
+      .nav-center,.nav-right{display:none!important}
+      .hamburger{display:block!important;width:28px;height:22px}
+      .nav-inner{padding-inline:16px;gap:12px}
+      .nav-logo{display:inline-flex;align-items:center;gap:10px}
+      label[for="nav-toggle"]{margin-left:auto;display:inline-flex;align-items:center;cursor:pointer;padding:6px}
+      .nav-mobile{top:var(--nav-h);border-top:1px solid var(--glass-border)}
+      body.menu-open{overflow:hidden;touch-action:none}
+    }
+    @media (max-width:900px){
+      .nav-mobile{background:rgba(0,0,0,0.35);color:#fff!important}
+      .nav-mobile a{color:#fff!important;border-bottom:1px solid rgba(255,255,255,0.12);text-decoration:none}
+      .nav-mobile a:last-child{border-bottom:none}
+      label[for="nav-toggle"]{margin-left:auto;display:inline-flex;align-items:center;justify-content:center;height:var(--nav-h);padding:0;cursor:pointer}
+      .hamburger{display:block!important;position:relative;width:28px;height:22px}
+      .hamburger span,.hamburger::before,.hamburger::after{position:absolute;left:0;right:0;height:2px;background:#fff;transition:transform 250ms ease,opacity 200ms ease}
+      .hamburger::before{top:0}
+      .hamburger span{top:50%;transform:translateY(-50%)}
+      .hamburger::after{bottom:0}
+    }
+
+    /* Apartments mobile flow */
+    @media (max-width:900px){
+      .apt.apt-section{display:flex;flex-direction:column;gap:0;min-height:auto}
+      .apt.apt-section .apt-text{order:1;height:auto;transform:none!important;padding:clamp(18px,6vw,40px);text-align:left}
+      .apt.apt-section .rotator,.apt.apt-section>img{order:2;height:100svh;min-height:100svh;max-height:100svh;transform:none!important}
+      @supports (height:100dvh){
+        .apt.apt-section .rotator,.apt.apt-section>img{height:100dvh;min-height:100dvh;max-height:100dvh}
+      }
+      .apt.apt-section .rotator img,.apt.apt-section .rotator video{height:100%!important;width:auto!important;max-height:100%!important;max-width:none!important}
+    }
     .apt.apt-section { scroll-margin-top: var(--nav-h) }
-    @media (max-width:900px){.apt.apt-section .apt-text{order:1;transform:none!important;padding-top:calc(var(--nav-h) + 8px)!important;padding-right:clamp(18px,6vw,40px);padding-bottom:clamp(18px,6vw,40px);padding-left:clamp(18px,6vw,40px);text-align:left}.apt.apt-section .rotator,.apt.apt-section>img{order:2;height:100svh!important;min-height:100svh!important;max-height:100svh!important;transform:none!important;background:#000}@supports (height:100dvh){.apt.apt-section .rotator,.apt.apt-section>img{height:100dvh!important;min-height:100dvh!important;max-height:100dvh!important}}}
+    @media (max-width:900px){
+      .apt.apt-section .apt-text{
+        order:1;transform:none!important;
+        padding-top:calc(var(--nav-h) + 8px)!important;
+        padding-right:clamp(18px,6vw,40px);
+        padding-bottom:clamp(18px,6vw,40px);
+        padding-left:clamp(18px,6vw,40px);
+        text-align:left
+      }
+      .apt.apt-section .rotator,.apt.apt-section>img{
+        order:2;height:100svh!important;min-height:100svh!important;max-height:100svh!important;transform:none!important;background:#000
+      }
+      @supports (height:100dvh){
+        .apt.apt-section .rotator,.apt.apt-section>img{height:100dvh!important;min-height:100dvh!important;max-height:100dvh!important}
+      }
+    }
     .apt.apt-section { scroll-margin-top: var(--nav-h) }
-    @media (min-width:901px){.apt.apt-section .apt-text,.apt.apt-section .rotator,.apt.apt-section>img{height:100svh!important;transform:none!important}}
-    @supports (height:100dvh){@media (min-width:901px){.apt.apt-section .apt-text,.apt.apt-section .rotator,.apt.apt-section>img{height:100dvh!important}}}
-    @media (min-width:901px){.apt.apt-section .rotator,.apt.apt-section>img,.apt.apt-section .apt-text{height:100vh!important;transform:none!important}.apt.apt-section{background:transparent!important}.apt.apt-section .apt-text{background:#fff;padding-top:calc(var(--nav-h) + clamp(16px,3vw,48px))!important;padding-right:clamp(16px,3vw,48px);padding-bottom:clamp(16px,3vw,48px);padding-left:clamp(16px,3vw,48px)}}
-    @supports (height:100dvh){@media (min-width:901px){.apt.apt-section .rotator,.apt.apt-section>img,.apt.apt-section .apt-text{height:100dvh!important}}}
-    @media (min-width:901px){#apartments.section{background:transparent!important}.apt.apt-section{background:transparent!important}#apartments .wrap{padding:0!important}#apartments .wrap>h2{display:none!important}.apt.apt-section .apt-text{background:#fff;padding-top:calc(var(--nav-h) + clamp(16px,3vw,48px))!important;padding-right:clamp(16px,3vw,48px);padding-bottom:clamp(16px,3vw,48px);padding-left:clamp(16px,3vw,48px)}.apt.apt-section .rotator,.apt.apt-section>img{background:#000;height:100vh!important;transform:none!important}#apigania.apt-section{margin-top:0!important}}
-    @supports (height:100dvh){@media (min-width:901px){.apt.apt-section .rotator,.apt.apt-section>img,.apt.apt-section .apt-text{height:100dvh!important}}}
+    @media (min-width:901px){
+      .apt.apt-section .apt-text,.apt.apt-section .rotator,.apt.apt-section>img{height:100svh!important;transform:none!important}
+    }
+    @supports (height:100dvh){
+      @media (min-width:901px){
+        .apt.apt-section .apt-text,.apt.apt-section .rotator,.apt.apt-section>img{height:100dvh!important}
+      }
+    }
+    @media (min-width:901px){
+      .apt.apt-section .rotator,.apt.apt-section>img,.apt.apt-section .apt-text{height:100vh!important;transform:none!important}
+      .apt.apt-section{background:transparent!important}
+      .apt.apt-section .apt-text{background:#fff;padding-top:calc(var(--nav-h) + clamp(16px,3vw,48px))!important;padding-right:clamp(16px,3vw,48px);padding-bottom:clamp(16px,3vw,48px);padding-left:clamp(16px,3vw,48px)}
+    }
+    @supports (height:100dvh){
+      @media (min-width:901px){
+        .apt.apt-section .rotator,.apt.apt-section>img,.apt.apt-section .apt-text{height:100dvh!important}
+      }
+    }
+    @media (min-width:901px){
+      #apartments.section{background:transparent!important}
+      .apt.apt-section{background:transparent!important}
+      #apartments .wrap{padding:0!important}
+      #apartments .wrap>h2{display:none!important}
+      .apt.apt-section .apt-text{background:#fff;padding-top:calc(var(--nav-h) + clamp(16px,3vw,48px))!important;padding-right:clamp(16px,3vw,48px);padding-bottom:clamp(16px,3vw,48px);padding-left:clamp(16px,3vw,48px)}
+      .apt.apt-section .rotator,.apt.apt-section>img{background:#000;height:100vh!important;transform:none!important}
+      #apigania.apt-section{margin-top:0!important}
+    }
+    @supports (height:100dvh){
+      @media (min-width:901px){
+        .apt.apt-section .rotator,.apt.apt-section>img,.apt.apt-section .apt-text{height:100dvh!important}
+      }
+    }
     .apt .apt-text h2{margin:0 0 6px}
     .apt .apt-text h3{margin:0 0 10px}
   </style>
 </head>
 <body>
+  <!-- INTRO -->
   <div id="intro"><img src="logo.png" alt="Tinos Treasures logo"><h1>Tinos Treasures</h1></div>
-  <div class="video-background"><video id="bg-video" muted loop playsinline preload="auto"><source src="tinos_treasures_background.mp4" type="video/mp4" /></video></div>
-  <nav class="nav" id="nav"><div class="nav-inner"><a class="nav-logo" href="#home"><img src="logo.png" alt="Logo"><span>Tinos Treasures</span></a><div class="nav-center"><a class="nav-link" href="#home">Home</a><div class="nav-dropdown"><a class="nav-drop-toggle" href="#apartments">Apartments ▾</a><div class="nav-dropdown-menu"><a href="#apigania">Apigania</a><a href="#vathi">Vathi</a><a href="#livada">Livada</a><a href="#ammos">Ammos</a></div></div><a class="nav-link" href="#location">The Location</a><a class="nav-link" href="#contact">Contact Us</a></div><div class="nav-right"><a class="nav-cta" href="https://tinostreasures.reserve-online.net/" target="_blank" rel="noopener">Book now!</a></div><input type="checkbox" id="nav-toggle"><label for="nav-toggle" aria-label="Menu" aria-controls="mobile-menu" aria-expanded="false"><div class="hamburger"><span></span></div></label></div></nav>
-  <div class="nav-mobile" id="mobile-menu"><a href="#home">Home</a><a href="#apartments">Apartments</a><div class="mobile-sub"><a href="#apigania">— Apigania</a><a href="#vathi">— Vathi</a><a href="#livada">— Livada</a><a href="#ammos">— Ammos</a></div><a href="#location">The Location</a><a href="#contact">Contact Us</a><a href="https://tinostreasures.reserve-online.net/" target="_blank" rel="noopener">Book now!</a></div>
 
-  <section id="home" class="anchor-offset snap slide-section"><div class="container"><h1 class="visually-hidden">Luxury Seaside Apartments in Isternia Bay, Tinos</h1><main><div class="tagline" id="tagline"><p>Seaside luxurious 70sqm serviced apartments,</p><p>By the beach at Isternia bay in Tinos, Greece.</p><p>Crafted with care, designed for memories.</p></div></main></div></section>
+  <!-- Background video -->
+  <div class="video-background">
+    <video id="bg-video" muted loop playsinline preload="auto">
+      <source src="tinos_treasures_background.mp4" type="video/mp4" />
+    </video>
+  </div>
 
-  <section id="apartments" class="section anchor-offset"><div class="wrap">
-      <!-- APIGANIA (as in your file) -->
+  <!-- Navbar -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="nav-logo" href="#home"><img src="logo.png" alt="Logo"><span>Tinos Treasures</span></a>
+      <div class="nav-center">
+        <a class="nav-link" href="#home">Home</a>
+        <div class="nav-dropdown">
+          <a class="nav-drop-toggle" href="#apartments">Apartments ▾</a>
+          <div class="nav-dropdown-menu">
+            <a href="#apigania">Apigania</a>
+            <a href="#vathi">Vathi</a>
+            <a href="#livada">Livada</a>
+            <a href="#ammos">Ammos</a>
+          </div>
+        </div>
+        <a class="nav-link" href="#location">The Location</a>
+        <a class="nav-link" href="#contact">Contact Us</a>
+      </div>
+      <div class="nav-right">
+        <a class="nav-cta" href="https://tinostreasures.reserve-online.net/" target="_blank" rel="noopener">Book now!</a>
+      </div>
+      <input type="checkbox" id="nav-toggle">
+      <label for="nav-toggle" aria-label="Menu" aria-controls="mobile-menu" aria-expanded="false">
+        <div class="hamburger"><span></span></div>
+      </label>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="nav-mobile" id="mobile-menu">
+    <a href="#home">Home</a>
+    <a href="#apartments">Apartments</a>
+    <div class="mobile-sub">
+      <a href="#apigania">— Apigania</a>
+      <a href="#vathi">— Vathi</a>
+      <a href="#livada">— Livada</a>
+      <a href="#ammos">— Ammos</a>
+    </div>
+    <a href="#location">The Location</a>
+    <a href="#contact">Contact Us</a>
+    <a href="https://tinostreasures.reserve-online.net/" target="_blank" rel="noopener">Book now!</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="home" class="anchor-offset snap slide-section">
+    <div class="container">
+      <h1 class="visually-hidden">Luxury Seaside Apartments in Isternia Bay, Tinos</h1>
+      <main>
+        <div class="tagline" id="tagline">
+          <p>Seaside luxurious 70sqm serviced apartments,</p>
+          <p>By the beach at Isternia bay in Tinos, Greece.</p>
+          <p>Crafted with care, designed for memories.</p>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <!-- APARTMENTS -->
+  <section id="apartments" class="section anchor-offset">
+    <div class="wrap">
+      <!-- APIGANIA -->
       <div id="apigania" class="apt apt-section snap">
         <div class="rotator" id="apigania-rotator">
-          <video id="apigania-video" muted playsinline preload="auto">
+          <video id="apigania-video" muted autoplay playsinline webkit-playsinline preload="auto">
             <source src="media/apigania_fast/apigania.mp4" type="video/mp4">
           </video>
           <img id="apigania-a" alt="Apigania gallery image A" class="standby" src="media/apigania_fast/Apigania_LivingRoom_f_1_1400.webp">
           <img id="apigania-b" alt="Apigania gallery image B" class="standby" src="media/apigania_fast/Apigania_LivingRoom_f_2_1400.webp">
           <div class="controls" aria-label="Gallery controls">
             <button class="btn prev"  type="button" aria-label="Previous" title="Previous">❮</button>
-            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause"><span class="ico ico-pause">❚❚</span><span class="ico ico-play" style="display:none">▶</span></button>
+            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause">
+              <span class="ico ico-pause">❚❚</span>
+              <span class="ico ico-play" style="display:none">▶</span>
+            </button>
             <button class="btn next"  type="button" aria-label="Next" title="Next">❯</button>
           </div>
         </div>
-        <div class="apt-text"><h2>Apartments</h2><h3>Apigania</h3><p>Spacious 70sqm seaside apartment with serene tones, curated decor, and hotel-like comforts perfect for families or couples.</p></div>
+        <div class="apt-text">
+          <h2>Apartments</h2>
+          <h3>Apigania</h3>
+          <p>Spacious 70sqm seaside apartment with serene tones, curated decor, and hotel-like comforts perfect for families or couples.</p>
+        </div>
       </div>
 
-      <!-- VATHI — now video + slideshow rotator (video first) -->
+      <!-- VATHI -->
       <div id="vathi" class="apt apt-section snap">
         <div class="rotator" id="vathi-rotator">
-          <video id="vathi-video" muted playsinline preload="auto">
+          <video id="vathi-video" muted autoplay playsinline webkit-playsinline preload="auto">
             <source src="media/vathi_fast/vathi.mp4" type="video/mp4">
           </video>
           <img id="vathi-a" alt="Vathi gallery image A" class="standby" src="media/vathi_fast/Vathi_LivingRoom_f_1_f_1_1400.webp">
           <img id="vathi-b" alt="Vathi gallery image B" class="standby" src="media/vathi_fast/Vathi_LivingRoom_f_3_f_1_1400.webp">
           <div class="controls" aria-label="Gallery controls">
             <button class="btn prev"  type="button" aria-label="Previous" title="Previous">❮</button>
-            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause"><span class="ico ico-pause">❚❚</span><span class="ico ico-play" style="display:none">▶</span></button>
+            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause">
+              <span class="ico ico-pause">❚❚</span>
+              <span class="ico ico-play" style="display:none">▶</span>
+            </button>
             <button class="btn next"  type="button" aria-label="Next" title="Next">❯</button>
           </div>
         </div>
-        <div class="apt-text"><h2>Apartments</h2><h3>Vathi</h3><p>Bright, air-filled interiors with soft textures and a calming palette designed for slow mornings and sunset views.</p></div>
+        <div class="apt-text">
+          <h2>Apartments</h2>
+          <h3>Vathi</h3>
+          <p>Bright, air-filled interiors with soft textures and a calming palette designed for slow mornings and sunset views.</p>
+        </div>
       </div>
 
-      <!-- LIVADA — now video + slideshow rotator (video first) -->
+      <!-- LIVADA -->
       <div id="livada" class="apt apt-section snap">
         <div class="rotator" id="livada-rotator">
-          <video id="livada-video" muted playsinline preload="auto">
+          <video id="livada-video" muted autoplay playsinline webkit-playsinline preload="auto">
             <source src="media/livada_fast/livada.mp4" type="video/mp4">
           </video>
           <img id="livada-a" alt="Livada gallery image A" class="standby" src="media/livada_fast/Livada_LivingRoom_f_1_1400.webp">
           <img id="livada-b" alt="Livada gallery image B" class="standby" src="media/livada_fast/Livada_LivingRoom_f_2_1400.webp">
           <div class="controls" aria-label="Gallery controls">
             <button class="btn prev"  type="button" aria-label="Previous" title="Previous">❮</button>
-            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause"><span class="ico ico-pause">❚❚</span><span class="ico ico-play" style="display:none">▶</span></button>
+            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause">
+              <span class="ico ico-pause">❚❚</span>
+              <span class="ico ico-play" style="display:none">▶</span>
+            </button>
             <button class="btn next"  type="button" aria-label="Next" title="Next">❯</button>
           </div>
         </div>
-        <div class="apt-text"><h2>Apartments</h2><h3>Livada</h3><p>Cycladic simplicity meets comfort: thoughtful details, generous living space, and a relaxing ambience near the bay.</p></div>
+        <div class="apt-text">
+          <h2>Apartments</h2>
+          <h3>Livada</h3>
+          <p>Cycladic simplicity meets comfort: thoughtful details, generous living space, and a relaxing ambience near the bay.</p>
+        </div>
       </div>
 
-      <!-- AMMOS — now video + slideshow rotator (video first) -->
+      <!-- AMMOS -->
       <div id="ammos" class="apt apt-section snap">
         <div class="rotator" id="ammos-rotator">
-          <video id="ammos-video" muted playsinline preload="auto">
+          <video id="ammos-video" muted autoplay playsinline webkit-playsinline preload="auto">
             <source src="media/ammos_fast/ammos.mp4" type="video/mp4">
           </video>
           <img id="ammos-a" alt="Ammos gallery image A" class="standby" src="media/ammos_fast/Ammos_LivingRoom_f_1_1400.webp">
           <img id="ammos-b" alt="Ammos gallery image B" class="standby" src="media/ammos_fast/Ammos_LivingRoom_f_2_1400.webp">
           <div class="controls" aria-label="Gallery controls">
             <button class="btn prev"  type="button" aria-label="Previous" title="Previous">❮</button>
-            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause"><span class="ico ico-pause">❚❚</span><span class="ico ico-play" style="display:none">▶</span></button>
+            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause">
+              <span class="ico ico-pause">❚❚</span>
+              <span class="ico ico-play" style="display:none">▶</span>
+            </button>
             <button class="btn next"  type="button" aria-label="Next" title="Next">❯</button>
           </div>
         </div>
-        <div class="apt-text"><h2>Apartments</h2><h3>Ammos</h3><p>Minimal yet warm retreat with crafted finishes and a layout tailored for long stays and memorable gatherings.</p></div>
+        <div class="apt-text">
+          <h2>Apartments</h2>
+          <h3>Ammos</h3>
+          <p>Minimal yet warm retreat with crafted finishes and a layout tailored for long stays and memorable gatherings.</p>
+        </div>
       </div>
+    </div>
+  </section>
 
-    </div></section>
+  <!-- LOCATION -->
+  <section id="location" class="section anchor-offset snap slide-section" style="background:#fff;color:#000">
+    <div class="wrap">
+      <div>
+        <h2> The Location</h2>
+        <p>Set on Isternia Bay, Tinos Treasures places you steps from the sea and a short drive from traditional villages, local tavernas, and untouched landscapes. Experience Cycladic light, gentle breezes, and a slower rhythm of life.</p>
+      </div>
+    </div>
+  </section>
 
-  <section id="location" class="section anchor-offset snap slide-section" style="background:#fff;color:#000"><div class="wrap"><div><h2> The Location</h2><p>Set on Isternia Bay, Tinos Treasures places you steps from the sea and a short drive from traditional villages, local tavernas, and untouched landscapes. Experience Cycladic light, gentle breezes, and a slower rhythm of life.</p></div></div></section>
-
-  <section id="contact" class="section anchor-offset snap slide-section" style="background:#fff;color:#000"><div class="wrap"><h2 class="fade-in">Contact Us</h2><p class="fade-in delay-1 contact-info" style="text-align:left">Ormos Isternion — Tinos, 84200 — Cyclades, Greece<br><a href="mailto:info@tinostreasures.gr">info@tinostreasures.gr</a> · <a href="tel:+306976596001">+30 697 659 6001</a></p>
-    <div class="social"><a class="instagram" href="https://www.instagram.com/tinostreasures_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">[svg]</a><a class="facebook" href="https://www.facebook.com/Tinos.Treasures/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">[svg]</a><a class="google" href="https://www.google.com/search?q=Tinos+Treasures+Apart-Hotel" target="_blank" rel="noopener noreferrer" aria-label="Google Search">[svg]</a><a class="youtube" href="https://www.youtube.com/@tinostreasures" target="_blank" rel="noopener noreferrer" aria-label="YouTube">[svg]</a><a class="maps" href="https://maps.app.goo.gl/VVLBkF2q8XZqKbU38" target="_blank" rel="noopener noreferrer" aria-label="Google Maps">[svg]</a></div></div></section>
+  <!-- CONTACT -->
+  <section id="contact" class="section anchor-offset snap slide-section" style="background:#fff;color:#000">
+    <div class="wrap">
+      <h2 class="fade-in">Contact Us</h2>
+      <p class="fade-in delay-1 contact-info" style="text-align:left">
+        Ormos Isternion — Tinos, 84200 — Cyclades, Greece<br>
+        <a href="mailto:info@tinostreasures.gr">info@tinostreasures.gr</a> ·
+        <a href="tel:+306976596001">+30 697 659 6001</a>
+      </p>
+      <div class="social">
+        <a class="instagram" href="https://www.instagram.com/tinostreasures_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">[svg]</a>
+        <a class="facebook" href="https://www.facebook.com/Tinos.Treasures/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">[svg]</a>
+        <a class="google" href="https://www.google.com/search?q=Tinos+Treasures+Apart-Hotel" target="_blank" rel="noopener noreferrer" aria-label="Google Search">[svg]</a>
+        <a class="youtube" href="https://www.youtube.com/@tinostreasures" target="_blank" rel="noopener noreferrer" aria-label="YouTube">[svg]</a>
+        <a class="maps" href="https://maps.app.goo.gl/VVLBkF2q8XZqKbU38" target="_blank" rel="noopener noreferrer" aria-label="Google Maps">[svg]</a>
+      </div>
+    </div>
+  </section>
 
   <footer class="footer-bottom snap">© <span id="year"></span> Tinos Treasures. All rights reserved.</footer>
 
+  <!-- =================
+       SCRIPTS
+       ================= -->
+
   <script>
-  // Mobile menu ARIA + open/close
-  (function(){
-    const navToggle=document.getElementById('nav-toggle');
-    const navLabel=document.querySelector('label[for="nav-toggle"]');
-    const mobileMenu=document.getElementById('mobile-menu');
-    function syncAria(){if(navLabel&&navToggle)navLabel.setAttribute('aria-expanded',navToggle.checked?'true':'false');}
-    if(navToggle){const applyState=()=>{document.body.classList.toggle('menu-open',navToggle.checked);syncAria()};navToggle.addEventListener('change',applyState);applyState()}
-    if(mobileMenu&&navToggle){mobileMenu.addEventListener('click',(e)=>{const t=e.target.closest('a');if(!t)return;navToggle.checked=false;document.body.classList.remove('menu-open');syncAria();});}
-  })();
+    // Mobile menu ARIA + open/close
+    (function(){
+      const navToggle=document.getElementById('nav-toggle');
+      const navLabel=document.querySelector('label[for="nav-toggle"]');
+      const mobileMenu=document.getElementById('mobile-menu');
+      function syncAria(){if(navLabel&&navToggle)navLabel.setAttribute('aria-expanded',navToggle.checked?'true':'false');}
+      if(navToggle){
+        const applyState=()=>{document.body.classList.toggle('menu-open',navToggle.checked);syncAria()};
+        navToggle.addEventListener('change',applyState);applyState()
+      }
+      if(mobileMenu&&navToggle){
+        mobileMenu.addEventListener('click',(e)=>{
+          const t=e.target.closest('a');if(!t)return;
+          navToggle.checked=false;document.body.classList.remove('menu-open');syncAria();
+        });
+      }
+    })();
   </script>
 
   <script>
-  // Intro / hero video timing (unchanged)
-  (function(){
-    const intro=document.getElementById('intro');
-    const videoBg=document.getElementById('bg-video');
-    const tagline=document.getElementById('tagline');
-    const INTRO_MS=3400;document.body.classList.add('intro-active');
-    if(videoBg){try{videoBg.pause()}catch{};try{videoBg.currentTime=0}catch{};const onMeta=()=>{try{videoBg.currentTime=0}catch{}};videoBg.addEventListener('loadedmetadata',onMeta,{once:true});videoBg.addEventListener('error',()=>{document.body.classList.add('no-video');videoBg.setAttribute('poster','poster.jpg')},{once:true});}
-    function startFromZeroAndPlay(){if(!videoBg)return;const seekToZero=()=>new Promise((resolve)=>{let done=false;const finish=()=>{if(!done){done=true;resolve()}};try{videoBg.currentTime=0}catch{};if(videoBg.currentTime<0.05)return finish();const onSeeked=()=>{videoBg.removeEventListener('seeked',onSeeked);finish()};videoBg.addEventListener('seeked',onSeeked);setTimeout(finish,250)});seekToZero().then(()=>{videoBg.play().then(()=>{videoBg.classList.add('is-ready')}).catch(()=>{document.body.classList.add('no-video');videoBg.setAttribute('poster','poster.jpg');videoBg.classList.add('is-ready')})})}
-    setTimeout(()=>{if(intro)intro.style.display='none';document.body.classList.remove('intro-active');tagline?.classList.add('visible');startFromZeroAndPlay()},INTRO_MS);
-  })();
+    // Intro / hero video timing (unchanged)
+    (function(){
+      const intro=document.getElementById('intro');
+      const videoBg=document.getElementById('bg-video');
+      const tagline=document.getElementById('tagline');
+      const INTRO_MS=3400;document.body.classList.add('intro-active');
+
+      if(videoBg){
+        try{videoBg.pause()}catch{};
+        try{videoBg.currentTime=0}catch{};
+        const onMeta=()=>{try{videoBg.currentTime=0}catch{}};
+        videoBg.addEventListener('loadedmetadata',onMeta,{once:true});
+        videoBg.addEventListener('error',()=>{
+          document.body.classList.add('no-video');
+          videoBg.setAttribute('poster','poster.jpg')
+        },{once:true});
+      }
+
+      function startFromZeroAndPlay(){
+        if(!videoBg) return;
+        const seekToZero=()=>new Promise((resolve)=>{
+          let done=false;const finish=()=>{if(!done){done=true;resolve()}};
+          try{videoBg.currentTime=0}catch{};
+          if(videoBg.currentTime<0.05) return finish();
+          const onSeeked=()=>{videoBg.removeEventListener('seeked',onSeeked);finish()};
+          videoBg.addEventListener('seeked',onSeeked);
+          setTimeout(finish,250);
+        });
+        seekToZero().then(()=>{
+          videoBg.play()
+            .then(()=>{videoBg.classList.add('is-ready')})
+            .catch(()=>{
+              document.body.classList.add('no-video');
+              videoBg.setAttribute('poster','poster.jpg');
+              videoBg.classList.add('is-ready')
+            });
+        });
+      }
+
+      setTimeout(()=>{
+        if(intro) intro.style.display='none';
+        document.body.classList.remove('intro-active');
+        tagline?.classList.add('visible');
+        startFromZeroAndPlay();
+      },INTRO_MS);
+    })();
   </script>
 
   <script>
-  // Dropdown on touch
-  (function(){const drop=document.querySelector('.nav-dropdown');const toggle=drop?.querySelector('.nav-drop-toggle');const menu=drop?.querySelector('.nav-dropdown-menu');if(!drop||!toggle||!menu)return;toggle.addEventListener('click',(e)=>{const noHover=window.matchMedia('(hover: none)').matches;if(noHover){e.preventDefault();e.stopPropagation();drop.classList.toggle('open')}});document.addEventListener('click',(e)=>{if(!drop.contains(e.target))drop.classList.remove('open')});document.addEventListener('keydown',(e)=>{if(e.key==='Escape')drop.classList.remove('open')});})();
+    // Dropdown on touch
+    (function(){
+      const drop=document.querySelector('.nav-dropdown');
+      const toggle=drop?.querySelector('.nav-drop-toggle');
+      const menu=drop?.querySelector('.nav-dropdown-menu');
+      if(!drop||!toggle||!menu) return;
+      toggle.addEventListener('click',(e)=>{
+        const noHover=window.matchMedia('(hover: none)').matches;
+        if(noHover){e.preventDefault();e.stopPropagation();drop.classList.toggle('open')}
+      });
+      document.addEventListener('click',(e)=>{if(!drop.contains(e.target))drop.classList.remove('open')});
+      document.addEventListener('keydown',(e)=>{if(e.key==='Escape')drop.classList.remove('open')});
+    })();
   </script>
 
-  <!-- APIGANIA script (copied from your original) -->
+  <!-- APIGANIA -->
   <script>
   (function(){
     const sources=[
@@ -278,35 +549,110 @@
       "media/apigania_fast/Apigania_Bathroom_f_2_1400.webp",
       "media/apigania_fast/Apigania_Bathroom_f_3_1400.webp"
     ];
+
     const rotator=document.getElementById('apigania-rotator');
     const video=document.getElementById('apigania-video');
     const a=document.getElementById('apigania-a');
     const b=document.getElementById('apigania-b');
-    if(!rotator||!video||!a||!b)return;
+    if(!rotator||!video||!a||!b) return;
+
+    // iOS-safe inline autoplay (attributes + properties)
+    video.muted = true;
+    video.playsInline = true;
+    video.setAttribute('muted','');
+    video.setAttribute('playsinline','');
+    video.setAttribute('webkit-playsinline','');
+    video.setAttribute('autoplay','');
+
     const prevBtn=rotator.querySelector('.btn.prev');
     const nextBtn=rotator.querySelector('.btn.next');
     const toggleBtn=rotator.querySelector('.btn.center');
     const icoPause=toggleBtn.querySelector('.ico-pause');
-    const icoPlay=toggleBtn.querySelector('.ico-play');
-    sources.forEach(src=>{const im=new Image();im.src=src});
-    let idx=2,topIsA=true;const HOLD_MS=2000;let slideTimer=null;let paused=false;
-    function clearTimers(){if(slideTimer){clearTimeout(slideTimer);slideTimer=null}}
-    function whenDecodable(img){const p=(img.decode?img.decode():Promise.resolve());return p.catch(()=>{})}
-    function showInitialFrames(){a.classList.remove('standby');b.classList.remove('standby');a.classList.add('is-top');b.classList.remove('is-top');topIsA=true;idx=2}
-    function scheduleNext(){if(!paused){slideTimer=setTimeout(nextFrame,HOLD_MS)}}
-    function nextFrame(){const top=topIsA?a:b,bottom=topIsA?b:a;bottom.src=sources[idx];idx=(idx+1)%sources.length;whenDecodable(bottom).then(()=>{requestAnimationFrame(()=>{top.classList.remove('is-top');requestAnimationFrame(()=>{bottom.classList.add('is-top');topIsA=!topIsA;scheduleNext()})})})}
-    function setPaused(p){paused=p;toggleBtn.setAttribute('aria-pressed',p?'true':'false');icoPause.style.display=p?'none':'inline';icoPlay.style.display=p?'inline':'none';if(p){clearTimers()}else{scheduleNext()}}
-    function startSlideshow(){rotator.classList.add('slideshow');showInitialFrames();video.classList.add('hidden');setPaused(false)}
-    function resetToBeginning(){clearTimers();setPaused(true);topIsA=true;idx=2;a.classList.add('standby');a.classList.remove('is-top');b.classList.add('standby');b.classList.remove('is-top');rotator.classList.remove('slideshow');video.classList.remove('hidden');try{video.pause()}catch(e){}try{video.currentTime=0}catch(e){}}
-    const io=new IntersectionObserver((entries)=>{const e=entries[0];if(e.intersectionRatio<0.15){resetToBeginning();return}if(e.isIntersecting&&e.intersectionRatio>=0.6){video.play().catch(()=>{startSlideshow()})}},{threshold:[0,0.15,0.6,1]});io.observe(rotator);
-    video.addEventListener('ended',startSlideshow,{once:true});
-    prevBtn.addEventListener('click',()=>{if(!rotator.classList.contains('slideshow'))return;clearTimers();const top=topIsA?a:b,bottom=topIsA?b:a;idx=(idx-2+sources.length)%sources.length;bottom.src=sources[idx];idx=(idx+1)%sources.length;whenDecodable(bottom).then(()=>{top.classList.remove('is-top');bottom.classList.add('is-top');topIsA=!topIsA;scheduleNext()})});
-    nextBtn.addEventListener('click',()=>{if(!rotator.classList.contains('slideshow'))return;clearTimers();const top=topIsA?a:b,bottom=topIsA?b:a;bottom.src=sources[idx];idx=(idx+1)%sources.length;whenDecodable(bottom).then(()=>{top.classList.remove('is-top');bottom.classList.add('is-top');topIsA=!topIsA;scheduleNext()})});
-    toggleBtn.addEventListener('click',()=>{if(!rotator.classList.contains('slideshow')){if(video.paused){video.play().catch(()=>{})}else{video.pause()}return}setPaused(!paused)});
+    const icoPlay =toggleBtn.querySelector('.ico-play');
+
+    sources.forEach(src=>{const im=new Image(); im.src=src;});
+
+    let idx=2, topIsA=true;
+    const HOLD_MS=2000;
+    let slideTimer=null;
+    let paused=false;
+
+    function clearTimers(){ if(slideTimer){clearTimeout(slideTimer);slideTimer=null} }
+    function whenDecodable(img){ const p=(img.decode?img.decode():Promise.resolve()); return p.catch(()=>{}); }
+    function showInitialFrames(){ a.classList.remove('standby'); b.classList.remove('standby'); a.classList.add('is-top'); b.classList.remove('is-top'); topIsA=true; idx=2; }
+    function scheduleNext(){ if(!paused){ slideTimer=setTimeout(nextFrame,HOLD_MS); } }
+    function nextFrame(){
+      const top=topIsA ? a : b, bottom=topIsA ? b : a;
+      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+      whenDecodable(bottom).then(()=>{ requestAnimationFrame(()=>{ top.classList.remove('is-top'); requestAnimationFrame(()=>{ bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); }); }); });
+    }
+    function setPaused(p){
+      paused=p;
+      toggleBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
+      icoPause.style.display = p ? 'none' : 'inline';
+      icoPlay.style.display  = p ? 'inline' : 'none';
+      if(p){ clearTimers(); } else { scheduleNext(); }
+    }
+    function startSlideshow(){
+      rotator.classList.add('slideshow');
+      showInitialFrames();
+      video.classList.add('hidden');
+      setPaused(false);
+    }
+    function resetToBeginning(){
+      clearTimers(); setPaused(true); topIsA=true; idx=2;
+      a.classList.add('standby'); a.classList.remove('is-top');
+      b.classList.add('standby'); b.classList.remove('is-top');
+      rotator.classList.remove('slideshow');
+      video.classList.remove('hidden');
+      try{video.pause()}catch(e){}
+      try{video.currentTime=0}catch(e){}
+    }
+
+    const isTouch = window.matchMedia('(hover: none)').matches;
+    const PLAY_T = isTouch ? 0.30 : 0.60;
+    const RESET_T = 0.10;
+
+    const io = new IntersectionObserver(([e]) => {
+      if (e.intersectionRatio < RESET_T) { resetToBeginning(); return; }
+      if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
+        video.play().catch(()=>{ startSlideshow(); });
+      }
+    }, {
+      threshold: [0, RESET_T, 0.25, PLAY_T, 1],
+      rootMargin: '0px 0px -10% 0px'
+    });
+    io.observe(rotator);
+
+    video.addEventListener('ended', startSlideshow, { once:true });
+
+    prevBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')) return;
+      clearTimers();
+      const top=topIsA ? a : b, bottom=topIsA ? b : a;
+      idx=(idx-2+sources.length)%sources.length; bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+    });
+
+    nextBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')) return;
+      clearTimers();
+      const top=topIsA ? a : b, bottom=topIsA ? b : a;
+      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+    });
+
+    toggleBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')){
+        if (video.paused) { video.play().catch(()=>{}); } else { video.pause(); }
+        return;
+      }
+      setPaused(!paused);
+    });
   })();
   </script>
 
-  <!-- VATHI slideshow script -->
+  <!-- VATHI -->
   <script>
   (function(){
     const sources=[
@@ -328,35 +674,109 @@
       "media/vathi_fast/Vathi_Bathroom_f_1_f_1_1400.webp",
       "media/vathi_fast/Vathi_Bathroom_f_2_f_1_1400.webp"
     ];
+
     const rotator=document.getElementById('vathi-rotator');
     const video=document.getElementById('vathi-video');
     const a=document.getElementById('vathi-a');
     const b=document.getElementById('vathi-b');
-    if(!rotator||!video||!a||!b)return;
+    if(!rotator||!video||!a||!b) return;
+
+    video.muted = true;
+    video.playsInline = true;
+    video.setAttribute('muted','');
+    video.setAttribute('playsinline','');
+    video.setAttribute('webkit-playsinline','');
+    video.setAttribute('autoplay','');
+
     const prevBtn=rotator.querySelector('.btn.prev');
     const nextBtn=rotator.querySelector('.btn.next');
     const toggleBtn=rotator.querySelector('.btn.center');
     const icoPause=toggleBtn.querySelector('.ico-pause');
     const icoPlay=toggleBtn.querySelector('.ico-play');
-    sources.forEach(src=>{const im=new Image();im.src=src});
-    let idx=2,topIsA=true;const HOLD_MS=2000;let slideTimer=null;let paused=false;
-    function clearTimers(){if(slideTimer){clearTimeout(slideTimer);slideTimer=null}}
-    function whenDecodable(img){const p=(img.decode?img.decode():Promise.resolve());return p.catch(()=>{})}
-    function showInitialFrames(){a.classList.remove('standby');b.classList.remove('standby');a.classList.add('is-top');b.classList.remove('is-top');topIsA=true;idx=2}
-    function scheduleNext(){if(!paused){slideTimer=setTimeout(nextFrame,HOLD_MS)}}
-    function nextFrame(){const top=topIsA?a:b,bottom=topIsA?b:a;bottom.src=sources[idx];idx=(idx+1)%sources.length;whenDecodable(bottom).then(()=>{requestAnimationFrame(()=>{top.classList.remove('is-top');requestAnimationFrame(()=>{bottom.classList.add('is-top');topIsA=!topIsA;scheduleNext()})})})}
-    function setPaused(p){paused=p;toggleBtn.setAttribute('aria-pressed',p?'true':'false');icoPause.style.display=p?'none':'inline';icoPlay.style.display=p?'inline':'none';if(p){clearTimers()}else{scheduleNext()}}
-    function startSlideshow(){rotator.classList.add('slideshow');showInitialFrames();video.classList.add('hidden');setPaused(false)}
-    function resetToBeginning(){clearTimers();setPaused(true);topIsA=true;idx=2;a.classList.add('standby');a.classList.remove('is-top');b.classList.add('standby');b.classList.remove('is-top');rotator.classList.remove('slideshow');video.classList.remove('hidden');try{video.pause()}catch(e){}try{video.currentTime=0}catch(e){}}
-    const io=new IntersectionObserver((entries)=>{const e=entries[0];if(e.intersectionRatio<0.15){resetToBeginning();return}if(e.isIntersecting&&e.intersectionRatio>=0.6){video.play().catch(()=>{startSlideshow()})}},{threshold:[0,0.15,0.6,1]});io.observe(rotator);
-    video.addEventListener('ended',startSlideshow,{once:true});
-    prevBtn.addEventListener('click',()=>{if(!rotator.classList.contains('slideshow'))return;clearTimers();const top=topIsA?a:b,bottom=topIsA?b:a;idx=(idx-2+sources.length)%sources.length;bottom.src=sources[idx];idx=(idx+1)%sources.length;whenDecodable(bottom).then(()=>{top.classList.remove('is-top');bottom.classList.add('is-top');topIsA=!topIsA;scheduleNext()})});
-    nextBtn.addEventListener('click',()=>{if(!rotator.classList.contains('slideshow'))return;clearTimers();const top=topIsA?a:b,bottom=topIsA?b:a;bottom.src=sources[idx];idx=(idx+1)%sources.length;whenDecodable(bottom).then(()=>{top.classList.remove('is-top');bottom.classList.add('is-top');topIsA=!topIsA;scheduleNext()})});
-    toggleBtn.addEventListener('click',()=>{if(!rotator.classList.contains('slideshow')){if(video.paused){video.play().catch(()=>{})}else{video.pause()}return}setPaused(!paused)});
+
+    sources.forEach(src=>{const im=new Image(); im.src=src;});
+
+    let idx=2, topIsA=true;
+    const HOLD_MS=2000;
+    let slideTimer=null;
+    let paused=false;
+
+    function clearTimers(){ if(slideTimer){clearTimeout(slideTimer);slideTimer=null} }
+    function whenDecodable(img){ const p=(img.decode?img.decode():Promise.resolve()); return p.catch(()=>{}); }
+    function showInitialFrames(){ a.classList.remove('standby'); b.classList.remove('standby'); a.classList.add('is-top'); b.classList.remove('is-top'); topIsA=true; idx=2; }
+    function scheduleNext(){ if(!paused){ slideTimer=setTimeout(nextFrame,HOLD_MS); } }
+    function nextFrame(){
+      const top=topIsA ? a : b, bottom=topIsA ? b : a;
+      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+      whenDecodable(bottom).then(()=>{ requestAnimationFrame(()=>{ top.classList.remove('is-top'); requestAnimationFrame(()=>{ bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); }); }); });
+    }
+    function setPaused(p){
+      paused=p;
+      toggleBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
+      icoPause.style.display = p ? 'none' : 'inline';
+      icoPlay.style.display  = p ? 'inline' : 'none';
+      if(p){ clearTimers(); } else { scheduleNext(); }
+    }
+    function startSlideshow(){
+      rotator.classList.add('slideshow');
+      showInitialFrames();
+      video.classList.add('hidden');
+      setPaused(false);
+    }
+    function resetToBeginning(){
+      clearTimers(); setPaused(true); topIsA=true; idx=2;
+      a.classList.add('standby'); a.classList.remove('is-top');
+      b.classList.add('standby'); b.classList.remove('is-top');
+      rotator.classList.remove('slideshow');
+      video.classList.remove('hidden');
+      try{video.pause()}catch(e){}
+      try{video.currentTime=0}catch(e){}
+    }
+
+    const isTouch = window.matchMedia('(hover: none)').matches;
+    const PLAY_T = isTouch ? 0.30 : 0.60;
+    const RESET_T = 0.10;
+
+    const io = new IntersectionObserver(([e]) => {
+      if (e.intersectionRatio < RESET_T) { resetToBeginning(); return; }
+      if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
+        video.play().catch(()=>{ startSlideshow(); });
+      }
+    }, {
+      threshold: [0, RESET_T, 0.25, PLAY_T, 1],
+      rootMargin: '0px 0px -10% 0px'
+    });
+    io.observe(rotator);
+
+    video.addEventListener('ended', startSlideshow, { once:true });
+
+    prevBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')) return;
+      clearTimers();
+      const top=topIsA ? a : b, bottom=topIsA ? b : a;
+      idx=(idx-2+sources.length)%sources.length; bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+    });
+
+    nextBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')) return;
+      clearTimers();
+      const top=topIsA ? a : b, bottom=topIsA ? b : a;
+      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+    });
+
+    toggleBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')){
+        if (video.paused) { video.play().catch(()=>{}); } else { video.pause(); }
+        return;
+      }
+      setPaused(!paused);
+    });
   })();
   </script>
 
-  <!-- LIVADA slideshow script -->
+  <!-- LIVADA -->
   <script>
   (function(){
     const sources=[
@@ -379,35 +799,109 @@
       "media/livada_fast/Livada_Bathroom_f_2_1400.webp",
       "media/livada_fast/Livada_Bathroom_f_3_1400.webp"
     ];
+
     const rotator=document.getElementById('livada-rotator');
     const video=document.getElementById('livada-video');
     const a=document.getElementById('livada-a');
     const b=document.getElementById('livada-b');
-    if(!rotator||!video||!a||!b)return;
+    if(!rotator||!video||!a||!b) return;
+
+    video.muted = true;
+    video.playsInline = true;
+    video.setAttribute('muted','');
+    video.setAttribute('playsinline','');
+    video.setAttribute('webkit-playsinline','');
+    video.setAttribute('autoplay','');
+
     const prevBtn=rotator.querySelector('.btn.prev');
     const nextBtn=rotator.querySelector('.btn.next');
     const toggleBtn=rotator.querySelector('.btn.center');
     const icoPause=toggleBtn.querySelector('.ico-pause');
     const icoPlay=toggleBtn.querySelector('.ico-play');
-    sources.forEach(src=>{const im=new Image();im.src=src});
-    let idx=2,topIsA=true;const HOLD_MS=2000;let slideTimer=null;let paused=false;
-    function clearTimers(){if(slideTimer){clearTimeout(slideTimer);slideTimer=null}}
-    function whenDecodable(img){const p=(img.decode?img.decode():Promise.resolve());return p.catch(()=>{})}
-    function showInitialFrames(){a.classList.remove('standby');b.classList.remove('standby');a.classList.add('is-top');b.classList.remove('is-top');topIsA=true;idx=2}
-    function scheduleNext(){if(!paused){slideTimer=setTimeout(nextFrame,HOLD_MS)}}
-    function nextFrame(){const top=topIsA?a:b,bottom=topIsA?b:a;bottom.src=sources[idx];idx=(idx+1)%sources.length;whenDecodable(bottom).then(()=>{requestAnimationFrame(()=>{top.classList.remove('is-top');requestAnimationFrame(()=>{bottom.classList.add('is-top');topIsA=!topIsA;scheduleNext()})})})}
-    function setPaused(p){paused=p;toggleBtn.setAttribute('aria-pressed',p?'true':'false');icoPause.style.display=p?'none':'inline';icoPlay.style.display=p?'inline':'none';if(p){clearTimers()}else{scheduleNext()}}
-    function startSlideshow(){rotator.classList.add('slideshow');showInitialFrames();video.classList.add('hidden');setPaused(false)}
-    function resetToBeginning(){clearTimers();setPaused(true);topIsA=true;idx=2;a.classList.add('standby');a.classList.remove('is-top');b.classList.add('standby');b.classList.remove('is-top');rotator.classList.remove('slideshow');video.classList.remove('hidden');try{video.pause()}catch(e){}try{video.currentTime=0}catch(e){}}
-    const io=new IntersectionObserver((entries)=>{const e=entries[0];if(e.intersectionRatio<0.15){resetToBeginning();return}if(e.isIntersecting&&e.intersectionRatio>=0.6){video.play().catch(()=>{startSlideshow()})}},{threshold:[0,0.15,0.6,1]});io.observe(rotator);
-    video.addEventListener('ended',startSlideshow,{once:true});
-    prevBtn.addEventListener('click',()=>{if(!rotator.classList.contains('slideshow'))return;clearTimers();const top=topIsA?a:b,bottom=topIsA?b:a;idx=(idx-2+sources.length)%sources.length;bottom.src=sources[idx];idx=(idx+1)%sources.length;whenDecodable(bottom).then(()=>{top.classList.remove('is-top');bottom.classList.add('is-top');topIsA=!topIsA;scheduleNext()})});
-    nextBtn.addEventListener('click',()=>{if(!rotator.classList.contains('slideshow'))return;clearTimers();const top=topIsA?a:b,bottom=topIsA?b:a;bottom.src=sources[idx];idx=(idx+1)%sources.length;whenDecodable(bottom).then(()=>{top.classList.remove('is-top');bottom.classList.add('is-top');topIsA=!topIsA;scheduleNext()})});
-    toggleBtn.addEventListener('click',()=>{if(!rotator.classList.contains('slideshow')){if(video.paused){video.play().catch(()=>{})}else{video.pause()}return}setPaused(!paused)});
+
+    sources.forEach(src=>{const im=new Image(); im.src=src;});
+
+    let idx=2, topIsA=true;
+    const HOLD_MS=2000;
+    let slideTimer=null;
+    let paused=false;
+
+    function clearTimers(){ if(slideTimer){clearTimeout(slideTimer);slideTimer=null} }
+    function whenDecodable(img){ const p=(img.decode?img.decode():Promise.resolve()); return p.catch(()=>{}); }
+    function showInitialFrames(){ a.classList.remove('standby'); b.classList.remove('standby'); a.classList.add('is-top'); b.classList.remove('is-top'); topIsA=true; idx=2; }
+    function scheduleNext(){ if(!paused){ slideTimer=setTimeout(nextFrame,HOLD_MS); } }
+    function nextFrame(){
+      const top=topIsA ? a : b, bottom=topIsA ? b : a;
+      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+      whenDecodable(bottom).then(()=>{ requestAnimationFrame(()=>{ top.classList.remove('is-top'); requestAnimationFrame(()=>{ bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); }); }); });
+    }
+    function setPaused(p){
+      paused=p;
+      toggleBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
+      icoPause.style.display = p ? 'none' : 'inline';
+      icoPlay.style.display  = p ? 'inline' : 'none';
+      if(p){ clearTimers(); } else { scheduleNext(); }
+    }
+    function startSlideshow(){
+      rotator.classList.add('slideshow');
+      showInitialFrames();
+      video.classList.add('hidden');
+      setPaused(false);
+    }
+    function resetToBeginning(){
+      clearTimers(); setPaused(true); topIsA=true; idx=2;
+      a.classList.add('standby'); a.classList.remove('is-top');
+      b.classList.add('standby'); b.classList.remove('is-top');
+      rotator.classList.remove('slideshow');
+      video.classList.remove('hidden');
+      try{video.pause()}catch(e){}
+      try{video.currentTime=0}catch(e){}
+    }
+
+    const isTouch = window.matchMedia('(hover: none)').matches;
+    const PLAY_T = isTouch ? 0.30 : 0.60;
+    const RESET_T = 0.10;
+
+    const io = new IntersectionObserver(([e]) => {
+      if (e.intersectionRatio < RESET_T) { resetToBeginning(); return; }
+      if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
+        video.play().catch(()=>{ startSlideshow(); });
+      }
+    }, {
+      threshold: [0, RESET_T, 0.25, PLAY_T, 1],
+      rootMargin: '0px 0px -10% 0px'
+    });
+    io.observe(rotator);
+
+    video.addEventListener('ended', startSlideshow, { once:true });
+
+    prevBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')) return;
+      clearTimers();
+      const top=topIsA ? a : b, bottom=topIsA ? b : a;
+      idx=(idx-2+sources.length)%sources.length; bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+    });
+
+    nextBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')) return;
+      clearTimers();
+      const top=topIsA ? a : b, bottom=topIsA ? b : a;
+      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+    });
+
+    toggleBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')){
+        if (video.paused) { video.play().catch(()=>{}); } else { video.pause(); }
+        return;
+      }
+      setPaused(!paused);
+    });
   })();
   </script>
 
-  <!-- AMMOS slideshow script -->
+  <!-- AMMOS -->
   <script>
   (function(){
     const sources=[
@@ -430,31 +924,105 @@
       "media/ammos_fast/Ammos_Bathroom_f_2_1400.webp",
       "media/ammos_fast/Ammos_Bathroom_f_3_1400.webp"
     ];
+
     const rotator=document.getElementById('ammos-rotator');
     const video=document.getElementById('ammos-video');
     const a=document.getElementById('ammos-a');
     const b=document.getElementById('ammos-b');
-    if(!rotator||!video||!a||!b)return;
+    if(!rotator||!video||!a||!b) return;
+
+    video.muted = true;
+    video.playsInline = true;
+    video.setAttribute('muted','');
+    video.setAttribute('playsinline','');
+    video.setAttribute('webkit-playsinline','');
+    video.setAttribute('autoplay','');
+
     const prevBtn=rotator.querySelector('.btn.prev');
     const nextBtn=rotator.querySelector('.btn.next');
     const toggleBtn=rotator.querySelector('.btn.center');
     const icoPause=toggleBtn.querySelector('.ico-pause');
     const icoPlay=toggleBtn.querySelector('.ico-play');
-    sources.forEach(src=>{const im=new Image();im.src=src});
-    let idx=2,topIsA=true;const HOLD_MS=2000;let slideTimer=null;let paused=false;
-    function clearTimers(){if(slideTimer){clearTimeout(slideTimer);slideTimer=null}}
-    function whenDecodable(img){const p=(img.decode?img.decode():Promise.resolve());return p.catch(()=>{})}
-    function showInitialFrames(){a.classList.remove('standby');b.classList.remove('standby');a.classList.add('is-top');b.classList.remove('is-top');topIsA=true;idx=2}
-    function scheduleNext(){if(!paused){slideTimer=setTimeout(nextFrame,HOLD_MS)}}
-    function nextFrame(){const top=topIsA?a:b,bottom=topIsA?b:a;bottom.src=sources[idx];idx=(idx+1)%sources.length;whenDecodable(bottom).then(()=>{requestAnimationFrame(()=>{top.classList.remove('is-top');requestAnimationFrame(()=>{bottom.classList.add('is-top');topIsA=!topIsA;scheduleNext()})})})}
-    function setPaused(p){paused=p;toggleBtn.setAttribute('aria-pressed',p?'true':'false');icoPause.style.display=p?'none':'inline';icoPlay.style.display=p?'inline':'none';if(p){clearTimers()}else{scheduleNext()}}
-    function startSlideshow(){rotator.classList.add('slideshow');showInitialFrames();video.classList.add('hidden');setPaused(false)}
-    function resetToBeginning(){clearTimers();setPaused(true);topIsA=true;idx=2;a.classList.add('standby');a.classList.remove('is-top');b.classList.add('standby');b.classList.remove('is-top');rotator.classList.remove('slideshow');video.classList.remove('hidden');try{video.pause()}catch(e){}try{video.currentTime=0}catch(e){}}
-    const io=new IntersectionObserver((entries)=>{const e=entries[0];if(e.intersectionRatio<0.15){resetToBeginning();return}if(e.isIntersecting&&e.intersectionRatio>=0.6){video.play().catch(()=>{startSlideshow()})}},{threshold:[0,0.15,0.6,1]});io.observe(rotator);
-    video.addEventListener('ended',startSlideshow,{once:true});
-    prevBtn.addEventListener('click',()=>{if(!rotator.classList.contains('slideshow'))return;clearTimers();const top=topIsA?a:b,bottom=topIsA?b:a;idx=(idx-2+sources.length)%sources.length;bottom.src=sources[idx];idx=(idx+1)%sources.length;whenDecodable(bottom).then(()=>{top.classList.remove('is-top');bottom.classList.add('is-top');topIsA=!topIsA;scheduleNext()})});
-    nextBtn.addEventListener('click',()=>{if(!rotator.classList.contains('slideshow'))return;clearTimers();const top=topIsA?a:b,bottom=topIsA?b:a;bottom.src=sources[idx];idx=(idx+1)%sources.length;whenDecodable(bottom).then(()=>{top.classList.remove('is-top');bottom.classList.add('is-top');topIsA=!topIsA;scheduleNext()})});
-    toggleBtn.addEventListener('click',()=>{if(!rotator.classList.contains('slideshow')){if(video.paused){video.play().catch(()=>{})}else{video.pause()}return}setPaused(!paused)});
+
+    sources.forEach(src=>{const im=new Image(); im.src=src;});
+
+    let idx=2, topIsA=true;
+    const HOLD_MS=2000;
+    let slideTimer=null;
+    let paused=false;
+
+    function clearTimers(){ if(slideTimer){clearTimeout(slideTimer);slideTimer=null} }
+    function whenDecodable(img){ const p=(img.decode?img.decode():Promise.resolve()); return p.catch(()=>{}); }
+    function showInitialFrames(){ a.classList.remove('standby'); b.classList.remove('standby'); a.classList.add('is-top'); b.classList.remove('is-top'); topIsA=true; idx=2; }
+    function scheduleNext(){ if(!paused){ slideTimer=setTimeout(nextFrame,HOLD_MS); } }
+    function nextFrame(){
+      const top=topIsA ? a : b, bottom=topIsA ? b : a;
+      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+      whenDecodable(bottom).then(()=>{ requestAnimationFrame(()=>{ top.classList.remove('is-top'); requestAnimationFrame(()=>{ bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); }); }); });
+    }
+    function setPaused(p){
+      paused=p;
+      toggleBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
+      icoPause.style.display = p ? 'none' : 'inline';
+      icoPlay.style.display  = p ? 'inline' : 'none';
+      if(p){ clearTimers(); } else { scheduleNext(); }
+    }
+    function startSlideshow(){
+      rotator.classList.add('slideshow');
+      showInitialFrames();
+      video.classList.add('hidden');
+      setPaused(false);
+    }
+    function resetToBeginning(){
+      clearTimers(); setPaused(true); topIsA=true; idx=2;
+      a.classList.add('standby'); a.classList.remove('is-top');
+      b.classList.add('standby'); b.classList.remove('is-top');
+      rotator.classList.remove('slideshow');
+      video.classList.remove('hidden');
+      try{video.pause()}catch(e){}
+      try{video.currentTime=0}catch(e){}
+    }
+
+    const isTouch = window.matchMedia('(hover: none)').matches;
+    const PLAY_T = isTouch ? 0.30 : 0.60;
+    const RESET_T = 0.10;
+
+    const io = new IntersectionObserver(([e]) => {
+      if (e.intersectionRatio < RESET_T) { resetToBeginning(); return; }
+      if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
+        video.play().catch(()=>{ startSlideshow(); });
+      }
+    }, {
+      threshold: [0, RESET_T, 0.25, PLAY_T, 1],
+      rootMargin: '0px 0px -10% 0px'
+    });
+    io.observe(rotator);
+
+    video.addEventListener('ended', startSlideshow, { once:true });
+
+    prevBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')) return;
+      clearTimers();
+      const top=topIsA ? a : b, bottom=topIsA ? b : a;
+      idx=(idx-2+sources.length)%sources.length; bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+    });
+
+    nextBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')) return;
+      clearTimers();
+      const top=topIsA ? a : b, bottom=topIsA ? b : a;
+      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+    });
+
+    toggleBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')){
+        if (video.paused) { video.play().catch(()=>{}); } else { video.pause(); }
+        return;
+      }
+      setPaused(!paused);
+    });
   })();
   </script>
 

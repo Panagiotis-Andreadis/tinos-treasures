@@ -32,7 +32,6 @@
       --white:#fff; --dark:#111; --accent:#fff;
       --container-w:1100px; --section-pad:clamp(60px,8vw,100px);
       --fade-duration:.8s; --nav-h:64px; --footer-h:80px;
-      /* scrollbar width (set via JS below) */
       --sbw: 0px;
     }
     html{scrollbar-gutter:stable;}
@@ -48,7 +47,7 @@
     @keyframes introFadeOut{0%{opacity:1;visibility:visible}90%{opacity:0;visibility:visible}100%{opacity:0;visibility:hidden;display:none}}
     body.intro-active #bg-video{opacity:0!important}
 
-    /* NAV (fixed) — constrained to avoid painting under the scrollbar */
+    /* NAV */
     .nav{
       position:fixed; top:0; left:0; right:auto; height:64px;
       width:calc(100vw - var(--sbw, 0px));
@@ -62,23 +61,14 @@
       transform:translateZ(0);
     }
     @supports not (overflow: clip){ .nav{overflow:hidden;} }
-
     .nav::before{
-      content:"";
-      position:absolute; inset:0;
+      content:""; position:absolute; inset:0;
       background:var(--glass-bg);
-      backdrop-filter:blur(10px);
-      -webkit-backdrop-filter:blur(10px);
+      backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
       pointer-events:none;
     }
 
-    .nav-inner{
-      position:relative; z-index:1;
-      width:100%; max-width:none; box-sizing:border-box;
-      display:flex; justify-content:space-between; align-items:center;
-      padding:0 3vw;
-      min-width:0; overflow:hidden;
-    }
+    .nav-inner{position:relative; z-index:1; width:100%; display:flex; justify-content:space-between; align-items:center; padding:0 3vw; min-width:0; overflow:hidden;}
     .nav-logo{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:#000}
     .nav-logo img{width:34px;height:34px;object-fit:contain;filter:none}
     .nav-logo span{font-size:16px;letter-spacing:.06em;color:#000}
@@ -217,11 +207,9 @@
       .hamburger::after{bottom:0}
     }
 
-    /* Desktop cleanup & spacing */
     .apt .apt-text h2{margin:0 0 6px}
     .apt .apt-text h3{margin:0 0 10px}
 
-    /* ===== DESKTOP: remove gap under navbar in Apartments ===== */
     @media (min-width:901px){
       #apartments.section{background:transparent!important}
       .apt.apt-section{background:transparent!important}
@@ -249,16 +237,10 @@
       }
     }
 
-    /* ===== MOBILE: section grows, rotator stays 100vh ===== */
     @media (max-width:900px){
       .apt.apt-section{
-        height:auto !important;
-        min-height:0 !important;
-        max-height:none !important;
-        overflow:visible !important;
-        display:flex !important;
-        flex-direction:column !important;
-        gap:0 !important;
+        height:auto !important; min-height:0 !important; max-height:none !important;
+        overflow:visible !important; display:flex !important; flex-direction:column !important; gap:0 !important;
       }
       .apt.apt-section .apt-text{
         order:1 !important;height:auto !important;transform:none !important;
@@ -465,8 +447,6 @@
        SCRIPTS
        ================= -->
   <script>
-    /* Compute scrollbar width and expose as --sbw so the header blur
-       stops before the scrollbar gutter (avoids “blurred scrollbar”) */
     (function(){
       function setSBW(){
         const sbw = Math.max(0, window.innerWidth - document.documentElement.clientWidth);
@@ -562,6 +542,13 @@
     })();
   </script>
 
+  <!-- Helper used by all rotators -->
+  <script>
+    function nearEnd(v, epsilon=0.12){
+      return (v && v.duration && (v.duration - v.currentTime) <= epsilon);
+    }
+  </script>
+
   <!-- APIGANIA -->
   <script>
   (function(){
@@ -592,13 +579,10 @@
     const b=document.getElementById('apigania-b');
     if(!rotator||!video||!a||!b) return;
 
-    // iOS-safe inline autoplay
-    video.muted = true;
-    video.playsInline = true;
-    video.setAttribute('muted','');
-    video.setAttribute('playsinline','');
-    video.setAttribute('webkit-playsinline','');
-    video.setAttribute('autoplay','');
+    // iOS-safe inline autoplay attrs
+    video.muted = true; video.playsInline = true;
+    video.setAttribute('muted',''); video.setAttribute('playsinline','');
+    video.setAttribute('webkit-playsinline',''); video.setAttribute('autoplay','');
 
     const prevBtn=rotator.querySelector('.btn.prev');
     const nextBtn=rotator.querySelector('.btn.next');
@@ -630,6 +614,7 @@
       if(p){ clearTimers(); } else { scheduleNext(); }
     }
     function startSlideshow(){
+      if(rotator.classList.contains('slideshow')) return;
       rotator.classList.add('slideshow');
       showInitialFrames();
       video.classList.add('hidden');
@@ -652,15 +637,21 @@
     const io = new IntersectionObserver(([e]) => {
       if (e.intersectionRatio < RESET_T) { resetToBeginning(); return; }
       if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
-        video.play().catch(()=>{ startSlideshow(); });
+        // If we re-enter and the video is already at or past the end, start slideshow immediately
+        if (video.ended || nearEnd(video)) {
+          startSlideshow();
+        } else {
+          video.play().catch(()=>{ startSlideshow(); });
+        }
       }
-    }, {
-      threshold: [0, RESET_T, 0.25, PLAY_T, 1],
-      rootMargin: '0px 0px -10% 0px'
-    });
+    }, { threshold: [0, RESET_T, 0.25, PLAY_T, 1], rootMargin: '0px 0px -10% 0px' });
     io.observe(rotator);
 
-    video.addEventListener('ended', startSlideshow, { once:true });
+    // Persistent end handlers (no once:true) + near-end guard
+    video.addEventListener('ended', startSlideshow);
+    video.addEventListener('timeupdate', () => {
+      if (!rotator.classList.contains('slideshow') && nearEnd(video)) startSlideshow();
+    });
 
     prevBtn.addEventListener('click', ()=>{
       if(!rotator.classList.contains('slideshow')) return;
@@ -717,12 +708,9 @@
     const b=document.getElementById('vathi-b');
     if(!rotator||!video||!a||!b) return;
 
-    video.muted = true;
-    video.playsInline = true;
-    video.setAttribute('muted','');
-    video.setAttribute('playsinline','');
-    video.setAttribute('webkit-playsinline','');
-    video.setAttribute('autoplay','');
+    video.muted = true; video.playsInline = true;
+    video.setAttribute('muted',''); video.setAttribute('playsinline','');
+    video.setAttribute('webkit-playsinline',''); video.setAttribute('autoplay','');
 
     const prevBtn=rotator.querySelector('.btn.prev');
     const nextBtn=rotator.querySelector('.btn.next');
@@ -754,6 +742,7 @@
       if(p){ clearTimers(); } else { scheduleNext(); }
     }
     function startSlideshow(){
+      if(rotator.classList.contains('slideshow')) return;
       rotator.classList.add('slideshow');
       showInitialFrames();
       video.classList.add('hidden');
@@ -776,15 +765,16 @@
     const io = new IntersectionObserver(([e]) => {
       if (e.intersectionRatio < RESET_T) { resetToBeginning(); return; }
       if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
-        video.play().catch(()=>{ startSlideshow(); });
+        if (video.ended || nearEnd(video)) { startSlideshow(); }
+        else { video.play().catch(()=>{ startSlideshow(); }); }
       }
-    }, {
-      threshold: [0, RESET_T, 0.25, PLAY_T, 1],
-      rootMargin: '0px 0px -10% 0px'
-    });
+    }, { threshold: [0, RESET_T, 0.25, PLAY_T, 1], rootMargin: '0px 0px -10% 0px' });
     io.observe(rotator);
 
-    video.addEventListener('ended', startSlideshow, { once:true });
+    video.addEventListener('ended', startSlideshow);
+    video.addEventListener('timeupdate', () => {
+      if (!rotator.classList.contains('slideshow') && nearEnd(video)) startSlideshow();
+    });
 
     prevBtn.addEventListener('click', ()=>{
       if(!rotator.classList.contains('slideshow')) return;
@@ -842,12 +832,9 @@
     const b=document.getElementById('livada-b');
     if(!rotator||!video||!a||!b) return;
 
-    video.muted = true;
-    video.playsInline = true;
-    video.setAttribute('muted','');
-    video.setAttribute('playsinline','');
-    video.setAttribute('webkit-playsinline','');
-    video.setAttribute('autoplay','');
+    video.muted = true; video.playsInline = true;
+    video.setAttribute('muted',''); video.setAttribute('playsinline','');
+    video.setAttribute('webkit-playsinline',''); video.setAttribute('autoplay','');
 
     const prevBtn=rotator.querySelector('.btn.prev');
     const nextBtn=rotator.querySelector('.btn.next');
@@ -879,6 +866,7 @@
       if(p){ clearTimers(); } else { scheduleNext(); }
     }
     function startSlideshow(){
+      if(rotator.classList.contains('slideshow')) return;
       rotator.classList.add('slideshow');
       showInitialFrames();
       video.classList.add('hidden');
@@ -901,15 +889,16 @@
     const io = new IntersectionObserver(([e]) => {
       if (e.intersectionRatio < RESET_T) { resetToBeginning(); return; }
       if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
-        video.play().catch(()=>{ startSlideshow(); });
+        if (video.ended || nearEnd(video)) { startSlideshow(); }
+        else { video.play().catch(()=>{ startSlideshow(); }); }
       }
-    }, {
-      threshold: [0, RESET_T, 0.25, PLAY_T, 1],
-      rootMargin: '0px 0px -10% 0px'
-    });
+    }, { threshold: [0, RESET_T, 0.25, PLAY_T, 1], rootMargin: '0px 0px -10% 0px' });
     io.observe(rotator);
 
-    video.addEventListener('ended', startSlideshow, { once:true });
+    video.addEventListener('ended', startSlideshow);
+    video.addEventListener('timeupdate', () => {
+      if (!rotator.classList.contains('slideshow') && nearEnd(video)) startSlideshow();
+    });
 
     prevBtn.addEventListener('click', ()=>{
       if(!rotator.classList.contains('slideshow')) return;
@@ -967,12 +956,9 @@
     const b=document.getElementById('ammos-b');
     if(!rotator||!video||!a||!b) return;
 
-    video.muted = true;
-    video.playsInline = true;
-    video.setAttribute('muted','');
-    video.setAttribute('playsinline','');
-    video.setAttribute('webkit-playsinline','');
-    video.setAttribute('autoplay','');
+    video.muted = true; video.playsInline = true;
+    video.setAttribute('muted',''); video.setAttribute('playsinline','');
+    video.setAttribute('webkit-playsinline',''); video.setAttribute('autoplay','');
 
     const prevBtn=rotator.querySelector('.btn.prev');
     const nextBtn=rotator.querySelector('.btn.next');
@@ -1004,6 +990,7 @@
       if(p){ clearTimers(); } else { scheduleNext(); }
     }
     function startSlideshow(){
+      if(rotator.classList.contains('slideshow')) return;
       rotator.classList.add('slideshow');
       showInitialFrames();
       video.classList.add('hidden');
@@ -1026,15 +1013,16 @@
     const io = new IntersectionObserver(([e]) => {
       if (e.intersectionRatio < RESET_T) { resetToBeginning(); return; }
       if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
-        video.play().catch(()=>{ startSlideshow(); });
+        if (video.ended || nearEnd(video)) { startSlideshow(); }
+        else { video.play().catch(()=>{ startSlideshow(); }); }
       }
-    }, {
-      threshold: [0, RESET_T, 0.25, PLAY_T, 1],
-      rootMargin: '0px 0px -10% 0px'
-    });
+    }, { threshold: [0, RESET_T, 0.25, PLAY_T, 1], rootMargin: '0px 0px -10% 0px' });
     io.observe(rotator);
 
-    video.addEventListener('ended', startSlideshow, { once:true });
+    video.addEventListener('ended', startSlideshow);
+    video.addEventListener('timeupdate', () => {
+      if (!rotator.classList.contains('slideshow') && nearEnd(video)) startSlideshow();
+    });
 
     prevBtn.addEventListener('click', ()=>{
       if(!rotator.classList.contains('slideshow')) return;

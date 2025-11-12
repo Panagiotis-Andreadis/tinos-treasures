@@ -324,6 +324,22 @@
       transform: translateY(-1px);
       text-decoration: none;
     }
+
+    /* === ADDED: mobile sticky CTA + hamburger spacing (no other changes) === */
+    .nav-cta--mobile { display: none; }
+    @media (max-width:900px){
+      .nav-cta--mobile{
+        display:inline-block;
+        margin-left:auto;
+        border-color:#fff;
+        color:#fff;
+      }
+      /* Nudge hamburger inward and separate from CTA */
+      label[for="nav-toggle"]{
+        margin-left:8px;
+        padding:8px 10px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -358,6 +374,10 @@
       <div class="nav-right">
         <a class="nav-cta" href="https://tinostreasures.reserve-online.net/" target="_blank" rel="noopener">Book now!</a>
       </div>
+
+      <!-- ADDED: sticky mobile CTA in top bar -->
+      <a class="nav-cta nav-cta--mobile" href="https://tinostreasures.reserve-online.net/" target="_blank" rel="noopener">Book now!</a>
+
       <input type="checkbox" id="nav-toggle">
       <label for="nav-toggle" aria-label="Menu" aria-controls="mobile-menu" aria-expanded="false">
         <div class="hamburger"><span></span></div>
@@ -413,7 +433,7 @@
         </div>
         <div class="apt-text"><h2>Apartments</h2><h3>Apigania</h3><p>Located on the upper floor, this seaside duplex apartment overlooks the sea, featuring a queen bed, two adult single beds, a marble-finished kitchen, a cozy living room with a flat-screen TV, and a sleek bathroom. An internal staircase connects the two levels. Step onto the veranda with its marble table and enjoy stunning views of Isternia village, the sea, and the island’s terraced landscape (xerolithies). Just a 2-minute level walk brings you to two beaches, two restaurants, and a quiet beach bar—no uphill climbs required.
     </p></p></div>
-      </div>
+      </div -->
 
       <!-- VATHI -->
       <div id="vathi" class="apt apt-section snap">

@@ -329,6 +329,16 @@
     background: linear-gradient(to right, #000 50%, #fff 50%) !important;
   }
 }
+/* Let the Apartments dropdown escape the navbar clipping */
+@media (min-width:901px){
+  .nav{
+    overflow: visible !important;   /* was clip/hidden */
+    contain: none !important;       /* cancel paint containment that can interfere */
+  }
+  .nav-dropdown-menu{
+    z-index: 100000;                /* belt-and-suspenders */
+  }
+}
 
   </style>
 </head>

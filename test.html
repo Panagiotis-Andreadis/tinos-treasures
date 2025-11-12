@@ -12,6 +12,7 @@
   <link rel="preload" href="Cycladic-Regular.otf" as="font" type="font/otf" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
 
+
   <!-- Open Graph -->
   <meta property="og:title" content="Tinos Treasures | Luxury Seaside Apartments in Tinos, Greece">
   <meta property="og:description" content="Seaside luxurious 70sqm family-friendly apartments with hotel-like services, located in Isternia Bay, Tinos.">
@@ -139,11 +140,13 @@
       .apt.apt-section .apt-text{display:grid;place-items:center;padding:clamp(18px,6vw,40px);text-align:left}
     }
     .apt-text p {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
-      line-height: 1.6;
-      color: #222;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #222;
     }
+
+
 
     .rotator{position:relative;width:100%;overflow:hidden;background:transparent}
     .rotator img,.rotator video{position:absolute!important;top:50%!important;left:50%!important;transform:translate(-50%,-50%)!important;height:100%!important;width:auto!important;max-height:100%!important;max-width:none!important;background:transparent!important;transition:opacity .6s ease}
@@ -180,6 +183,7 @@
     #contact .social a:hover{opacity:.8;text-decoration:none}
     #contact a{color:#000;text-decoration:none}
     #contact a:hover{text-decoration:underline;opacity:.8}
+    /* previous fill rule kept for legacy; overridden below */
     .social svg,.social svg path{fill:currentColor}
     .social svg{width:100%;height:100%;display:block;fill:currentColor}
     #contact .social{color:#000}
@@ -193,59 +197,22 @@
     .nav-cta:hover { background:rgba(255,255,255,0.15); transform:translateY(-1px) }
     .hamburger span, .hamburger::before, .hamburger::after { background:#fff }
 
-    /* ===== Mobile layout: logo left, CTA centered, hamburger right ===== */
     @media (max-width:900px){
       .nav-center,.nav-right{display:none!important}
       .hamburger{display:block!important;width:28px;height:22px}
-
-      /* Turn the nav-inner into a 3-column grid: [logo][center filler][hamburger] */
-      .nav-inner{
-        display:grid;
-        grid-template-columns:auto 1fr auto;
-        align-items:center;
-        padding-inline:12px;      /* small inset so nothing gets cropped */
-        gap:8px;
-      }
-
-      /* Show sticky mobile CTA and center it in the middle column */
-      .nav-cta--mobile{
-        display:inline-block;
-        grid-column:2;
-        justify-self:center;
-        border-color:#fff;
-        color:#fff;
-        padding:8px 14px;         /* slightly smaller than desktop for balance */
-      }
-
-      /* Logo pinned to the left column */
-      .nav-logo{
-        grid-column:1;
-        justify-self:start;
-      }
-
-      /* Hamburger pinned to right, with a little breathing room */
-      label[for="nav-toggle"]{
-        grid-column:3;
-        justify-self:end;
-        margin-left:0;
-        padding:8px 10px;         /* right inset so it’s not cropped */
-        display:inline-flex;
-        align-items:center;
-        cursor:pointer;
-        height:var(--nav-h);
-      }
-
+      .nav-inner{padding-inline:16px;gap:12px}
+      .nav-logo{display:inline-flex;align-items:center;gap:10px}
+      label[for="nav-toggle"]{margin-left:auto;display:inline-flex;align-items:center;cursor:pointer;padding:6px}
       .nav-mobile{top:var(--nav-h);border-top:1px solid var(--glass-border)}
       body.menu-open{overflow:hidden;touch-action:none}
-
+    }
+    @media (max-width:900px){
       .nav-mobile{background:rgba(0,0,0,0.35);color:#fff!important}
       .nav-mobile a{color:#fff!important;border-bottom:1px solid rgba(255,255,255,0.12);text-decoration:none}
       .nav-mobile a:last-child{border-bottom:none}
-
-      .hamburger{position:relative;width:28px;height:22px}
-      .hamburger span,.hamburger::before,.hamburger::after{
-        position:absolute;left:0;right:0;height:2px;background:#fff;transition:transform 250ms ease,opacity 200ms ease
-      }
+      label[for="nav-toggle"]{margin-left:auto;display:inline-flex;align-items:center;justify-content:center;height:var(--nav-h);padding:0;cursor:pointer}
+      .hamburger{display:block!important;position:relative;width:28px;height:22px}
+      .hamburger span,.hamburger::before,.hamburger::after{position:absolute;left:0;right:0;height:2px;background:#fff;transition:transform 250ms ease,opacity 200ms ease}
       .hamburger::before{top:0}
       .hamburger span{top:50%;transform:translateY(-50%)}
       .hamburger::after{bottom:0}
@@ -312,16 +279,67 @@
       html, body { scroll-snap-type: y proximity !important; }
     }
 
-    /* Outline-style icons (kept as-is) */
-    #contact .social svg * { fill:none !important; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; vector-effect:non-scaling-stroke; }
-    #contact .social svg .fill { fill:currentColor !important; stroke:none !important; }
-    #contact .social a { transition: color .25s ease, transform .15s ease, opacity .25s ease; }
-    #contact .social a:hover { color:#333; transform:translateY(-1px); opacity:1; text-decoration:none; }
+    /* === Outline-style social icons (Contact + Footer) === */
+    /* Contact section: black strokes on white bg */
+    #contact .social svg * {
+      fill: none !important;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      vector-effect: non-scaling-stroke;
+    }
+    #contact .social svg .fill {
+      fill: currentColor !important;
+      stroke: none !important;
+    }
+    #contact .social a {
+      transition: color .25s ease, transform .15s ease, opacity .25s ease;
+    }
+    #contact .social a:hover {
+      color: #333;
+      transform: translateY(-1px);
+      opacity: 1;
+      text-decoration: none;
+    }
 
-    .footer-bottom .social svg * { fill:none !important; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; vector-effect:non-scaling-stroke; }
-    .footer-bottom .social svg .fill { fill:currentColor !important; stroke:none !important; }
-    .footer-bottom .social a { transition:opacity .25s ease, transform .15s ease; }
-    .footer-bottom .social a:hover { opacity:.85; transform:translateY(-1px); text-decoration:none; }
+    /* Footer section (if/when icons are present): white strokes on black bg */
+    .footer-bottom .social svg * {
+      fill: none !important;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      vector-effect: non-scaling-stroke;
+    }
+    .footer-bottom .social svg .fill {
+      fill: currentColor !important;
+      stroke: none !important;
+    }
+    .footer-bottom .social a {
+      transition: opacity .25s ease, transform .15s ease;
+    }
+    .footer-bottom .social a:hover {
+      opacity: .85;
+      transform: translateY(-1px);
+      text-decoration: none;
+    }
+
+    /* === ADDED: mobile sticky CTA + hamburger spacing (no other changes) === */
+    .nav-cta--mobile { display: none; }
+    @media (max-width:900px){
+      .nav-cta--mobile{
+        display:inline-block;
+        margin-left:auto;
+        border-color:#fff;
+        color:#fff;
+      }
+      /* Nudge hamburger inward and separate from CTA */
+      label[for="nav-toggle"]{
+        margin-left:8px;
+        padding:8px 10px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -357,7 +375,7 @@
         <a class="nav-cta" href="https://tinostreasures.reserve-online.net/" target="_blank" rel="noopener">Book now!</a>
       </div>
 
-      <!-- Sticky mobile CTA in top bar (centered on mobile) -->
+      <!-- ADDED: sticky mobile CTA in top bar -->
       <a class="nav-cta nav-cta--mobile" href="https://tinostreasures.reserve-online.net/" target="_blank" rel="noopener">Book now!</a>
 
       <input type="checkbox" id="nav-toggle">
@@ -413,8 +431,9 @@
             <button class="btn next"  type="button" aria-label="Next" title="Next">❯</button>
           </div>
         </div>
-        <div class="apt-text"><h2>Apartments</h2><h3>Apigania</h3><p>Located on the upper floor, this seaside duplex apartment overlooks the sea, featuring a queen bed, two adult single beds, a marble-finished kitchen, a cozy living room with a flat-screen TV, and a sleek bathroom. An internal staircase connects the two levels. Step onto the veranda with its marble table and enjoy stunning views of Isternia village, the sea, and the island’s terraced landscape (xerolithies). Just a 2-minute level walk brings you to two beaches, two restaurants, and a quiet beach bar—no uphill climbs required.</p></div>
-      </div>
+        <div class="apt-text"><h2>Apartments</h2><h3>Apigania</h3><p>Located on the upper floor, this seaside duplex apartment overlooks the sea, featuring a queen bed, two adult single beds, a marble-finished kitchen, a cozy living room with a flat-screen TV, and a sleek bathroom. An internal staircase connects the two levels. Step onto the veranda with its marble table and enjoy stunning views of Isternia village, the sea, and the island’s terraced landscape (xerolithies). Just a 2-minute level walk brings you to two beaches, two restaurants, and a quiet beach bar—no uphill climbs required.
+    </p></p></div>
+      </div -->
 
       <!-- VATHI -->
       <div id="vathi" class="apt apt-section snap">
@@ -491,6 +510,7 @@
       </p>
 
       <div class="social">
+        <!-- Instagram (outline with filled flash dot) -->
         <a class="instagram" href="https://www.instagram.com/tinostreasures_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
@@ -499,25 +519,29 @@
           </svg>
         </a>
 
+        <!-- Facebook (outline) -->
         <a class="facebook" href="https://www.facebook.com/Tinos.Treasures/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M9 8H7v4h2v12h5V12h3.642L18 8h-4V6c0-1.084.218-1.5 1.273-1.5H18V0h-3.818C9.818 0 9 1.818 9 5v3z"/>
           </svg>
         </a>
 
+        <!-- Google Search (outline) -->
         <a class="google" href="https://www.google.com/search?q=Tinos+Treasures+Apart-Hotel" target="_blank" rel="noopener noreferrer" aria-label="Google Search">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M21.35 11.1h-9.17v2.9h5.64c-.24 1.48-1.7 4.34-5.64 4.34a6.53 6.53 0 0 1 0-13.06 5.84 5.84 0 0 1 4.09 1.59l2.79-2.69A9.63 9.63 0 0 0 12.18 0a10.18 10.18 0 1 0 9.17 11.1z"/>
           </svg>
         </a>
 
+        <!-- YouTube (outline tube, filled play triangle) -->
         <a class="youtube" href="https://www.youtube.com/@tinostreasures" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M10 15l5.19-3L10 9v6z" class="fill"/>
-            <path d="M21.5 6.5s-.2-1.43-.82-2.06c-.78-.82-1.65-.83-2.05-.88C15.35 3.5 12 3.5 12 3.5h-.01s-3.35 0-6.63.06c.4-.05 1.27-.06 2.05-.88C2.7 5.07 2.5 6.5 2.5 6.5S2.5 8.27 2.5 10.04v1.92c0 1.77.02 3.54.02 3.54s.2 1.43.82 2.06c.78.82 1.8.8 2.26.89 1.64.15 6.4.18 6.4.18s3.35 0 6.63-.06c.4-.05 1.27-.06 2.05-.88.62-.63.82-2.06.82-2.06s.02-1.77.02-3.54V10.04c0-1.77-.02-3.54-.02-3.54z"/>
+            <path d="M21.5 6.5s-.2-1.43-.82-2.06c-.78-.82-1.65-.83-2.05-.88C15.35 3.5 12 3.5 12 3.5h-.01s-3.35 0-6.63.06c-.4.05-1.27.06-2.05.88C2.7 5.07 2.5 6.5 2.5 6.5S2.5 8.27 2.5 10.04v1.92c0 1.77.02 3.54.02 3.54s.2 1.43.82 2.06c.78.82 1.8.8 2.26.89 1.64.15 6.4.18 6.4.18s3.35 0 6.63-.06c.4-.05 1.27-.06 2.05-.88.62-.63.82-2.06.82-2.06s.02-1.77.02-3.54V10.04c0-1.77-.02-3.54-.02-3.54z"/>
           </svg>
         </a>
 
+        <!-- Google Maps (outline pin, small filled center dot) -->
         <a class="maps" href="https://maps.app.goo.gl/VVLBkF2q8XZqKbU38" target="_blank" rel="noopener noreferrer" aria-label="Google Maps">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
@@ -666,6 +690,7 @@
     const b=document.getElementById('apigania-b');
     if(!rotator||!video||!a||!b) return;
 
+    // iOS-safe inline autoplay attrs
     video.muted = true; video.playsInline = true;
     video.setAttribute('muted',''); video.setAttribute('playsinline','');
     video.setAttribute('webkit-playsinline',''); video.setAttribute('autoplay','');
@@ -723,6 +748,7 @@
     const io = new IntersectionObserver(([e]) => {
       if (e.intersectionRatio < RESET_T) { resetToBeginning(); return; }
       if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
+        // If we re-enter and the video is already at or past the end, start slideshow immediately
         if (video.ended || nearEnd(video)) {
           startSlideshow();
         } else {
@@ -732,6 +758,7 @@
     }, { threshold: [0, RESET_T, 0.25, PLAY_T, 1], rootMargin: '0px 0px -10% 0px' });
     io.observe(rotator);
 
+    // Persistent end handlers (no once:true) + near-end guard
     video.addEventListener('ended', startSlideshow);
     video.addEventListener('timeupdate', () => {
       if (!rotator.classList.contains('slideshow') && nearEnd(video)) startSlideshow();

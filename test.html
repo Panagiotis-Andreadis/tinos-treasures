@@ -272,6 +272,22 @@
       .nav-mobile{background:rgba(0,0,0,0.35);color:#fff!important}
       .nav-mobile a{color:#fff!important;border-bottom:1px solid rgba(255,255,255,0.12);text-decoration:none}
       .nav-mobile a:last-child{border-bottom:none}
+@media (min-width:901px){
+  .nav { 
+    overflow: visible !important;      /* already added, keep */
+    contain: none !important;          /* already added, keep */
+  }
+  .nav-inner{
+    overflow: visible !important;      /* <-- this is the missing piece */
+  }
+  .nav-dropdown{
+    position: relative;                /* ensure a sane containing block */
+    z-index: 10001;                    /* above the nav glass layer */
+  }
+  .nav-dropdown-menu{
+    z-index: 10002;                    /* above everything in the nav */
+  }
+}
 
       .hamburger{position:relative;width:28px;height:22px}
       .hamburger span,.hamburger::before,.hamburger::after{

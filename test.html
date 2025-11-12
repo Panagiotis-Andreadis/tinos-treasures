@@ -321,6 +321,15 @@
     .footer-bottom .social svg .fill { fill:currentColor !important; stroke:none !important; }
     .footer-bottom .social a { transition:opacity .25s ease, transform .15s ease; }
     .footer-bottom .social a:hover { opacity:.85; transform:translateY(-1px); text-decoration:none; }
+    /* Prevent hero video from showing through under the navbar on Apartments */
+@media (min-width:901px){
+  #apartments.section,
+  .apt.apt-section{
+    /* Left half = media (black), right half = text (white) */
+    background: linear-gradient(to right, #000 50%, #fff 50%) !important;
+  }
+}
+
   </style>
 </head>
 <body>

@@ -120,7 +120,9 @@
     .tagline p{margin:0 4px;display:inline;white-space:nowrap;font-size:clamp(12px,.9vw,22px)}
     @media (max-width:1024px){.tagline{width:94vw}.tagline p{display:block;white-space:normal;font-size:clamp(11px,3.4vw,18px)}}
     h1{font-size:calc(clamp(12px,1.8vw,18px) * 3.2);margin:10px 0 12px;background:linear-gradient(180deg,#fff,#ddd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:fadeInUp var(--fade-duration) ease both .1s}
-    @keyframes fadeInUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}
+
+    }
 
     #apartments.section{padding-block:0;background:#fff;color:#000}
     .apt.apt-section{margin:0;background:#fff;color:#000}
@@ -141,9 +143,11 @@
       }
       .apt.apt-section .apt-text{display:grid;place-items:center;padding:clamp(18px,6vw,40px);text-align:left}
     }
+
+    /* PARAGRAPH SIZE UPDATED */
     .apt-text p {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
+      font-size: 1.25rem;   /* same as h3 */
       line-height: 1.6;
       color: #222;
     }
@@ -288,7 +292,10 @@
     }
 
     .apt .apt-text h2{margin:0 0 6px}
-    .apt .apt-text h3{margin:0 0 10px}
+    .apt .apt-text h3{
+      margin:0 0 10px;
+      font-size: 1.25rem;  /* same size as paragraph text */
+    }
 
     @media (min-width:901px){
       #apartments.section{background:transparent!important}
@@ -560,7 +567,7 @@
         <a class="youtube" href="https://www.youtube.com/@tinostreasures" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M10 15l5.19-3L10 9v6z" class="fill"/>
-            <path d="M21.5 6.5s-.2-1.43-.82-2.06c-.78-.82-1.65-.83-2.05-.88C15.35 3.5 12 3.5 12 3.5h-.01s-3.35 0-6.63.06c.4-.05 1.27.06 2.05.88C2.7 5.07 2.5 6.5 2.5 6.5S2.5 8.27 2.5 10.04v1.92c0 1.77.02 3.54.02 3.54s.2 1.43.82 2.06c.78.82 1.8.8 2.26.89 1.64.15 6.4.18 6.4.18s3.35 0 6.63-.06c.4-.05 1.27-.06 2.05-.88.62-.63.82-2.06.82-2.06s.02-1.77.02-3.54V10.04c0-1.77-.02-3.54-.02-3.54z"/>
+            <path d="M21.5 6.5s-.2-1.43-.82-2.06c-.78-.82-1.65-.83-2.05-.88C15.35 3.5 12 3.5 12 3.5h-.01s-3.35 0-6.63.06c.4-.05 1.27-.06 2.05.88.62-.63.82-2.06.82-2.06s.02-1.77.02-3.54V10.04c0-1.77-.02-3.54-.02-3.54z"/>
           </svg>
         </a>
 

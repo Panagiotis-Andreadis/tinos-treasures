@@ -56,12 +56,12 @@
       padding:0 16px;
       border-bottom:1px solid var(--glass-border);
       background:transparent;
-      overflow:clip;
-      contain:paint;
+      overflow:visible;                 /* <-- allow dropdown to escape */
       will-change:transform;
       transform:translateZ(0);
     }
-    @supports not (overflow: clip){ .nav{overflow:hidden;} }
+    @supports not (overflow: clip){ .nav{overflow:visible;} }
+
     .nav::before{
       content:""; position:absolute; inset:0;
       background:var(--glass-bg);
@@ -69,7 +69,10 @@
       pointer-events:none;
     }
 
-    .nav-inner{position:relative; z-index:1; width:100%; display:flex; justify-content:space-between; align-items:center; padding:0 3vw; min-width:0; overflow:hidden;}
+    .nav-inner{
+      position:relative; z-index:1; width:100%; display:flex; justify-content:space-between; align-items:center; padding:0 3vw; min-width:0;
+      /* overflow:hidden;  <-- removed so submenu isn't clipped */
+    }
     .nav-logo{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:#000}
     .nav-logo img{width:34px;height:34px;object-fit:contain;filter:none}
     .nav-logo span{font-size:16px;letter-spacing:.06em;color:#000}
@@ -167,7 +170,9 @@
 
     .nav-dropdown{position:relative}
     .nav-drop-toggle{cursor:pointer}
-    .nav-dropdown-menu{position:absolute;top:100%;margin-top:-1px;left:0;min-width:220px;padding:0;margin-left:0;border:1px solid var(--glass-border);border-top:0;border-radius:0;background:rgba(0,0,0,0.35);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:none;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s ease,visibility .2s ease;z-index:10000}
+    .nav-dropdown-menu{
+      position:absolute;top:100%;margin-top:-1px;left:0;min-width:220px;padding:0;margin-left:0;border:1px solid var(--glass-border);border-top:0;border-radius:0;background:rgba(0,0,0,0.35);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:none;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s ease,visibility .2s ease;z-index:10000;
+    }
     @media (hover:hover){.nav-dropdown:hover .nav-dropdown-menu{opacity:1;visibility:visible;pointer-events:auto}}
     .nav-dropdown.open .nav-dropdown-menu{opacity:1;visibility:visible;pointer-events:auto}
     .nav-dropdown-menu a{display:block;padding:12px 18px;text-decoration:none;color:#fff;opacity:.95;transition:opacity .2s ease,background .2s ease;white-space:nowrap}
@@ -272,22 +277,6 @@
       .nav-mobile{background:rgba(0,0,0,0.35);color:#fff!important}
       .nav-mobile a{color:#fff!important;border-bottom:1px solid rgba(255,255,255,0.12);text-decoration:none}
       .nav-mobile a:last-child{border-bottom:none}
-@media (min-width:901px){
-  .nav { 
-    overflow: visible !important;      /* already added, keep */
-    contain: none !important;          /* already added, keep */
-  }
-  .nav-inner{
-    overflow: visible !important;      /* <-- this is the missing piece */
-  }
-  .nav-dropdown{
-    position: relative;                /* ensure a sane containing block */
-    z-index: 10001;                    /* above the nav glass layer */
-  }
-  .nav-dropdown-menu{
-    z-index: 10002;                    /* above everything in the nav */
-  }
-}
 
       .hamburger{position:relative;width:28px;height:22px}
       .hamburger span,.hamburger::before,.hamburger::after{
@@ -369,24 +358,15 @@
     .footer-bottom .social svg .fill { fill:currentColor !important; stroke:none !important; }
     .footer-bottom .social a { transition:opacity .25s ease, transform .15s ease; }
     .footer-bottom .social a:hover { opacity:.85; transform:translateY(-1px); text-decoration:none; }
+
     /* Prevent hero video from showing through under the navbar on Apartments */
-@media (min-width:901px){
-  #apartments.section,
-  .apt.apt-section{
-    /* Left half = media (black), right half = text (white) */
-    background: linear-gradient(to right, #000 50%, #fff 50%) !important;
-  }
-}
-/* Let the Apartments dropdown escape the navbar clipping */
-@media (min-width:901px){
-  .nav{
-    overflow: visible !important;   /* was clip/hidden */
-    contain: none !important;       /* cancel paint containment that can interfere */
-  }
-  .nav-dropdown-menu{
-    z-index: 100000;                /* belt-and-suspenders */
-  }
-}
+    @media (min-width:901px){
+      #apartments.section,
+      .apt.apt-section{
+        /* Left half = media (black), right half = text (white) */
+        background: linear-gradient(to right, #000 50%, #fff 50%) !important;
+      }
+    }
 
   </style>
 </head>

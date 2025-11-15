@@ -56,7 +56,7 @@
       padding:0 16px;
       border-bottom:1px solid var(--glass-border);
       background:transparent;
-      overflow:visible;                 /* <-- allow dropdown to escape */
+      overflow:visible;
       will-change:transform;
       transform:translateZ(0);
     }
@@ -71,7 +71,6 @@
 
     .nav-inner{
       position:relative; z-index:1; width:100%; display:flex; justify-content:space-between; align-items:center; padding:0 3vw; min-width:0;
-      /* overflow:hidden;  <-- removed so submenu isn't clipped */
     }
     .nav-logo{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:#000}
     .nav-logo img{width:34px;height:34px;object-fit:contain;filter:none}
@@ -147,7 +146,7 @@
     /* PARAGRAPH SIZE UPDATED */
     .apt-text p {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.25rem;   /* same as h3 */
+      font-size: 1.25rem;
       line-height: 1.6;
       color: #222;
     }
@@ -213,7 +212,7 @@
 
 .footer-bottom p {
   margin: 0;
-  font-size: 0.9rem; /* larger for desktop */
+  font-size: 0.9rem;
 }
 
 /* Mobile adjustments */
@@ -234,10 +233,8 @@
     .nav-cta:hover { background:rgba(255,255,255,0.15); transform:translateY(-1px) }
     .hamburger span, .hamburger::before, .hamburger::after { background:#fff }
 
-    /* Hide mobile CTA on desktop by default */
     .nav-cta--mobile{display:none}
 
-    /* ===== Mobile layout: logo left, CTA centered, hamburger right ===== */
     @media (max-width:900px){
       .nav-center,.nav-right{display:none!important}
       .hamburger{display:block!important;width:28px;height:22px}
@@ -294,7 +291,7 @@
     .apt .apt-text h2{margin:0 0 6px}
     .apt .apt-text h3{
       margin:0 0 10px;
-      font-size: 1.25rem;  /* same size as paragraph text */
+      font-size: 1.25rem;
     }
 
     @media (min-width:901px){
@@ -355,7 +352,6 @@
       html, body { scroll-snap-type: y proximity !important; }
     }
 
-    /* Outline-style icons */
     #contact .social svg * { fill:none !important; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; vector-effect:non-scaling-stroke; }
     #contact .social svg .fill { fill:currentColor !important; stroke:none !important; }
     #contact .social a { transition: color .25s ease, transform .15s ease, opacity .25s ease; }
@@ -366,14 +362,13 @@
     .footer-bottom .social a { transition:opacity .25s ease, transform .15s ease; }
     .footer-bottom .social a:hover { opacity:.85; transform:translateY(-1px); text-decoration:none; }
 
-    /* Prevent hero video from showing through under the navbar on Apartments */
     @media (min-width:901px){
       #apartments.section,
       .apt.apt-section{
-        /* Left half = media (black), right half = text (white) */
         background: linear-gradient(to right, #000 50%, #fff 50%) !important;
       }
     }
+
 .icon {
   width: 32px;
   height: 32px;
@@ -382,7 +377,7 @@
   fill: none;
 }
 
-.icon--sm { width: 24px; height: 24px; }
+.icon--sm { width: 20px; height: 20px; } /* smaller to keep grid compact */
 .icon--lg { width: 40px; height: 40px; }
 
 .amenity {
@@ -400,23 +395,25 @@
 /* Grid layout for apartment pages */
 .apt-amenities-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 14px;
-  margin-top: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+  max-height: 40vh;         /* keep icons+text within one viewport */
+  overflow-y: auto;
 }
 
 .apt-amenity-card {
-  padding: 12px 14px;
+  padding: 8px 10px;
   border-radius: 10px;
   border: 1px solid #e4e4e4;
   background: #fafafa;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .apt-amenity-card span {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
   </style>
@@ -454,7 +451,6 @@
         <a class="nav-cta" href="https://tinostreasures.reserve-online.net/" target="_blank" rel="noopener">Book now!</a>
       </div>
 
-      <!-- Sticky mobile CTA in top bar (centered on mobile) -->
       <a class="nav-cta nav-cta--mobile" href="https://tinostreasures.reserve-online.net/" target="_blank" rel="noopener">Book now!</a>
 
       <input type="checkbox" id="nav-toggle">
@@ -506,7 +502,10 @@
           <img id="apigania-b" alt="Apigania gallery image B" class="standby" src="media/apigania_fast/Apigania_LivingRoom_f_2_1400.webp">
           <div class="controls" aria-label="Gallery controls">
             <button class="btn prev"  type="button" aria-label="Previous" title="Previous">❮</button>
-            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause"><span class="ico ico-pause">❚❚</span><span class="ico ico-play" style="display:none">▶</span></button>
+            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause">
+              <span class="ico ico-pause">❚❚</span>
+              <span class="ico ico-play" style="display:none">▶</span>
+            </button>
             <button class="btn next"  type="button" aria-label="Next" title="Next">❯</button>
           </div>
         </div>
@@ -514,7 +513,12 @@
           <h2>Apartments</h2>
           <h3>Apigania</h3>
 
-          <!-- Apigania amenities grid -->
+          <!-- TEXT FIRST (restored original copy) -->
+          <p>
+            Located on the upper floor, this seaside duplex apartment overlooks the sea, featuring a queen bed, two adult single beds, a marble-finished kitchen, a cozy living room with a flat-screen TV, and a sleek bathroom. An internal staircase connects the two levels. Step onto the veranda with its marble table and enjoy stunning views of Isternia village, the sea, and the island’s terraced landscape (xerolithies). Just a 2-minute level walk brings you to two beaches, two restaurants, and a quiet beach bar—no uphill climbs required.
+          </p>
+
+          <!-- Compact amenity icon grid that fits with text in one viewport -->
           <div class="apt-amenities-grid">
             <div class="apt-amenity-card">
               <svg class="icon icon--sm" aria-hidden="true">
@@ -565,10 +569,6 @@
               <span>1 × Internal staircase</span>
             </div>
           </div>
-
-          <p>
-            Located on the upper floor, this seaside duplex apartment overlooks the sea, featuring a queen bed, two adult single beds, a marble-finished kitchen, a cozy living room with a flat-screen TV, and a sleek bathroom. An internal staircase connects the two levels. Step onto the veranda with its marble table and enjoy stunning views of Isternia village, the sea, and the island’s terraced landscape (xerolithies). Just a 2-minute level walk brings you to two beaches, two restaurants, and a quiet beach bar—no uphill climbs required.
-          </p>
         </div>
       </div>
 
@@ -582,7 +582,10 @@
           <img id="vathi-b" alt="Vathi gallery image B" class="standby" src="media/vathi_fast/Vathi_LivingRoom_f_3_f_1_1400.webp">
           <div class="controls" aria-label="Gallery controls">
             <button class="btn prev"  type="button" aria-label="Previous" title="Previous">❮</button>
-            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause"><span class="ico ico-pause">❚❚</span><span class="ico ico-play" style="display:none">▶</span></button>
+            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause">
+              <span class="ico ico-pause">❚❚</span>
+              <span class="ico ico-play" style="display:none">▶</span>
+            </button>
             <button class="btn next"  type="button" aria-label="Next" title="Next">❯</button>
           </div>
         </div>
@@ -599,7 +602,10 @@
           <img id="livada-b" alt="Livada gallery image B" class="standby" src="media/livada_fast/Livada_LivingRoom_f_2_1400.webp">
           <div class="controls" aria-label="Gallery controls">
             <button class="btn prev"  type="button" aria-label="Previous" title="Previous">❮</button>
-            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause"><span class="ico ico-pause">❚❚</span><span class="ico ico-play" style="display:none">▶</span></button>
+            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause">
+              <span class="ico ico-pause">❚❚</span>
+              <span class="ico ico-play" style="display:none">▶</span>
+            </button>
             <button class="btn next"  type="button" aria-label="Next" title="Next">❯</button>
           </div>
         </div>
@@ -616,7 +622,10 @@
           <img id="ammos-b" alt="Ammos gallery image B" class="standby" src="media/ammos_fast/Ammos_LivingRoom_f_2_1400.webp">
           <div class="controls" aria-label="Gallery controls">
             <button class="btn prev"  type="button" aria-label="Previous" title="Previous">❮</button>
-            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause"><span class="ico ico-pause">❚❚</span><span class="ico ico-play" style="display:none">▶</span></button>
+            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause">
+              <span class="ico ico-pause">❚❚</span>
+              <span class="ico ico-play" style="display:none">▶</span>
+            </button>
             <button class="btn next"  type="button" aria-label="Next" title="Next">❯</button>
           </div>
         </div>
@@ -691,11 +700,6 @@
   </div>
 </footer>
 
-
-
-  <!-- =================
-       SCRIPTS
-       ================= -->
   <script>
     (function(){
       function setSBW(){
@@ -708,7 +712,6 @@
   </script>
 
   <script>
-    // Mobile menu ARIA + open/close
     (function(){
       const navToggle=document.getElementById('nav-toggle');
       const navLabel=document.querySelector('label[for="nav-toggle"]');
@@ -728,7 +731,6 @@
   </script>
 
   <script>
-    // Intro / hero video timing
     (function(){
       const intro=document.getElementById('intro');
       const videoBg=document.getElementById('bg-video');
@@ -777,7 +779,6 @@
   </script>
 
   <script>
-    // Dropdown on touch
     (function(){
       const drop=document.querySelector('.nav-dropdown');
       const toggle=drop?.querySelector('.nav-drop-toggle');
@@ -792,7 +793,6 @@
     })();
   </script>
 
-  <!-- Helper used by all rotators -->
   <script>
     function nearEnd(v, epsilon=0.12){
       return (v && v.duration && (v.duration - v.currentTime) <= epsilon);
@@ -1298,7 +1298,6 @@
   </script>
 
   <script>
-    // Year stamp
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>

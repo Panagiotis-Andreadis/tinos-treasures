@@ -452,23 +452,45 @@
       color: #222;
     }
 
-    /* Soft, black, underlined link under Apigania text */
-    .apigania-link {
-      display: inline-block;
-      margin-top: 6px;
-      margin-bottom: 6px;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-      line-height: 1.5;
-      color: #222;
-      text-decoration: none;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.25);
-      padding-bottom: 2px;
-    }
+    /* Apartment booking links – Option A + slight text bump */
+.apigania-link {
+  display: inline-block;
+  position: relative;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;              /* slight bump */
+  line-height: 1.5;
+  color: #222;
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+  transition:
+    color .25s ease,
+    border-color .25s ease;
+}
 
-    .apigania-link:hover {
-      border-bottom-color: rgba(0, 0, 0, 0.5);
-    }
+.apigania-link::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 4px;
+  transition: background .25s ease;
+}
+
+.apigania-link:hover {
+  color: #000;
+  border-bottom-color: rgba(0, 0, 0, 0.6);
+}
+
+.apigania-link:hover::before {
+  background: rgba(0, 0, 0, 0.12);
+}
+
 
     /* Tighten vertical spacing for ALL apartments */
     .apt .apt-text h2 {

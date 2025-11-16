@@ -519,17 +519,16 @@
         max-height:none !important;
       }
     }
-   .footer-bottom .footer-inner {
-  position: relative;
-  padding-top: 24px; /* adds space so link doesn't overlap */
+  /* BACK TO TOP — aligned to full viewport width */
+.footer-bottom {
+  position: relative; /* anchor the absolute button */
 }
 
-.footer-bottom .back-to-top {
+.back-to-top {
   position: absolute;
-  top: 6px;           /* position near the top inside footer */
-  right: 0;           /* align right */
+  top: 8px;
+  right: 20px; /* now aligns to full right side of viewport */
   display: inline-flex;
-  align-items: center;
   font-size: 0.78rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -539,11 +538,12 @@
   transition: opacity 0.25s ease, transform 0.15s ease;
 }
 
-.footer-bottom .back-to-top:hover {
+.back-to-top:hover {
   opacity: 1;
   text-decoration: underline;
   transform: translateY(-1px);
 }
+
 
 
   </style>
@@ -1023,17 +1023,21 @@
   </section>
 
   <footer class="footer-bottom snap">
+
+  <!-- Back to top aligned to full viewport right -->
+  <a href="#home" class="back-to-top">Back to top ↑</a>
+
   <div class="footer-inner">
     <p class="footer-line1">© <span id="year"></span>&nbsp;Tinos Treasures. All rights reserved.</p>
-    <p class="footer-line2">
-  <strong>Custom-coded and designed</strong>&nbsp;by&nbsp;Panagiotis A.&nbsp;|&nbsp;Content by&nbsp;
-  <strong><a href="https://www.teramok.us/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">TERAMOK</a></strong>.
-</p>
 
-    <!-- Right-aligned Back to Top -->
-    <a href="#home" class="back-to-top">Back to top ↑</a>
+    <p class="footer-line2">
+      <strong>Custom-coded and designed</strong>&nbsp;by&nbsp;Panagiotis A.&nbsp;|&nbsp;Content by&nbsp;
+      <strong><a href="https://www.teramok.us/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">TERAMOK</a></strong>.
+    </p>
   </div>
+
 </footer>
+
 
 
   <script>

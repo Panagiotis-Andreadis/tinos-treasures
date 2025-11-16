@@ -100,12 +100,31 @@
     .nav-mobile a{display:block;color:#000;text-decoration:none;padding:10px 0;font-size:16px;border-bottom:1px solid rgba(0,0,0,.12);opacity:.95;transition:opacity .2s ease}
     .nav-mobile a:hover{opacity:1}
 
-    /* Background video */
-    .video-background{position:fixed;top:0;left:0;width:100%;height:100%;overflow:hidden;z-index:-1;background:#000}
-    #bg-video{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;width:auto;height:auto;object-fit:cover;object-position:center;opacity:0;transition:opacity .35s ease}
+    /* Background video – UPDATED */
+    .video-background{
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100vh;
+      overflow:hidden;
+      z-index:-1;
+      background:#000;
+    }
+    @supports (-webkit-touch-callout:none){
+      .video-background{height:-webkit-fill-available;}
+    }
+    #bg-video{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+      opacity:0;
+      transition:opacity .35s ease;
+    }
     #bg-video.is-ready{opacity:1}
-    @media (max-aspect-ratio:9/16){#bg-video{width:100%;height:auto;min-width:auto;min-height:100%;object-fit:contain;background:#000}}
-    @supports (-webkit-touch-callout:none){.video-background{height:-webkit-fill-available}}
     body.no-video::before{content:"";position:fixed;inset:0;background:url('poster.jpg') center center/cover no-repeat;z-index:-2}
 
     section.anchor-offset{scroll-margin-top:var(--nav-h)}
@@ -393,7 +412,7 @@
       fill: none;
     }
 
-    .icon--sm { width: 20px; height: 20px; } /* smaller to keep grid compact */
+    .icon--sm { width: 20px; height: 20px; }
     .icon--lg { width: 40px; height: 40px; }
 
     .amenity {
@@ -411,7 +430,7 @@
     /* Grid layout for apartment pages */
     .apt-amenities-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 icons per row */
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
       margin-top: 12px;
     }
@@ -464,8 +483,7 @@
       margin-bottom: 8px !important;
     }
 
-    /* Let ALL apartment blocks auto-resize in height on desktop
-       so icons are never cropped – section grows beyond 100vh if needed */
+    /* Let ALL apartment blocks auto-resize in height on desktop */
     @media (min-width:901px){
       .apt.apt-section{
         height:auto !important;

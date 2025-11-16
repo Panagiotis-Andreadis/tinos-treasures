@@ -1051,24 +1051,61 @@
     })();
   </script>
 
-  <script>
-    (function(){
-      const navToggle=document.getElementById('nav-toggle');
-      const navLabel=document.querySelector('label[for="nav-toggle"]');
-      const mobileMenu=document.getElementById('mobile-menu');
-      function syncAria(){if(navLabel&&navToggle)navLabel.setAttribute('aria-expanded',navToggle.checked?'true':'false');}
-      if(navToggle){
-        const applyState=()=>{document.body.classList.toggle('menu-open',navToggle.checked);syncAria()};
-        navToggle.addEventListener('change',applyState);applyState()
+<script>
+  (function(){
+    const navToggle = document.getElementById('nav-toggle');
+    const navLabel  = document.querySelector('label[for="nav-toggle"]');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const nav = document.getElementById('nav');
+
+    function syncAria() {
+      if (navLabel && navToggle) {
+        navLabel.setAttribute('aria-expanded', navToggle.checked ? 'true' : 'false');
       }
-      if(mobileMenu&&navToggle){
-        mobileMenu.addEventListener('click',(e)=>{
-          const t=e.target.closest('a');if(!t)return;
-          navToggle.checked=false;document.body.classList.remove('menu-open');syncAria();
-        });
-      }
-    })();
-  </script>
+    }
+
+    if (navToggle) {
+      const applyState = () => {
+        document.body.classList.toggle('menu-open', navToggle.checked);
+        syncAria();
+      };
+      navToggle.addEventListener('change', applyState);
+      applyState();
+    }
+
+    // Close menu when a mobile menu link is clicked
+    if (mobileMenu && navToggle) {
+      mobileMenu.addEventListener('click', (e) => {
+        const t = e.target.closest('a');
+        if (!t) return;
+        navToggle.checked = false;
+        document.body.classList.remove('menu-open');
+        syncAria();
+      });
+    }
+
+    // 🔹 NEW: Close menu when clicking/tapping outside
+    if (navToggle) {
+      const closeIfClickOutside = (e) => {
+        if (!navToggle.checked) return; // menu already closed
+
+        const clickedInsideNav       = nav && nav.contains(e.target);
+        const clickedInsideMobileNav = mobileMenu && mobileMenu.contains(e.target);
+
+        // If click is NOT inside nav or mobile menu, close it
+        if (!clickedInsideNav && !clickedInsideMobileNav) {
+          navToggle.checked = false;
+          document.body.classList.remove('menu-open');
+          syncAria();
+        }
+      };
+
+      document.addEventListener('click', closeIfClickOutside);
+      document.addEventListener('touchstart', closeIfClickOutside);
+    }
+  })();
+</script>
+
 
   <script>
     (function(){

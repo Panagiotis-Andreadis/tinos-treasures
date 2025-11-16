@@ -394,7 +394,7 @@
   width: 32px;
   height: 32px;
   display: inline-block;
-    stroke: currentColor;
+  stroke: currentColor;
   fill: none;
 }
 
@@ -425,7 +425,7 @@
   padding: 8px 10px;
   border-radius: 10px;
   border: 1px solid #e4e4e4;
-  background: #fafafa;
+  background: none;              /* background removed, border kept */
   display: flex;
   align-items: center;
   gap: 10px;
@@ -433,8 +433,9 @@
 
 .apt-amenity-card span {
   font-family: 'Cormorant Garamond', serif;  /* same as Apigania text */
-  font-size: 1.25rem;                        /* same size as Apigania paragraph */
-  line-height: 1.6;
+  font-size: 1.25rem;                        /* exact same size as .apt-text p */
+  line-height: 1.6;                          /* exact same line-height as .apt-text p */
+  color: #222;
 }
 
   </style>

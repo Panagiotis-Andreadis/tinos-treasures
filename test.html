@@ -301,10 +301,11 @@
       #apartments .wrap>h2{display:none!important}
       .apt.apt-section .apt-text{
         background:#fff;
-        padding-top:calc(var(--nav-h) + clamp(16px,3vw,48px))!important;
-        padding-right:clamp(16px,3vw,48px);
-        padding-bottom:clamp(16px,3vw,48px);
-        padding-left:clamp(16px,3vw,48px)
+        padding-top:calc(var(--nav-h) + clamp(16px,3vw,32px))!important;
+        padding-right:clamp(16px,3vw,32px);
+        padding-bottom:clamp(12px,2vw,24px);
+        padding-left:clamp(16px,3vw,32px);
+        transform:none!important;
       }
       .apt.apt-section .rotator,
       .apt.apt-section>img{
@@ -368,7 +369,7 @@
         background: linear-gradient(to right, #000 50%, #fff 50%) !important;
       }
     }
-/* Desktop: make the text column a flex column and let the icons use the remaining height */
+/* Desktop: make the text column a flex column and let the icons + text fit in one viewport */
 @media (min-width:901px){
   .apt.apt-section .apt-text{
     display:flex;
@@ -377,10 +378,15 @@
     justify-content:flex-start;
   }
 
+  #apigania .apt-text{
+    padding-top:calc(var(--nav-h) + 8px) !important;
+    padding-bottom:16px !important;
+  }
+
   #apigania .apt-amenities-grid{
-    margin-top:14px;
-    flex:1 1 auto;        /* take remaining vertical space under the text */
-    overflow-y:auto;      /* if there are many icons, scroll inside instead of cropping */
+    margin-top:10px;
+    flex:0 0 auto;
+    overflow:visible;
   }
 }
 
@@ -408,14 +414,12 @@
 }
 
 /* Grid layout for apartment pages */
-/* Grid layout for apartment pages */
 .apt-amenities-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 icons per row */
   gap: 10px;
   margin-top: 12px;
 }
-
 
 .apt-amenity-card {
   padding: 8px 10px;
@@ -530,12 +534,10 @@
           <h2>Apartments</h2>
           <h3>Apigania</h3>
 
-          <!-- TEXT FIRST (restored original copy) -->
           <p>
             Located on the upper floor, this seaside duplex apartment overlooks the sea, featuring a queen bed, two adult single beds, a marble-finished kitchen, a cozy living room with a flat-screen TV, and a sleek bathroom. An internal staircase connects the two levels. Step onto the veranda with its marble table and enjoy stunning views of Isternia village, the sea, and the island’s terraced landscape (xerolithies). Just a 2-minute level walk brings you to two beaches, two restaurants, and a quiet beach bar—no uphill climbs required.
           </p>
 
-          <!-- Compact amenity icon grid that fits with text in one viewport -->
           <div class="apt-amenities-grid">
             <div class="apt-amenity-card">
               <svg class="icon icon--sm" aria-hidden="true">

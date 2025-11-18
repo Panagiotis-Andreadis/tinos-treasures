@@ -195,7 +195,10 @@
     }
     #contact.section.slide-section{height:calc(100svh - var(--footer-h));min-height:calc(100svh - var(--footer-h));max-height:calc(100svh - var(--footer-h))}
     @supports (height:100dvh){#contact.section.slide-section{height:calc(100dvh - var(--footer-h));min-height:calc(100dvh - var(--footer-h));max-height:calc(100dvh - var(--footer-h))}}
-    #contact.anchor-offset{scroll-margin-top:0!important}
+    #contact.anchor-offset{scroll-margin-top:0!important;}
+
+    /* LOCATION anchor should behave like apartments (rotator behind nav) */
+    #location.anchor-offset{scroll-margin-top:0!important;}
 
     html, body { scroll-snap-type:y mandatory; overscroll-behavior-y:contain }
 
@@ -470,7 +473,7 @@
       margin-top: 6px;
       margin-bottom: 6px;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;              /* slight bump */
+      font-size: 1.2rem;
       line-height: 1.5;
       color: #222;
       text-decoration: none;
@@ -532,13 +535,13 @@
 
     /* BACK TO TOP — aligned to full viewport width */
     .footer-bottom {
-      position: relative; /* anchor the absolute button */
+      position: relative;
     }
 
     .back-to-top {
       position: absolute;
       top: 8px;
-      right: 20px; /* now aligns to full right side of viewport */
+      right: 20px;
       display: inline-flex;
       font-size: 0.78rem;
       letter-spacing: 0.12em;
@@ -559,7 +562,7 @@
     #location.section.slide-section .wrap {
       height: 100%;
       box-sizing: border-box;
-      padding-top: var(--nav-h);
+      padding-top: 0;           /* remove offset so rotator sits behind navbar */
       padding-inline: 0;
       overflow: hidden;
     }
@@ -568,7 +571,7 @@
       #location .location-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        height: calc(100vh - var(--nav-h));
+        height: 100%;
       }
 
       #location #location-rotator {
@@ -1064,7 +1067,7 @@
     </div>
   </section>
 
-  <!-- LOCATION -->
+    <!-- LOCATION -->
   <section id="location" class="section anchor-offset snap slide-section" style="background:#fff;color:#000">
     <div class="wrap">
       <div class="location-grid">

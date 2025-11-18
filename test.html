@@ -200,13 +200,67 @@
     .snap{scroll-snap-align:start;scroll-snap-stop:always}
 
     .footer-bottom{position:relative;z-index:2;height:var(--footer-h);display:flex;align-items:center;justify-content:center;background:#000;color:#fff;text-align:center;border-top:1px solid rgba(255,255,255,.12);letter-spacing:.04em;padding:0 16px}
-    .social{display:flex;align-items:center;justify-content:flex-start;gap:14px;flex-wrap:nowrap;white-space:nowrap;color:#000}
-    #contact .social a{display:inline-flex;width:28px;height:28px;line-height:0;color:#000;text-decoration:none}
-    #contact .social a:hover{opacity:.8;text-decoration:none}
+
+    /* Clean, minimal social icons */
+    .social {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Shared button look for contact + footer */
+    #contact .social a,
+    .footer-bottom .social a {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      border: 1px solid currentColor;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      opacity: 0.9;
+      transition:
+        opacity 0.25s ease,
+        transform 0.15s ease,
+        background-color 0.25s ease;
+    }
+
+    #contact .social a:hover {
+      opacity: 1;
+      transform: translateY(-1px);
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+
+    .footer-bottom .social a:hover {
+      opacity: 1;
+      transform: translateY(-1px);
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .social svg {
+      width: 16px;
+      height: 16px;
+      display: block;
+    }
+
+    .social svg path,
+    .social svg rect,
+    .social svg circle {
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .social svg .fill {
+      fill: currentColor;
+      stroke: none;
+    }
+
     #contact a{color:#000;text-decoration:none}
     #contact a:hover{text-decoration:underline;opacity:.8}
-    .social svg,.social svg path{fill:currentColor}
-    .social svg{width:100%;height:100%;display:block;fill:currentColor}
     #contact .social{color:#000}
     .footer-bottom .social{color:#fff}
     .footer-bottom a{color:#fff;text-decoration:none}
@@ -279,7 +333,7 @@
 
       label[for="nav-toggle"]{
         grid-column:3;
-        justify-self:end;
+        justify-self=end;
         margin-left:0;
         padding:8px 10px;
         display:inline-flex;
@@ -369,16 +423,6 @@
       html, body { scroll-snap-type: y proximity !important; }
     }
 
-    #contact .social svg * { fill:none !important; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; vector-effect:non-scaling-stroke; }
-    #contact .social svg .fill { fill:currentColor !important; stroke:none !important; }
-    #contact .social a { transition: color .25s ease, transform .15s ease, opacity .25s ease; }
-    #contact .social a:hover { color:#333; transform:translateY(-1px); opacity:1; text-decoration:none; }
-
-    .footer-bottom .social svg * { fill:none !important; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; vector-effect:non-scaling-stroke; }
-    .footer-bottom .social svg .fill { fill:currentColor !important; stroke:none !important; }
-    .footer-bottom .social a { transition:opacity .25s ease, transform .15s ease; }
-    .footer-bottom .social a:hover { opacity:.85; transform:translateY(-1px); text-decoration:none; }
-
     @media (min-width:901px){
       #apartments.section,
       .apt.apt-section{
@@ -453,44 +497,43 @@
     }
 
     /* Apartment booking links – Option A + slight text bump */
-.apigania-link {
-  display: inline-block;
-  position: relative;
-  margin-top: 6px;
-  margin-bottom: 6px;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.2rem;              /* slight bump */
-  line-height: 1.5;
-  color: #222;
-  text-decoration: none;
-  padding-bottom: 2px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.35);
-  transition:
-    color .25s ease,
-    border-color .25s ease;
-}
+    .apigania-link {
+      display: inline-block;
+      position: relative;
+      margin-top: 6px;
+      margin-bottom: 6px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;              /* slight bump */
+      line-height: 1.5;
+      color: #222;
+      text-decoration: none;
+      padding-bottom: 2px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+      transition:
+        color .25s ease,
+        border-color .25s ease;
+    }
 
-.apigania-link::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -1px;
-  width: 100%;
-  height: 4px;
-  background: rgba(0, 0, 0, 0.06);
-  border-radius: 4px;
-  transition: background .25s ease;
-}
+    .apigania-link::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -1px;
+      width: 100%;
+      height: 4px;
+      background: rgba(0, 0, 0, 0.06);
+      border-radius: 4px;
+      transition: background .25s ease;
+    }
 
-.apigania-link:hover {
-  color: #000;
-  border-bottom-color: rgba(0, 0, 0, 0.6);
-}
+    .apigania-link:hover {
+      color: #000;
+      border-bottom-color: rgba(0, 0, 0, 0.6);
+    }
 
-.apigania-link:hover::before {
-  background: rgba(0, 0, 0, 0.12);
-}
-
+    .apigania-link:hover::before {
+      background: rgba(0, 0, 0, 0.12);
+    }
 
     /* Tighten vertical spacing for ALL apartments */
     .apt .apt-text h2 {
@@ -519,32 +562,31 @@
         max-height:none !important;
       }
     }
-  /* BACK TO TOP — aligned to full viewport width */
-.footer-bottom {
-  position: relative; /* anchor the absolute button */
-}
 
-.back-to-top {
-  position: absolute;
-  top: 8px;
-  right: 20px; /* now aligns to full right side of viewport */
-  display: inline-flex;
-  font-size: 0.78rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #fff;
-  text-decoration: none;
-  opacity: 0.9;
-  transition: opacity 0.25s ease, transform 0.15s ease;
-}
+    /* BACK TO TOP — aligned to full viewport width */
+    .footer-bottom {
+      position: relative; /* anchor the absolute button */
+    }
 
-.back-to-top:hover {
-  opacity: 1;
-  text-decoration: underline;
-  transform: translateY(-1px);
-}
+    .back-to-top {
+      position: absolute;
+      top: 8px;
+      right: 20px; /* now aligns to full right side of viewport */
+      display: inline-flex;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+      opacity: 0.9;
+      transition: opacity 0.25s ease, transform 0.15s ease;
+    }
 
-
+    .back-to-top:hover {
+      opacity: 1;
+      text-decoration: underline;
+      transform: translateY(-1px);
+    }
 
   </style>
 </head>
@@ -799,7 +841,7 @@
         </div>
       </div>
 
-            <!-- LIVADA -->
+      <!-- LIVADA -->
       <div id="livada" class="apt apt-section snap">
         <div class="rotator" id="livada-rotator">
           <video id="livada-video" muted autoplay playsinline webkit-playsinline preload="auto">
@@ -879,8 +921,7 @@
         </div>
       </div>
 
-
-            <!-- AMMOS -->
+      <!-- AMMOS -->
       <div id="ammos" class="apt apt-section snap">
         <div class="rotator" id="ammos-rotator">
           <video id="ammos-video" muted autoplay playsinline webkit-playsinline preload="auto">
@@ -960,7 +1001,6 @@
         </div>
       </div>
 
-
     </div>
   </section>
 
@@ -985,37 +1025,65 @@
       </p>
 
       <div class="social">
-        <a class="instagram" href="https://www.instagram.com/tinostreasures_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <!-- Instagram -->
+        <a class="instagram"
+           href="https://www.instagram.com/tinostreasures_/"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Instagram">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-            <circle cx="12" cy="12" r="3.5"/>
-            <circle cx="17.5" cy="6.5" r="1" class="fill"/>
+            <rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect>
+            <circle cx="12" cy="12" r="4.3"></circle>
+            <circle cx="17" cy="7.5" r="1.2"></circle>
           </svg>
         </a>
 
-        <a class="facebook" href="https://www.facebook.com/Tinos.Treasures/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+        <!-- Facebook -->
+        <a class="facebook"
+           href="https://www.facebook.com/Tinos.Treasures/"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Facebook">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M9 8H7v4h2v12h5V12h3.642L18 8h-4V6c0-1.084.218-1.5 1.273-1.5H18V0h-3.818C9.818 0 9 1.818 9 5v3z"/>
+            <circle cx="12" cy="12" r="9"></circle>
+            <path class="fill"
+                  d="M13.2 8H12c-1.1 0-1.9.8-1.9 1.9V11H9v2h1.1v4h2.1v-4h1.4L14 11h-1.8v-.9c0-.3.2-.6.6-.6h1.2V8z" />
           </svg>
         </a>
 
-        <a class="google" href="https://www.google.com/search?q=Tinos+Treasures+Apart-Hotel" target="_blank" rel="noopener noreferrer" aria-label="Google Search">
+        <!-- Google Search -->
+        <a class="google"
+           href="https://www.google.com/search?q=Tinos+Treasures+Apart-Hotel"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Google Search">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M21.35 11.1h-9.17v2.9h5.64c-.24 1.48-1.7 4.34-5.64 4.34a6.53 6.53 0 0 1 0-13.06 5.84 5.84 0 0 1 4.09 1.59l2.79-2.69A9.63 9.63 0 0 0 12.18 0a10.18 10.18 0 1 0 9.17 11.1z"/>
+            <circle cx="11" cy="11" r="5"></circle>
+            <line x1="15" y1="15" x2="19" y2="19"></line>
           </svg>
         </a>
 
-        <a class="youtube" href="https://www.youtube.com/@tinostreasures" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+        <!-- YouTube -->
+        <a class="youtube"
+           href="https://www.youtube.com/@tinostreasures"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="YouTube">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M10 15l5.19-3L10 9v6z" class="fill"/>
-            <path d="M21.5 6.5s-.2-1.43-.82-2.06c-.78-.82-1.65-.83-2.05-.88C15.35 3.5 12 3.5 12 3.5h-.01s-3.35 0-6.63.06c.4-.05 1.27-.06 2.05.88.62-.63.82-2.06.82-2.06s.02-1.77.02-3.54V10.04c0-1.77-.02-3.54-.02-3.54z"/>
+            <rect x="4" y="7" width="16" height="10" rx="3"></rect>
+            <path class="fill" d="M11 10l3.5 2-3.5 2z" />
           </svg>
         </a>
 
-        <a class="maps" href="https://maps.app.goo.gl/VVLBkF2q8XZqKbU38" target="_blank" rel="noopener noreferrer" aria-label="Google Maps">
+        <!-- Google Maps -->
+        <a class="maps"
+           href="https://maps.app.goo.gl/VVLBkF2q8XZqKbU38"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Google Maps">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
-            <circle cx="12" cy="9" r="1.2" class="fill"/>
+            <path d="M12 4.5a5 5 0 0 0-5 5c0 3.2 3.3 7.3 4.6 8.8a.6.6 0 0 0 .9 0C13.7 16.8 17 12.7 17 9.5a5 5 0 0 0-5-5z"></path>
+            <circle cx="12" cy="9.5" r="1.6"></circle>
           </svg>
         </a>
       </div>
@@ -1024,21 +1092,19 @@
 
   <footer class="footer-bottom snap">
 
-  <!-- Back to top aligned to full viewport right -->
-  <a href="#home" class="back-to-top">Back to top ↑</a>
+    <!-- Back to top aligned to full viewport right -->
+    <a href="#home" class="back-to-top">Back to top ↑</a>
 
-  <div class="footer-inner">
-    <p class="footer-line1">© <span id="year"></span>&nbsp;Tinos Treasures. All rights reserved.</p>
+    <div class="footer-inner">
+      <p class="footer-line1">© <span id="year"></span>&nbsp;Tinos Treasures. All rights reserved.</p>
 
-    <p class="footer-line2">
-      <strong>Custom-coded and designed</strong>&nbsp;by&nbsp;Panagiotis A.&nbsp;|&nbsp;Content by&nbsp;
-      <strong><a href="https://www.teramok.us/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">TERAMOK</a></strong>.
-    </p>
-  </div>
+      <p class="footer-line2">
+        <strong>Custom-coded and designed</strong>&nbsp;by&nbsp;Panagiotis A.&nbsp;|&nbsp;Content by&nbsp;
+        <strong><a href="https://www.teramok.us/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">TERAMOK</a></strong>.
+      </p>
+    </div>
 
-</footer>
-
-
+  </footer>
 
   <script>
     (function(){
@@ -1051,61 +1117,60 @@
     })();
   </script>
 
-<script>
-  (function(){
-    const navToggle = document.getElementById('nav-toggle');
-    const navLabel  = document.querySelector('label[for="nav-toggle"]');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const nav = document.getElementById('nav');
+  <script>
+    (function(){
+      const navToggle = document.getElementById('nav-toggle');
+      const navLabel  = document.querySelector('label[for="nav-toggle"]');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const nav = document.getElementById('nav');
 
-    function syncAria() {
-      if (navLabel && navToggle) {
-        navLabel.setAttribute('aria-expanded', navToggle.checked ? 'true' : 'false');
+      function syncAria() {
+        if (navLabel && navToggle) {
+          navLabel.setAttribute('aria-expanded', navToggle.checked ? 'true' : 'false');
+        }
       }
-    }
 
-    if (navToggle) {
-      const applyState = () => {
-        document.body.classList.toggle('menu-open', navToggle.checked);
-        syncAria();
-      };
-      navToggle.addEventListener('change', applyState);
-      applyState();
-    }
+      if (navToggle) {
+        const applyState = () => {
+          document.body.classList.toggle('menu-open', navToggle.checked);
+          syncAria();
+        };
+        navToggle.addEventListener('change', applyState);
+        applyState();
+      }
 
-    // Close menu when a mobile menu link is clicked
-    if (mobileMenu && navToggle) {
-      mobileMenu.addEventListener('click', (e) => {
-        const t = e.target.closest('a');
-        if (!t) return;
-        navToggle.checked = false;
-        document.body.classList.remove('menu-open');
-        syncAria();
-      });
-    }
-
-    // 🔹 NEW: Close menu when clicking/tapping outside
-    if (navToggle) {
-      const closeIfClickOutside = (e) => {
-        if (!navToggle.checked) return; // menu already closed
-
-        const clickedInsideNav       = nav && nav.contains(e.target);
-        const clickedInsideMobileNav = mobileMenu && mobileMenu.contains(e.target);
-
-        // If click is NOT inside nav or mobile menu, close it
-        if (!clickedInsideNav && !clickedInsideMobileNav) {
+      // Close menu when a mobile menu link is clicked
+      if (mobileMenu && navToggle) {
+        mobileMenu.addEventListener('click', (e) => {
+          const t = e.target.closest('a');
+          if (!t) return;
           navToggle.checked = false;
           document.body.classList.remove('menu-open');
           syncAria();
-        }
-      };
+        });
+      }
 
-      document.addEventListener('click', closeIfClickOutside);
-      document.addEventListener('touchstart', closeIfClickOutside);
-    }
-  })();
-</script>
+      // 🔹 NEW: Close menu when clicking/tapping outside
+      if (navToggle) {
+        const closeIfClickOutside = (e) => {
+          if (!navToggle.checked) return; // menu already closed
 
+          const clickedInsideNav       = nav && nav.contains(e.target);
+          const clickedInsideMobileNav = mobileMenu && mobileMenu.contains(e.target);
+
+          // If click is NOT inside nav or mobile menu, close it
+          if (!clickedInsideNav && !clickedInsideMobileNav) {
+            navToggle.checked = false;
+            document.body.classList.remove('menu-open');
+            syncAria();
+          }
+        };
+
+        document.addEventListener('click', closeIfClickOutside);
+        document.addEventListener('touchstart', closeIfClickOutside);
+      }
+    })();
+  </script>
 
   <script>
     (function(){
@@ -1178,500 +1243,500 @@
 
   <!-- APIGANIA -->
   <script>
-  (function(){
-    const sources=[
-      "media/apigania_fast/Apigania_LivingRoom_f_1_1400.webp",
-      "media/apigania_fast/Apigania_LivingRoom_f_2_1400.webp",
-      "media/apigania_fast/Apigania_LivingRoom_f_3_1400.webp",
-      "media/apigania_fast/Apigania_Outdoor_f_1_1400.webp",
-      "media/apigania_fast/Apigania_Outdoor_f_2_1400.webp",
-      "media/apigania_fast/Apigania_Outdoor_f_3_1400.webp",
-      "media/apigania_fast/Apigania_Kichen_f_1_1400.webp",
-      "media/apigania_fast/Apigania_Kichen_f_2_1400.webp",
-      "media/apigania_fast/Apigania_Kichen_f_3_1400.webp",
-      "media/apigania_fast/Apigania_MainBedroom_f_1_1400.webp",
-      "media/apigania_fast/Apigania_MainBedroom_f_2_1400.webp",
-      "media/apigania_fast/Apigania_MainBedroom_f_3_1400.webp",
-      "media/apigania_fast/Apigani_SecondBedroom_f_1_1400.webp",
-      "media/apigania_fast/Apigani_SecondBedroom_f_2_1400.webp",
-      "media/apigania_fast/Apigani_SecondBedroom_f_3_1400.webp",
-      "media/apigania_fast/Apigania_Bathroom_f_1_1400.webp",
-      "media/apigania_fast/Apigania_Bathroom_f_2_1400.webp",
-      "media/apigania_fast/Apigania_Bathroom_f_3_1400.webp"
-    ];
+    (function(){
+      const sources=[
+        "media/apigania_fast/Apigania_LivingRoom_f_1_1400.webp",
+        "media/apigania_fast/Apigania_LivingRoom_f_2_1400.webp",
+        "media/apigania_fast/Apigania_LivingRoom_f_3_1400.webp",
+        "media/apigania_fast/Apigania_Outdoor_f_1_1400.webp",
+        "media/apigania_fast/Apigania_Outdoor_f_2_1400.webp",
+        "media/apigania_fast/Apigania_Outdoor_f_3_1400.webp",
+        "media/apigania_fast/Apigania_Kichen_f_1_1400.webp",
+        "media/apigania_fast/Apigania_Kichen_f_2_1400.webp",
+        "media/apigania_fast/Apigania_Kichen_f_3_1400.webp",
+        "media/apigania_fast/Apigania_MainBedroom_f_1_1400.webp",
+        "media/apigania_fast/Apigania_MainBedroom_f_2_1400.webp",
+        "media/apigania_fast/Apigania_MainBedroom_f_3_1400.webp",
+        "media/apigania_fast/Apigani_SecondBedroom_f_1_1400.webp",
+        "media/apigania_fast/Apigani_SecondBedroom_f_2_1400.webp",
+        "media/apigania_fast/Apigani_SecondBedroom_f_3_1400.webp",
+        "media/apigania_fast/Apigania_Bathroom_f_1_1400.webp",
+        "media/apigania_fast/Apigania_Bathroom_f_2_1400.webp",
+        "media/apigania_fast/Apigania_Bathroom_f_3_1400.webp"
+      ];
 
-    const rotator=document.getElementById('apigania-rotator');
-    const video=document.getElementById('apigania-video');
-    const a=document.getElementById('apigania-a');
-    const b=document.getElementById('apigania-b');
-    if(!rotator||!video||!a||!b) return;
+      const rotator=document.getElementById('apigania-rotator');
+      const video=document.getElementById('apigania-video');
+      const a=document.getElementById('apigania-a');
+      const b=document.getElementById('apigania-b');
+      if(!rotator||!video||!a||!b) return;
 
-    video.muted = true; video.playsInline = true;
-    video.setAttribute('muted',''); video.setAttribute('playsinline','');
-    video.setAttribute('webkit-playsinline',''); video.setAttribute('autoplay','');
+      video.muted = true; video.playsInline = true;
+      video.setAttribute('muted',''); video.setAttribute('playsinline','');
+      video.setAttribute('webkit-playsinline',''); video.setAttribute('autoplay','');
 
-    const prevBtn=rotator.querySelector('.btn.prev');
-    const nextBtn=rotator.querySelector('.btn.next');
-    const toggleBtn=rotator.querySelector('.btn.center');
-    const icoPause=toggleBtn.querySelector('.ico-pause');
-    const icoPlay =toggleBtn.querySelector('.ico-play');
+      const prevBtn=rotator.querySelector('.btn.prev');
+      const nextBtn=rotator.querySelector('.btn.next');
+      const toggleBtn=rotator.querySelector('.btn.center');
+      const icoPause=toggleBtn.querySelector('.ico-pause');
+      const icoPlay =toggleBtn.querySelector('.ico-play');
 
-    sources.forEach(src=>{const im=new Image(); im.src=src;});
+      sources.forEach(src=>{const im=new Image(); im.src=src;});
 
-    let idx=2, topIsA=true;
-    const HOLD_MS=2000;
-    let slideTimer=null;
-    let paused=false;
+      let idx=2, topIsA=true;
+      const HOLD_MS=2000;
+      let slideTimer=null;
+      let paused=false;
 
-    function clearTimers(){ if(slideTimer){clearTimeout(slideTimer);slideTimer=null} }
-    function whenDecodable(img){ const p=(img.decode?img.decode():Promise.resolve()); return p.catch(()=>{}); }
-    function showInitialFrames(){ a.classList.remove('standby'); b.classList.remove('standby'); a.classList.add('is-top'); b.classList.remove('is-top'); topIsA=true; idx=2; }
-    function scheduleNext(){ if(!paused){ slideTimer=setTimeout(nextFrame,HOLD_MS); } }
-    function nextFrame(){
-      const top=topIsA ? a : b, bottom=topIsA ? b : a;
-      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
-      whenDecodable(bottom).then(()=>{ requestAnimationFrame(()=>{ top.classList.remove('is-top'); requestAnimationFrame(()=>{ bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); }); }); });
-    }
-    function setPaused(p){
-      paused=p;
-      toggleBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
-      icoPause.style.display = p ? 'none' : 'inline';
-      icoPlay.style.display  = p ? 'inline' : 'none';
-      if(p){ clearTimers(); } else { scheduleNext(); }
-    }
-    function startSlideshow(){
-      if(rotator.classList.contains('slideshow')) return;
-      rotator.classList.add('slideshow');
-      showInitialFrames();
-      video.classList.add('hidden');
-      setPaused(false);
-    }
-    function resetToBeginning(){
-      clearTimers(); setPaused(true); topIsA=true; idx=2;
-      a.classList.add('standby'); a.classList.remove('is-top');
-      b.classList.add('standby'); b.classList.remove('is-top');
-      rotator.classList.remove('slideshow');
-      video.classList.remove('hidden');
-      try{video.pause()}catch(e){}
-      try{video.currentTime=0}catch(e){}
-    }
+      function clearTimers(){ if(slideTimer){clearTimeout(slideTimer);slideTimer=null} }
+      function whenDecodable(img){ const p=(img.decode?img.decode():Promise.resolve()); return p.catch(()=>{}); }
+      function showInitialFrames(){ a.classList.remove('standby'); b.classList.remove('standby'); a.classList.add('is-top'); b.classList.remove('is-top'); topIsA=true; idx=2; }
+      function scheduleNext(){ if(!paused){ slideTimer=setTimeout(nextFrame,HOLD_MS); } }
+      function nextFrame(){
+        const top=topIsA ? a : b, bottom=topIsA ? b : a;
+        bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+        whenDecodable(bottom).then(()=>{ requestAnimationFrame(()=>{ top.classList.remove('is-top'); requestAnimationFrame(()=>{ bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); }); }); });
+      }
+      function setPaused(p){
+        paused=p;
+        toggleBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
+        icoPause.style.display = p ? 'none' : 'inline';
+        icoPlay.style.display  = p ? 'inline' : 'none';
+        if(p){ clearTimers(); } else { scheduleNext(); }
+      }
+      function startSlideshow(){
+        if(rotator.classList.contains('slideshow')) return;
+        rotator.classList.add('slideshow');
+        showInitialFrames();
+        video.classList.add('hidden');
+        setPaused(false);
+      }
+      function resetToBeginning(){
+        clearTimers(); setPaused(true); topIsA=true; idx=2;
+        a.classList.add('standby'); a.classList.remove('is-top');
+        b.classList.add('standby'); b.classList.remove('is-top');
+        rotator.classList.remove('slideshow');
+        video.classList.remove('hidden');
+        try{video.pause()}catch(e){}
+        try{video.currentTime=0}catch(e){}
+      }
 
-    const isTouch = window.matchMedia('(hover: none)').matches;
-    const PLAY_T = isTouch ? 0.30 : 0.60;
-    const RESET_T = 0.10;
+      const isTouch = window.matchMedia('(hover: none)').matches;
+      const PLAY_T = isTouch ? 0.30 : 0.60;
+      const RESET_T = 0.10;
 
-    const io = new IntersectionObserver(([e]) => {
-      if (e.intersectionRatio < RESET_T) { resetToBeginning(); return; }
-      if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
-        if (video.ended || nearEnd(video)) {
-          startSlideshow();
-        } else {
-          video.play().catch(()=>{ startSlideshow(); });
+      const io = new IntersectionObserver(([e]) => {
+        if (e.intersectionRatio < RESET_T) { resetToBeginning(); return; }
+        if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
+          if (video.ended || nearEnd(video)) {
+            startSlideshow();
+          } else {
+            video.play().catch(()=>{ startSlideshow(); });
+          }
         }
-      }
-    }, { threshold: [0, RESET_T, 0.25, PLAY_T, 1], rootMargin: '0px 0px -10% 0px' });
-    io.observe(rotator);
+      }, { threshold: [0, RESET_T, 0.25, PLAY_T, 1], rootMargin: '0px 0px -10% 0px' });
+      io.observe(rotator);
 
-    video.addEventListener('ended', startSlideshow);
-    video.addEventListener('timeupdate', () => {
-      if (!rotator.classList.contains('slideshow') && nearEnd(video)) startSlideshow();
-    });
+      video.addEventListener('ended', startSlideshow);
+      video.addEventListener('timeupdate', () => {
+        if (!rotator.classList.contains('slideshow') && nearEnd(video)) startSlideshow();
+      });
 
-    prevBtn.addEventListener('click', ()=>{
-      if(!rotator.classList.contains('slideshow')) return;
-      clearTimers();
-      const top=topIsA ? a : b, bottom=topIsA ? b : a;
-      idx=(idx-2+sources.length)%sources.length; bottom.src=sources[idx]; idx=(idx+1)%sources.length;
-      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
-    });
+      prevBtn.addEventListener('click', ()=>{
+        if(!rotator.classList.contains('slideshow')) return;
+        clearTimers();
+        const top=topIsA ? a : b, bottom=topIsA ? b : a;
+        idx=(idx-2+sources.length)%sources.length; bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+        whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+      });
 
-    nextBtn.addEventListener('click', ()=>{
-      if(!rotator.classList.contains('slideshow')) return;
-      clearTimers();
-      const top=topIsA ? a : b, bottom=topIsA ? b : a;
-      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
-      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
-    });
+      nextBtn.addEventListener('click', ()=>{
+        if(!rotator.classList.contains('slideshow')) return;
+        clearTimers();
+        const top=topIsA ? a : b, bottom=topIsA ? b : a;
+        bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+        whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+      });
 
-    toggleBtn.addEventListener('click', ()=>{
-      if(!rotator.classList.contains('slideshow')){
-        if (video.paused) { video.play().catch(()=>{}); } else { video.pause(); }
-        return;
-      }
-      setPaused(!paused);
-    });
-  })();
+      toggleBtn.addEventListener('click', ()=>{
+        if(!rotator.classList.contains('slideshow')){
+          if (video.paused) { video.play().catch(()=>{}); } else { video.pause(); }
+          return;
+        }
+        setPaused(!paused);
+      });
+    })();
   </script>
 
   <!-- VATHI -->
   <script>
-  (function(){
-    const sources=[
-      "media/vathi_fast/Vathi_LivingRoom_f_1_f_1_1400.webp",
-      "media/vathi_fast/Vathi_LivingRoom_f_3_f_1_1400.webp",
-      "media/vathi_fast/Vathi_Livingoom_f_2_f_1_1400.webp",
-      "media/vathi_fast/Vathi_Outdoor_f_1_f_1_1400.webp",
-      "media/vathi_fast/Vathi_Outdoor_f_2_f_1_1400.webp",
-      "media/vathi_fast/Vathi_Outdoor_f_3_f_1_1400.webp",
-      "media/vathi_fast/Vathi_Kitchen_f_1_f_1_1400.webp",
-      "media/vathi_fast/Vathi_Kitchen_f_2_f_1_1400.webp",
-      "media/vathi_fast/Vathi_Kitchen_f_3_f_1_1400.webp",
-      "media/vathi_fast/Vathi_MainBedroom_f_1_f_1_1400.webp",
-      "media/vathi_fast/Vathi_MainBedroom_f_2_f_1_1400.webp",
-      "media/vathi_fast/Vathi_MainBedroom_f_3_f_1_1400.webp",
-      "media/vathi_fast/Vathi_SecondBedroom_f_1_f_1_1400.webp",
-      "media/vathi_fast/Vathi_SecondBedroom_f_2_f_1_1400.webp",
-      "media/vathi_fast/Vathi_SecondBedroom_f_3_f_1_1400.webp",
-      "media/vathi_fast/Vathi_Bathroom_f_1_f_1_1400.webp",
-      "media/vathi_fast/Vathi_Bathroom_f_2_f_1_1400.webp"
-    ];
+    (function(){
+      const sources=[
+        "media/vathi_fast/Vathi_LivingRoom_f_1_f_1_1400.webp",
+        "media/vathi_fast/Vathi_LivingRoom_f_3_f_1_1400.webp",
+        "media/vathi_fast/Vathi_Livingoom_f_2_f_1_1400.webp",
+        "media/vathi_fast/Vathi_Outdoor_f_1_f_1_1400.webp",
+        "media/vathi_fast/Vathi_Outdoor_f_2_f_1_1400.webp",
+        "media/vathi_fast/Vathi_Outdoor_f_3_f_1_1400.webp",
+        "media/vathi_fast/Vathi_Kitchen_f_1_f_1_1400.webp",
+        "media/vathi_fast/Vathi_Kitchen_f_2_f_1_1400.webp",
+        "media/vathi_fast/Vathi_Kitchen_f_3_f_1_1400.webp",
+        "media/vathi_fast/Vathi_MainBedroom_f_1_f_1_1400.webp",
+        "media/vathi_fast/Vathi_MainBedroom_f_2_f_1_1400.webp",
+        "media/vathi_fast/Vathi_MainBedroom_f_3_f_1_1400.webp",
+        "media/vathi_fast/Vathi_SecondBedroom_f_1_f_1_1400.webp",
+        "media/vathi_fast/Vathi_SecondBedroom_f_2_f_1_1400.webp",
+        "media/vathi_fast/Vathi_SecondBedroom_f_3_f_1_1400.webp",
+        "media/vathi_fast/Vathi_Bathroom_f_1_f_1_1400.webp",
+        "media/vathi_fast/Vathi_Bathroom_f_2_f_1_1400.webp"
+      ];
 
-    const rotator=document.getElementById('vathi-rotator');
-    const video=document.getElementById('vathi-video');
-    const a=document.getElementById('vathi-a');
-    const b=document.getElementById('vathi-b');
-    if(!rotator||!video||!a||!b) return;
+      const rotator=document.getElementById('vathi-rotator');
+      const video=document.getElementById('vathi-video');
+      const a=document.getElementById('vathi-a');
+      const b=document.getElementById('vathi-b');
+      if(!rotator||!video||!a||!b) return;
 
-    video.muted = true; video.playsInline = true;
-    video.setAttribute('muted',''); video.setAttribute('playsinline','');
-    video.setAttribute('webkit-playsinline',''); video.setAttribute('autoplay','');
+      video.muted = true; video.playsInline = true;
+      video.setAttribute('muted',''); video.setAttribute('playsinline','');
+      video.setAttribute('webkit-playsinline',''); video.setAttribute('autoplay','');
 
-    const prevBtn=rotator.querySelector('.btn.prev');
-    const nextBtn=rotator.querySelector('.btn.next');
-    const toggleBtn=rotator.querySelector('.btn.center');
-    const icoPause=toggleBtn.querySelector('.ico-pause');
-    const icoPlay=toggleBtn.querySelector('.ico-play');
+      const prevBtn=rotator.querySelector('.btn.prev');
+      const nextBtn=rotator.querySelector('.btn.next');
+      const toggleBtn=rotator.querySelector('.btn.center');
+      const icoPause=toggleBtn.querySelector('.ico-pause');
+      const icoPlay=toggleBtn.querySelector('.ico-play');
 
-    sources.forEach(src=>{const im=new Image(); im.src=src;});
+      sources.forEach(src=>{const im=new Image(); im.src=src;});
 
-    let idx=2, topIsA=true;
-    const HOLD_MS=2000;
-    let slideTimer=null;
-    let paused=false;
+      let idx=2, topIsA=true;
+      const HOLD_MS=2000;
+      let slideTimer=null;
+      let paused=false;
 
-    function clearTimers(){ if(slideTimer){clearTimeout(slideTimer);slideTimer=null} }
-    function whenDecodable(img){ const p=(img.decode?img.decode():Promise.resolve()); return p.catch(()=>{}); }
-    function showInitialFrames(){ a.classList.remove('standby'); b.classList.remove('standby'); a.classList.add('is-top'); b.classList.remove('is-top'); topIsA=true; idx=2; }
-    function scheduleNext(){ if(!paused){ slideTimer=setTimeout(nextFrame,HOLD_MS); } }
-    function nextFrame(){
-      const top=topIsA ? a : b, bottom=topIsA ? b : a;
-      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
-      whenDecodable(bottom).then(()=>{ requestAnimationFrame(()=>{ top.classList.remove('is-top'); requestAnimationFrame(()=>{ bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); }); }); });
-    }
-    function setPaused(p){
-      paused=p;
-      toggleBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
-      icoPause.style.display = p ? 'none' : 'inline';
-      icoPlay.style.display  = p ? 'inline' : 'none';
-      if(p){ clearTimers(); } else { scheduleNext(); }
-    }
-    function startSlideshow(){
-      if(rotator.classList.contains('slideshow')) return;
-      rotator.classList.add('slideshow');
-      showInitialFrames();
-      video.classList.add('hidden');
-      setPaused(false);
-    }
-    function resetToBeginning(){
-      clearTimers(); setPaused(true); topIsA=true; idx=2;
-      a.classList.add('standby'); a.classList.remove('is-top');
-      b.classList.add('standby'); b.classList.remove('is-top');
-      rotator.classList.remove('slideshow');
-      video.classList.remove('hidden');
-      try{video.pause()}catch(e){}
-      try{video.currentTime=0}catch(e){}
-    }
-
-    const isTouch = window.matchMedia('(hover: none)').matches;
-    const PLAY_T = isTouch ? 0.30 : 0.60;
-    const RESET_T = 0.10;
-
-    const io = new IntersectionObserver(([e]) => {
-      if (e.intersectionRatio < RESET_T) { resetToBeginning(); return; }
-      if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
-        if (video.ended || nearEnd(video)) { startSlideshow(); }
-        else { video.play().catch(()=>{ startSlideshow(); }); }
+      function clearTimers(){ if(slideTimer){clearTimeout(slideTimer);slideTimer=null} }
+      function whenDecodable(img){ const p=(img.decode?img.decode():Promise.resolve()); return p.catch(()=>{}); }
+      function showInitialFrames(){ a.classList.remove('standby'); b.classList.remove('standby'); a.classList.add('is-top'); b.classList.remove('is-top'); topIsA=true; idx=2; }
+      function scheduleNext(){ if(!paused){ slideTimer=setTimeout(nextFrame,HOLD_MS); } }
+      function nextFrame(){
+        const top=topIsA ? a : b, bottom=topIsA ? b : a;
+        bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+        whenDecodable(bottom).then(()=>{ requestAnimationFrame(()=>{ top.classList.remove('is-top'); requestAnimationFrame(()=>{ bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); }); }); });
       }
-    }, { threshold: [0, RESET_T, 0.25, PLAY_T, 1], rootMargin: '0px 0px -10% 0px' });
-    io.observe(rotator);
-
-    video.addEventListener('ended', startSlideshow);
-    video.addEventListener('timeupdate', () => {
-      if (!rotator.classList.contains('slideshow') && nearEnd(video)) startSlideshow();
-    });
-
-    prevBtn.addEventListener('click', ()=>{
-      if(!rotator.classList.contains('slideshow')) return;
-      clearTimers();
-      const top=topIsA ? a : b, bottom=topIsA ? b : a;
-      idx=(idx-2+sources.length)%sources.length; bottom.src=sources[idx]; idx=(idx+1)%sources.length;
-      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
-    });
-
-    nextBtn.addEventListener('click', ()=>{
-      if(!rotator.classList.contains('slideshow')) return;
-      clearTimers();
-      const top=topIsA ? a : b, bottom=topIsA ? b : a;
-      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
-      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
-    });
-
-    toggleBtn.addEventListener('click', ()=>{
-      if(!rotator.classList.contains('slideshow')){
-        if (video.paused) { video.play().catch(()=>{}); } else { video.pause(); }
-        return;
+      function setPaused(p){
+        paused=p;
+        toggleBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
+        icoPause.style.display = p ? 'none' : 'inline';
+        icoPlay.style.display  = p ? 'inline' : 'none';
+        if(p){ clearTimers(); } else { scheduleNext(); }
       }
-      setPaused(!paused);
-    });
-  })();
+      function startSlideshow(){
+        if(rotator.classList.contains('slideshow')) return;
+        rotator.classList.add('slideshow');
+        showInitialFrames();
+        video.classList.add('hidden');
+        setPaused(false);
+      }
+      function resetToBeginning(){
+        clearTimers(); setPaused(true); topIsA=true; idx=2;
+        a.classList.add('standby'); a.classList.remove('is-top');
+        b.classList.add('standby'); b.classList.remove('is-top');
+        rotator.classList.remove('slideshow');
+        video.classList.remove('hidden');
+        try{video.pause()}catch(e){}
+        try{video.currentTime=0}catch(e){}
+      }
+
+      const isTouch = window.matchMedia('(hover: none)').matches;
+      const PLAY_T = isTouch ? 0.30 : 0.60;
+      const RESET_T = 0.10;
+
+      const io = new IntersectionObserver(([e]) => {
+        if (e.intersectionRatio < RESET_T) { resetToBeginning(); return; }
+        if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
+          if (video.ended || nearEnd(video)) { startSlideshow(); }
+          else { video.play().catch(()=>{ startSlideshow(); }); }
+        }
+      }, { threshold: [0, RESET_T, 0.25, PLAY_T, 1], rootMargin: '0px 0px -10% 0px' });
+      io.observe(rotator);
+
+      video.addEventListener('ended', startSlideshow);
+      video.addEventListener('timeupdate', () => {
+        if (!rotator.classList.contains('slideshow') && nearEnd(video)) startSlideshow();
+      });
+
+      prevBtn.addEventListener('click', ()=>{
+        if(!rotator.classList.contains('slideshow')) return;
+        clearTimers();
+        const top=topIsA ? a : b, bottom=topIsA ? b : a;
+        idx=(idx-2+sources.length)%sources.length; bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+        whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+      });
+
+      nextBtn.addEventListener('click', ()=>{
+        if(!rotator.classList.contains('slideshow')) return;
+        clearTimers();
+        const top=topIsA ? a : b, bottom=topIsA ? b : a;
+        bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+        whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+      });
+
+      toggleBtn.addEventListener('click', ()=>{
+        if(!rotator.classList.contains('slideshow')){
+          if (video.paused) { video.play().catch(()=>{}); } else { video.pause(); }
+          return;
+        }
+        setPaused(!paused);
+      });
+    })();
   </script>
 
   <!-- LIVADA -->
   <script>
-  (function(){
-    const sources=[
-      "media/livada_fast/Livada_LivingRoom_f_1_1400.webp",
-      "media/livada_fast/Livada_LivingRoom_f_2_1400.webp",
-      "media/livada_fast/Livada_LivingRoom_f_3_1400.webp",
-      "media/livada_fast/Livada_Outdoor_f_1_1400.webp",
-      "media/livada_fast/Livada_Outdoor_f_2_1400.webp",
-      "media/livada_fast/Livada_Outdoor_f_3_1400.webp",
-      "media/livada_fast/Livada_Kitchen_f_1_1400.webp",
-      "media/livada_fast/Livada_Kitchen_f_2_1400.webp",
-      "media/livada_fast/Livada_Kitchen_f_3_1400.webp",
-      "media/livada_fast/Livada_MainBedroom_f_1_1400.webp",
-      "media/livada_fast/Livada_MainBedroom_f_2_1400.webp",
-      "media/livada_fast/Livada_MainBedroom_f_3_1400.webp",
-      "media/livada_fast/Livada_SecondBedroom_f_1_1400.webp",
-      "media/livada_fast/Livada_SecondBedroom_f_2_1400.webp",
-      "media/livada_fast/Livada_SecondBedroom_f_3_1400.webp",
-      "media/livada_fast/Livada_Bathroom_f_1_1400.webp",
-      "media/livada_fast/Livada_Bathroom_f_2_1400.webp",
-      "media/livada_fast/Livada_Bathroom_f_3_1400.webp"
-    ];
+    (function(){
+      const sources=[
+        "media/livada_fast/Livada_LivingRoom_f_1_1400.webp",
+        "media/livada_fast/Livada_LivingRoom_f_2_1400.webp",
+        "media/livada_fast/Livada_LivingRoom_f_3_1400.webp",
+        "media/livada_fast/Livada_Outdoor_f_1_1400.webp",
+        "media/livada_fast/Livada_Outdoor_f_2_1400.webp",
+        "media/livada_fast/Livada_Outdoor_f_3_1400.webp",
+        "media/livada_fast/Livada_Kitchen_f_1_1400.webp",
+        "media/livada_fast/Livada_Kitchen_f_2_1400.webp",
+        "media/livada_fast/Livada_Kitchen_f_3_1400.webp",
+        "media/livada_fast/Livada_MainBedroom_f_1_1400.webp",
+        "media/livada_fast/Livada_MainBedroom_f_2_1400.webp",
+        "media/livada_fast/Livada_MainBedroom_f_3_1400.webp",
+        "media/livada_fast/Livada_SecondBedroom_f_1_1400.webp",
+        "media/livada_fast/Livada_SecondBedroom_f_2_1400.webp",
+        "media/livada_fast/Livada_SecondBedroom_f_3_1400.webp",
+        "media/livada_fast/Livada_Bathroom_f_1_1400.webp",
+        "media/livada_fast/Livada_Bathroom_f_2_1400.webp",
+        "media/livada_fast/Livada_Bathroom_f_3_1400.webp"
+      ];
 
-    const rotator=document.getElementById('livada-rotator');
-    const video=document.getElementById('livada-video');
-    const a=document.getElementById('livada-a');
-    const b=document.getElementById('livada-b');
-    if(!rotator||!video||!a||!b) return;
+      const rotator=document.getElementById('livada-rotator');
+      const video=document.getElementById('livada-video');
+      const a=document.getElementById('livada-a');
+      const b=document.getElementById('livada-b');
+      if(!rotator||!video||!a||!b) return;
 
-    video.muted = true; video.playsInline = true;
-    video.setAttribute('muted',''); video.setAttribute('playsinline','');
-    video.setAttribute('webkit-playsinline',''); video.setAttribute('autoplay','');
+      video.muted = true; video.playsInline = true;
+      video.setAttribute('muted',''); video.setAttribute('playsinline','');
+      video.setAttribute('webkit-playsinline',''); video.setAttribute('autoplay','');
 
-    const prevBtn=rotator.querySelector('.btn.prev');
-    const nextBtn=rotator.querySelector('.btn.next');
-    const toggleBtn=rotator.querySelector('.btn.center');
-    const icoPause=toggleBtn.querySelector('.ico-pause');
-    const icoPlay=toggleBtn.querySelector('.ico-play');
+      const prevBtn=rotator.querySelector('.btn.prev');
+      const nextBtn=rotator.querySelector('.btn.next');
+      const toggleBtn=rotator.querySelector('.btn.center');
+      const icoPause=toggleBtn.querySelector('.ico-pause');
+      const icoPlay=toggleBtn.querySelector('.ico-play');
 
-    sources.forEach(src=>{const im=new Image(); im.src=src;});
+      sources.forEach(src=>{const im=new Image(); im.src=src;});
 
-    let idx=2, topIsA=true;
-    const HOLD_MS=2000;
-    let slideTimer=null;
-    let paused=false;
+      let idx=2, topIsA=true;
+      const HOLD_MS=2000;
+      let slideTimer=null;
+      let paused=false;
 
-    function clearTimers(){ if(slideTimer){clearTimeout(slideTimer);slideTimer=null} }
-    function whenDecodable(img){ const p=(img.decode?img.decode():Promise.resolve()); return p.catch(()=>{}); }
-    function showInitialFrames(){ a.classList.remove('standby'); b.classList.remove('standby'); a.classList.add('is-top'); b.classList.remove('is-top'); topIsA=true; idx=2; }
-    function scheduleNext(){ if(!paused){ slideTimer=setTimeout(nextFrame,HOLD_MS); } }
-    function nextFrame(){
-      const top=topIsA ? a : b, bottom=topIsA ? b : a;
-      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
-      whenDecodable(bottom).then(()=>{ requestAnimationFrame(()=>{ top.classList.remove('is-top'); requestAnimationFrame(()=>{ bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); }); }); });
-    }
-    function setPaused(p){
-      paused=p;
-      toggleBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
-      icoPause.style.display = p ? 'none' : 'inline';
-      icoPlay.style.display  = p ? 'inline' : 'none';
-      if(p){ clearTimers(); } else { scheduleNext(); }
-    }
-    function startSlideshow(){
-      if(rotator.classList.contains('slideshow')) return;
-      rotator.classList.add('slideshow');
-      showInitialFrames();
-      video.classList.add('hidden');
-      setPaused(false);
-    }
-    function resetToBeginning(){
-      clearTimers(); setPaused(true); topIsA=true; idx=2;
-      a.classList.add('standby'); a.classList.remove('is-top');
-      b.classList.add('standby'); b.classList.remove('is-top');
-      rotator.classList.remove('slideshow');
-      video.classList.remove('hidden');
-      try{video.pause()}catch(e){}
-      try{video.currentTime=0}catch(e){}
-    }
-
-    const isTouch = window.matchMedia('(hover: none)').matches;
-    const PLAY_T = isTouch ? 0.30 : 0.60;
-    const RESET_T = 0.10;
-
-    const io = new IntersectionObserver(([e]) => {
-      if (e.intersectionRatio < RESET_T) { resetToBeginning(); return; }
-      if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
-        if (video.ended || nearEnd(video)) { startSlideshow(); }
-        else { video.play().catch(()=>{ startSlideshow(); }); }
+      function clearTimers(){ if(slideTimer){clearTimeout(slideTimer);slideTimer=null} }
+      function whenDecodable(img){ const p=(img.decode?img.decode():Promise.resolve()); return p.catch(()=>{}); }
+      function showInitialFrames(){ a.classList.remove('standby'); b.classList.remove('standby'); a.classList.add('is-top'); b.classList.remove('is-top'); topIsA=true; idx=2; }
+      function scheduleNext(){ if(!paused){ slideTimer=setTimeout(nextFrame,HOLD_MS); } }
+      function nextFrame(){
+        const top=topIsA ? a : b, bottom=topIsA ? b : a;
+        bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+        whenDecodable(bottom).then(()=>{ requestAnimationFrame(()=>{ top.classList.remove('is-top'); requestAnimationFrame(()=>{ bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); }); }); });
       }
-    }, { threshold: [0, RESET_T, 0.25, PLAY_T, 1], rootMargin: '0px 0px -10% 0px' });
-    io.observe(rotator);
-
-    video.addEventListener('ended', startSlideshow);
-    video.addEventListener('timeupdate', () => {
-      if (!rotator.classList.contains('slideshow') && nearEnd(video)) startSlideshow();
-    });
-
-    prevBtn.addEventListener('click', ()=>{
-      if(!rotator.classList.contains('slideshow')) return;
-      clearTimers();
-      const top=topIsA ? a : b, bottom=topIsA ? b : a;
-      idx=(idx-2+sources.length)%sources.length; bottom.src=sources[idx]; idx=(idx+1)%sources.length;
-      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
-    });
-
-    nextBtn.addEventListener('click', ()=>{
-      if(!rotator.classList.contains('slideshow')) return;
-      clearTimers();
-      const top=topIsA ? a : b, bottom=topIsA ? b : a;
-      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
-      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
-    });
-
-    toggleBtn.addEventListener('click', ()=>{
-      if(!rotator.classList.contains('slideshow')){
-        if (video.paused) { video.play().catch(()=>{}); } else { video.pause(); }
-        return;
+      function setPaused(p){
+        paused=p;
+        toggleBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
+        icoPause.style.display = p ? 'none' : 'inline';
+        icoPlay.style.display  = p ? 'inline' : 'none';
+        if(p){ clearTimers(); } else { scheduleNext(); }
       }
-      setPaused(!paused);
-    });
-  })();
+      function startSlideshow(){
+        if(rotator.classList.contains('slideshow')) return;
+        rotator.classList.add('slideshow');
+        showInitialFrames();
+        video.classList.add('hidden');
+        setPaused(false);
+      }
+      function resetToBeginning(){
+        clearTimers(); setPaused(true); topIsA=true; idx=2;
+        a.classList.add('standby'); a.classList.remove('is-top');
+        b.classList.add('standby'); b.classList.remove('is-top');
+        rotator.classList.remove('slideshow');
+        video.classList.remove('hidden');
+        try{video.pause()}catch(e){}
+        try{video.currentTime=0}catch(e){}
+      }
+
+      const isTouch = window.matchMedia('(hover: none)').matches;
+      const PLAY_T = isTouch ? 0.30 : 0.60;
+      const RESET_T = 0.10;
+
+      const io = new IntersectionObserver(([e]) => {
+        if (e.intersectionRatio < RESET_T) { resetToBeginning(); return; }
+        if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
+          if (video.ended || nearEnd(video)) { startSlideshow(); }
+          else { video.play().catch(()=>{ startSlideshow(); }); }
+        }
+      }, { threshold: [0, RESET_T, 0.25, PLAY_T, 1], rootMargin: '0px 0px -10% 0px' });
+      io.observe(rotator);
+
+      video.addEventListener('ended', startSlideshow);
+      video.addEventListener('timeupdate', () => {
+        if (!rotator.classList.contains('slideshow') && nearEnd(video)) startSlideshow();
+      });
+
+      prevBtn.addEventListener('click', ()=>{
+        if(!rotator.classList.contains('slideshow')) return;
+        clearTimers();
+        const top=topIsA ? a : b, bottom=topIsA ? b : a;
+        idx=(idx-2+sources.length)%sources.length; bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+        whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+      });
+
+      nextBtn.addEventListener('click', ()=>{
+        if(!rotator.classList.contains('slideshow')) return;
+        clearTimers();
+        const top=topIsA ? a : b, bottom=topIsA ? b : a;
+        bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+        whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+      });
+
+      toggleBtn.addEventListener('click', ()=>{
+        if(!rotator.classList.contains('slideshow')){
+          if (video.paused) { video.play().catch(()=>{}); } else { video.pause(); }
+          return;
+        }
+        setPaused(!paused);
+      });
+    })();
   </script>
 
   <!-- AMMOS -->
   <script>
-  (function(){
-    const sources=[
-      "media/ammos_fast/Ammos_LivingRoom_f_1_1400.webp",
-      "media/ammos_fast/Ammos_LivingRoom_f_2_1400.webp",
-      "media/ammos_fast/Ammos_LivingRoom_f_3_1400.webp",
-      "media/ammos_fast/Ammos_Outdoor_f_1_1400.webp",
-      "media/ammos_fast/Ammos_Outdoor_f_2_1400.webp",
-      "media/ammos_fast/Ammos_Outdoor_f_3_1400.webp",
-      "media/ammos_fast/Ammos_Kitchen_f_1_1400.webp",
-      "media/ammos_fast/Ammos_Kitchen_f_2_1400.webp",
-      "media/ammos_fast/Ammos_Kitchen_f_3_1400.webp",
-      "media/ammos_fast/Ammos_MainBedroom_f_1_1400.webp",
-      "media/ammos_fast/Ammos_MainBedroom_f_2_1400.webp",
-      "media/ammos_fast/Ammos_MainBedroom_f_3_1400.webp",
-      "media/ammos_fast/Ammos_SecondBedroom_f_1_1400.webp",
-      "media/ammos_fast/Ammos_SecondBedroom_f_2_1400.webp",
-      "media/ammos_fast/Ammos_SecondBedroom_f_3_1400.webp",
-      "media/ammos_fast/Ammos_Bathroom_f_1_1400.webp",
-      "media/ammos_fast/Ammos_Bathroom_f_2_1400.webp",
-      "media/ammos_fast/Ammos_Bathroom_f_3_1400.webp"
-    ];
+    (function(){
+      const sources=[
+        "media/ammos_fast/Ammos_LivingRoom_f_1_1400.webp",
+        "media/ammos_fast/Ammos_LivingRoom_f_2_1400.webp",
+        "media/ammos_fast/Ammos_LivingRoom_f_3_1400.webp",
+        "media/ammos_fast/Ammos_Outdoor_f_1_1400.webp",
+        "media/ammos_fast/Ammos_Outdoor_f_2_1400.webp",
+        "media/ammos_fast/Ammos_Outdoor_f_3_1400.webp",
+        "media/ammos_fast/Ammos_Kitchen_f_1_1400.webp",
+        "media/ammos_fast/Ammos_Kitchen_f_2_1400.webp",
+        "media/ammos_fast/Ammos_Kitchen_f_3_1400.webp",
+        "media/ammos_fast/Ammos_MainBedroom_f_1_1400.webp",
+        "media/ammos_fast/Ammos_MainBedroom_f_2_1400.webp",
+        "media/ammos_fast/Ammos_MainBedroom_f_3_1400.webp",
+        "media/ammos_fast/Ammos_SecondBedroom_f_1_1400.webp",
+        "media/ammos_fast/Ammos_SecondBedroom_f_2_1400.webp",
+        "media/ammos_fast/Ammos_SecondBedroom_f_3_1400.webp",
+        "media/ammos_fast/Ammos_Bathroom_f_1_1400.webp",
+        "media/ammos_fast/Ammos_Bathroom_f_2_1400.webp",
+        "media/ammos_fast/Ammos_Bathroom_f_3_1400.webp"
+      ];
 
-    const rotator=document.getElementById('ammos-rotator');
-    const video=document.getElementById('ammos-video');
-    const a=document.getElementById('ammos-a');
-    const b=document.getElementById('ammos-b');
-    if(!rotator||!video||!a||!b) return;
+      const rotator=document.getElementById('ammos-rotator');
+      const video=document.getElementById('ammos-video');
+      const a=document.getElementById('ammos-a');
+      const b=document.getElementById('ammos-b');
+      if(!rotator||!video||!a||!b) return;
 
-    video.muted = true; video.playsInline = true;
-    video.setAttribute('muted',''); video.setAttribute('playsinline','');
-    video.setAttribute('webkit-playsinline',''); video.setAttribute('autoplay','');
+      video.muted = true; video.playsInline = true;
+      video.setAttribute('muted',''); video.setAttribute('playsinline','');
+      video.setAttribute('webkit-playsinline',''); video.setAttribute('autoplay','');
 
-    const prevBtn=rotator.querySelector('.btn.prev');
-    const nextBtn=rotator.querySelector('.btn.next');
-    const toggleBtn=rotator.querySelector('.btn.center');
-    const icoPause=toggleBtn.querySelector('.ico-pause');
-    const icoPlay=toggleBtn.querySelector('.ico-play');
+      const prevBtn=rotator.querySelector('.btn.prev');
+      const nextBtn=rotator.querySelector('.btn.next');
+      const toggleBtn=rotator.querySelector('.btn.center');
+      const icoPause=toggleBtn.querySelector('.ico-pause');
+      const icoPlay=toggleBtn.querySelector('.ico-play');
 
-    sources.forEach(src=>{const im=new Image(); im.src=src;});
+      sources.forEach(src=>{const im=new Image(); im.src=src;});
 
-    let idx=2, topIsA=true;
-    const HOLD_MS=2000;
-    let slideTimer=null;
-    let paused=false;
+      let idx=2, topIsA=true;
+      const HOLD_MS=2000;
+      let slideTimer=null;
+      let paused=false;
 
-    function clearTimers(){ if(slideTimer){clearTimeout(slideTimer);slideTimer=null} }
-    function whenDecodable(img){ const p=(img.decode?img.decode():Promise.resolve()); return p.catch(()=>{}); }
-    function showInitialFrames(){ a.classList.remove('standby'); b.classList.remove('standby'); a.classList.add('is-top'); b.classList.remove('is-top'); topIsA=true; idx=2; }
-    function scheduleNext(){ if(!paused){ slideTimer=setTimeout(nextFrame,HOLD_MS); } }
-    function nextFrame(){
-      const top=topIsA ? a : b, bottom=topIsA ? b : a;
-      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
-      whenDecodable(bottom).then(()=>{ requestAnimationFrame(()=>{ top.classList.remove('is-top'); requestAnimationFrame(()=>{ bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); }); }); });
-    }
-    function setPaused(p){
-      paused=p;
-      toggleBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
-      icoPause.style.display = p ? 'none' : 'inline';
-      icoPlay.style.display  = p ? 'inline' : 'none';
-      if(p){ clearTimers(); } else { scheduleNext(); }
-    }
-    function startSlideshow(){
-      if(rotator.classList.contains('slideshow')) return;
-      rotator.classList.add('slideshow');
-      showInitialFrames();
-      video.classList.add('hidden');
-      setPaused(false);
-    }
-    function resetToBeginning(){
-      clearTimers(); setPaused(true); topIsA=true; idx=2;
-      a.classList.add('standby'); a.classList.remove('is-top');
-      b.classList.add('standby'); b.classList.remove('is-top');
-      rotator.classList.remove('slideshow');
-      video.classList.remove('hidden');
-      try{video.pause()}catch(e){}
-      try{video.currentTime=0}catch(e){}
-    }
-
-    const isTouch = window.matchMedia('(hover: none)').matches;
-    const PLAY_T = isTouch ? 0.30 : 0.60;
-    const RESET_T = 0.10;
-
-    const io = new IntersectionObserver(([e]) => {
-      if (e.intersectionRatio < RESET_T) { resetToBeginning(); return; }
-      if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
-        if (video.ended || nearEnd(video)) { startSlideshow(); }
-        else { video.play().catch(()=>{ startSlideshow(); }); }
+      function clearTimers(){ if(slideTimer){clearTimeout(slideTimer);slideTimer=null} }
+      function whenDecodable(img){ const p=(img.decode?img.decode():Promise.resolve()); return p.catch(()=>{}); }
+      function showInitialFrames(){ a.classList.remove('standby'); b.classList.remove('standby'); a.classList.add('is-top'); b.classList.remove('is-top'); topIsA=true; idx=2; }
+      function scheduleNext(){ if(!paused){ slideTimer=setTimeout(nextFrame,HOLD_MS); } }
+      function nextFrame(){
+        const top=topIsA ? a : b, bottom=topIsA ? b : a;
+        bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+        whenDecodable(bottom).then(()=>{ requestAnimationFrame(()=>{ top.classList.remove('is-top'); requestAnimationFrame(()=>{ bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); }); }); });
       }
-    }, { threshold: [0, RESET_T, 0.25, PLAY_T, 1], rootMargin: '0px 0px -10% 0px' });
-    io.observe(rotator);
-
-    video.addEventListener('ended', startSlideshow);
-    video.addEventListener('timeupdate', () => {
-      if (!rotator.classList.contains('slideshow') && nearEnd(video)) startSlideshow();
-    });
-
-    prevBtn.addEventListener('click', ()=>{
-      if(!rotator.classList.contains('slideshow')) return;
-      clearTimers();
-      const top=topIsA ? a : b, bottom=topIsA ? b : a;
-      idx=(idx-2+sources.length)%sources.length; bottom.src=sources[idx]; idx=(idx+1)%sources.length;
-      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
-    });
-
-    nextBtn.addEventListener('click', ()=>{
-      if(!rotator.classList.contains('slideshow')) return;
-      clearTimers();
-      const top=topIsA ? a : b, bottom=topIsA ? b : a;
-      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
-      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
-    });
-
-    toggleBtn.addEventListener('click', ()=>{
-      if(!rotator.classList.contains('slideshow')){
-        if (video.paused) { video.play().catch(()=>{}); } else { video.pause(); }
-        return;
+      function setPaused(p){
+        paused=p;
+        toggleBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
+        icoPause.style.display = p ? 'none' : 'inline';
+        icoPlay.style.display  = p ? 'inline' : 'none';
+        if(p){ clearTimers(); } else { scheduleNext(); }
       }
-      setPaused(!paused);
-    });
-  })();
+      function startSlideshow(){
+        if(rotator.classList.contains('slideshow')) return;
+        rotator.classList.add('slideshow');
+        showInitialFrames();
+        video.classList.add('hidden');
+        setPaused(false);
+      }
+      function resetToBeginning(){
+        clearTimers(); setPaused(true); topIsA=true; idx=2;
+        a.classList.add('standby'); a.classList.remove('is-top');
+        b.classList.add('standby'); b.classList.remove('is-top');
+        rotator.classList.remove('slideshow');
+        video.classList.remove('hidden');
+        try{video.pause()}catch(e){}
+        try{video.currentTime=0}catch(e){}
+      }
+
+      const isTouch = window.matchMedia('(hover: none)').matches;
+      const PLAY_T = isTouch ? 0.30 : 0.60;
+      const RESET_T = 0.10;
+
+      const io = new IntersectionObserver(([e]) => {
+        if (e.intersectionRatio < RESET_T) { resetToBeginning(); return; }
+        if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
+          if (video.ended || nearEnd(video)) { startSlideshow(); }
+          else { video.play().catch(()=>{ startSlideshow(); }); }
+        }
+      }, { threshold: [0, RESET_T, 0.25, PLAY_T, 1], rootMargin: '0px 0px -10% 0px' });
+      io.observe(rotator);
+
+      video.addEventListener('ended', startSlideshow);
+      video.addEventListener('timeupdate', () => {
+        if (!rotator.classList.contains('slideshow') && nearEnd(video)) startSlideshow();
+      });
+
+      prevBtn.addEventListener('click', ()=>{
+        if(!rotator.classList.contains('slideshow')) return;
+        clearTimers();
+        const top=topIsA ? a : b, bottom=topIsA ? b : a;
+        idx=(idx-2+sources.length)%sources.length; bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+        whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+      });
+
+      nextBtn.addEventListener('click', ()=>{
+        if(!rotator.classList.contains('slideshow')) return;
+        clearTimers();
+        const top=topIsA ? a : b, bottom=topIsA ? b : a;
+        bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+        whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+      });
+
+      toggleBtn.addEventListener('click', ()=>{
+        if(!rotator.classList.contains('slideshow')){
+          if (video.paused) { video.play().catch(()=>{}); } else { video.pause(); }
+          return;
+        }
+        setPaused(!paused);
+      });
+    })();
   </script>
 
   <script>

@@ -547,30 +547,40 @@
       }
     }
 
-    /* BACK TO TOP — aligned to full viewport width */
-    .footer-bottom {
-      position: relative;
-    }
+ /* FLOATING BACK TO TOP BUTTON */
+.back-to-top {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.75);
+  color: #fff;
+  font-size: 24px;
+  text-decoration: none;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.45);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+  transition: opacity .25s ease, transform .25s ease;
+  z-index: 99999;
+}
 
-    .back-to-top {
-      position: absolute;
-      top: 8px;
-      right: 20px;
-      display: inline-flex;
-      font-size: 0.78rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #fff;
-      text-decoration: none;
-      opacity: 0.9;
-      transition: opacity 0.25s ease, transform 0.15s ease;
-    }
+.back-to-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
 
-    .back-to-top:hover {
-      opacity: 1;
-      text-decoration: underline;
-      transform: translateY(-1px);
-    }
+.back-to-top:hover {
+  background: rgba(0,0,0,0.9);
+  box-shadow: 0 14px 32px rgba(0,0,0,0.6);
+}
+
 
     /* LOCATION layout: mirror apartment section (rotator left, text right) */
     #location.section.slide-section .wrap {
@@ -1232,7 +1242,7 @@
   <footer class="footer-bottom snap">
 
     <!-- Back to top aligned to full viewport right -->
-    <a href="#home" class="back-to-top">Back to top ↑</a>
+    <a href="#home" class="back-to-top" aria-label="Back to top">↑</a>
 
     <div class="footer-inner">
       <p class="footer-line1">© <span id="year"></span>&nbsp;Tinos Treasures. All rights reserved.</p>
@@ -2037,5 +2047,24 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
+
+  <script>
+(function () {
+  const btn = document.querySelector('.back-to-top');
+  if (!btn) return;
+
+  function showHide() {
+    if (window.scrollY > 250) {
+      btn.classList.add('visible');
+    } else {
+      btn.classList.remove('visible');
+    }
+  }
+
+  window.addEventListener('scroll', showHide, { passive: true });
+  showHide();
+})();
+</script>
+
 </body>
 </html>

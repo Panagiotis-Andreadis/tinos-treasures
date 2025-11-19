@@ -640,40 +640,28 @@
     #location .location-slide.is-top {
       opacity: 1;
     }
-/* FLOATING BACK TO TOP BUTTON – always in layout, fade via opacity */
+/* FINAL FLOATING BACK TO TOP BUTTON (ALWAYS VISIBLE) */
 a.back-to-top {
   position: fixed !important;
-  inset: auto 18px 18px auto !important; /* top | right | bottom | left */
+  inset: auto 18px 18px auto !important; /* top right bottom left */
   width: 44px;
   height: 44px;
   border-radius: 50%;
-
-  display: flex;              /* always rendered */
+  display: flex;
   align-items: center;
   justify-content: center;
-
   background: rgba(0,0,0,0.85);
   color: #fff !important;
   font-size: 24px;
   text-decoration: none;
   box-shadow: 0 10px 25px rgba(0,0,0,0.45);
   z-index: 999999;
-
-  opacity: 0;                  /* hidden by default */
-  pointer-events: none;        /* not clickable when hidden */
-  transition: opacity .2s ease;
-}
-
-a.back-to-top.visible {
-  opacity: 1;
-  pointer-events: auto;
 }
 
 a.back-to-top:hover {
   background: rgba(0,0,0,0.98);
   box-shadow: 0 14px 32px rgba(0,0,0,0.6);
 }
-
 
   </style>
 </head>
@@ -2048,29 +2036,6 @@ a.back-to-top:hover {
   </script>
 
  
-<script>
-  (function () {
-    var btn = document.querySelector('.back-to-top');
-    if (!btn) return;
-
-    var THRESHOLD = 40; // px – tweak if you want it earlier/later
-
-    function updateButton() {
-      var y = window.scrollY || window.pageYOffset || 0;
-      if (y > THRESHOLD) {
-        btn.classList.add('visible');
-      } else {
-        btn.classList.remove('visible');
-      }
-    }
-
-    window.addEventListener('scroll', updateButton, { passive: true });
-    window.addEventListener('load', updateButton);
-    updateButton(); // run once on initial load
-  })();
-</script>
-
-
 
 </body>
 </html>

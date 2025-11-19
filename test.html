@@ -640,7 +640,7 @@
     #location .location-slide.is-top {
       opacity: 1;
     }
-/* FLOATING BACK TO TOP – SHOW AFTER SCROLL */
+/* FLOATING BACK TO TOP – APPEAR AFTER SCROLL */
 a.back-to-top {
   position: fixed !important;
   inset: auto 18px 18px auto !important; /* bottom-right */
@@ -674,6 +674,7 @@ a.back-to-top:hover {
   background: rgba(0,0,0,0.98);
   box-shadow: 0 14px 32px rgba(0,0,0,0.6);
 }
+
 
   </style>
 </head>
@@ -2052,7 +2053,7 @@ a.back-to-top:hover {
   const btn = document.querySelector('.back-to-top');
   if (!btn) return;
 
-  const THRESHOLD = 250; // px from top before showing
+  const THRESHOLD = 250; // px scrolled before showing the button
 
   function onScroll() {
     if (window.scrollY > THRESHOLD) {
@@ -2063,9 +2064,11 @@ a.back-to-top:hover {
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
+  // Run once on load (in case user refreshes mid-page)
   onScroll();
 })();
 </script>
+
 
 
 </body>

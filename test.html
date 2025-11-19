@@ -1878,8 +1878,7 @@
   </script>
 
     <!-- LOCATION ROTATOR JS -->
-  <!-- LOCATION ROTATOR JS -->
-<script>
+ <script>
   (function () {
     const sources = [
       "media/location_fast/location_1_1400.webp",
@@ -1895,7 +1894,6 @@
     ];
 
     const rotator = document.getElementById('location-rotator');
-    const section = document.getElementById('location');
     if (!rotator) return;
 
     const a = rotator.querySelector('.location-slide-a');
@@ -1967,7 +1965,7 @@
       }
     }
 
-    // 🔁 Reset to first slide (used both on init and when leaving section)
+    // Reset to first slide
     function goToFirstSlide() {
       clearTimers();
       idx = 2;
@@ -1980,7 +1978,7 @@
       b.classList.remove('is-top');
     }
 
-    // Initial state: first slide, paused.
+    // Initial state: first slide, paused
     goToFirstSlide();
     setPaused(true);
 
@@ -2011,16 +2009,16 @@
       setPaused(!paused);
     });
 
-    // 👇 THIS is the bit that makes it restart from slide 1 on scroll
+    // Intersection observer now watches the ROTATOR itself
     const io = new IntersectionObserver(([entry]) => {
-      // When mostly out of view → reset to first slide and pause
+      // Mostly out of view → reset and pause
       if (entry.intersectionRatio < 0.15) {
         goToFirstSlide();
         setPaused(true);
         return;
       }
 
-      // When nicely in view → start from first slide and play
+      // Nicely in view → start from first slide and play
       if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
         goToFirstSlide();
         setPaused(false);
@@ -2030,9 +2028,10 @@
       rootMargin: '0px 0px -10% 0px'
     });
 
-    io.observe(section || rotator);
+    io.observe(rotator);
   })();
 </script>
+
 
 
   <script>

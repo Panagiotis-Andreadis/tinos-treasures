@@ -640,24 +640,27 @@
     #location .location-slide.is-top {
       opacity: 1;
     }
-/* FLOATING BACK TO TOP BUTTON – always in layout, just fade in/out */
+/* FLOATING BACK TO TOP BUTTON – always in layout, fade via opacity */
 a.back-to-top {
   position: fixed !important;
-  inset: auto 18px 18px auto !important; /* top right bottom left */
+  inset: auto 18px 18px auto !important; /* top | right | bottom | left */
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  display: flex;            /* always flex – we use opacity to hide it */
+
+  display: flex;              /* always rendered */
   align-items: center;
   justify-content: center;
+
   background: rgba(0,0,0,0.85);
   color: #fff !important;
   font-size: 24px;
   text-decoration: none;
   box-shadow: 0 10px 25px rgba(0,0,0,0.45);
   z-index: 999999;
-  opacity: 0;
-  pointer-events: none;     /* not clickable when hidden */
+
+  opacity: 0;                  /* hidden by default */
+  pointer-events: none;        /* not clickable when hidden */
   transition: opacity .2s ease;
 }
 
@@ -2050,7 +2053,7 @@ a.back-to-top:hover {
     var btn = document.querySelector('.back-to-top');
     if (!btn) return;
 
-    var THRESHOLD = 40; // tweak as you like
+    var THRESHOLD = 40; // px – tweak if you want it earlier/later
 
     function updateButton() {
       var y = window.scrollY || window.pageYOffset || 0;
@@ -2063,7 +2066,7 @@ a.back-to-top:hover {
 
     window.addEventListener('scroll', updateButton, { passive: true });
     window.addEventListener('load', updateButton);
-    updateButton();
+    updateButton(); // run once on initial load
   })();
 </script>
 

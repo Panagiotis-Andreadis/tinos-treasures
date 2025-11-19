@@ -2050,7 +2050,7 @@ a.back-to-top:hover {
     var btn = document.querySelector('.back-to-top');
     if (!btn) return;
 
-    var THRESHOLD = 40; // you can tweak this
+    var THRESHOLD = 40; // tweak as you like
 
     function updateButton() {
       var y = window.scrollY || window.pageYOffset || 0;
@@ -2063,9 +2063,10 @@ a.back-to-top:hover {
 
     window.addEventListener('scroll', updateButton, { passive: true });
     window.addEventListener('load', updateButton);
-    updateButton(); // run once immediately
+    updateButton();
   })();
 </script>
+
 
 
 </body>

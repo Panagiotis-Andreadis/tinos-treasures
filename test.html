@@ -2048,15 +2048,23 @@ a.back-to-top:hover {
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 
- <script>
+<script>
 (function () {
   const btn = document.querySelector('.back-to-top');
   if (!btn) return;
 
-  const THRESHOLD = 250; // px scrolled before showing the button
+  const THRESHOLD = 120; // show sooner + more forgiving
+
+  function getScrollY() {
+    // Cross-browser friendly
+    return window.pageYOffset ||
+           document.documentElement.scrollTop ||
+           document.body.scrollTop ||
+           0;
+  }
 
   function onScroll() {
-    if (window.scrollY > THRESHOLD) {
+    if (getScrollY() > THRESHOLD) {
       btn.classList.add('visible');
     } else {
       btn.classList.remove('visible');
@@ -2064,10 +2072,10 @@ a.back-to-top:hover {
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
-  // Run once on load (in case user refreshes mid-page)
-  onScroll();
+  onScroll(); // run once on load
 })();
 </script>
+
 
 
 

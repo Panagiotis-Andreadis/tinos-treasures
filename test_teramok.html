@@ -1,0 +1,2041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tinos Treasures | Luxury Seaside Apartments in Tinos, Greece</title>
+  <meta name="description" content="Seaside 70sqm serviced apartments in Isternia Bay, Tinos. Crafted for care and memories. Book your stay today!">
+  <meta name="keywords" content="Tinos Treasures, Tinos apartments, Isternia bay, luxury seaside apartments, family-friendly villas, Tinos Greece accommodation, Tinos holidays">
+  <meta name="author" content="Tinos Treasures">
+  <link rel="canonical" href="https://tinostreasures.gr/">
+  <link rel="icon" href="logo.png" type="image/png">
+  <link rel="preload" href="Cycladic-Regular.otf" as="font" type="font/otf" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Tinos Treasures | Luxury Seaside Apartments in Tinos, Greece">
+  <meta property="og:description" content="Seaside luxurious 70sqm family-friendly apartments with hotel-like services, located in Isternia Bay, Tinos.">
+  <meta property="og:image" content="https://tinostreasures.gr/poster.jpg">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tinos Treasures | Luxury Seaside Apartments">
+  <meta name="twitter:description" content="Stay by the beach at Isternia Bay, Tinos — crafted for care and memories.">
+  <meta name="twitter:image" content="https://tinostreasures.gr/poster.jpg">
+
+  <style>
+    @font-face { font-family:'Cycladic'; src:url('Cycladic-Regular.otf') format('opentype'); font-display:swap; }
+    :root{
+      --glass-bg: rgba(0,0,0,0.35);
+      --glass-bg-scrolled: rgba(0,0,0,0.55);
+      --glass-border: rgba(255,255,255,0.12);
+      --white:#fff; --dark:#111; --accent:#fff;
+      --container-w:1100px; --section-pad:clamp(60px,8vw,100px);
+      --fade-duration:.8s; --nav-h:64px; --footer-h:80px;
+      --sbw: 0px;
+    }
+    html{scrollbar-gutter:stable;}
+    .visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+    html,body{margin:0;padding:0;height:100%;width:100%;font-family:'Cycladic',sans-serif;color:#f5f5f5;overflow-x:hidden}
+    body{overflow-y:auto;background:#000;scroll-snap-type:y mandatory}
+
+    /* INTRO */
+    #intro{position:fixed;inset:0;height:100svh;background:#000;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:99999;animation:introFadeOut 3.4s ease forwards}
+    #intro img{width:clamp(140px,15vw,220px);filter:brightness(0) invert(1);animation:fadeInOut 3.4s ease forwards}
+    #intro h1{font-family:'Cycladic',sans-serif;font-size:clamp(28px,5vw,48px);color:#fff;margin-top:20px;animation:fadeInOut 3.4s ease forwards}
+    @keyframes fadeInOut{0%{opacity:0}20%{opacity:1}70%{opacity:1}100%{opacity:0}}
+    @keyframes introFadeOut{0%{opacity:1;visibility:visible}90%{opacity:0;visibility:visible}100%{opacity:0;visibility:hidden;display:none}}
+    body.intro-active #bg-video{opacity:0!important}
+
+    /* NAV */
+    .nav{
+      position:fixed; top:0; left:0; right:auto; height:64px;
+      width:calc(100vw - var(--sbw, 0px));
+      display:flex; align-items:center; z-index:9999;
+      padding:0 16px;
+      border-bottom:1px solid var(--glass-border);
+      background:transparent;
+      overflow:visible;
+      will-change:transform;
+      transform:translateZ(0);
+    }
+    @supports not (overflow: clip){ .nav{overflow:visible;} }
+
+    .nav::before{
+      content:""; position:absolute; inset:0;
+      background:var(--glass-bg);
+      backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+      pointer-events:none;
+    }
+
+    .nav-inner{
+      position:relative; z-index:1; width:100%; display:flex; justify-content:space-between; align-items:center; padding:0 3vw; min-width:0;
+    }
+    .nav-logo{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:#000}
+    .nav-logo img{width:34px;height:34px;object-fit:contain;filter:none}
+    .nav-logo span{font-size:16px;letter-spacing:.06em;color:#000}
+    .nav-center{flex:1;display:flex;justify-content:center;gap:clamp(20px,5vw,80px)}
+    .nav-link,.nav-drop-toggle{text-decoration:none;letter-spacing:.06em;transition:opacity .2s ease;opacity:.95;color:#000}
+    .nav-link:hover,.nav-drop-toggle:hover{opacity:1}
+    .nav-right{display:flex;justify-content:end}
+    .nav-cta{display:inline-block;padding:10px 20px;border-radius:8px;font-weight:600;letter-spacing:.02em;text-decoration:none;color:#000;background:transparent;border:2px solid #000;transition:all .3s ease;white-space:nowrap}
+    .nav-cta:hover{background:rgba(0,0,0,.06);transform:translateY(-1px)}
+    .hamburger{display:none;width:28px;height:22px;position:relative;cursor:pointer}
+    .hamburger span,.hamburger::before,.hamburger::after{content:"";position:absolute;left:0;right:0;height:2px;background:#000;transition:transform 250ms ease,opacity 200ms ease}
+    .nav-link,.nav-drop-toggle,.nav-dropdown-menu a { font-size:14px; }
+    #nav-toggle{display:none}
+    #nav-toggle:checked + label .hamburger::before{transform:translateY(10px) rotate(45deg)}
+    #nav-toggle:checked + label .hamburger span{opacity:0}
+    #nav-toggle:checked + label .hamburger::after{transform:translateY(-10px) rotate(-45deg)}
+    .nav-mobile{
+      display:none; position:fixed; top:64px; left:0; right:auto;
+      width:calc(100vw - var(--sbw, 0px));
+      padding:14px 18px; border-bottom:1px solid var(--glass-border); z-index:10001;
+      background:var(--glass-bg-scrolled); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+      transition:background .25s ease,border-color .25s ease
+    }
+    .nav.transparent + .nav-mobile{ background:transparent; border-bottom-color:transparent; }
+    body.menu-open .nav-mobile{display:block}
+    .nav-mobile a{display:block;color:#000;text-decoration:none;padding:10px 0;font-size:16px;border-bottom:1px solid rgba(0,0,0,.12);opacity:.95;transition:opacity .2s ease}
+    .nav-mobile a:hover{opacity:1}
+
+    /* Background video – UPDATED */
+    .video-background{
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100vh;
+      overflow:hidden;
+      z-index:-1;
+      background:#000;
+    }
+    @supports (-webkit-touch-callout:none){
+      .video-background{height:-webkit-fill-available;}
+    }
+    #bg-video{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+      opacity:0;
+      transition:opacity .35s ease;
+    }
+    #bg-video.is-ready{opacity:1}
+    body.no-video::before{content:"";position:fixed;inset:0;background:url('poster.jpg') center center/cover no-repeat;z-index:-2}
+
+    section.anchor-offset{scroll-margin-top:var(--nav-h)}
+    .slide-section,.apt.apt-section{position:relative;height:100svh;min-height:100svh;max-height:100svh;overflow:hidden;scroll-snap-align:start;scroll-snap-stop:always;display:grid;grid-template-columns:1fr}
+    @supports (height: 100dvh){.slide-section,.apt.apt-section{height:100dvh;min-height:100dvh;max-height:100dvh}}
+    #home .container{height:100%;box-sizing:border-box;padding-top:var(--nav-h);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:20px;max-width:900px;margin:auto;padding-inline:40px;text-align:center}
+
+    .tagline{position:absolute;left:50%;transform:translateX(-50%);bottom:max(20px, calc(2svh + env(safe-area-inset-bottom)));width:96vw;text-align:center;color:#f5f5f5;line-height:1.35;opacity:0;transition:opacity 1s ease}
+    @supports (height: 100dvh){.tagline{bottom:max(20px, calc(2dvh + env(safe-area-inset-bottom)))} }
+    .tagline.visible{opacity:1}
+    .tagline p{margin:0 4px;display:inline;white-space:nowrap;font-size:clamp(12px,.9vw,22px)}
+    @media (max-width:1024px){.tagline{width:94vw}.tagline p{display:block;white-space:normal;font-size:clamp(11px,3.4vw,18px)}}
+    h1{font-size:calc(clamp(12px,1.8vw,18px) * 3.2);margin:10px 0 12px;background:linear-gradient(180deg,#fff,#ddd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:fadeInUp var(--fade-duration) ease both .1s}
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+
+    #apartments.section{padding-block:0;background:#fff;color:#000}
+    .apt.apt-section{margin:0;background:#fff;color:#000}
+    @media (min-width:901px){
+      .apt.apt-section{grid-template-columns:1fr 1fr;align-items:stretch}
+      .apt.apt-section .rotator,.apt.apt-section>img,.apt.apt-section .apt-text{height:calc(100svh - var(--nav-h))}
+      @supports (height:100dvh){
+        .apt.apt-section .rotator,.apt.apt-section>img,.apt.apt-section .apt-text{height:calc(100dvh - var(--nav-h))}
+      }
+      .apt.apt-section .apt-text{display:grid;place-items:center;padding:clamp(16px,3vw,48px);transform:translateY(var(--nav-h));box-sizing:border-box}
+      .apt.apt-section .rotator,.apt.apt-section>img{transform:translateY(var(--nav-h))}
+    }
+    @media (max-width:900px){
+      .apt.apt-section{grid-template-columns:1fr}
+      .apt.apt-section .rotator,.apt.apt-section>img,.apt.apt-section .apt-text{height:calc(100svh - var(--nav-h));transform:translateY(var(--nav-h));box-sizing:border-box}
+      @supports (height:100dvh){
+        .apt.apt-section .rotator,.apt.apt-section>img,.apt.apt-section .apt-text{height:calc(100dvh - var(--nav-h))}
+      }
+      .apt.apt-section .apt-text{display:grid;place-items:center;padding:clamp(18px,6vw,40px);text-align:left}
+    }
+
+    /* PARAGRAPH SIZE UPDATED */
+    .apt-text p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      line-height: 1.6;
+      color: #222;
+    }
+
+    .rotator{position:relative;width:100%;overflow:hidden;background:transparent}
+    .rotator img,.rotator video{position:absolute!important;top:50%!important;left:50%!important;transform:translate(-50%,-50%)!important;height:100%!important;width:auto!important;max-height:100%!important;max-width:none!important;background:transparent!important;transition:opacity .6s ease}
+    .rotator img{opacity:0}
+    .rotator img.is-top{opacity:1}
+    .rotator img.standby{opacity:0!important}
+    .rotator video.hidden{opacity:0!important;pointer-events:none!important;z-index:0!important}
+
+    .rotator .controls{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:8px;opacity:0;pointer-events:none;transition:opacity .2s ease;z-index:2}
+    @media (hover:hover){.rotator.slideshow .controls{pointer-events:auto}.rotator.slideshow:hover .controls{opacity:1}}
+    @media (hover:none){.rotator.slideshow .controls{opacity:1;pointer-events:auto}}
+    .rotator .btn{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.25);color:#fff;padding:6px 10px;border-radius:8px;cursor:pointer;font:inherit}
+    .rotator .btn:hover{background:rgba(0,0,0,.5)}
+
+    /* CONTACT wrap (location now has its own layout below) */
+    #contact.section.slide-section .wrap{
+      height:100%;
+      box-sizing:border-box;
+      padding-top:var(--nav-h);
+      display:grid;
+      align-content:center;
+      justify-items:start;
+      text-align:left;
+      padding-inline:clamp(12px,2.5vw,40px);
+      overflow:hidden
+    }
+    #contact.section.slide-section{height:calc(100svh - var(--footer-h));min-height:calc(100svh - var(--footer-h));max-height:calc(100svh - var(--footer-h))}
+    @supports (height:100dvh){#contact.section.slide-section{height:calc(100dvh - var(--footer-h));min-height:calc(100dvh - var(--footer-h));max-height:calc(100dvh - var(--footer-h))}}
+    #contact.anchor-offset{scroll-margin-top:0!important;}
+
+    /* LOCATION anchor should behave like apartments (rotator behind nav) */
+    #location.anchor-offset{scroll-margin-top:0!important;}
+
+    html, body { scroll-snap-type:y mandatory; overscroll-behavior-y:contain }
+
+    .nav-dropdown{position:relative}
+    .nav-drop-toggle{cursor:pointer}
+    .nav-dropdown-menu{
+      position:absolute;top:100%;margin-top:-1px;left:0;min-width:220px;padding:0;margin-left:0;border:1px solid var(--glass-border);border-top:0;border-radius:0;background:rgba(0,0,0,0.35);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:none;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s ease,visibility .2s ease;z-index:10000;
+    }
+    @media (hover:hover){.nav-dropdown:hover .nav-dropdown-menu{opacity:1;visibility:visible;pointer-events:auto}}
+    .nav-dropdown.open .nav-dropdown-menu{opacity:1;visibility:visible;pointer-events:auto}
+    .nav-dropdown-menu a{display:block;padding:12px 18px;text-decoration:none;color:#fff;opacity:.95;transition:opacity .2s ease,background .2s ease;white-space:nowrap}
+    .nav-dropdown-menu a:hover{opacity:1;background:rgba(255,255,255,.12)}
+    .snap{scroll-snap-align:start;scroll-snap-stop:always}
+
+    .footer-bottom{position:relative;z-index:2;height:var(--footer-h);display:flex;align-items:center;justify-content:center;background:#000;color:#fff;text-align:center;border-top:1px solid rgba(255,255,255,.12);letter-spacing:.04em;padding:0 16px}
+    .social{display:flex;align-items:center;justify-content:flex-start;gap:14px;flex-wrap:nowrap;white-space:nowrap;color:#000}
+    #contact .social a{display:inline-flex;width:28px;height:28px;line-height:0;color:#000;text-decoration:none}
+    #contact .social a:hover{opacity:.8;text-decoration:none}
+    #contact a{color:#000;text-decoration:none}
+    #contact a:hover{text-decoration:underline;opacity:.8}
+    .social svg,.social svg path{fill:currentColor}
+    .social svg{width:100%;height:100%;display:block;fill:currentColor}
+    #contact .social{color:#000}
+    .footer-bottom .social{color:#fff}
+    .footer-bottom a{color:#fff;text-decoration:none}
+    .footer-bottom a:hover{color:#fff;text-decoration:underline}
+    .footer-bottom {
+      text-align: center;
+      background: #000;
+      color: #fff;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 14px 10px;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .footer-bottom .footer-inner {
+      line-height: 1.6;
+    }
+
+    .footer-bottom p {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 900px) {
+      .footer-bottom p {
+        font-size: clamp(0.45rem, 2.6vw, 0.75rem);
+      }
+
+      .footer-bottom .footer-inner {
+        line-height: 1.4;
+      }
+    }
+
+    .nav, .nav * { color:#fff!important; fill:#fff!important }
+    .nav-logo img { filter:brightness(0) invert(1) }
+    .nav-cta { border-color:#fff; background:transparent; color:#fff }
+    .nav-cta:hover { background:rgba(255,255,255,0.15); transform:translateY(-1px) }
+    .hamburger span, .hamburger::before, .hamburger::after { background:#fff }
+
+    .nav-cta--mobile{display:none}
+
+    @media (max-width:900px){
+      .nav-center,.nav-right{display:none!important}
+      .hamburger{display:block!important;width:28px;height:22px}
+
+      .nav-inner{
+        display:grid;
+        grid-template-columns:auto 1fr auto;
+        align-items:center;
+        padding-inline:12px;
+        gap:8px;
+      }
+
+      .nav-cta--mobile{
+        display:inline-block;
+        grid-column:2;
+        justify-self:center;
+        border-color:#fff;
+        color:#fff;
+        padding:8px 14px;
+      }
+
+      .nav-logo{
+        grid-column:1;
+        justify-self:start;
+      }
+
+      label[for="nav-toggle"]{
+        grid-column:3;
+        justify-self:end;
+        margin-left:0;
+        padding:8px 10px;
+        display:inline-flex;
+        align-items:center;
+        cursor:pointer;
+        height:var(--nav-h);
+      }
+
+      .nav-mobile{top:var(--nav-h);border-top:1px solid var(--glass-border)}
+      body.menu-open{overflow:hidden;touch-action:none}
+
+      .nav-mobile{background:rgba(0,0,0,0.35);color:#fff!important}
+      .nav-mobile a{color:#fff!important;border-bottom:1px solid rgba(255,255,255,0.12);text-decoration:none}
+      .nav-mobile a:last-child{border-bottom:none}
+
+      .hamburger{position:relative;width:28px;height:22px}
+      .hamburger span,.hamburger::before,.hamburger::after{
+        position:absolute;left:0;right:0;height:2px;background:#fff;transition:transform 250ms ease,opacity 200ms ease
+      }
+      .hamburger::before{top:0}
+      .hamburger span{top:50%;transform:translateY(-50%)}
+      .hamburger::after{bottom:0}
+    }
+
+    .apt .apt-text h2{margin:0 0 6px}
+    .apt .apt-text h3{
+      margin:0 0 10px;
+      font-size: 1.25rem;
+    }
+
+    @media (min-width:901px){
+      #apartments.section{background:transparent!important}
+      .apt.apt-section{background:transparent!important}
+      #apartments .wrap{padding:0!important}
+      #apartments .wrap>h2{display:none!important}
+      .apt.apt-section .apt-text{
+        background:#fff;
+        padding-top:calc(var(--nav-h) + clamp(16px,3vw,32px))!important;
+        padding-right:clamp(16px,3vw,32px);
+        padding-bottom:clamp(12px,2vw,24px);
+        padding-left:clamp(16px,3vw,32px);
+        transform:none!important;
+      }
+      .apt.apt-section .rotator,
+      .apt.apt-section>img{
+        background:#000;height:100vh!important;transform:none!important
+      }
+      #apigania.apt-section{margin-top:0!important}
+    }
+
+    @supports (height:100dvh){
+      @media (min-width:901px){
+        .apt.apt-section .rotator,
+        .apt.apt-section>img,
+        .apt.apt-section .apt-text{height:100dvh!important}
+      }
+    }
+
+    @media (max-width:900px){
+      .apt.apt-section{
+        height:auto !important; min-height:0 !important; max-height:none !important;
+        overflow:visible !important; display:flex !important; flex-direction:column !important; gap:0 !important;
+      }
+      .apt.apt-section .apt-text{
+        order:1 !important;height:auto !important;transform:none !important;
+        padding-top:calc(var(--nav-h) + 8px) !important;
+        padding-right:clamp(18px,6vw,40px) !important;
+        padding-bottom:clamp(18px,6vw,40px) !important;
+        padding-left:clamp(18px,6vw,40px) !important;
+        text-align:left;
+      }
+      .apt.apt-section .rotator,
+      .apt.apt-section > img{
+        order:2 !important;height:100svh !important;min-height:100svh !important;max-height:100svh !important;
+        transform:none !important;background:#000;
+      }
+      @supports (height:100dvh){
+        .apt.apt-section .rotator,
+        .apt.apt-section > img{
+          height:100dvh !important;min-height:100dvh !important;max-height:100dvh !important;
+        }
+      }
+      .apt.apt-section .rotator img,
+      .apt.apt-section .rotator video{
+        height:100% !important;width:auto !important;max-height:100% !important;max-width:none !important;
+      }
+      html, body { scroll-snap-type: y proximity !important; }
+    }
+    @media (max-width:900px){
+  /* Let the LOCATION section grow vertically like apartments */
+  #location.section.slide-section{
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    overflow:visible !important;
+  }
+
+  #location.section.slide-section .wrap{
+    height:auto !important;
+    overflow:visible !important;
+  }
+}
+
+    #contact .social svg * { fill:none !important; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; vector-effect:non-scaling-stroke; }
+    #contact .social svg .fill { fill:currentColor !important; stroke:none !important; }
+    #contact .social a { transition: color .25s ease, transform .15s ease, opacity .25s ease; }
+    #contact .social a:hover { color:#333; transform:translateY(-1px); opacity:1; text-decoration:none; }
+
+    .footer-bottom .social svg * { fill:none !important; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; vector-effect:non-scaling-stroke; }
+    .footer-bottom .social svg .fill { fill:currentColor !important; stroke:none !important; }
+    .footer-bottom .social a { transition:opacity .25s ease, transform .15s ease; }
+    .footer-bottom .social a:hover { opacity:.85; transform:translateY(-1px); text-decoration:none; }
+
+    @media (min-width:901px){
+      #apartments.section,
+      .apt.apt-section{
+        background: linear-gradient(to right, #000 50%, #fff 50%) !important;
+      }
+    }
+
+    /* Desktop: make the text column a flex column and unify padding/spacing for ALL apartments */
+    @media (min-width:901px){
+      .apt.apt-section .apt-text{
+        display:flex;
+        flex-direction:column;
+        align-items:flex-start;
+        justify-content:flex-start;
+        padding-top:calc(var(--nav-h) + 8px) !important;
+        padding-bottom:16px !important;
+      }
+
+      .apt .apt-amenities-grid{
+        margin-top:10px;
+        flex:0 0 auto;
+        overflow:visible;
+      }
+    }
+
+    .icon {
+      width: 32px;
+      height: 32px;
+      display: inline-block;
+      stroke: currentColor;
+      fill: none;
+    }
+
+    .icon--sm { width: 32px; height: 32px; }
+    .icon--lg { width: 40px; height: 40px; }
+
+    .amenity {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+
+    .amenity-label {
+      white-space: nowrap;
+    }
+
+    /* Grid layout for apartment pages */
+    .apt-amenities-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .apt-amenity-card {
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid #e4e4e4;
+      background: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .apt-amenity-card span {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      line-height: 1.6;
+      color: #222;
+    }
+
+    /* Apartment booking links – Option A + slight text bump */
+    .apigania-link {
+      display: inline-block;
+      position: relative;
+      margin-top: 6px;
+      margin-bottom: 6px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      line-height: 1.5;
+      color: #222;
+      text-decoration: none;
+      padding-bottom: 2px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+      transition:
+        color .25s ease,
+        border-color .25s ease;
+    }
+
+    .apigania-link::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -1px;
+      width: 100%;
+      height: 4px;
+      background: rgba(0, 0, 0, 0.06);
+      border-radius: 4px;
+      transition: background .25s ease;
+    }
+
+    .apigania-link:hover {
+      color: #000;
+      border-bottom-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .apigania-link:hover::before {
+      background: rgba(0, 0, 0, 0.12);
+    }
+
+    /* Tighten vertical spacing for ALL apartments */
+    .apt .apt-text h2 {
+      margin-bottom: 4px !important;
+    }
+
+    .apt .apt-text h3 {
+      margin-bottom: 6px !important;
+    }
+
+    .apt .apt-text p {
+      margin-bottom: 8px !important;
+    }
+
+    /* Let ALL apartment blocks auto-resize in height on desktop */
+    @media (min-width:901px){
+      .apt.apt-section{
+        height:auto !important;
+        min-height:100vh !important;
+        max-height:none !important;
+        overflow:visible !important;
+      }
+      .apt.apt-section .apt-text{
+        height:auto !important;
+        min-height:100vh !important;
+        max-height:none !important;
+      }
+    }
+
+    /* BACK TO TOP — aligned to full viewport width */
+    .footer-bottom {
+      position: relative;
+    }
+
+    .back-to-top {
+      position: absolute;
+      top: 8px;
+      right: 20px;
+      display: inline-flex;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+      opacity: 0.9;
+      transition: opacity 0.25s ease, transform 0.15s ease;
+    }
+
+    .back-to-top:hover {
+      opacity: 1;
+      text-decoration: underline;
+      transform: translateY(-1px);
+    }
+
+    /* LOCATION layout: mirror apartment section (rotator left, text right) */
+    #location.section.slide-section .wrap {
+      height: 100%;
+      box-sizing: border-box;
+      padding-top: 0;           /* remove offset so rotator sits behind navbar */
+      padding-inline: 0;
+      overflow: hidden;
+    }
+
+    @media (min-width: 901px) {
+      #location .location-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        height: 100%;
+      }
+
+      #location #location-rotator {
+        background: #000;
+        height: 100%;
+      }
+
+      #location .location-text {
+        background: #fff;
+        padding: clamp(16px, 3vw, 40px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+      }
+
+      #location .location-text h2 {
+        margin-bottom: 8px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      #location .location-grid {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+      }
+
+      #location .location-text {
+        order: 1;
+        padding-top: calc(var(--nav-h) + 8px);
+        padding-right: clamp(18px, 6vw, 40px);
+        padding-bottom: clamp(18px, 6vw, 40px);
+        padding-left: clamp(18px, 6vw, 40px);
+      }
+
+      #location #location-rotator {
+        order: 2;
+        height: 100svh;
+        min-height: 100svh;
+        max-height: 100svh;
+        background:#000;
+      }
+
+      @supports (height: 100dvh) {
+        #location #location-rotator {
+          height: 100dvh;
+          min-height: 100dvh;
+          max-height: 100dvh;
+        }
+      }
+
+      #location #location-rotator img {
+        height: 100% !important;
+        width: auto !important;
+        max-height: 100% !important;
+        max-width: none !important;
+      }
+    }
+
+    /* Fade behavior for location slides */
+    #location .location-slide {
+      position: absolute !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      height: 100% !important;
+      width: auto !important;
+      max-height: 100% !important;
+      max-width: none !important;
+      background: transparent !important;
+      opacity: 0;
+      transition: opacity .6s ease;
+    }
+
+    #location .location-slide.is-top {
+      opacity: 1;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- INTRO -->
+  <div id="intro"><img src="logo.png" alt="Tinos Treasures logo"><h1>Tinos Treasures</h1></div>
+
+  <!-- Background video -->
+  <div class="video-background">
+    <video id="bg-video" muted loop playsinline preload="auto">
+      <source src="tinos_treasures_background.mp4" type="video/mp4" />
+    </video>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="nav-logo" href="#home"><img src="logo.png" alt="Logo"><span>Tinos Treasures</span></a>
+      <div class="nav-center">
+        <a class="nav-link" href="#home">Home</a>
+        <div class="nav-dropdown">
+          <a class="nav-drop-toggle" href="#apartments">Apartments ▾</a>
+          <div class="nav-dropdown-menu">
+            <a href="#apigania">Apigania</a>
+            <a href="#vathi">Vathi</a>
+            <a href="#livada">Livada</a>
+            <a href="#ammos">Ammos</a>
+          </div>
+        </div>
+        <a class="nav-link" href="#location">The Location</a>
+        <a class="nav-link" href="#contact">Contact Us</a>
+      </div>
+      <div class="nav-right">
+        <a class="nav-cta" href="https://tinostreasures.reserve-online.net/" target="_blank" rel="noopener">Book now!</a>
+      </div>
+
+      <a class="nav-cta nav-cta--mobile" href="https://tinostreasures.reserve-online.net/" target="_blank" rel="noopener">Book now!</a>
+
+      <input type="checkbox" id="nav-toggle">
+      <label for="nav-toggle" aria-label="Menu" aria-controls="mobile-menu" aria-expanded="false">
+        <div class="hamburger"><span></span></div>
+      </label>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="nav-mobile" id="mobile-menu">
+    <a href="#home">Home</a>
+    <a href="#apartments">Apartments</a>
+    <div class="mobile-sub">
+      <a href="#apigania">— Apigania</a>
+      <a href="#vathi">— Vathi</a>
+      <a href="#livada">— Livada</a>
+      <a href="#ammos">— Ammos</a>
+    </div>
+    <a href="#location">The Location</a>
+    <a href="#contact">Contact Us</a>
+    <a href="https://tinostreasures.reserve-online.net/" target="_blank" rel="noopener">Book now!</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="home" class="anchor-offset snap slide-section">
+    <div class="container">
+      <h1 class="visually-hidden">Luxury Seaside Apartments in Isternia Bay, Tinos</h1>
+      <main>
+        <div class="tagline" id="tagline">
+          <p>Seaside luxurious 70sqm serviced apartments,</p>
+          <p>By the beach at Isternia bay in Tinos, Greece.</p>
+          <p>Crafted with care, designed for memories.</p>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <!-- APARTMENTS -->
+  <section id="apartments" class="section anchor-offset">
+    <div class="wrap">
+      <!-- APIGANIA -->
+      <div id="apigania" class="apt apt-section snap">
+        <div class="rotator" id="apigania-rotator">
+          <video id="apigania-video" muted autoplay playsinline webkit-playsinline preload="auto">
+            <source src="media/apigania_fast/apigania.mp4" type="video/mp4">
+          </video>
+          <img id="apigania-a" alt="Apigania gallery image A" class="standby" src="media/apigania_fast/Apigania_LivingRoom_f_1_1400.webp">
+          <img id="apigania-b" alt="Apigania gallery image B" class="standby" src="media/apigania_fast/Apigania_LivingRoom_f_2_1400.webp">
+          <div class="controls" aria-label="Gallery controls">
+            <button class="btn prev"  type="button" aria-label="Previous" title="Previous">❮</button>
+            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause">
+              <span class="ico ico-pause">❚❚</span>
+              <span class="ico ico-play" style="display:none">▶</span>
+            </button>
+            <button class="btn next"  type="button" aria-label="Next" title="Next">❯</button>
+          </div>
+        </div>
+        <div class="apt-text">
+          <h2>Apartments</h2>
+          <h3>1. Apigania</h3>
+
+          <p>
+            Located on the upper floor, this seaside duplex apartment overlooks the sea, featuring a queen bed, two adult single beds, a marble-finished kitchen, a cozy living room with a flat-screen TV, and a sleek bathroom. An internal staircase connects the two levels. Step onto the veranda with its marble table and enjoy stunning views of Isternia village, the sea, and the island’s terraced landscape (xerolithies). Just a 2-minute level walk brings you to two beaches, two restaurants, and a quiet beach bar—no uphill climbs required.
+          </p>
+
+          <a
+            class="apigania-link"
+            href="https://tinostreasures.reserve-online.net/property/TINOSTREAS/APIGAN"
+            target="_blank"
+            rel="noopener"
+          >
+            Explore Apigania in detail and book your stay here.
+          </a>
+
+          <div class="apt-amenities-grid">
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-bed-queen"></use>
+              </svg>
+              <span>Bedroom 1 — Queen-size bed</span>
+            </div>
+
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-bed-twins"></use>
+              </svg>
+              <span>Bedroom 2 — Two single beds</span>
+            </div>
+
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-living"></use>
+              </svg>
+              <span>1 × Living room</span>
+            </div>
+
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-kitchen"></use>
+              </svg>
+              <span>1 × Kitchen</span>
+            </div>
+
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-balcony-sea"></use>
+              </svg>
+              <span>Balcony with sea view</span>
+            </div>
+
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-bathroom-shower"></use>
+              </svg>
+              <span>1 × Bathroom with shower</span>
+            </div>
+
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-stairs"></use>
+              </svg>
+              <span>1 × Internal staircase</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VATHI -->
+      <div id="vathi" class="apt apt-section snap">
+        <div class="rotator" id="vathi-rotator">
+          <video id="vathi-video" muted autoplay playsinline webkit-playsinline preload="auto">
+            <source src="media/vathi_fast/vathi.mp4" type="video/mp4">
+          </video>
+          <img id="vathi-a" alt="Vathi gallery image A" class="standby" src="media/vathi_fast/Vathi_LivingRoom_f_1_f_1_1400.webp">
+          <img id="vathi-b" alt="Vathi gallery image B" class="standby" src="media/vathi_fast/Vathi_LivingRoom_f_3_f_1_1400.webp">
+          <div class="controls" aria-label="Gallery controls">
+            <button class="btn prev"  type="button" aria-label="Previous" title="Previous">❮</button>
+            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause">
+              <span class="ico ico-pause">❚❚</span>
+              <span class="ico ico-play" style="display:none">▶</span>
+            </button>
+            <button class="btn next"  type="button" aria-label="Next" title="Next">❯</button>
+          </div>
+        </div>
+        <div class="apt-text">
+          <h2>Apartments</h2>
+          <h3>2. Vathi</h3>
+
+          <p>
+            Located on the upper floor, this seaside duplex apartment overlooks the sea, featuring a queen bed, two adult single beds, a cozy living room with a sofa bed and a flat-screen TV, and a sleek bathroom. An internal staircase connects the two levels. Step onto the veranda with its marble table and enjoy stunning views of Isternia village, the sea, and the island’s terraced landscape (xerolithies). Just a 2-minute level walk brings you to two beaches, two restaurants, and a quiet beach bar—no uphill climbs required.
+          </p>
+
+          <a
+            class="apigania-link"
+            href="https://tinostreasures.reserve-online.net/property/TINOSTREAS/VATHI"
+            target="_blank"
+            rel="noopener"
+          >
+            Explore Vathi in detail and book your stay here.
+          </a>
+
+          <div class="apt-amenities-grid">
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-bed-queen"></use>
+              </svg>
+              <span>Bedroom 1 — Queen-size bed</span>
+            </div>
+
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-bed-twins"></use>
+              </svg>
+              <span>Bedroom 2 — Two single beds</span>
+            </div>
+
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-living"></use>
+              </svg>
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-sofa-bed"></use>
+              </svg>
+              <span>1 × Living room with sofa bed</span>
+            </div>
+
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-kitchen"></use>
+              </svg>
+              <span>1 × Kitchen</span>
+            </div>
+
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-balcony-sea"></use>
+              </svg>
+              <span>Balcony with sea view</span>
+            </div>
+
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-bathroom-shower"></use>
+              </svg>
+              <span>1 × Bathroom with shower</span>
+            </div>
+
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-stairs"></use>
+              </svg>
+              <span>1 × Internal staircase</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LIVADA -->
+      <div id="livada" class="apt apt-section snap">
+        <div class="rotator" id="livada-rotator">
+          <video id="livada-video" muted autoplay playsinline webkit-playsinline preload="auto">
+            <source src="media/livada_fast/livada.mp4" type="video/mp4">
+          </video>
+          <img id="livada-a" alt="Livada gallery image A" class="standby" src="media/livada_fast/Livada_LivingRoom_f_1_1400.webp">
+          <img id="livada-b" alt="Livada gallery image B" class="standby" src="media/livada_fast/Livada_LivingRoom_f_2_1400.webp">
+          <div class="controls" aria-label="Gallery controls">
+            <button class="btn prev"  type="button" aria-label="Previous" title="Previous">❮</button>
+            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause">
+              <span class="ico ico-pause">❚❚</span>
+              <span class="ico ico-play" style="display:none">▶</span>
+            </button>
+            <button class="btn next"  type="button" aria-label="Next" title="Next">❯</button>
+          </div>
+        </div>
+        <div class="apt-text">
+          <h2>Apartments</h2>
+          <h3>3. Livada</h3>
+
+          <p>
+            Located on the main floor, this seaside apartment enjoys stunning views of Isternia village and the island’s terraced landscape (xerolithies). Spanning 70 sqm on one level, the 2-bedroom retreat blends comfort with luxury—featuring a queen bed, two adult singles, a marble-finished kitchen, a cozy living room with flat-screen TV, and a sleek bathroom. Just a 2-minute level walk brings you to two beaches, two restaurants, and a quiet beach bar—no uphill climbs required.
+          </p>
+
+          <a
+            class="apigania-link"
+            href="https://tinostreasures.reserve-online.net/property/TINOSTREAS/LIVADA"
+            target="_blank"
+            rel="noopener"
+          >
+            Explore Livada in detail and book your stay here.
+          </a>
+
+          <div class="apt-amenities-grid">
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-bed-queen"></use>
+              </svg>
+              <span>Bedroom 1 — Queen-size bed</span>
+            </div>
+
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-bed-twins"></use>
+              </svg>
+              <span>Bedroom 2 — Two single beds</span>
+            </div>
+
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-living"></use>
+              </svg>
+              <span>1 × Living room</span>
+            </div>
+
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-kitchen"></use>
+              </svg>
+              <span>1 × Kitchen</span>
+            </div>
+
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-balcony-village"></use>
+              </svg>
+              <span>Balcony with mountain view</span>
+            </div>
+
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-bathroom-shower"></use>
+              </svg>
+              <span>1 × Bathroom with shower</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AMMOS -->
+      <div id="ammos" class="apt apt-section snap">
+        <div class="rotator" id="ammos-rotator">
+          <video id="ammos-video" muted autoplay playsinline webkit-playsinline preload="auto">
+            <source src="media/ammos_fast/ammos.mp4" type="video/mp4">
+          </video>
+          <img id="ammos-a" alt="Ammos gallery image A" class="standby" src="media/ammos_fast/Ammos_LivingRoom_f_1_1400.webp">
+          <img id="ammos-b" alt="Ammos gallery image B" class="standby" src="media/ammos_fast/Ammos_LivingRoom_f_2_1400.webp">
+          <div class="controls" aria-label="Gallery controls">
+            <button class="btn prev"  type="button" aria-label="Previous" title="Previous">❮</button>
+            <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause">
+              <span class="ico ico-pause">❚❚</span>
+              <span class="ico ico-play" style="display:none">▶</span>
+            </button>
+            <button class="btn next"  type="button" aria-label="Next" title="Next">❯</button>
+          </div>
+        </div>
+        <div class="apt-text">
+          <h2>Apartments</h2>
+          <h3>4. Ammos</h3>
+
+          <p>
+            Located on the main floor, this seaside apartment enjoys stunning views of Isternia village and the island’s terraced landscape (xerolithies). Spanning 70 sqm on one level, the 2-bedroom retreat blends comfort with luxury—featuring a queen bed, two adult singles, a marble-finished kitchen, a cozy living room with flat-screen TV, and a sleek bathroom. Just a 2-minute level walk brings you to two beaches, two restaurants, and a quiet beach bar—no uphill climbs required.
+          </p>
+
+          <a
+            class="apigania-link"
+            href="https://tinostreasures.reserve-online.net/property/TINOSTREAS/AMMOS"
+            target="_blank"
+            rel="noopener"
+          >
+            Explore Ammos in detail and book your stay here.
+          </a>
+
+          <div class="apt-amenities-grid">
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-bed-queen"></use>
+              </svg>
+              <span>Bedroom 1 — Queen-size bed</span>
+            </div>
+
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-bed-twins"></use>
+              </svg>
+              <span>Bedroom 2 — Two single beds</span>
+            </div>
+
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-living"></use>
+              </svg>
+              <span>1 × Living room</span>
+            </div>
+
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-kitchen"></use>
+              </svg>
+              <span>1 × Kitchen</span>
+            </div>
+
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-balcony-village"></use>
+              </svg>
+              <span>Balcony with mountain view</span>
+            </div>
+
+            <div class="apt-amenity-card">
+              <svg class="icon icon--sm" aria-hidden="true">
+                <use href="media/sprite.svg#icon-bathroom-shower"></use>
+              </svg>
+              <span>1 × Bathroom with shower</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+     <!-- LOCATION -->
+  <section id="location" class="section anchor-offset snap slide-section" style="background:#fff;color:#000">
+    <div class="wrap">
+      <div class="location-grid">
+        <!-- Left: image rotator -->
+        <div class="rotator" id="location-rotator">
+          <img
+            class="location-slide location-slide-a is-top"
+            src="media/location_fast/location_1_1400.webp"
+            alt="Isternia Bay and surrounding Cycladic landscape"
+          >
+          <img
+            class="location-slide location-slide-b"
+            src="media/location_fast/location_2_1400.webp"
+            alt="Aerial view of the beach and turquoise waters"
+          >
+
+          <div class="controls" aria-label="Location gallery controls">
+            <button class="btn prev"  type="button" aria-label="Previous" title="Previous">❮</button>
+            <button class="btn center toggle" type="button" aria-label="Pause slideshow" aria-pressed="false" title="Pause">
+              <span class="ico ico-pause">❚❚</span>
+              <span class="ico ico-play" style="display:none">▶</span>
+            </button>
+            <button class="btn next"  type="button" aria-label="Next" title="Next">❯</button>
+          </div>
+        </div>
+
+        <!-- Right: text styled like apartments -->
+        <div class="apt-text location-text">
+          <h2>The Location</h2>
+          <p>
+            Ormos Isternion is a charming blend of old-world Tinian tradition and understated luxury. This car-free seaside hamlet feels almost like a gated resort—quiet, welcoming, and effortlessly elegant. Home to the island’s most celebrated restaurant, a cozy café–ouzeri serving traditional mezedes, and two beautiful beaches (one with a subtle, serene beach bar), it also offers a spacious waterfront promenade perfect for children, families, and groups of friends to unwind. Everything you need is just a short stroll away, wrapped in the warmth and authenticity of true Tinos living.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section anchor-offset snap slide-section" style="background:#fff;color:#000">
+    <div class="wrap">
+      <h2 class="fade-in">Contact Us</h2>
+      <p class="fade-in delay-1 contact-info" style="text-align:left">
+        <a href="https://maps.app.goo.gl/VVLBkF2q8XZqKbU38"
+           target="_blank"
+           rel="noopener noreferrer">
+          Ormos Isternion — Tinos, 84200 — Cyclades, Greece
+        </a><br>
+
+        <a href="mailto:info@tinostreasures.gr">info@tinostreasures.gr</a> ·
+        <a href="tel:+306976596001">+30 697 659 6001</a>
+      </p>
+
+      <div class="social">
+
+        <!-- Instagram -->
+        <a class="instagram"
+           href="https://www.instagram.com/tinostreasures_/"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg"
+               viewBox="0 0 24 24"
+               aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5"
+                  fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            <circle cx="12" cy="12" r="4"
+                    fill="none" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            <circle cx="16.5" cy="7.5" r="1.3"
+                    fill="currentColor" />
+          </svg>
+        </a>
+
+        <!-- Facebook -->
+        <a class="facebook"
+           href="https://www.facebook.com/Tinos.Treasures/"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Facebook">
+          <svg xmlns="http://www.w3.org/2000/svg"
+               viewBox="0 0 24 24"
+               aria-hidden="true">
+            <path d="M15 3h-2c-1.7 0-3 1.3-3 3v3H8v3h2v9h3v-9h2.5l.5-3H13V6c0-.3.3-.6.6-.6H15V3z"
+                  fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+
+        <!-- Google Search (Minimal Outline G) -->
+        <a class="google"
+           href="https://www.google.com/search?q=Tinos+Treasures+Apart-Hotel"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Google Search">
+          <svg xmlns="http://www.w3.org/2000/svg"
+               viewBox="0 0 24 24"
+               aria-hidden="true">
+            <path d="M12 4a8 8 0 1 0 8 8"
+                  fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 12h5"
+                  fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+
+        <!-- YouTube (Outline + Larger Play Triangle) -->
+        <a class="youtube"
+           href="https://www.youtube.com/@tinostreasures"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="YouTube">
+          <svg xmlns="http://www.w3.org/2000/svg"
+               viewBox="0 0 24 24"
+               aria-hidden="true">
+            <rect x="3" y="7" width="18" height="10" rx="3"
+                  fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M10 10l5 2-5 2z"
+                  fill="currentColor" />
+          </svg>
+        </a>
+
+        <!-- Google Maps (Outline Pin) -->
+        <a class="maps"
+           href="https://maps.app.goo.gl/VVLBkF2q8XZqKbU38"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Google Maps">
+          <svg xmlns="http://www.w3.org/2000/svg"
+               viewBox="0 0 24 24"
+               aria-hidden="true">
+            <path d="M12 3a6 6 0 0 0-6 6c0 4.2 6 12 6 12s6-7.8 6-12a6 6 0 0 0-6-6z"
+                  fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            <circle cx="12" cy="9" r="2"
+                    fill="none" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer-bottom snap">
+
+    <!-- Back to top aligned to full viewport right -->
+    <a href="#home" class="back-to-top">Back to top ↑</a>
+
+    <div class="footer-inner">
+      <p class="footer-line1">© <span id="year"></span>&nbsp;Tinos Treasures. All rights reserved.</p>
+
+      <p class="footer-line2">
+        <strong>Custom-coded and designed</strong>&nbsp;by&nbsp;Panagiotis A.&nbsp;|&nbsp;Content by&nbsp;
+        <strong><a href="https://www.teramok.us/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">TERAMOK</a></strong>.
+      </p>
+    </div>
+
+  </footer>
+
+  <script>
+    (function(){
+      function setSBW(){
+        const sbw = Math.max(0, window.innerWidth - document.documentElement.clientWidth);
+        document.documentElement.style.setProperty('--sbw', sbw + 'px');
+      }
+      setSBW();
+      let to; window.addEventListener('resize', () => { clearTimeout(to); to = setTimeout(setSBW, 100); });
+    })();
+  </script>
+
+  <script>
+    (function(){
+      const navToggle = document.getElementById('nav-toggle');
+      const navLabel  = document.querySelector('label[for="nav-toggle"]');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const nav = document.getElementById('nav');
+
+      function syncAria() {
+        if (navLabel && navToggle) {
+          navLabel.setAttribute('aria-expanded', navToggle.checked ? 'true' : 'false');
+        }
+      }
+
+      if (navToggle) {
+        const applyState = () => {
+          document.body.classList.toggle('menu-open', navToggle.checked);
+          syncAria();
+        };
+        navToggle.addEventListener('change', applyState);
+        applyState();
+      }
+
+      // Close menu when a mobile menu link is clicked
+      if (mobileMenu && navToggle) {
+        mobileMenu.addEventListener('click', (e) => {
+          const t = e.target.closest('a');
+          if (!t) return;
+          navToggle.checked = false;
+          document.body.classList.remove('menu-open');
+          syncAria();
+        });
+      }
+
+      // Close menu when clicking/tapping outside
+      if (navToggle) {
+        const closeIfClickOutside = (e) => {
+          if (!navToggle.checked) return; // menu already closed
+
+          const clickedInsideNav       = nav && nav.contains(e.target);
+          const clickedInsideMobileNav = mobileMenu && mobileMenu.contains(e.target);
+
+          if (!clickedInsideNav && !clickedInsideMobileNav) {
+            navToggle.checked = false;
+            document.body.classList.remove('menu-open');
+            syncAria();
+          }
+        };
+
+        document.addEventListener('click', closeIfClickOutside);
+        document.addEventListener('touchstart', closeIfClickOutside);
+      }
+    })();
+  </script>
+
+  <script>
+    (function(){
+      const intro=document.getElementById('intro');
+      const videoBg=document.getElementById('bg-video');
+      const tagline=document.getElementById('tagline');
+      const INTRO_MS=3400;document.body.classList.add('intro-active');
+
+      if(videoBg){
+        try{videoBg.pause()}catch{};
+        try{videoBg.currentTime=0}catch{};
+        const onMeta=()=>{try{videoBg.currentTime=0}catch{}};
+        videoBg.addEventListener('loadedmetadata',onMeta,{once:true});
+        videoBg.addEventListener('error',()=>{
+          document.body.classList.add('no-video');
+          videoBg.setAttribute('poster','poster.jpg')
+        },{once:true});
+      }
+
+      function startFromZeroAndPlay(){
+        if(!videoBg) return;
+        const seekToZero=()=>new Promise((resolve)=>{
+          let done=false;const finish=()=>{if(!done){done=true;resolve()}};
+          try{videoBg.currentTime=0}catch{};
+          if(videoBg.currentTime<0.05) return finish();
+          const onSeeked=()=>{videoBg.removeEventListener('seeked',onSeeked);finish()};
+          videoBg.addEventListener('seeked',onSeeked);
+          setTimeout(finish,250);
+        });
+        seekToZero().then(()=>{
+          videoBg.play()
+            .then(()=>{videoBg.classList.add('is-ready')})
+            .catch(()=>{
+              document.body.classList.add('no-video');
+              videoBg.setAttribute('poster','poster.jpg');
+              videoBg.classList.add('is-ready')
+            });
+        });
+      }
+
+      setTimeout(()=>{
+        if(intro) intro.style.display='none';
+        document.body.classList.remove('intro-active');
+        tagline?.classList.add('visible');
+        startFromZeroAndPlay();
+      },INTRO_MS);
+    })();
+  </script>
+
+  <script>
+    (function(){
+      const drop=document.querySelector('.nav-dropdown');
+      const toggle=drop?.querySelector('.nav-drop-toggle');
+      const menu=drop?.querySelector('.nav-dropdown-menu');
+      if(!drop||!toggle||!menu) return;
+      toggle.addEventListener('click',(e)=>{
+        const noHover=window.matchMedia('(hover: none)').matches;
+        if(noHover){e.preventDefault();e.stopPropagation();drop.classList.toggle('open')}
+      });
+      document.addEventListener('click',(e)=>{if(!drop.contains(e.target))drop.classList.remove('open')});
+      document.addEventListener('keydown',(e)=>{if(e.key==='Escape')drop.classList.remove('open')});
+    })();
+  </script>
+
+  <script>
+    function nearEnd(v, epsilon=0.12){
+      return (v && v.duration && (v.duration - v.currentTime) <= epsilon);
+    }
+  </script>
+
+  <!-- APIGANIA -->
+  <script>
+  (function(){
+    const sources=[
+      "media/apigania_fast/Apigania_LivingRoom_f_1_1400.webp",
+      "media/apigania_fast/Apigania_LivingRoom_f_2_1400.webp",
+      "media/apigania_fast/Apigania_LivingRoom_f_3_1400.webp",
+      "media/apigania_fast/Apigania_Outdoor_f_1_1400.webp",
+      "media/apigania_fast/Apigania_Outdoor_f_2_1400.webp",
+      "media/apigania_fast/Apigania_Outdoor_f_3_1400.webp",
+      "media/apigania_fast/Apigania_Kichen_f_1_1400.webp",
+      "media/apigania_fast/Apigania_Kichen_f_2_1400.webp",
+      "media/apigania_fast/Apigania_Kichen_f_3_1400.webp",
+      "media/apigania_fast/Apigania_MainBedroom_f_1_1400.webp",
+      "media/apigania_fast/Apigania_MainBedroom_f_2_1400.webp",
+      "media/apigania_fast/Apigania_MainBedroom_f_3_1400.webp",
+      "media/apigania_fast/Apigani_SecondBedroom_f_1_1400.webp",
+      "media/apigania_fast/Apigani_SecondBedroom_f_2_1400.webp",
+      "media/apigania_fast/Apigani_SecondBedroom_f_3_1400.webp",
+      "media/apigania_fast/Apigania_Bathroom_f_1_1400.webp",
+      "media/apigania_fast/Apigania_Bathroom_f_2_1400.webp",
+      "media/apigania_fast/Apigania_Bathroom_f_3_1400.webp"
+    ];
+
+    const rotator=document.getElementById('apigania-rotator');
+    const video=document.getElementById('apigania-video');
+    const a=document.getElementById('apigania-a');
+    const b=document.getElementById('apigania-b');
+    if(!rotator||!video||!a||!b) return;
+
+    video.muted = true; video.playsInline = true;
+    video.setAttribute('muted',''); video.setAttribute('playsinline','');
+    video.setAttribute('webkit-playsinline',''); video.setAttribute('autoplay','');
+
+    const prevBtn=rotator.querySelector('.btn.prev');
+    const nextBtn=rotator.querySelector('.btn.next');
+    const toggleBtn=rotator.querySelector('.btn.center');
+    const icoPause=toggleBtn.querySelector('.ico-pause');
+    const icoPlay =toggleBtn.querySelector('.ico-play');
+
+    sources.forEach(src=>{const im=new Image(); im.src=src;});
+
+    let idx=2, topIsA=true;
+    const HOLD_MS=2000;
+    let slideTimer=null;
+    let paused=false;
+
+    function clearTimers(){ if(slideTimer){clearTimeout(slideTimer);slideTimer=null} }
+    function whenDecodable(img){ const p=(img.decode?img.decode():Promise.resolve()); return p.catch(()=>{}); }
+    function showInitialFrames(){ a.classList.remove('standby'); b.classList.remove('standby'); a.classList.add('is-top'); b.classList.remove('is-top'); topIsA=true; idx=2; }
+    function scheduleNext(){ if(!paused){ slideTimer=setTimeout(nextFrame,HOLD_MS); } }
+    function nextFrame(){
+      const top=topIsA ? a : b, bottom=topIsA ? b : a;
+      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+      whenDecodable(bottom).then(()=>{ requestAnimationFrame(()=>{ top.classList.remove('is-top'); requestAnimationFrame(()=>{ bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); }); }); });
+    }
+    function setPaused(p){
+      paused=p;
+      toggleBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
+      icoPause.style.display = p ? 'none' : 'inline';
+      icoPlay.style.display  = p ? 'inline' : 'none';
+      if(p){ clearTimers(); } else { scheduleNext(); }
+    }
+    function startSlideshow(){
+      if(rotator.classList.contains('slideshow')) return;
+      rotator.classList.add('slideshow');
+      showInitialFrames();
+      video.classList.add('hidden');
+      setPaused(false);
+    }
+    function resetToBeginning(){
+      clearTimers(); setPaused(true); topIsA=true; idx=2;
+      a.classList.add('standby'); a.classList.remove('is-top');
+      b.classList.add('standby'); b.classList.remove('is-top');
+      rotator.classList.remove('slideshow');
+      video.classList.remove('hidden');
+      try{video.pause()}catch(e){}
+      try{video.currentTime=0}catch(e){}
+    }
+
+    const isTouch = window.matchMedia('(hover: none)').matches;
+    const PLAY_T = isTouch ? 0.30 : 0.60;
+    const RESET_T = 0.10;
+
+    const io = new IntersectionObserver(([e]) => {
+      if (e.intersectionRatio < RESET_T) { resetToBeginning(); return; }
+      if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
+        if (video.ended || nearEnd(video)) {
+          startSlideshow();
+        } else {
+          video.play().catch(()=>{ startSlideshow(); });
+        }
+      }
+    }, { threshold: [0, RESET_T, 0.25, PLAY_T, 1], rootMargin: '0px 0px -10% 0px' });
+    io.observe(rotator);
+
+    video.addEventListener('ended', startSlideshow);
+    video.addEventListener('timeupdate', () => {
+      if (!rotator.classList.contains('slideshow') && nearEnd(video)) startSlideshow();
+    });
+
+    prevBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')) return;
+      clearTimers();
+      const top=topIsA ? a : b, bottom=topIsA ? b : a;
+      idx=(idx-2+sources.length)%sources.length; bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+    });
+
+    nextBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')) return;
+      clearTimers();
+      const top=topIsA ? a : b, bottom=topIsA ? b : a;
+      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+    });
+
+    toggleBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')){
+        if (video.paused) { video.play().catch(()=>{}); } else { video.pause(); }
+        return;
+      }
+      setPaused(!paused);
+    });
+  })();
+  </script>
+
+  <!-- VATHI -->
+  <script>
+  (function(){
+    const sources=[
+      "media/vathi_fast/Vathi_LivingRoom_f_1_f_1_1400.webp",
+      "media/vathi_fast/Vathi_LivingRoom_f_3_f_1_1400.webp",
+      "media/vathi_fast/Vathi_Livingoom_f_2_f_1_1400.webp",
+      "media/vathi_fast/Vathi_Outdoor_f_1_f_1_1400.webp",
+      "media/vathi_fast/Vathi_Outdoor_f_2_f_1_1400.webp",
+      "media/vathi_fast/Vathi_Outdoor_f_3_f_1_1400.webp",
+      "media/vathi_fast/Vathi_Kitchen_f_1_f_1_1400.webp",
+      "media/vathi_fast/Vathi_Kitchen_f_2_f_1_1400.webp",
+      "media/vathi_fast/Vathi_Kitchen_f_3_f_1_1400.webp",
+      "media/vathi_fast/Vathi_MainBedroom_f_1_f_1_1400.webp",
+      "media/vathi_fast/Vathi_MainBedroom_f_2_f_1_1400.webp",
+      "media/vathi_fast/Vathi_MainBedroom_f_3_f_1_1400.webp",
+      "media/vathi_fast/Vathi_SecondBedroom_f_1_f_1_1400.webp",
+      "media/vathi_fast/Vathi_SecondBedroom_f_2_f_1_1400.webp",
+      "media/vathi_fast/Vathi_SecondBedroom_f_3_f_1_1400.webp",
+      "media/vathi_fast/Vathi_Bathroom_f_1_f_1_1400.webp",
+      "media/vathi_fast/Vathi_Bathroom_f_2_f_1_1400.webp"
+    ];
+
+    const rotator=document.getElementById('vathi-rotator');
+    const video=document.getElementById('vathi-video');
+    const a=document.getElementById('vathi-a');
+    const b=document.getElementById('vathi-b');
+    if(!rotator||!video||!a||!b) return;
+
+    video.muted = true; video.playsInline = true;
+    video.setAttribute('muted',''); video.setAttribute('playsinline','');
+    video.setAttribute('webkit-playsinline',''); video.setAttribute('autoplay','');
+
+    const prevBtn=rotator.querySelector('.btn.prev');
+    const nextBtn=rotator.querySelector('.btn.next');
+    const toggleBtn=rotator.querySelector('.btn.center');
+    const icoPause=toggleBtn.querySelector('.ico-pause');
+    const icoPlay=toggleBtn.querySelector('.ico-play');
+
+    sources.forEach(src=>{const im=new Image(); im.src=src;});
+
+    let idx=2, topIsA=true;
+    const HOLD_MS=2000;
+    let slideTimer=null;
+    let paused=false;
+
+    function clearTimers(){ if(slideTimer){clearTimeout(slideTimer);slideTimer=null} }
+    function whenDecodable(img){ const p=(img.decode?img.decode():Promise.resolve()); return p.catch(()=>{}); }
+    function showInitialFrames(){ a.classList.remove('standby'); b.classList.remove('standby'); a.classList.add('is-top'); b.classList.remove('is-top'); topIsA=true; idx=2; }
+    function scheduleNext(){ if(!paused){ slideTimer=setTimeout(nextFrame,HOLD_MS); } }
+    function nextFrame(){
+      const top=topIsA ? a : b, bottom=topIsA ? b : a;
+      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+      whenDecodable(bottom).then(()=>{ requestAnimationFrame(()=>{ top.classList.remove('is-top'); requestAnimationFrame(()=>{ bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); }); }); });
+    }
+    function setPaused(p){
+      paused=p;
+      toggleBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
+      icoPause.style.display = p ? 'none' : 'inline';
+      icoPlay.style.display  = p ? 'inline' : 'none';
+      if(p){ clearTimers(); } else { scheduleNext(); }
+    }
+    function startSlideshow(){
+      if(rotator.classList.contains('slideshow')) return;
+      rotator.classList.add('slideshow');
+      showInitialFrames();
+      video.classList.add('hidden');
+      setPaused(false);
+    }
+    function resetToBeginning(){
+      clearTimers(); setPaused(true); topIsA=true; idx=2;
+      a.classList.add('standby'); a.classList.remove('is-top');
+      b.classList.add('standby'); b.classList.remove('is-top');
+      rotator.classList.remove('slideshow');
+      video.classList.remove('hidden');
+      try{video.pause()}catch(e){}
+      try{video.currentTime=0}catch(e){}
+    }
+
+    const isTouch = window.matchMedia('(hover: none)').matches;
+    const PLAY_T = isTouch ? 0.30 : 0.60;
+    const RESET_T = 0.10;
+
+    const io = new IntersectionObserver(([e]) => {
+      if (e.intersectionRatio < RESET_T) { resetToBeginning(); return; }
+      if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
+        if (video.ended || nearEnd(video)) { startSlideshow(); }
+        else { video.play().catch(()=>{ startSlideshow(); }); }
+      }
+    }, { threshold: [0, RESET_T, 0.25, PLAY_T, 1], rootMargin: '0px 0px -10% 0px' });
+    io.observe(rotator);
+
+    video.addEventListener('ended', startSlideshow);
+    video.addEventListener('timeupdate', () => {
+      if (!rotator.classList.contains('slideshow') && nearEnd(video)) startSlideshow();
+    });
+
+    prevBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')) return;
+      clearTimers();
+      const top=topIsA ? a : b, bottom=topIsA ? b : a;
+      idx=(idx-2+sources.length)%sources.length; bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+    });
+
+    nextBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')) return;
+      clearTimers();
+      const top=topIsA ? a : b, bottom=topIsA ? b : a;
+      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+    });
+
+    toggleBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')){
+        if (video.paused) { video.play().catch(()=>{}); } else { video.pause(); }
+        return;
+      }
+      setPaused(!paused);
+    });
+  })();
+  </script>
+
+  <!-- LIVADA -->
+  <script>
+  (function(){
+    const sources=[
+      "media/livada_fast/Livada_LivingRoom_f_1_1400.webp",
+      "media/livada_fast/Livada_LivingRoom_f_2_1400.webp",
+      "media/livada_fast/Livada_LivingRoom_f_3_1400.webp",
+      "media/livada_fast/Livada_Outdoor_f_1_1400.webp",
+      "media/livada_fast/Livada_Outdoor_f_2_1400.webp",
+      "media/livada_fast/Livada_Outdoor_f_3_1400.webp",
+      "media/livada_fast/Livada_Kitchen_f_1_1400.webp",
+      "media/livada_fast/Livada_Kitchen_f_2_1400.webp",
+      "media/livada_fast/Livada_Kitchen_f_3_1400.webp",
+      "media/livada_fast/Livada_MainBedroom_f_1_1400.webp",
+      "media/livada_fast/Livada_MainBedroom_f_2_1400.webp",
+      "media/livada_fast/Livada_MainBedroom_f_3_1400.webp",
+      "media/livada_fast/Livada_SecondBedroom_f_1_1400.webp",
+      "media/livada_fast/Livada_SecondBedroom_f_2_1400.webp",
+      "media/livada_fast/Livada_SecondBedroom_f_3_1400.webp",
+      "media/livada_fast/Livada_Bathroom_f_1_1400.webp",
+      "media/livada_fast/Livada_Bathroom_f_2_1400.webp",
+      "media/livada_fast/Livada_Bathroom_f_3_1400.webp"
+    ];
+
+    const rotator=document.getElementById('livada-rotator');
+    const video=document.getElementById('livada-video');
+    const a=document.getElementById('livada-a');
+    const b=document.getElementById('livada-b');
+    if(!rotator||!video||!a||!b) return;
+
+    video.muted = true; video.playsInline = true;
+    video.setAttribute('muted',''); video.setAttribute('playsinline','');
+    video.setAttribute('webkit-playsinline',''); video.setAttribute('autoplay','');
+
+    const prevBtn=rotator.querySelector('.btn.prev');
+    const nextBtn=rotator.querySelector('.btn.next');
+    const toggleBtn=rotator.querySelector('.btn.center');
+    const icoPause=toggleBtn.querySelector('.ico-pause');
+    const icoPlay=toggleBtn.querySelector('.ico-play');
+
+    sources.forEach(src=>{const im=new Image(); im.src=src;});
+
+    let idx=2, topIsA=true;
+    const HOLD_MS=2000;
+    let slideTimer=null;
+    let paused=false;
+
+    function clearTimers(){ if(slideTimer){clearTimeout(slideTimer);slideTimer=null} }
+    function whenDecodable(img){ const p=(img.decode?img.decode():Promise.resolve()); return p.catch(()=>{}); }
+    function showInitialFrames(){ a.classList.remove('standby'); b.classList.remove('standby'); a.classList.add('is-top'); b.classList.remove('is-top'); topIsA=true; idx=2; }
+    function scheduleNext(){ if(!paused){ slideTimer=setTimeout(nextFrame,HOLD_MS); } }
+    function nextFrame(){
+      const top=topIsA ? a : b, bottom=topIsA ? b : a;
+      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+      whenDecodable(bottom).then(()=>{ requestAnimationFrame(()=>{ top.classList.remove('is-top'); requestAnimationFrame(()=>{ bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); }); }); });
+    }
+    function setPaused(p){
+      paused=p;
+      toggleBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
+      icoPause.style.display = p ? 'none' : 'inline';
+      icoPlay.style.display  = p ? 'inline' : 'none';
+      if(p){ clearTimers(); } else { scheduleNext(); }
+    }
+    function startSlideshow(){
+      if(rotator.classList.contains('slideshow')) return;
+      rotator.classList.add('slideshow');
+      showInitialFrames();
+      video.classList.add('hidden');
+      setPaused(false);
+    }
+    function resetToBeginning(){
+      clearTimers(); setPaused(true); topIsA=true; idx=2;
+      a.classList.add('standby'); a.classList.remove('is-top');
+      b.classList.add('standby'); b.classList.remove('is-top');
+      rotator.classList.remove('slideshow');
+      video.classList.remove('hidden');
+      try{video.pause()}catch(e){}
+      try{video.currentTime=0}catch(e){}
+    }
+
+    const isTouch = window.matchMedia('(hover: none)').matches;
+    const PLAY_T = isTouch ? 0.30 : 0.60;
+    const RESET_T = 0.10;
+
+    const io = new IntersectionObserver(([e]) => {
+      if (e.intersectionRatio < RESET_T) { resetToBeginning(); return; }
+      if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
+        if (video.ended || nearEnd(video)) { startSlideshow(); }
+        else { video.play().catch(()=>{ startSlideshow(); }); }
+      }
+    }, { threshold: [0, RESET_T, 0.25, PLAY_T, 1], rootMargin: '0px 0px -10% 0px' });
+    io.observe(rotator);
+
+    video.addEventListener('ended', startSlideshow);
+    video.addEventListener('timeupdate', () => {
+      if (!rotator.classList.contains('slideshow') && nearEnd(video)) startSlideshow();
+    });
+
+    prevBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')) return;
+      clearTimers();
+      const top=topIsA ? a : b, bottom=topIsA ? b : a;
+      idx=(idx-2+sources.length)%sources.length; bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+    });
+
+    nextBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')) return;
+      clearTimers();
+      const top=topIsA ? a : b, bottom=topIsA ? b : a;
+      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+    });
+
+    toggleBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')){
+        if (video.paused) { video.play().catch(()=>{}); } else { video.pause(); }
+        return;
+      }
+      setPaused(!paused);
+    });
+  })();
+  </script>
+
+  <!-- AMMOS -->
+  <script>
+  (function(){
+    const sources=[
+      "media/ammos_fast/Ammos_LivingRoom_f_1_1400.webp",
+      "media/ammos_fast/Ammos_LivingRoom_f_2_1400.webp",
+      "media/ammos_fast/Ammos_LivingRoom_f_3_1400.webp",
+      "media/ammos_fast/Ammos_Outdoor_f_1_1400.webp",
+      "media/ammos_fast/Ammos_Outdoor_f_2_1400.webp",
+      "media/ammos_fast/Ammos_Outdoor_f_3_1400.webp",
+      "media/ammos_fast/Ammos_Kitchen_f_1_1400.webp",
+      "media/ammos_fast/Ammos_Kitchen_f_2_1400.webp",
+      "media/ammos_fast/Ammos_Kitchen_f_3_1400.webp",
+      "media/ammos_fast/Ammos_MainBedroom_f_1_1400.webp",
+      "media/ammos_fast/Ammos_MainBedroom_f_2_1400.webp",
+      "media/ammos_fast/Ammos_MainBedroom_f_3_1400.webp",
+      "media/ammos_fast/Ammos_SecondBedroom_f_1_1400.webp",
+      "media/ammos_fast/Ammos_SecondBedroom_f_2_1400.webp",
+      "media/ammos_fast/Ammos_SecondBedroom_f_3_1400.webp",
+      "media/ammos_fast/Ammos_Bathroom_f_1_1400.webp",
+      "media/ammos_fast/Ammos_Bathroom_f_2_1400.webp",
+      "media/ammos_fast/Ammos_Bathroom_f_3_1400.webp"
+    ];
+
+    const rotator=document.getElementById('ammos-rotator');
+    const video=document.getElementById('ammos-video');
+    const a=document.getElementById('ammos-a');
+    const b=document.getElementById('ammos-b');
+    if(!rotator||!video||!a||!b) return;
+
+    video.muted = true; video.playsInline = true;
+    video.setAttribute('muted',''); video.setAttribute('playsinline','');
+    video.setAttribute('webkit-playsinline',''); video.setAttribute('autoplay','');
+
+    const prevBtn=rotator.querySelector('.btn.prev');
+    const nextBtn=rotator.querySelector('.btn.next');
+    const toggleBtn=rotator.querySelector('.btn.center');
+    const icoPause=toggleBtn.querySelector('.ico-pause');
+    const icoPlay=toggleBtn.querySelector('.ico-play');
+
+    sources.forEach(src=>{const im=new Image(); im.src=src;});
+
+    let idx=2, topIsA=true;
+    const HOLD_MS=2000;
+    let slideTimer=null;
+    let paused=false;
+
+    function clearTimers(){ if(slideTimer){clearTimeout(slideTimer);slideTimer=null} }
+    function whenDecodable(img){ const p=(img.decode?img.decode():Promise.resolve()); return p.catch(()=>{}); }
+    function showInitialFrames(){ a.classList.remove('standby'); b.classList.remove('standby'); a.classList.add('is-top'); b.classList.remove('is-top'); topIsA=true; idx=2; }
+    function scheduleNext(){ if(!paused){ slideTimer=setTimeout(nextFrame,HOLD_MS); } }
+    function nextFrame(){
+      const top=topIsA ? a : b, bottom=topIsA ? b : a;
+      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+      whenDecodable(bottom).then(()=>{ requestAnimationFrame(()=>{ top.classList.remove('is-top'); requestAnimationFrame(()=>{ bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); }); }); });
+    }
+    function setPaused(p){
+      paused=p;
+      toggleBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
+      icoPause.style.display = p ? 'none' : 'inline';
+      icoPlay.style.display  = p ? 'inline' : 'none';
+      if(p){ clearTimers(); } else { scheduleNext(); }
+    }
+    function startSlideshow(){
+      if(rotator.classList.contains('slideshow')) return;
+      rotator.classList.add('slideshow');
+      showInitialFrames();
+      video.classList.add('hidden');
+      setPaused(false);
+    }
+    function resetToBeginning(){
+      clearTimers(); setPaused(true); topIsA=true; idx=2;
+      a.classList.add('standby'); a.classList.remove('is-top');
+      b.classList.add('standby'); b.classList.remove('is-top');
+      rotator.classList.remove('slideshow');
+      video.classList.remove('hidden');
+      try{video.pause()}catch(e){}
+      try{video.currentTime=0}catch(e){}
+    }
+
+    const isTouch = window.matchMedia('(hover: none)').matches;
+    const PLAY_T = isTouch ? 0.30 : 0.60;
+    const RESET_T = 0.10;
+
+    const io = new IntersectionObserver(([e]) => {
+      if (e.intersectionRatio < RESET_T) { resetToBeginning(); return; }
+      if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
+        if (video.ended || nearEnd(video)) { startSlideshow(); }
+        else { video.play().catch(()=>{ startSlideshow(); }); }
+      }
+    }, { threshold: [0, RESET_T, 0.25, PLAY_T, 1], rootMargin: '0px 0px -10% 0px' });
+    io.observe(rotator);
+
+    video.addEventListener('ended', startSlideshow);
+    video.addEventListener('timeupdate', () => {
+      if (!rotator.classList.contains('slideshow') && nearEnd(video)) startSlideshow();
+    });
+
+    prevBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')) return;
+      clearTimers();
+      const top=topIsA ? a : b, bottom=topIsA ? b : a;
+      idx=(idx-2+sources.length)%sources.length; bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+    });
+
+    nextBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')) return;
+      clearTimers();
+      const top=topIsA ? a : b, bottom=topIsA ? b : a;
+      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
+      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+    });
+
+    toggleBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')){
+        if (video.paused) { video.play().catch(()=>{}); } else { video.pause(); }
+        return;
+      }
+      setPaused(!paused);
+    });
+  })();
+  </script>
+
+    <!-- LOCATION ROTATOR JS -->
+ <script>
+  (function () {
+    const sources = [
+      "media/location_fast/location_1_1400.webp",
+      "media/location_fast/location_2_1400.webp",
+      "media/location_fast/location_3_1400.webp",
+      "media/location_fast/location_4_1400.webp",
+      "media/location_fast/location_5_1000.webp",
+      "media/location_fast/location_6_1000.webp",
+      "media/location_fast/location_7_1400.webp",
+      "media/location_fast/location_8_1400.webp",
+      "media/location_fast/location_9_1290.webp",
+      "media/location_fast/location_10_1365.webp"
+    ];
+
+    const rotator = document.getElementById('location-rotator');
+    if (!rotator) return;
+
+    const a = rotator.querySelector('.location-slide-a');
+    const b = rotator.querySelector('.location-slide-b');
+    const prevBtn   = rotator.querySelector('.btn.prev');
+    const nextBtn   = rotator.querySelector('.btn.next');
+    const toggleBtn = rotator.querySelector('.btn.center');
+    const icoPause  = toggleBtn.querySelector('.ico-pause');
+    const icoPlay   = toggleBtn.querySelector('.ico-play');
+
+    if (!a || !b || !prevBtn || !nextBtn || !toggleBtn) return;
+
+    // Preload all images
+    sources.forEach(src => { const im = new Image(); im.src = src; });
+
+    let idx = 2;          // 0 & 1 are the first two slides
+    let topIsA = true;
+    const HOLD_MS = 2500;
+    let slideTimer = null;
+    let paused = false;
+
+    function clearTimers() {
+      if (slideTimer) {
+        clearTimeout(slideTimer);
+        slideTimer = null;
+      }
+    }
+
+    function whenDecodable(img) {
+      const p = (img.decode ? img.decode() : Promise.resolve());
+      return p.catch(() => {});
+    }
+
+    function scheduleNext() {
+      if (!paused) {
+        slideTimer = setTimeout(nextFrame, HOLD_MS);
+      }
+    }
+
+    function nextFrame() {
+      const top = topIsA ? a : b;
+      const bottom = topIsA ? b : a;
+
+      bottom.src = sources[idx];
+      idx = (idx + 1) % sources.length;
+
+      whenDecodable(bottom).then(() => {
+        requestAnimationFrame(() => {
+          top.classList.remove('is-top');
+          requestAnimationFrame(() => {
+            bottom.classList.add('is-top');
+            topIsA = !topIsA;
+            scheduleNext();
+          });
+        });
+      });
+    }
+
+    function setPaused(p) {
+      paused = p;
+      toggleBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
+      icoPause.style.display = p ? 'none' : 'inline';
+      icoPlay.style.display  = p ? 'inline' : 'none';
+
+      if (p) {
+        clearTimers();
+      } else {
+        scheduleNext();
+      }
+    }
+
+    // Reset to first slide
+    function goToFirstSlide() {
+      clearTimers();
+      idx = 2;
+      topIsA = true;
+
+      a.src = sources[0];
+      b.src = sources[1];
+
+      a.classList.add('is-top');
+      b.classList.remove('is-top');
+    }
+
+    // Initial state: first slide, paused
+    goToFirstSlide();
+    setPaused(true);
+
+    // Controls
+    prevBtn.addEventListener('click', () => {
+      clearTimers();
+      const top = topIsA ? a : b;
+      const bottom = topIsA ? b : a;
+
+      idx = (idx - 2 + sources.length) % sources.length;
+      bottom.src = sources[idx];
+      idx = (idx + 1) % sources.length;
+
+      whenDecodable(bottom).then(() => {
+        top.classList.remove('is-top');
+        bottom.classList.add('is-top');
+        topIsA = !topIsA;
+        scheduleNext();
+      });
+    });
+
+    nextBtn.addEventListener('click', () => {
+      clearTimers();
+      nextFrame();
+    });
+
+    toggleBtn.addEventListener('click', () => {
+      setPaused(!paused);
+    });
+
+    // Intersection observer now watches the ROTATOR itself
+    const io = new IntersectionObserver(([entry]) => {
+      // Mostly out of view → reset and pause
+      if (entry.intersectionRatio < 0.15) {
+        goToFirstSlide();
+        setPaused(true);
+        return;
+      }
+
+      // Nicely in view → start from first slide and play
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+        goToFirstSlide();
+        setPaused(false);
+      }
+    }, {
+      threshold: [0, 0.15, 0.5, 1],
+      rootMargin: '0px 0px -10% 0px'
+    });
+
+    io.observe(rotator);
+  })();
+</script>
+
+
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

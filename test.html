@@ -640,10 +640,10 @@
     #location .location-slide.is-top {
       opacity: 1;
     }
-/* FLOATING BACK TO TOP – APPEAR AFTER SCROLL */
+/* FINAL FLOATING BACK TO TOP BUTTON (ALWAYS VISIBLE) */
 a.back-to-top {
   position: fixed !important;
-  inset: auto 18px 18px auto !important; /* bottom-right */
+  inset: auto 18px 18px auto !important; /* top right bottom left */
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -656,25 +656,12 @@ a.back-to-top {
   text-decoration: none;
   box-shadow: 0 10px 25px rgba(0,0,0,0.45);
   z-index: 999999;
-
-  /* hidden by default */
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(10px);
-  transition: opacity .25s ease, transform .25s ease;
-}
-
-a.back-to-top.visible {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
 }
 
 a.back-to-top:hover {
   background: rgba(0,0,0,0.98);
   box-shadow: 0 14px 32px rgba(0,0,0,0.6);
 }
-
 
   </style>
 </head>
@@ -1252,8 +1239,7 @@ a.back-to-top:hover {
 </footer>
 
 <!-- Put the floating button here, outside any flex layout -->
-<a href="#home" class="back-to-top visible" aria-label="Back to top">↑</a>
-
+<a href="#home" class="back-to-top" aria-label="Back to top">↑</a>
 
 
   <script>
@@ -2049,46 +2035,7 @@ a.back-to-top:hover {
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 
-<script>
-(function () {
-  const btn = document.querySelector('.back-to-top');
-  if (!btn) return;
-
-  const THRESHOLD = 120;
-
-  function getScrollY() {
-    // Robust: whichever element actually scrolls (html or body)
-    if (document.scrollingElement) {
-      return document.scrollingElement.scrollTop;
-    }
-    return (
-      window.pageYOffset ||
-      document.documentElement.scrollTop ||
-      document.body.scrollTop ||
-      0
-    );
-  }
-
-  function onScroll() {
-    const y = getScrollY();
-    if (y > THRESHOLD) {
-      btn.classList.add('visible');
-    } else {
-      btn.classList.remove('visible');
-    }
-  }
-
-  // Listen on both window and document for safety
-  window.addEventListener('scroll', onScroll, { passive: true });
-  document.addEventListener('scroll', onScroll, { passive: true });
-
-  onScroll(); // run once on load
-})();
-</script>
-
-
-
-
+ 
 
 </body>
 </html>

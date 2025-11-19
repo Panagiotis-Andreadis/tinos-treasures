@@ -640,10 +640,10 @@
     #location .location-slide.is-top {
       opacity: 1;
     }
-/* FINAL FLOATING BACK TO TOP BUTTON (ALWAYS VISIBLE) */
+/* FLOATING BACK TO TOP – SHOW AFTER SCROLL */
 a.back-to-top {
   position: fixed !important;
-  inset: auto 18px 18px auto !important; /* top right bottom left */
+  inset: auto 18px 18px auto !important; /* bottom-right */
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -656,6 +656,18 @@ a.back-to-top {
   text-decoration: none;
   box-shadow: 0 10px 25px rgba(0,0,0,0.45);
   z-index: 999999;
+
+  /* hidden by default */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+a.back-to-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
 a.back-to-top:hover {
@@ -2035,7 +2047,26 @@ a.back-to-top:hover {
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 
- 
+ <script>
+(function () {
+  const btn = document.querySelector('.back-to-top');
+  if (!btn) return;
+
+  const THRESHOLD = 250; // px from top before showing
+
+  function onScroll() {
+    if (window.scrollY > THRESHOLD) {
+      btn.classList.add('visible');
+    } else {
+      btn.classList.remove('visible');
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+
 
 </body>
 </html>

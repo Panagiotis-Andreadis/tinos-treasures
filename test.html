@@ -640,14 +640,14 @@
     #location .location-slide.is-top {
       opacity: 1;
     }
-/* FLOATING BACK TO TOP BUTTON – HIDDEN AT TOP, NO ANIMATIONS */
+/* FLOATING BACK TO TOP BUTTON – always in layout, just fade in/out */
 a.back-to-top {
   position: fixed !important;
   inset: auto 18px 18px auto !important; /* top right bottom left */
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  display: none; /* hidden by default */
+  display: flex;            /* always flex – we use opacity to hide it */
   align-items: center;
   justify-content: center;
   background: rgba(0,0,0,0.85);
@@ -656,11 +656,14 @@ a.back-to-top {
   text-decoration: none;
   box-shadow: 0 10px 25px rgba(0,0,0,0.45);
   z-index: 999999;
+  opacity: 0;
+  pointer-events: none;     /* not clickable when hidden */
+  transition: opacity .2s ease;
 }
 
-/* When scrolled, JS will add .visible → show it */
 a.back-to-top.visible {
-  display: flex;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 a.back-to-top:hover {
@@ -2044,13 +2047,13 @@ a.back-to-top:hover {
  
 <script>
   (function () {
-    const btn = document.querySelector('.back-to-top');
+    var btn = document.querySelector('.back-to-top');
     if (!btn) return;
 
-    const THRESHOLD = 10; // show as soon as you move a bit
+    var THRESHOLD = 40; // you can tweak this
 
-    function onScroll() {
-      const y = window.scrollY || window.pageYOffset || 0;
+    function updateButton() {
+      var y = window.scrollY || window.pageYOffset || 0;
       if (y > THRESHOLD) {
         btn.classList.add('visible');
       } else {
@@ -2058,10 +2061,12 @@ a.back-to-top:hover {
       }
     }
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll(); // run once on load
+    window.addEventListener('scroll', updateButton, { passive: true });
+    window.addEventListener('load', updateButton);
+    updateButton(); // run once immediately
   })();
 </script>
+
 
 </body>
 </html>

@@ -548,6 +548,7 @@
     }
 
  /* FLOATING BACK TO TOP BUTTON */
+.back/* FLOATING BACK TO TOP BUTTON – ALWAYS VISIBLE */
 .back-to-top {
   position: fixed;
   right: 18px;
@@ -563,23 +564,18 @@
   font-size: 24px;
   text-decoration: none;
   box-shadow: 0 10px 25px rgba(0,0,0,0.45);
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(12px);
-  transition: opacity .25s ease, transform .25s ease;
-  z-index: 99999;
-}
-
-.back-to-top.visible {
-  opacity: 1;
+  opacity: 0.9;           /* <-- visible by default */
   pointer-events: auto;
   transform: translateY(0);
+  transition: background .25s ease, box-shadow .25s ease;
+  z-index: 99999;
 }
 
 .back-to-top:hover {
   background: rgba(0,0,0,0.9);
   box-shadow: 0 14px 32px rgba(0,0,0,0.6);
 }
+
 
 
     /* LOCATION layout: mirror apartment section (rotator left, text right) */
@@ -2048,23 +2044,7 @@
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 
-  <script>
-(function () {
-  const btn = document.querySelector('.back-to-top');
-  if (!btn) return;
-
-  function showHide() {
-    if (window.scrollY > 250) {
-      btn.classList.add('visible');
-    } else {
-      btn.classList.remove('visible');
-    }
-  }
-
-  window.addEventListener('scroll', showHide, { passive: true });
-  showHide();
-})();
-</script>
+ 
 
 </body>
 </html>

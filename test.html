@@ -1864,126 +1864,162 @@
   </script>
 
     <!-- LOCATION ROTATOR JS -->
-  <script>
-    (function () {
-      const sources = [
-  "media/location_fast/location_1_1400.webp",
-  "media/location_fast/location_2_1400.webp",
-  "media/location_fast/location_3_1400.webp",
-  "media/location_fast/location_4_1400.webp",
-  "media/location_fast/location_5_1000.webp",
-  "media/location_fast/location_6_1000.webp",
-  "media/location_fast/location_7_1400.webp",
-  "media/location_fast/location_8_1400.webp",
-  "media/location_fast/location_9_1290.webp",   // ← no 1400 version exists
-  "media/location_fast/location_10_1365.webp"   // ← no 1400 version exists
-];
+  <!-- LOCATION ROTATOR JS -->
+<script>
+  (function () {
+    const sources = [
+      "media/location_fast/location_1_1400.webp",
+      "media/location_fast/location_2_1400.webp",
+      "media/location_fast/location_3_1400.webp",
+      "media/location_fast/location_4_1400.webp",
+      "media/location_fast/location_5_1000.webp",
+      "media/location_fast/location_6_1000.webp",
+      "media/location_fast/location_7_1400.webp",
+      "media/location_fast/location_8_1400.webp",
+      "media/location_fast/location_9_1290.webp",
+      "media/location_fast/location_10_1365.webp"
+    ];
 
+    const rotator = document.getElementById('location-rotator');
+    const section = document.getElementById('location');
+    if (!rotator) return;
 
-      const rotator = document.getElementById('location-rotator');
-      if (!rotator) return;
+    const a = rotator.querySelector('.location-slide-a');
+    const b = rotator.querySelector('.location-slide-b');
+    const prevBtn   = rotator.querySelector('.btn.prev');
+    const nextBtn   = rotator.querySelector('.btn.next');
+    const toggleBtn = rotator.querySelector('.btn.center');
+    const icoPause  = toggleBtn.querySelector('.ico-pause');
+    const icoPlay   = toggleBtn.querySelector('.ico-play');
 
-      const a = rotator.querySelector('.location-slide-a');
-      const b = rotator.querySelector('.location-slide-b');
-      const prevBtn   = rotator.querySelector('.btn.prev');
-      const nextBtn   = rotator.querySelector('.btn.next');
-      const toggleBtn = rotator.querySelector('.btn.center');
-      const icoPause  = toggleBtn.querySelector('.ico-pause');
-      const icoPlay   = toggleBtn.querySelector('.ico-play');
+    if (!a || !b || !prevBtn || !nextBtn || !toggleBtn) return;
 
-      if (!a || !b || !prevBtn || !nextBtn || !toggleBtn) return;
+    // Preload all images
+    sources.forEach(src => { const im = new Image(); im.src = src; });
 
-      // Preload all images
-      sources.forEach(src => { const im = new Image(); im.src = src; });
+    let idx = 2;          // 0 & 1 are the first two slides
+    let topIsA = true;
+    const HOLD_MS = 2500;
+    let slideTimer = null;
+    let paused = false;
 
-      let idx = 2;          // 0 & 1 are already shown in <img> tags
-      let topIsA = true;
-      const HOLD_MS = 2500;
-      let slideTimer = null;
-      let paused = false;
-
-      function clearTimers() {
-        if (slideTimer) {
-          clearTimeout(slideTimer);
-          slideTimer = null;
-        }
+    function clearTimers() {
+      if (slideTimer) {
+        clearTimeout(slideTimer);
+        slideTimer = null;
       }
+    }
 
-      function whenDecodable(img) {
-        const p = (img.decode ? img.decode() : Promise.resolve());
-        return p.catch(() => {});
+    function whenDecodable(img) {
+      const p = (img.decode ? img.decode() : Promise.resolve());
+      return p.catch(() => {});
+    }
+
+    function scheduleNext() {
+      if (!paused) {
+        slideTimer = setTimeout(nextFrame, HOLD_MS);
       }
+    }
 
-      function scheduleNext() {
-        if (!paused) {
-          slideTimer = setTimeout(nextFrame, HOLD_MS);
-        }
-      }
+    function nextFrame() {
+      const top = topIsA ? a : b;
+      const bottom = topIsA ? b : a;
 
-      function nextFrame() {
-        const top = topIsA ? a : b;
-        const bottom = topIsA ? b : a;
+      bottom.src = sources[idx];
+      idx = (idx + 1) % sources.length;
 
-        bottom.src = sources[idx];
-        idx = (idx + 1) % sources.length;
-
-        whenDecodable(bottom).then(() => {
+      whenDecodable(bottom).then(() => {
+        requestAnimationFrame(() => {
+          top.classList.remove('is-top');
           requestAnimationFrame(() => {
-            top.classList.remove('is-top');
-            requestAnimationFrame(() => {
-              bottom.classList.add('is-top');
-              topIsA = !topIsA;
-              scheduleNext();
-            });
+            bottom.classList.add('is-top');
+            topIsA = !topIsA;
+            scheduleNext();
           });
         });
+      });
+    }
+
+    function setPaused(p) {
+      paused = p;
+      toggleBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
+      icoPause.style.display = p ? 'none' : 'inline';
+      icoPlay.style.display  = p ? 'inline' : 'none';
+
+      if (p) {
+        clearTimers();
+      } else {
+        scheduleNext();
       }
+    }
 
-      function setPaused(p) {
-        paused = p;
-        toggleBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
-        icoPause.style.display = p ? 'none' : 'inline';
-        icoPlay.style.display  = p ? 'inline' : 'none';
+    // 🔁 Reset to first slide (used both on init and when leaving section)
+    function goToFirstSlide() {
+      clearTimers();
+      idx = 2;
+      topIsA = true;
 
-        if (p) {
-          clearTimers();
-        } else {
-          scheduleNext();
-        }
-      }
+      a.src = sources[0];
+      b.src = sources[1];
 
-      // Init
       a.classList.add('is-top');
       b.classList.remove('is-top');
-      setPaused(false);
+    }
 
-      prevBtn.addEventListener('click', () => {
-        clearTimers();
-        const top = topIsA ? a : b;
-        const bottom = topIsA ? b : a;
+    // Initial state: first slide, paused.
+    goToFirstSlide();
+    setPaused(true);
 
-        idx = (idx - 2 + sources.length) % sources.length;
-        bottom.src = sources[idx];
-        idx = (idx + 1) % sources.length;
+    // Controls
+    prevBtn.addEventListener('click', () => {
+      clearTimers();
+      const top = topIsA ? a : b;
+      const bottom = topIsA ? b : a;
 
-        whenDecodable(bottom).then(() => {
-          top.classList.remove('is-top');
-          bottom.classList.add('is-top');
-          topIsA = !topIsA;
-          scheduleNext();
-        });
+      idx = (idx - 2 + sources.length) % sources.length;
+      bottom.src = sources[idx];
+      idx = (idx + 1) % sources.length;
+
+      whenDecodable(bottom).then(() => {
+        top.classList.remove('is-top');
+        bottom.classList.add('is-top');
+        topIsA = !topIsA;
+        scheduleNext();
       });
+    });
 
-      nextBtn.addEventListener('click', () => {
-        clearTimers();
-        nextFrame();
-      });
+    nextBtn.addEventListener('click', () => {
+      clearTimers();
+      nextFrame();
+    });
 
-      toggleBtn.addEventListener('click', () => {
-        setPaused(!paused);
-      });
-    })();
-  </script>
+    toggleBtn.addEventListener('click', () => {
+      setPaused(!paused);
+    });
+
+    // 👇 THIS is the bit that makes it restart from slide 1 on scroll
+    const io = new IntersectionObserver(([entry]) => {
+      // When mostly out of view → reset to first slide and pause
+      if (entry.intersectionRatio < 0.15) {
+        goToFirstSlide();
+        setPaused(true);
+        return;
+      }
+
+      // When nicely in view → start from first slide and play
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+        goToFirstSlide();
+        setPaused(false);
+      }
+    }, {
+      threshold: [0, 0.15, 0.5, 1],
+      rootMargin: '0px 0px -10% 0px'
+    });
+
+    io.observe(section || rotator);
+  })();
+</script>
+
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();

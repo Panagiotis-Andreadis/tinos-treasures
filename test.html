@@ -382,6 +382,20 @@
       }
       html, body { scroll-snap-type: y proximity !important; }
     }
+    @media (max-width:900px){
+  /* Let the LOCATION section grow vertically like apartments */
+  #location.section.slide-section{
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    overflow:visible !important;
+  }
+
+  #location.section.slide-section .wrap{
+    height:auto !important;
+    overflow:visible !important;
+  }
+}
 
     #contact .social svg * { fill:none !important; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; vector-effect:non-scaling-stroke; }
     #contact .social svg .fill { fill:currentColor !important; stroke:none !important; }

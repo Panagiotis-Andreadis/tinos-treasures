@@ -2053,25 +2053,34 @@ a.back-to-top:hover {
   const btn = document.querySelector('.back-to-top');
   if (!btn) return;
 
-  const THRESHOLD = 120; // show sooner + more forgiving
+  const THRESHOLD = 120;
 
   function getScrollY() {
-    // Cross-browser friendly
-    return window.pageYOffset ||
-           document.documentElement.scrollTop ||
-           document.body.scrollTop ||
-           0;
+    // Robust: whichever element actually scrolls (html or body)
+    if (document.scrollingElement) {
+      return document.scrollingElement.scrollTop;
+    }
+    return (
+      window.pageYOffset ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      0
+    );
   }
 
   function onScroll() {
-    if (getScrollY() > THRESHOLD) {
+    const y = getScrollY();
+    if (y > THRESHOLD) {
       btn.classList.add('visible');
     } else {
       btn.classList.remove('visible');
     }
   }
 
+  // Listen on both window and document for safety
   window.addEventListener('scroll', onScroll, { passive: true });
+  document.addEventListener('scroll', onScroll, { passive: true });
+
   onScroll(); // run once on load
 })();
 </script>

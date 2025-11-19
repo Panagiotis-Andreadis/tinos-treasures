@@ -183,16 +183,17 @@
 
     /* CONTACT wrap (location now has its own layout below) */
     #contact.section.slide-section .wrap{
-      height:100%;
-      box-sizing:border-box;
-      padding-top:var(--nav-h);
-      display:grid;
-      align-content:center;
-      justify-items:start;
-      text-align:left;
-      padding-inline:clamp(12px,2.5vw,40px);
-      overflow:hidden
-    }
+  height:100%;
+  box-sizing:border-box;
+  padding-top:var(--nav-h);
+  display:grid;
+  align-content:flex-start; /* so content starts from top, not forced center */
+  justify-items:start;
+  text-align:left;
+  padding-inline:clamp(12px,2.5vw,40px);
+  overflow:auto; /* allow scroll if content is taller than the viewport */
+}
+
     #contact.section.slide-section{height:calc(100svh - var(--footer-h));min-height:calc(100svh - var(--footer-h));max-height:calc(100svh - var(--footer-h))}
     @supports (height:100dvh){#contact.section.slide-section{height:calc(100dvh - var(--footer-h));min-height:calc(100dvh - var(--footer-h));max-height:calc(100dvh - var(--footer-h))}}
     #contact.anchor-offset{scroll-margin-top:0!important;}
@@ -662,6 +663,151 @@ a.back-to-top:hover {
   background: rgba(0,0,0,0.98);
   box-shadow: 0 14px 32px rgba(0,0,0,0.6);
 }
+/* === REVIEWS & FEATURED SECTION (CONTACT) === */
+.reviews-block {
+  margin-top: 24px;
+  border-top: 1px solid #e4e4e4;
+  padding-top: 18px;
+}
+
+.reviews-title,
+.featured-title {
+  font-size: 1.2rem;
+  margin: 0 0 4px;
+}
+
+.reviews-subtitle {
+  margin: 0 0 16px;
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #777;
+}
+
+.reviews-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.reviews-column {
+  flex: 1 1 260px;
+}
+
+/* Google widget shell – where your widget/API will render */
+.google-widget-shell {
+  min-height: 140px; /* avoids layout jump while widget loads */
+}
+
+/* Booking.com badge + text */
+.booking-badge {
+  margin-bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.booking-badge img {
+  max-height: 42px;
+  width: auto;
+  display: block;
+}
+
+.booking-badge-text {
+  font-size: 0.9rem;
+  color: #444;
+}
+
+/* Booking.com quotes grid */
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.review-card {
+  border: 1px solid #e4e4e4;
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #fafafa;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+
+.review-author {
+  font-weight: 600;
+}
+
+.review-rating {
+  font-size: 0.85rem;
+}
+
+.review-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: #222;
+  margin: 6px 0;
+}
+
+.review-source {
+  font-size: 0.8rem;
+  color: #777;
+}
+
+/* Featured in */
+.featured-block {
+  margin-top: 24px;
+  border-top: 1px solid #e4e4e4;
+  padding-top: 18px;
+}
+
+.featured-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+
+.featured-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+  opacity: 0.9;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.featured-item:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+  text-decoration: underline;
+}
+
+.featured-logo {
+  max-height: 32px;
+  width: auto;
+  display: block;
+}
+
+.featured-name {
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Mobile tweaks */
+@media (max-width: 900px) {
+  .reviews-layout {
+    flex-direction: column;
+  }
+}
 
   </style>
 </head>
@@ -1121,10 +1267,11 @@ a.back-to-top:hover {
     </div>
   </section>
 
-  <!-- CONTACT -->
+   <!-- CONTACT -->
   <section id="contact" class="section anchor-offset snap slide-section" style="background:#fff;color:#000">
     <div class="wrap">
       <h2 class="fade-in">Contact Us</h2>
+
       <p class="fade-in delay-1 contact-info" style="text-align:left">
         <a href="https://maps.app.goo.gl/VVLBkF2q8XZqKbU38"
            target="_blank"
@@ -1136,6 +1283,7 @@ a.back-to-top:hover {
         <a href="tel:+306976596001">+30 697 659 6001</a>
       </p>
 
+      <!-- Social icons (unchanged) -->
       <div class="social">
 
         <!-- Instagram -->
@@ -1173,7 +1321,7 @@ a.back-to-top:hover {
           </svg>
         </a>
 
-        <!-- Google Search (Minimal Outline G) -->
+        <!-- Google Search -->
         <a class="google"
            href="https://www.google.com/search?q=Tinos+Treasures+Apart-Hotel"
            target="_blank"
@@ -1191,7 +1339,7 @@ a.back-to-top:hover {
           </svg>
         </a>
 
-        <!-- YouTube (Outline + Larger Play Triangle) -->
+        <!-- YouTube -->
         <a class="youtube"
            href="https://www.youtube.com/@tinostreasures"
            target="_blank"
@@ -1208,7 +1356,7 @@ a.back-to-top:hover {
           </svg>
         </a>
 
-        <!-- Google Maps (Outline Pin) -->
+        <!-- Google Maps -->
         <a class="maps"
            href="https://maps.app.goo.gl/VVLBkF2q8XZqKbU38"
            target="_blank"
@@ -1228,8 +1376,85 @@ a.back-to-top:hover {
 
       </div>
 
+      <!-- ⭐ GUEST REVIEWS: GOOGLE + BOOKING.COM -->
+      <div class="reviews-block">
+        <h3 class="reviews-title">What our guests say</h3>
+        <p class="reviews-subtitle">Reviews from Google &amp; Booking.com</p>
+
+        <div class="reviews-layout">
+          <!-- Left: Google reviews widget/API container -->
+          <div class="reviews-column reviews-column--google">
+            <div id="tt-google-reviews" class="google-widget-shell">
+              <!-- Your Google reviews widget or API-based markup will be injected here -->
+            </div>
+          </div>
+
+          <!-- Right: Booking.com badge + curated quotes -->
+          <div class="reviews-column reviews-column--booking">
+            <div class="booking-badge">
+              <!-- Replace with your official Booking.com badge image or embed -->
+              <img src="media/booking-badge-placeholder.png" alt="Booking.com rating badge">
+              <span class="booking-badge-text">Rated 9.4 / 10 on Booking.com</span>
+            </div>
+
+            <div class="reviews-grid">
+              <!-- Booking.com quote 1 -->
+              <article class="review-card">
+                <header class="review-header">
+                  <div class="review-author">Maria K.</div>
+                  <div class="review-rating">10 / 10</div>
+                </header>
+                <p class="review-text">
+                  “Beautiful apartments right by the sea, calm and tastefully designed. The hosts were incredibly kind and helpful throughout our stay.”
+                </p>
+                <div class="review-source">Source: Booking.com</div>
+              </article>
+
+              <!-- Booking.com quote 2 -->
+              <article class="review-card">
+                <header class="review-header">
+                  <div class="review-author">Thomas L.</div>
+                  <div class="review-rating">9 / 10</div>
+                </header>
+                <p class="review-text">
+                  “Perfect location in Isternia Bay – two beaches and tavernas just a short walk away. Ideal for families who want comfort without crowds.”
+                </p>
+                <div class="review-source">Source: Booking.com</div>
+              </article>
+
+              <!-- Add 1–2 more quotes if you want -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ⭐ AS FEATURED IN -->
+      <div class="featured-block">
+        <h3 class="featured-title">As featured in</h3>
+        <div class="featured-grid">
+          <!-- Replace href + text with your actual mentions -->
+          <a class="featured-item"
+             href="https://example-magazine-1.com/your-article"
+             target="_blank"
+             rel="noopener noreferrer">
+            <!-- Optional logo -->
+            <!-- <img class="featured-logo" src="media/press-logo-1.png" alt="Magazine 1 logo"> -->
+            <span class="featured-name">MAGAZINE / SITE NAME 1</span>
+          </a>
+
+          <a class="featured-item"
+             href="https://example-magazine-2.com/your-article"
+             target="_blank"
+             rel="noopener noreferrer">
+            <!-- <img class="featured-logo" src="media/press-logo-2.png" alt="Magazine 2 logo"> -->
+            <span class="featured-name">MAGAZINE / SITE NAME 2</span>
+          </a>
+        </div>
+      </div>
+
     </div>
   </section>
+
 
 <footer class="footer-bottom snap">
   <div class="footer-inner">

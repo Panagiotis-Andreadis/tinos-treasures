@@ -640,14 +640,14 @@
     #location .location-slide.is-top {
       opacity: 1;
     }
-/* FINAL FLOATING BACK TO TOP BUTTON (ALWAYS VISIBLE) */
+/* FLOATING BACK TO TOP BUTTON – HIDDEN AT TOP, NO ANIMATIONS */
 a.back-to-top {
   position: fixed !important;
   inset: auto 18px 18px auto !important; /* top right bottom left */
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  display: flex;
+  display: none; /* hidden by default */
   align-items: center;
   justify-content: center;
   background: rgba(0,0,0,0.85);
@@ -658,10 +658,16 @@ a.back-to-top {
   z-index: 999999;
 }
 
+/* When scrolled, JS will add .visible → show it */
+a.back-to-top.visible {
+  display: flex;
+}
+
 a.back-to-top:hover {
   background: rgba(0,0,0,0.98);
   box-shadow: 0 14px 32px rgba(0,0,0,0.6);
 }
+
 
   </style>
 </head>
@@ -2036,6 +2042,26 @@ a.back-to-top:hover {
   </script>
 
  
+<script>
+  (function () {
+    const btn = document.querySelector('.back-to-top');
+    if (!btn) return;
+
+    const THRESHOLD = 10; // show as soon as you move a bit
+
+    function onScroll() {
+      const y = window.scrollY || window.pageYOffset || 0;
+      if (y > THRESHOLD) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll(); // run once on load
+  })();
+</script>
 
 </body>
 </html>

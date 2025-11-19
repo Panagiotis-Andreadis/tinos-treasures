@@ -547,37 +547,7 @@
       }
     }
 
- /* FLOATING BACK TO TOP BUTTON */
-.back/* FLOATING BACK TO TOP BUTTON – ALWAYS VISIBLE */
-.back-to-top {
-  position: fixed;
-  right: 18px;
-  bottom: 18px;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0,0,0,0.75);
-  color: #fff;
-  font-size: 24px;
-  text-decoration: none;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.45);
-  opacity: 0.9;           /* <-- visible by default */
-  pointer-events: auto;
-  transform: translateY(0);
-  transition: background .25s ease, box-shadow .25s ease;
-  z-index: 99999;
-}
-
-.back-to-top:hover {
-  background: rgba(0,0,0,0.9);
-  box-shadow: 0 14px 32px rgba(0,0,0,0.6);
-}
-
-
-
+ 
     /* LOCATION layout: mirror apartment section (rotator left, text right) */
     #location.section.slide-section .wrap {
       height: 100%;
@@ -670,6 +640,28 @@
     #location .location-slide.is-top {
       opacity: 1;
     }
+/* FINAL FLOATING BACK TO TOP BUTTON (ALWAYS VISIBLE) */
+a.back-to-top {
+  position: fixed !important;
+  inset: auto 18px 18px auto !important; /* top right bottom left */
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.85);
+  color: #fff !important;
+  font-size: 24px;
+  text-decoration: none;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.45);
+  z-index: 999999;
+}
+
+a.back-to-top:hover {
+  background: rgba(0,0,0,0.98);
+  box-shadow: 0 14px 32px rgba(0,0,0,0.6);
+}
 
   </style>
 </head>
@@ -1235,21 +1227,20 @@
     </div>
   </section>
 
-  <footer class="footer-bottom snap">
+<footer class="footer-bottom snap">
+  <div class="footer-inner">
+    <p class="footer-line1">© <span id="year"></span>&nbsp;Tinos Treasures. All rights reserved.</p>
 
-    <!-- Back to top aligned to full viewport right -->
-    <a href="#home" class="back-to-top" aria-label="Back to top">↑</a>
+    <p class="footer-line2">
+      Custom-coded and designed &nbsp;by&nbsp;Panagiotis A.&nbsp;|&nbsp;Content by&nbsp;
+      <strong><a href="https://www.teramok.us/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">TERAMOK</a></strong>.
+    </p>
+  </div>
+</footer>
 
-    <div class="footer-inner">
-      <p class="footer-line1">© <span id="year"></span>&nbsp;Tinos Treasures. All rights reserved.</p>
+<!-- Put the floating button here, outside any flex layout -->
+<a href="#home" class="back-to-top" aria-label="Back to top">↑</a>
 
-      <p class="footer-line2">
-        Custom-coded and designed &nbsp;by&nbsp;Panagiotis A.&nbsp;|&nbsp;Content by&nbsp;
-        <strong><a href="https://www.teramok.us/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">TERAMOK</a></strong>.
-      </p>
-    </div>
-
-  </footer>
 
   <script>
     (function(){

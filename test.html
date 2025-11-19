@@ -1067,7 +1067,7 @@
     </div>
   </section>
 
-    <!-- LOCATION -->
+     <!-- LOCATION -->
   <section id="location" class="section anchor-offset snap slide-section" style="background:#fff;color:#000">
     <div class="wrap">
       <div class="location-grid">
@@ -1076,12 +1076,12 @@
           <img
             class="location-slide location-slide-a is-top"
             src="media/location_fast/location_1_1400.webp"
-            alt="Isternia bay and surrounding landscape"
+            alt="Isternia Bay and surrounding Cycladic landscape"
           >
           <img
             class="location-slide location-slide-b"
             src="media/location_fast/location_2_1400.webp"
-            alt="Seaside view near Tinos Treasures"
+            alt="Aerial view of the beach and turquoise waters"
           >
 
           <div class="controls" aria-label="Location gallery controls">
@@ -1098,7 +1098,7 @@
         <div class="apt-text location-text">
           <h2>The Location</h2>
           <p>
-Ormos Isternion is a charming blend of old-world Tinian tradition and understated luxury. This car-free seaside hamlet feels almost like a gated resort—quiet, welcoming, and effortlessly elegant. Home to the island’s most celebrated restaurant, a cozy café–ouzeri serving traditional mezedes, and two beautiful beaches (one with a subtle, serene beach bar), it also offers a spacious waterfront promenade perfect for children, families, and groups of friends to unwind. Everything you need is just a short stroll away, wrapped in the warmth and authenticity of true Tinos living.
+            Ormos Isternion is a charming blend of old-world Tinian tradition and understated luxury. This car-free seaside hamlet feels almost like a gated resort—quiet, welcoming, and effortlessly elegant. Home to the island’s most celebrated restaurant, a cozy café–ouzeri serving traditional mezedes, and two beautiful beaches (one with a subtle, serene beach bar), it also offers a spacious waterfront promenade perfect for children, families, and groups of friends to unwind. Everything you need is just a short stroll away, wrapped in the warmth and authenticity of true Tinos living.
           </p>
         </div>
       </div>
@@ -1863,13 +1863,20 @@ Ormos Isternion is a charming blend of old-world Tinian tradition and understate
   })();
   </script>
 
-  <!-- LOCATION ROTATOR JS -->
+    <!-- LOCATION ROTATOR JS -->
   <script>
     (function () {
       const sources = [
         "media/location_fast/location_1_1400.webp",
         "media/location_fast/location_2_1400.webp",
-        "media/location_fast/location_3_1400.webp"
+        "media/location_fast/location_3_1400.webp",
+        "media/location_fast/location_4_1400.webp",
+        "media/location_fast/location_5_1400.webp",
+        "media/location_fast/location_6_1400.webp",
+        "media/location_fast/location_7_1400.webp",
+        "media/location_fast/location_8_1400.webp",
+        "media/location_fast/location_9_1400.webp",
+        "media/location_fast/location_10_1400.webp"
       ];
 
       const rotator = document.getElementById('location-rotator');
@@ -1885,9 +1892,10 @@ Ormos Isternion is a charming blend of old-world Tinian tradition and understate
 
       if (!a || !b || !prevBtn || !nextBtn || !toggleBtn) return;
 
+      // Preload all images
       sources.forEach(src => { const im = new Image(); im.src = src; });
 
-      let idx = 2;          // 0 & 1 are already shown
+      let idx = 2;          // 0 & 1 are already shown in <img> tags
       let topIsA = true;
       const HOLD_MS = 2500;
       let slideTimer = null;

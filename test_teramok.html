@@ -492,7 +492,7 @@
       color: #222;
       text-decoration: none;
       padding-bottom: 2px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+      border-bottom: none;
       transition:
         color .25s ease,
         border-color .25s ease;
@@ -547,31 +547,7 @@
       }
     }
 
-    /* BACK TO TOP — aligned to full viewport width */
-    .footer-bottom {
-      position: relative;
-    }
-
-    .back-to-top {
-      position: absolute;
-      top: 8px;
-      right: 20px;
-      display: inline-flex;
-      font-size: 0.78rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #fff;
-      text-decoration: none;
-      opacity: 0.9;
-      transition: opacity 0.25s ease, transform 0.15s ease;
-    }
-
-    .back-to-top:hover {
-      opacity: 1;
-      text-decoration: underline;
-      transform: translateY(-1px);
-    }
-
+ 
     /* LOCATION layout: mirror apartment section (rotator left, text right) */
     #location.section.slide-section .wrap {
       height: 100%;
@@ -664,6 +640,28 @@
     #location .location-slide.is-top {
       opacity: 1;
     }
+/* FINAL FLOATING BACK TO TOP BUTTON (ALWAYS VISIBLE) */
+a.back-to-top {
+  position: fixed !important;
+  inset: auto 18px 18px auto !important; /* top right bottom left */
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.85);
+  color: #fff !important;
+  font-size: 24px;
+  text-decoration: none;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.45);
+  z-index: 999999;
+}
+
+a.back-to-top:hover {
+  background: rgba(0,0,0,0.98);
+  box-shadow: 0 14px 32px rgba(0,0,0,0.6);
+}
 
   </style>
 </head>
@@ -760,20 +758,21 @@
         </div>
         <div class="apt-text">
           <h2>Apartments</h2>
-          <h3>1. Apigania</h3>
+          <h3>I. Apigania</h3>
 
           <p>
-            Located on the upper floor, this seaside duplex apartment overlooks the sea, featuring a queen bed, two adult single beds, a marble-finished kitchen, a cozy living room with a flat-screen TV, and a sleek bathroom. An internal staircase connects the two levels. Step onto the veranda with its marble table and enjoy stunning views of Isternia village, the sea, and the island’s terraced landscape (xerolithies). Just a 2-minute level walk brings you to two beaches, two restaurants, and a quiet beach bar—no uphill climbs required.
+            Located on the upper floor, this seaside duplex apartment has a sea view, featuring a queen bed, two adult single beds, a marble-finished kitchen, a cozy living room with a flat-screen TV, and a sleek bathroom. An internal staircase connects the two levels. Step onto the veranda with its marble table and enjoy stunning views of Isternia village, the sea, and the island’s terraced landscape (xerolithies). Just a 2-minute level walk brings you to two beaches, two restaurants, and a quiet beach bar—no uphill climbs required.
           </p>
 
           <a
-            class="apigania-link"
-            href="https://tinostreasures.reserve-online.net/property/TINOSTREAS/APIGAN"
-            target="_blank"
-            rel="noopener"
-          >
-            Explore Apigania in detail and book your stay here.
-          </a>
+  class="apigania-link"
+  href="https://tinostreasures.reserve-online.net/property/TINOSTREAS/APIGAN"
+  target="_blank"
+  rel="noopener"
+>
+  <strong><u>Explore Apigania in detail and book your stay here.</u></strong>
+</a>
+
 
           <div class="apt-amenities-grid">
             <div class="apt-amenity-card">
@@ -847,20 +846,21 @@
         </div>
         <div class="apt-text">
           <h2>Apartments</h2>
-          <h3>2. Vathi</h3>
+          <h3>II. Vathi</h3>
 
           <p>
-            Located on the upper floor, this seaside duplex apartment overlooks the sea, featuring a queen bed, two adult single beds, a cozy living room with a sofa bed and a flat-screen TV, and a sleek bathroom. An internal staircase connects the two levels. Step onto the veranda with its marble table and enjoy stunning views of Isternia village, the sea, and the island’s terraced landscape (xerolithies). Just a 2-minute level walk brings you to two beaches, two restaurants, and a quiet beach bar—no uphill climbs required.
+            Located on the upper floor, this seaside duplex apartment has a sea view, featuring a queen bed, two adult single beds, a cozy living room with a sofa bed and a flat-screen TV, and a sleek bathroom. An internal staircase connects the two levels. Step onto the veranda with its marble table and enjoy stunning views of Isternia village, the sea, and the island’s terraced landscape (xerolithies). Just a 2-minute level walk brings you to two beaches, two restaurants, and a quiet beach bar—no uphill climbs required.
           </p>
 
-          <a
-            class="apigania-link"
-            href="https://tinostreasures.reserve-online.net/property/TINOSTREAS/VATHI"
-            target="_blank"
-            rel="noopener"
-          >
-            Explore Vathi in detail and book your stay here.
-          </a>
+         <a
+  class="apigania-link"
+  href="https://tinostreasures.reserve-online.net/property/TINOSTREAS/VATHI"
+  target="_blank"
+  rel="noopener"
+>
+  <strong><u>Explore Vathi in detail and book your stay here.</u></strong>
+</a>
+
 
           <div class="apt-amenities-grid">
             <div class="apt-amenity-card">
@@ -937,20 +937,21 @@
         </div>
         <div class="apt-text">
           <h2>Apartments</h2>
-          <h3>3. Livada</h3>
+          <h3>III. Livada</h3>
 
           <p>
             Located on the main floor, this seaside apartment enjoys stunning views of Isternia village and the island’s terraced landscape (xerolithies). Spanning 70 sqm on one level, the 2-bedroom retreat blends comfort with luxury—featuring a queen bed, two adult singles, a marble-finished kitchen, a cozy living room with flat-screen TV, and a sleek bathroom. Just a 2-minute level walk brings you to two beaches, two restaurants, and a quiet beach bar—no uphill climbs required.
           </p>
 
-          <a
-            class="apigania-link"
-            href="https://tinostreasures.reserve-online.net/property/TINOSTREAS/LIVADA"
-            target="_blank"
-            rel="noopener"
-          >
-            Explore Livada in detail and book your stay here.
-          </a>
+         <a
+  class="apigania-link"
+  href="https://tinostreasures.reserve-online.net/property/TINOSTREAS/LIVADA"
+  target="_blank"
+  rel="noopener"
+>
+  <strong><u>Explore Livada in detail and book your stay here.</u></strong>
+</a>
+
 
           <div class="apt-amenities-grid">
             <div class="apt-amenity-card">
@@ -1017,20 +1018,21 @@
         </div>
         <div class="apt-text">
           <h2>Apartments</h2>
-          <h3>4. Ammos</h3>
+          <h3>IV. Ammos</h3>
 
           <p>
             Located on the main floor, this seaside apartment enjoys stunning views of Isternia village and the island’s terraced landscape (xerolithies). Spanning 70 sqm on one level, the 2-bedroom retreat blends comfort with luxury—featuring a queen bed, two adult singles, a marble-finished kitchen, a cozy living room with flat-screen TV, and a sleek bathroom. Just a 2-minute level walk brings you to two beaches, two restaurants, and a quiet beach bar—no uphill climbs required.
           </p>
 
-          <a
-            class="apigania-link"
-            href="https://tinostreasures.reserve-online.net/property/TINOSTREAS/AMMOS"
-            target="_blank"
-            rel="noopener"
-          >
-            Explore Ammos in detail and book your stay here.
-          </a>
+         <a
+  class="apigania-link"
+  href="https://tinostreasures.reserve-online.net/property/TINOSTREAS/AMMOS"
+  target="_blank"
+  rel="noopener"
+>
+  <strong><u>Explore Ammos in detail and book your stay here.</u></strong>
+</a>
+
 
           <div class="apt-amenities-grid">
             <div class="apt-amenity-card">
@@ -1229,21 +1231,20 @@
     </div>
   </section>
 
-  <footer class="footer-bottom snap">
+<footer class="footer-bottom snap">
+  <div class="footer-inner">
+    <p class="footer-line1">© <span id="year"></span>&nbsp;Tinos Treasures. All rights reserved.</p>
 
-    <!-- Back to top aligned to full viewport right -->
-    <a href="#home" class="back-to-top">Back to top ↑</a>
+    <p class="footer-line2">
+      Custom-coded and designed &nbsp;by&nbsp;Panagiotis A.&nbsp;|&nbsp;Content by&nbsp;
+      <strong><a href="https://www.teramok.us/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">TERAMOK</a></strong>.
+    </p>
+  </div>
+</footer>
 
-    <div class="footer-inner">
-      <p class="footer-line1">© <span id="year"></span>&nbsp;Tinos Treasures. All rights reserved.</p>
+<!-- Put the floating button here, outside any flex layout -->
+<a href="#home" class="back-to-top" aria-label="Back to top">↑</a>
 
-      <p class="footer-line2">
-        <strong>Custom-coded and designed</strong>&nbsp;by&nbsp;Panagiotis A.&nbsp;|&nbsp;Content by&nbsp;
-        <strong><a href="https://www.teramok.us/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">TERAMOK</a></strong>.
-      </p>
-    </div>
-
-  </footer>
 
   <script>
     (function(){
@@ -2037,5 +2038,8 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
+
+ 
+
 </body>
 </html>

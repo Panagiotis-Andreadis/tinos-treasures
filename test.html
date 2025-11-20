@@ -974,6 +974,25 @@ a.back-to-top:hover {
     max-height: 38px;
   }
 }
+/* Traveller Review Award badge */
+.booking-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;   /* allows wrap on mobile */
+}
+
+.booking-award-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.booking-award-badge img {
+  height: 60px;      /* tweak if needed */
+  width: auto;
+  display: block;
+}
 
 
   </style>
@@ -1556,8 +1575,9 @@ a.back-to-top:hover {
               Superb <strong>9.3 / 10</strong> average score, based on <strong>17 Booking.com reviews</strong>.
             </p>
 
-            <!-- Booking.com badge – light -->
+                        <!-- Booking.com score badge + Traveller Review Award -->
             <div class="booking-badge-row">
+              <!-- Score badge – light -->
               <svg class="booking-badge booking-badge--light"
                    viewBox="0 0 260 56"
                    role="img"
@@ -1604,6 +1624,18 @@ a.back-to-top:hover {
                       font-size="11"
                       fill="#bbbbbb">Booking.com reviews</text>
               </svg>
+
+              <!-- Traveller Review Award badge -->
+              <a
+                class="booking-award-badge"
+                href="https://www.booking.com/hotel/gr/tinos-treasures-apart-hotel.en-gb.html#tab-reviews" 
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Booking.com Traveller Review Award">
+                <img
+                  src="media/awards/booking-traveller-review-award-2024.png"
+                  alt="Booking.com Traveller Review Award 2024 – Tinos Treasures">
+              </a>
             </div>
 
             <!-- 10 highest Booking.com quotes (from your CSV) -->

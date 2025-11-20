@@ -988,11 +988,18 @@ a.back-to-top:hover {
   justify-content: center;
 }
 
-.booking-award-badge img {
-  height: 240px;      /* tweak if needed */
-  width: auto;
-  display: block;
+/* Traveller Award Badges: fit side-by-side on desktop */
+@media (min-width:900px){
+  .booking-award-badge img {
+    height: 180px !important; /* was 240px */
+  }
+
+  .booking-badge-row {
+    flex-wrap: nowrap !important;
+    justify-content: flex-start;
+  }
 }
+
 /* OVERRIDE: remove grey boxes / dark backgrounds in reviews & featured */
 .reviews-block {
   background: transparent !important;
@@ -1276,6 +1283,50 @@ a.back-to-top:hover {
 /* Keep the Google widget nicely aligned on the right */
 .reviews-right .google-widget-shell {
   margin-top: 4px;
+}
+/* === Align "Featured in" with Google widget and Contact Us === */
+
+/* Make Featured block equal height to contact-main on desktop */
+@media (min-width:900px){
+  #contact .contact-top {
+    align-items:flex-start !important;
+  }
+
+  #contact .featured-block {
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+    height:100%;
+  }
+
+  /* Align Featured In title to same baseline as Contact Us */
+  #contact .featured-block h3 {
+    margin-top:0 !important;
+    padding-top:4px; /* subtle vertical adjustment */
+  }
+
+  /* Align Google widget with Featured In column */
+  .reviews-right {
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+    padding-top:4px;
+  }
+}
+/* === FULL-WIDTH FOOTER FIX === */
+footer.footer-bottom {
+  width:100% !important;
+  max-width:100% !important;
+  margin:0 !important;
+  padding:16px 0 !important;
+  position:relative;
+  left:0;
+  right:0;
+  border-top:1px solid rgba(255,255,255,0.12);
+}
+#contact .wrap footer,
+footer.footer-bottom {
+  max-width:none !important;
 }
 
   </style>

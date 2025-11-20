@@ -993,6 +993,34 @@ a.back-to-top:hover {
   width: auto;
   display: block;
 }
+/* OVERRIDE: remove grey boxes / dark backgrounds in reviews & featured */
+.reviews-block {
+  background: transparent !important;
+  border-radius: 0 !important;
+  border: none !important;
+  border-top: 1px solid #e4e4e4 !important;  /* keep only a subtle top line */
+  padding: 18px 0 0 !important;
+}
+
+.review-card {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.featured-block {
+  background: transparent !important;
+  border-radius: 0 !important;
+  border: none !important;
+  border-top: 1px solid #e4e4e4 !important;  /* same subtle divider */
+  padding: 18px 0 0 !important;
+}
+
+.featured-logos a {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
 
 
   </style>

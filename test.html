@@ -1092,6 +1092,32 @@ a.back-to-top:hover {
 .review-slider {
   touch-action: pan-y;
 }
+/* ----------------------------------------
+   CONTACT FONT FIX
+   Only titles keep Cycladic.
+   Everything else becomes Cormorant Garamond.
+----------------------------------------- */
+
+/* Default for the entire contact section */
+#contact {
+  font-family: 'Cormorant Garamond', serif !important;
+}
+
+/* Force ALL text inside contact to use Cormorant,
+   except for the headings we will re-enable below */
+#contact * {
+  font-family: 'Cormorant Garamond', serif !important;
+}
+
+/* These headings MUST keep Cycladic */
+#contact h2,                /* Contact Us */
+#contact .featured-block h3, /* Featured in */
+#contact .reviews-block h3   /* Guest reviews */
+{
+  font-family: 'Cycladic', sans-serif !important;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
 
   </style>
 </head>

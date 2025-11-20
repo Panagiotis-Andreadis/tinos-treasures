@@ -1352,6 +1352,42 @@ footer.footer-bottom {
     padding-top: 0;
   }
 }
+/* PERFECT ALIGNMENT FOR CONTACT / FEATURED / GOOGLE (DESKTOP) */
+@media (min-width: 900px) {
+  /* Turn the whole contact area into a 2-column grid */
+  #contact .contact-columns {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    column-gap: 26px;
+    row-gap: 26px;
+    align-items: flex-start;
+  }
+
+  /* These wrappers become "invisible" so their children participate in the grid */
+  #contact .contact-top,
+  #contact .contact-bottom,
+  .reviews-two-col {
+    display: contents;
+  }
+
+  /* LEFT column: Contact Us + Booking.com (reviews-left) */
+  #contact .contact-main,
+  .reviews-left {
+    grid-column: 1;
+  }
+
+  /* RIGHT column: Featured in + Google widget */
+  #contact .contact-top .featured-block,
+  .reviews-right {
+    grid-column: 2;
+  }
+
+  /* Make Featured in and Google widget start at the same vertical line */
+  #contact .contact-top .featured-block,
+  .reviews-right {
+    align-self: flex-start;
+  }
+}
 
   </style>
 </head>

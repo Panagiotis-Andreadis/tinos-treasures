@@ -1029,19 +1029,27 @@ a.back-to-top:hover {
   min-height: 140px;
 }
 
+/* === Review Slider – FIXED LAYOUT === */
+.review-slider {
+  position: relative;
+  width: 100%;
+  /* let height be defined by the active slide */
+  min-height: 0;
+}
+
 .review-slide {
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  transition: opacity .6s ease;
-  pointer-events: none;
+  display: none;          /* hide by default */
+  opacity: 1;             /* no fade needed (or keep if you want) */
+  position: static;       /* participate in normal flow */
+  pointer-events: auto;
 }
 
 .review-slide.active {
-  opacity: 1;
-  pointer-events: auto;
+  display: block;         /* only this one is visible */
 }
+
+
+
 
 .review-slide blockquote {
   font-size: 1rem;
@@ -2623,49 +2631,61 @@ a.back-to-top:hover {
 </script>
 <script>
 (function(){
-  const slides = Array.from(document.querySelectorAll('.review-slide'));
-  const indexEl = document.querySelector('.review-index');
-  const prevBtn = document.querySelector('.review-prev');
-  const nextBtn = document.querySelector('.review-next');
+  const slider   = document.querySelector('.review-slider');
+  const slides   = slider ? Array.from(slider.querySelectorAll('.review-slide')) : [];
+  const indexEl  = slider ? slider.querySelector('.review-index') : null;
+  const prevBtn  = slider ? slider.querySelector('.review-prev') : null;
+  const nextBtn  = slider ? slider.querySelector('.review-next') : null;
+
+  // If something is missing, bail out safely
+  if (!slider || !slides.length || !indexEl || !prevBtn || !nextBtn) return;
+
   let current = 0;
   const total = slides.length;
 
-  function show(i){
+  function show(i) {
     slides.forEach(s => s.classList.remove('active'));
     slides[i].classList.add('active');
-    indexEl.textContent = `${i+1} / ${total}`;
+    indexEl.textContent = `${i + 1} / ${total}`;
   }
 
-  function next(){
+  function next() {
     current = (current + 1) % total;
     show(current);
   }
 
-  function prev(){
+  function prev() {
     current = (current - 1 + total) % total;
     show(current);
   }
 
-  nextBtn.addEventListener('click', next);
   prevBtn.addEventListener('click', prev);
+  nextBtn.addEventListener('click', next);
 
-  /* Auto slide */
+  // Auto slide
   let auto = setInterval(next, 6000);
 
-  /* Pause on hover (desktop) */
-  const slider = document.querySelector('.review-slider');
-  slider.addEventListener('mouseenter', ()=> clearInterval(auto));
-  slider.addEventListener('mouseleave', ()=> auto = setInterval(next, 6000));
+  // Pause on hover (desktop)
+  slider.addEventListener('mouseenter', () => {
+    clearInterval(auto);
+    auto = null;
+  });
+  slider.addEventListener('mouseleave', () => {
+    if (!auto) auto = setInterval(next, 6000);
+  });
 
-  /* Swipe support */
+  // Swipe support (mobile)
   let startX = 0;
-  slider.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+  slider.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+  });
   slider.addEventListener('touchend', e => {
     const dx = e.changedTouches[0].clientX - startX;
     if (dx > 40) prev();
     if (dx < -40) next();
   });
 
+  // Initial render
   show(current);
 })();
 </script>

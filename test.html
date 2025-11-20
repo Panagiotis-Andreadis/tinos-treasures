@@ -1122,6 +1122,84 @@ a.back-to-top:hover {
   width: 64px;
   height: 64px;
 }
+/* =========================================
+   Make GOOGLE widget match Booking.com style
+   in the "Guest reviews" block
+========================================= */
+
+/* 1. Reset the Elfsight container (no grey box, no border) */
+.reviews-block .google-widget-shell,
+.reviews-block .google-widget-shell * {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* 2. Remove padding / card look from the main widget shells */
+.reviews-block .google-widget-shell .eapps-widget,
+.reviews-block .google-widget-shell .eapps-widget-inner,
+.reviews-block .google-widget-shell .eapps-google-reviews,
+.reviews-block .google-widget-shell .eapps-google-reviews-list,
+.reviews-block .google-widget-shell .eapps-google-reviews-item {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 0 10px 0 !important; /* spacing between quotes */
+}
+
+/* 3. Show Google reviews as simple text quotes (like Booking.com slider) */
+.reviews-block .google-widget-shell .eapps-google-reviews-item-content,
+.reviews-block .google-widget-shell .eapps-google-reviews-review-text {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-size: 1rem !important;
+  line-height: 1.55 !important;
+  color: #222 !important;
+  margin: 0 0 4px 0 !important;
+}
+
+/* 4. Author / meta line under each quote */
+.reviews-block .google-widget-shell .eapps-google-reviews-author,
+.reviews-block .google-widget-shell .eapps-google-reviews-review-author,
+.reviews-block .google-widget-shell .eapps-google-reviews-review-date {
+  display: inline-block !important;
+  font-family: 'Cormorant Garamond', serif !important;
+  font-size: 0.8rem !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: #555 !important;
+}
+
+/* Put author + date on one light line */
+.reviews-block .google-widget-shell .eapps-google-reviews-review-footer {
+  margin-top: 2px !important;
+}
+
+/* 5. One-column, stacked layout (no grid of cards) */
+.reviews-block .google-widget-shell .eapps-google-reviews-list {
+  display: block !important;
+}
+.reviews-block .google-widget-shell .eapps-google-reviews-item {
+  width: 100% !important;
+}
+
+/* 6. Hide extra UI to keep it as “pure text reviews” */
+.reviews-block .google-widget-shell .eapps-google-reviews-review-rating,
+.reviews-block .google-widget-shell .eapps-google-reviews-review-rating-stars,
+.reviews-block .google-widget-shell .eapps-google-reviews-review-source,
+.reviews-block .google-widget-shell .eapps-google-reviews-logo,
+.reviews-block .google-widget-shell .eapps-google-reviews-header,
+.reviews-block .google-widget-shell .eapps-google-reviews-badge,
+.reviews-block .google-widget-shell .eapps-google-reviews-pagination,
+.reviews-block .google-widget-shell .eapps-google-reviews-read-more,
+.reviews-block .google-widget-shell .eapps-google-reviews-author-image {
+  display: none !important;
+}
+
+/* 7. Tiny spacing tweak so Google block “sits” like your manual quotes */
+.reviews-block .google-widget-shell {
+  margin-bottom: 10px !important;
+}
 
   </style>
 </head>

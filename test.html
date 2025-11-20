@@ -1029,35 +1029,34 @@ a.back-to-top:hover {
   min-height: 140px;
 }
 
-/* === Review Slider – FIXED LAYOUT === */
+/* Review slider container */
 .review-slider {
   position: relative;
   width: 100%;
-  /* let height be defined by the active slide */
-  min-height: 0;
+  touch-action: pan-y; /* allow vertical scroll, we’ll handle horizontal swipe */
 }
 
+/* One review at a time */
 .review-slide {
-  display: none;          /* hide by default */
-  opacity: 1;             /* no fade needed (or keep if you want) */
-  position: static;       /* participate in normal flow */
+  display: none;      /* hide all by default */
+  position: static;   /* no absolute positioning so height adjusts naturally */
+  opacity: 1;
   pointer-events: auto;
 }
 
 .review-slide.active {
-  display: block;         /* only this one is visible */
+  display: block;     /* only current slide is visible */
 }
 
-
-
-
 .review-slide blockquote {
+  font-family: 'Cormorant Garamond', serif;
   font-size: 1rem;
   line-height: 1.55;
   color: #222;
   margin: 0 0 4px;
 }
 
+/* Controls */
 .review-controls {
   margin-top: 10px;
   display: flex;
@@ -1087,6 +1086,7 @@ a.back-to-top:hover {
   letter-spacing: 0.06em;
   color: #555;
 }
+
 
 /* Touch swipe */
 .review-slider {
@@ -2663,7 +2663,7 @@ a.back-to-top:hover {
   const prevBtn  = slider ? slider.querySelector('.review-prev') : null;
   const nextBtn  = slider ? slider.querySelector('.review-next') : null;
 
-  // If something is missing, bail out safely
+  // Safety: if anything is missing, do nothing
   if (!slider || !slides.length || !indexEl || !prevBtn || !nextBtn) return;
 
   let current = 0;
@@ -2685,10 +2685,11 @@ a.back-to-top:hover {
     show(current);
   }
 
+  // Button clicks
   prevBtn.addEventListener('click', prev);
   nextBtn.addEventListener('click', next);
 
-  // Auto slide
+  // Auto-rotate every 6 seconds
   let auto = setInterval(next, 6000);
 
   // Pause on hover (desktop)
@@ -2707,11 +2708,11 @@ a.back-to-top:hover {
   });
   slider.addEventListener('touchend', e => {
     const dx = e.changedTouches[0].clientX - startX;
-    if (dx > 40) prev();
-    if (dx < -40) next();
+    if (dx > 40) prev();    // swipe right → previous
+    if (dx < -40) next();   // swipe left → next
   });
 
-  // Initial render
+  // Initial slide
   show(current);
 })();
 </script>

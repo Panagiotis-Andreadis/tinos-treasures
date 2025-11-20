@@ -1352,7 +1352,7 @@ footer.footer-bottom {
     padding-top: 0;
   }
 }
-/* PERFECT ALIGNMENT FOR CONTACT / FEATURED / GOOGLE (DESKTOP) */
+/* DESKTOP LAYOUT: Contact / Featured (top) + Reviews full-width (bottom) */
 @media (min-width: 900px) {
   /* Turn the whole contact area into a 2-column grid */
   #contact .contact-columns {
@@ -1363,31 +1363,32 @@ footer.footer-bottom {
     align-items: flex-start;
   }
 
-  /* These wrappers become "invisible" so their children participate in the grid */
+  /* Remove the wrapper boxes so their children become grid items */
   #contact .contact-top,
-  #contact .contact-bottom,
-  .reviews-two-col {
+  #contact .contact-bottom {
     display: contents;
   }
 
-  /* LEFT column: Contact Us + Booking.com (reviews-left) */
-  #contact .contact-main,
-  .reviews-left {
+  /* LEFT column, top: Contact Us */
+  #contact .contact-main {
     grid-column: 1;
   }
 
-  /* RIGHT column: Featured in + Google widget */
-  #contact .contact-top .featured-block,
-  .reviews-right {
+  /* RIGHT column, top: Featured in */
+  #contact .contact-top .featured-block {
     grid-column: 2;
+    align-self: flex-start;
+    border-top: none !important;
+    padding-top: 0 !important;
+    margin-top: 0;
   }
 
-  /* Make Featured in and Google widget start at the same vertical line */
-  #contact .contact-top .featured-block,
-  .reviews-right {
-    align-self: flex-start;
+  /* SECOND ROW: reviews block spans both columns */
+  #contact .contact-bottom .reviews-block {
+    grid-column: 1 / span 2;
   }
 }
+
 
   </style>
 </head>

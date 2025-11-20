@@ -823,8 +823,9 @@ a.back-to-top:hover {
   flex-direction: column;
   gap: 26px;
   width: 100%;
-  max-width: 1000px;
+  max-width: none;    /* allow full width */
 }
+
 
 #contact .contact-main {
   display: flex;
@@ -1330,6 +1331,24 @@ footer.footer-bottom {
 #contact .wrap footer,
 footer.footer-bottom {
   max-width:none !important;
+}
+/* FINAL FIX: align "Featured in" with "Contact Us" on desktop */
+@media (min-width: 900px) {
+  /* remove the top divider & extra padding only for the top-row Featured block */
+  #contact .contact-top .featured-block {
+    border-top: none !important;
+    padding-top: 0 !important;
+  }
+
+  /* make sure the headings start at the same vertical line */
+  #contact .contact-main h2 {
+    margin-top: 0;
+  }
+
+  #contact .contact-top .featured-block h3 {
+    margin-top: 0;
+    padding-top: 0;
+  }
 }
 
   </style>

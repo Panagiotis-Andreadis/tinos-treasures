@@ -1388,6 +1388,21 @@ footer.footer-bottom {
     grid-column: 1 / span 2;
   }
 }
+/* Make left reviews column a vertical stack */
+.reviews-left {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Slider takes its own space; badges sit underneath */
+.review-slider {
+  flex: 0 0 auto;
+}
+
+/* Slight spacing between slider and badges (now below) */
+.booking-badge-row {
+  margin-top: 16px;
+}
 
 
   </style>
@@ -2983,9 +2998,33 @@ Lovely beach which is a 3’ walk as well as some very good restaurants.”</blo
   const total = slides.length;
 
   function show(i) {
-    slides.forEach(s => s.classList.remove('active'));
-    slides[i].classList.add('active');
+    slides.forEach((s, idx) => {
+      s.classList.toggle('active', idx === i);
+      s.style.display = idx === i ? 'block' : 'none';
+    });
     indexEl.textContent = `${i + 1} / ${total}`;
+  }
+
+  // Measure tallest slide and lock slider min-height
+  function setSliderHeight() {
+    let max = 0;
+
+    slides.forEach(s => {
+      const wasActive  = s.classList.contains('active');
+      const oldDisplay = s.style.display;
+
+      // Temporarily show to measure
+      s.style.display = 'block';
+      const h = s.offsetHeight;
+      if (h > max) max = h;
+
+      // Restore state
+      s.style.display = wasActive ? 'block' : 'none';
+    });
+
+    if (max > 0) {
+      slider.style.minHeight = max + 'px';
+    }
   }
 
   function next() {
@@ -3025,10 +3064,13 @@ Lovely beach which is a 3’ walk as well as some very good restaurants.”</blo
     if (dx < -40) next();   // swipe left → next
   });
 
-  // Initial slide
+  // Initial slide + height lock
   show(current);
+  setSliderHeight();
+  window.addEventListener('resize', setSliderHeight);
 })();
 </script>
+
 
 
 

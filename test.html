@@ -1389,21 +1389,49 @@ footer.footer-bottom {
   }
 }
 /* Make left reviews column a vertical stack */
+/* REVIEWS LEFT: simple block flow, fixed slider height */
 .reviews-left {
-  display: flex;
-  flex-direction: column;
+  display: block; /* back to normal block layout */
 }
 
-/* Slider takes its own space; badges sit underneath */
-.review-slider {
-  flex: 0 0 auto;
+/* Give the slider a fixed visual height so badges never move */
+@media (min-width: 900px) {
+  .reviews-left .review-slider {
+    min-height: 260px !important;  /* you can tweak 260 → 240/280 if needed */
+    margin-bottom: 16px;
+  }
 }
 
-/* Slight spacing between slider and badges (now below) */
+/* Mobile can be a bit smaller */
+@media (max-width: 899px) {
+  .reviews-left .review-slider {
+    min-height: 220px !important;
+    margin-bottom: 12px;
+  }
+}
+
+/* Badges sit directly under the slider */
 .booking-badge-row {
-  margin-top: 16px;
+  margin-top: 0;
 }
 
+
+/* FINAL ALIGNMENT: Contact Us + Featured in on desktop */
+@media (min-width: 900px) {
+  /* Make sure both headings start at the same vertical line */
+  #contact .contact-main h2,
+  #contact .contact-top .featured-block h3 {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    margin-bottom: 8px; /* same bottom space */
+  }
+
+  /* Ensure Featured block sits flush with the top row */
+  #contact .contact-top .featured-block {
+    margin-top: 0 !important;
+    align-self: flex-start;
+  }
+}
 
   </style>
 </head>

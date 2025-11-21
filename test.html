@@ -1,4 +1,4 @@
-featured in is not aligned horizontally with contact us <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -185,16 +185,16 @@ featured in is not aligned horizontally with contact us <!DOCTYPE html>
 
     /* CONTACT wrap (location now has its own layout below) */
     #contact.section.slide-section .wrap{
-  height:100%;
-  box-sizing:border-box;
-  padding-top:var(--nav-h);
-  display:grid;
-  align-content:flex-start; /* so content starts from top, not forced center */
-  justify-items:start;
-  text-align:left;
-  padding-inline:clamp(12px,2.5vw,40px);
-  overflow:auto; /* allow scroll if content is taller than the viewport */
-}
+      height:100%;
+      box-sizing:border-box;
+      padding-top:var(--nav-h);
+      display:grid;
+      align-content:flex-start;
+      justify-items:start;
+      text-align:left;
+      padding-inline:clamp(12px,2.5vw,40px);
+      overflow:auto;
+    }
 
     #contact.section.slide-section{height:calc(100svh - var(--footer-h));min-height:calc(100svh - var(--footer-h));max-height:calc(100svh - var(--footer-h))}
     @supports (height:100dvh){#contact.section.slide-section{height:calc(100dvh - var(--footer-h));min-height:calc(100dvh - var(--footer-h));max-height:calc(100dvh - var(--footer-h))}}
@@ -386,19 +386,19 @@ featured in is not aligned horizontally with contact us <!DOCTYPE html>
       html, body { scroll-snap-type: y proximity !important; }
     }
     @media (max-width:900px){
-  /* Let the LOCATION section grow vertically like apartments */
-  #location.section.slide-section{
-    height:auto !important;
-    min-height:0 !important;
-    max-height:none !important;
-    overflow:visible !important;
-  }
+      /* Let the LOCATION section grow vertically like apartments */
+      #location.section.slide-section{
+        height:auto !important;
+        min-height:0 !important;
+        max-height:none !important;
+        overflow:visible !important;
+      }
 
-  #location.section.slide-section .wrap{
-    height:auto !important;
-    overflow:visible !important;
-  }
-}
+      #location.section.slide-section .wrap{
+        height:auto !important;
+        overflow:visible !important;
+      }
+    }
 
     #contact .social svg * { fill:none !important; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; vector-effect:non-scaling-stroke; }
     #contact .social svg .fill { fill:currentColor !important; stroke:none !important; }
@@ -555,7 +555,7 @@ featured in is not aligned horizontally with contact us <!DOCTYPE html>
     #location.section.slide-section .wrap {
       height: 100%;
       box-sizing: border-box;
-      padding-top: 0;           /* remove offset so rotator sits behind navbar */
+      padding-top: 0;
       padding-inline: 0;
       overflow: hidden;
     }
@@ -643,796 +643,432 @@ featured in is not aligned horizontally with contact us <!DOCTYPE html>
     #location .location-slide.is-top {
       opacity: 1;
     }
-/* FINAL FLOATING BACK TO TOP BUTTON (ALWAYS VISIBLE) */
-a.back-to-top {
-  position: fixed !important;
-  inset: auto 18px 18px auto !important; /* top right bottom left */
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0,0,0,0.85);
-  color: #fff !important;
-  font-size: 24px;
-  text-decoration: none;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.45);
-  z-index: 999999;
-}
-
-a.back-to-top:hover {
-  background: rgba(0,0,0,0.98);
-  box-shadow: 0 14px 32px rgba(0,0,0,0.6);
-}
-/* === REVIEWS & FEATURED SECTION (CONTACT) === */
-.reviews-block {
-  margin-top: 24px;
-  border-top: 1px solid #e4e4e4;
-  padding-top: 18px;
-}
-
-.reviews-title,
-.featured-title {
-  font-size: 1.2rem;
-  margin: 0 0 4px;
-}
-
-.reviews-subtitle {
-  margin: 0 0 16px;
-  font-size: 0.9rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #777;
-}
-
-.reviews-layout {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.reviews-column {
-  flex: 1 1 260px;
-}
-
-/* Google widget shell – where your widget/API will render */
-.google-widget-shell {
-  min-height: 140px; /* avoids layout jump while widget loads */
-}
-
-/* Booking.com badge + text */
-.booking-badge {
-  margin-bottom: 12px;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.booking-badge img {
-  max-height: 42px;
-  width: auto;
-  display: block;
-}
-
-.booking-badge-text {
-  font-size: 0.9rem;
-  color: #444;
-}
-
-/* Booking.com quotes grid */
-.reviews-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
-}
-
-.review-card {
-  border: 1px solid #e4e4e4;
-  border-radius: 10px;
-  padding: 10px 12px;
-  background: #fafafa;
-}
-
-.review-header {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.9rem;
-  margin-bottom: 6px;
-}
-
-.review-author {
-  font-weight: 600;
-}
-
-.review-rating {
-  font-size: 0.85rem;
-}
-
-.review-text {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.05rem;
-  line-height: 1.5;
-  color: #222;
-  margin: 6px 0;
-}
-
-.review-source {
-  font-size: 0.8rem;
-  color: #777;
-}
-
-/* Featured in */
-.featured-block {
-  margin-top: 24px;
-  border-top: 1px solid #e4e4e4;
-  padding-top: 18px;
-}
-
-.featured-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  align-items: center;
-}
-
-.featured-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  color: inherit;
-  opacity: 0.9;
-  transition: opacity 0.2s ease, transform 0.15s ease;
-}
-
-.featured-item:hover {
-  opacity: 1;
-  transform: translateY(-1px);
-  text-decoration: underline;
-}
-
-.featured-logo {
-  max-height: 32px;
-  width: auto;
-  display: block;
-}
-
-.featured-name {
-  font-size: 0.95rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-/* Mobile tweaks */
-@media (max-width: 900px) {
-  .reviews-layout {
-    flex-direction: column;
-  }
-}
-    /* CONTACT — layout for contact + reviews + featured logos */
-#contact .wrap {
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  padding-inline: clamp(12px, 2.5vw, 40px);
-  row-gap: 20px;
-}
-
-
-#contact .contact-columns {
-  display: flex;
-  flex-direction: column;
-  gap: 26px;
-  width: 100%;
-  max-width: none;    /* allow full width */
-}
-
-
-#contact .contact-main {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-#contact .contact-main h2 {
-  margin-bottom: 4px;
-}
-
-#contact .contact-info {
-  margin: 0;
-}
-
-#contact .contact-extra {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* Desktop split: contact on the left, reviews + featured on the right */
-@media (min-width: 900px) {
-  #contact .contact-columns {
-    flex-direction: row;
-    align-items: flex-start;
-  }
-  #contact .contact-main {
-    flex: 1;
-  }
-  #contact .contact-extra {
-    flex: 1.1;
-  }
-}
-
-/* Reviews block */
-.reviews-block {
-  border-radius: 18px;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  padding: 14px 16px 16px;
-  background: #fafafa;
-}
-
-.reviews-block h3 {
-  margin: 0 0 8px;
-  font-size: 1.1rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.reviews-intro {
-  font-size: 0.95rem;
-  margin: 0 0 10px;
-  color: #333;
-}
-
-/* Booking.com badge container */
-.booking-badge-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-
-/* Make SVG badge scale nicely */
-.booking-badge {
-  height: 44px;
-  width: auto;
-}
-
-/* Hide dark badge by default – use if you ever need it on dark background */
-.booking-badge--dark {
-  display: none;
-}
-
-/* Quotes list */
-.reviews-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 8px;
-  display: grid;
-  gap: 8px;
-}
-
-.review-item blockquote {
-  margin: 0;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  font-family: 'Cormorant Garamond', serif;
-  color: #222;
-}
-
-.review-meta {
-  display: block;
-  margin-top: 2px;
-  font-size: 0.8rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: #555;
-}
-
-.reviews-note {
-  margin: 0;
-  font-size: 0.8rem;
-  color: #666;
-}
-
-/* Featured in */
-.featured-block {
-  border-radius: 18px;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  padding: 14px 16px 16px;
-  background: #fdfdfd;
-}
-
-.featured-block h3 {
-  margin: 0 0 10px;
-  font-size: 1.1rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.featured-logos {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  align-items: center;
-}
-
-.featured-logos a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 10px;
-  border-radius: 12px;
-  border: 1px solid rgba(0, 0, 0, 0.04);
-  background: #fff;
-  text-decoration: none;
-}
-
-.featured-logos img {
-  display: block;
-  max-height: 46px;
-  width: auto;
-}
-
-/* Slightly smaller logos on very small screens */
-@media (max-width: 600px) {
-  .featured-logos img {
-    max-height: 38px;
-  }
-}
-/* Traveller Review Award badge */
-.booking-badge-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;   /* allows wrap on mobile */
-}
-
-.booking-award-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Traveller Award Badges: fit side-by-side on desktop */
-@media (min-width:900px){
-  .booking-award-badge img {
-    height: 180px !important; /* was 240px */
-  }
-
-  .booking-badge-row {
-    flex-wrap: nowrap !important;
-    justify-content: flex-start;
-  }
-}
-
-/* OVERRIDE: remove grey boxes / dark backgrounds in reviews & featured */
-.reviews-block {
-  background: transparent !important;
-  border-radius: 0 !important;
-  border: none !important;
-  border-top: 1px solid #e4e4e4 !important;  /* keep only a subtle top line */
-  padding: 18px 0 0 !important;
-}
-
-.review-card {
-  background: transparent !important;
-  border: none !important;
-  padding: 0 !important;
-}
-
-.featured-block {
-  background: transparent !important;
-  border-radius: 0 !important;
-  border: none !important;
-  border-top: 1px solid #e4e4e4 !important;  /* same subtle divider */
-  padding: 18px 0 0 !important;
-}
-
-.featured-logos a {
-  background: transparent !important;
-  border: none !important;
-  padding: 0 !important;
-}
-
-/* === Review Slider === */
-.review-slider {
-  position: relative;
-  width: 100%;
-  min-height: 140px;
-}
-
-/* Review slider container */
-.review-slider {
-  position: relative;
-  width: 100%;
-  touch-action: pan-y; /* allow vertical scroll, we’ll handle horizontal swipe */
-}
-
-/* One review at a time */
-.review-slide {
-  display: none;      /* hide all by default */
-  position: static;   /* no absolute positioning so height adjusts naturally */
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.review-slide.active {
-  display: block;     /* only current slide is visible */
-}
-
-.review-slide blockquote {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1rem;
-  line-height: 1.55;
-  color: #222;
-  margin: 0 0 4px;
-}
-
-/* Controls */
-.review-controls {
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  font-size: 0.9rem;
-  color: #555;
-}
-
-.review-controls button {
-  background: none;
-  border: none;
-  font-size: 22px;
-  line-height: 1;
-  cursor: pointer;
-  color: #222;
-  transition: opacity .25s ease;
-}
-
-.review-controls button:hover {
-  opacity: 0.6;
-}
-
-.review-index {
-  font-size: 0.85rem;
-  letter-spacing: 0.06em;
-  color: #555;
-}
-
-
-/* Touch swipe */
-.review-slider {
-  touch-action: pan-y;
-}
-/* ----------------------------------------
-   CONTACT FONT FIX
-   Only titles keep Cycladic.
-   Everything else becomes Cormorant Garamond.
------------------------------------------ */
-
-/* Default for the entire contact section */
-#contact {
-  font-family: 'Cormorant Garamond', serif !important;
-}
-
-/* Force ALL text inside contact to use Cormorant,
-   except for the headings we will re-enable below */
-#contact * {
-  font-family: 'Cormorant Garamond', serif !important;
-}
-
-/* These headings MUST keep Cycladic */
-#contact h2,                /* Contact Us */
-#contact .featured-block h3, /* Featured in */
-#contact .reviews-block h3   /* Guest reviews */
-{
-  font-family: 'Cycladic', sans-serif !important;
-  letter-spacing: .04em;
-  text-transform: uppercase;
-}
-.location-text .icon--sm {
-  width: 64px;
-  height: 64px;
-}
-/* =========================================
-   Make GOOGLE widget match Booking.com style
-   in the "Guest reviews" block
-========================================= */
-
-/* 1. Reset the Elfsight container (no grey box, no border) */
-.reviews-block .google-widget-shell,
-.reviews-block .google-widget-shell * {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-/* 2. Remove padding / card look from the main widget shells */
-.reviews-block .google-widget-shell .eapps-widget,
-.reviews-block .google-widget-shell .eapps-widget-inner,
-.reviews-block .google-widget-shell .eapps-google-reviews,
-.reviews-block .google-widget-shell .eapps-google-reviews-list,
-.reviews-block .google-widget-shell .eapps-google-reviews-item {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-  margin: 0 0 10px 0 !important; /* spacing between quotes */
-}
-
-/* 3. Show Google reviews as simple text quotes (like Booking.com slider) */
-.reviews-block .google-widget-shell .eapps-google-reviews-item-content,
-.reviews-block .google-widget-shell .eapps-google-reviews-review-text {
-  font-family: 'Cormorant Garamond', serif !important;
-  font-size: 1rem !important;
-  line-height: 1.55 !important;
-  color: #222 !important;
-  margin: 0 0 4px 0 !important;
-}
-
-/* 4. Author / meta line under each quote */
-.reviews-block .google-widget-shell .eapps-google-reviews-author,
-.reviews-block .google-widget-shell .eapps-google-reviews-review-author,
-.reviews-block .google-widget-shell .eapps-google-reviews-review-date {
-  display: inline-block !important;
-  font-family: 'Cormorant Garamond', serif !important;
-  font-size: 0.8rem !important;
-  letter-spacing: 0.06em !important;
-  text-transform: uppercase !important;
-  color: #555 !important;
-}
-
-/* Put author + date on one light line */
-.reviews-block .google-widget-shell .eapps-google-reviews-review-footer {
-  margin-top: 2px !important;
-}
-
-/* 5. One-column, stacked layout (no grid of cards) */
-.reviews-block .google-widget-shell .eapps-google-reviews-list {
-  display: block !important;
-}
-.reviews-block .google-widget-shell .eapps-google-reviews-item {
-  width: 100% !important;
-}
-
-/* 6. Hide extra UI to keep it as “pure text reviews” */
-.reviews-block .google-widget-shell .eapps-google-reviews-review-rating,
-.reviews-block .google-widget-shell .eapps-google-reviews-review-rating-stars,
-.reviews-block .google-widget-shell .eapps-google-reviews-review-source,
-.reviews-block .google-widget-shell .eapps-google-reviews-logo,
-.reviews-block .google-widget-shell .eapps-google-reviews-header,
-.reviews-block .google-widget-shell .eapps-google-reviews-badge,
-.reviews-block .google-widget-shell .eapps-google-reviews-pagination,
-.reviews-block .google-widget-shell .eapps-google-reviews-read-more,
-.reviews-block .google-widget-shell .eapps-google-reviews-author-image {
-  display: none !important;
-}
-
-/* 7. Tiny spacing tweak so Google block “sits” like your manual quotes */
-.reviews-block .google-widget-shell {
-  margin-bottom: 10px !important;
-}
-/* === NEW CONTACT LAYOUT (desktop-focused) === */
-
-/* Columns wrapper stays vertical; we control rows inside */
-#contact .contact-columns {
-  display: flex;
-  flex-direction: column;
-  gap: 26px;
-}
-
-/* Top row: Contact Us + Featured in */
-#contact .contact-top {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-@media (min-width: 900px) {
-  #contact .contact-top {
-    flex-direction: row;
-    align-items: flex-start;
-  }
-
-  #contact .contact-main {
-    flex: 1;
-  }
-
-  /* Featured in to the right of Contact Us */
-  #contact .contact-top .featured-block {
-    flex: 1;
-    margin-top: 0;
-    border-top: none !important;
-    padding-top: 0 !important;
-  }
-}
-
-/* Bottom row wrapper */
-#contact .contact-bottom {
-  width: 100%;
-}
-
-/* Split Guest reviews into two columns on desktop:
-   left = Booking.com, right = Google widget */
-.reviews-two-col {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.reviews-left,
-.reviews-right {
-  flex: 1;
-}
-
-@media (min-width: 900px) {
-  .reviews-two-col {
-    flex-direction: row;
-    align-items: flex-start;
-  }
-}
-
-/* Small spacing tweaks so heading + badges feel anchored to slider */
-.reviews-left h3 {
-  margin-bottom: 8px;
-}
-
-.reviews-left .reviews-intro {
-  margin-bottom: 10px;
-}
-
-.reviews-left .booking-badge-row {
-  margin-bottom: 14px;
-}
-
-/* Keep the Google widget nicely aligned on the right */
-.reviews-right .google-widget-shell {
-  margin-top: 4px;
-}
-/* === Align "Featured in" with Google widget and Contact Us === */
-
-/* Make Featured block equal height to contact-main on desktop */
-@media (min-width:900px){
-  #contact .contact-top {
-    align-items:flex-start !important;
-  }
-
-  #contact .featured-block {
-    display:flex;
-    flex-direction:column;
-    justify-content:flex-start;
-    height:100%;
-  }
-
-  /* Align Featured In title to same baseline as Contact Us */
-  #contact .featured-block h3 {
-    margin-top:0 !important;
-    padding-top:4px; /* subtle vertical adjustment */
-  }
-
-  /* Align Google widget with Featured In column */
-  .reviews-right {
-    display:flex;
-    flex-direction:column;
-    justify-content:flex-start;
-    padding-top:4px;
-  }
-}
-/* === FULL-WIDTH FOOTER FIX === */
-footer.footer-bottom {
-  width:100% !important;
-  max-width:100% !important;
-  margin:0 !important;
-  padding:16px 0 !important;
-  position:relative;
-  left:0;
-  right:0;
-  border-top:1px solid rgba(255,255,255,0.12);
-}
-#contact .wrap footer,
-footer.footer-bottom {
-  max-width:none !important;
-}
-/* FINAL FIX: align "Featured in" with "Contact Us" on desktop */
-@media (min-width: 900px) {
-  /* remove the top divider & extra padding only for the top-row Featured block */
-  #contact .contact-top .featured-block {
-    border-top: none !important;
-    padding-top: 0 !important;
-  }
-
-  /* make sure the headings start at the same vertical line */
-  #contact .contact-main h2 {
-    margin-top: 0;
-  }
-
-  #contact .contact-top .featured-block h3 {
-    margin-top: 0;
-    padding-top: 0;
-  }
-}
-/* DESKTOP LAYOUT: Contact / Featured (top) + Reviews full-width (bottom) */
-@media (min-width: 900px) {
-  /* Turn the whole contact area into a 2-column grid */
-  #contact .contact-columns {
-    display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-    column-gap: 26px;
-    row-gap: 26px;
-    align-items: flex-start;
-  }
-
-  /* Remove the wrapper boxes so their children become grid items */
-  #contact .contact-top,
-  #contact .contact-bottom {
-    display: contents;
-  }
-
-  /* LEFT column, top: Contact Us */
-  #contact .contact-main {
-    grid-column: 1;
-  }
-
-  /* RIGHT column, top: Featured in */
-  #contact .contact-top .featured-block {
-    grid-column: 2;
-    align-self: flex-start;
-    border-top: none !important;
-    padding-top: 0 !important;
-    margin-top: 0;
-  }
-
-  /* SECOND ROW: reviews block spans both columns */
-  #contact .contact-bottom .reviews-block {
-    grid-column: 1 / span 2;
-  }
-}
-/* Make left reviews column a vertical stack */
-/* REVIEWS LEFT: simple block flow, fixed slider height */
-.reviews-left {
-  display: block; /* back to normal block layout */
-}
-
-/* Give the slider a fixed visual height so badges never move */
-@media (min-width: 900px) {
-  .reviews-left .review-slider {
-    min-height: 260px !important;  /* you can tweak 260 → 240/280 if needed */
-    margin-bottom: 16px;
-  }
-}
-
-/* Mobile can be a bit smaller */
-@media (max-width: 899px) {
-  .reviews-left .review-slider {
-    min-height: 220px !important;
-    margin-bottom: 12px;
-  }
-}
-
-/* Badges sit directly under the slider */
-.booking-badge-row {
-  margin-top: 0;
-}
-
-
-/* FINAL ALIGNMENT: Contact Us + Featured in on desktop */
-@media (min-width: 900px) {
-  /* Make sure both headings start at the same vertical line */
-  #contact .contact-main h2,
-  #contact .contact-top .featured-block h3 {
-    margin-top: 0 !important;
-    padding-top: 0 !important;
-    margin-bottom: 8px; /* same bottom space */
-  }
-
-  /* Ensure Featured block sits flush with the top row */
-  #contact .contact-top .featured-block {
-    margin-top: 0 !important;
-    align-self: flex-start;
-  }
-}
 
+    /* FINAL FLOATING BACK TO TOP BUTTON (ALWAYS VISIBLE) */
+    a.back-to-top {
+      position: fixed !important;
+      inset: auto 18px 18px auto !important;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.85);
+      color: #fff !important;
+      font-size: 24px;
+      text-decoration: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.45);
+      z-index: 999999;
+    }
+
+    a.back-to-top:hover {
+      background: rgba(0,0,0,0.98);
+      box-shadow: 0 14px 32px rgba(0,0,0,0.6);
+    }
+
+    /* === REVIEWS & FEATURED SECTION (CONTACT) === */
+
+    /* Base contact layout */
+    #contact .wrap {
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+      padding-inline: clamp(12px, 2.5vw, 40px);
+      row-gap: 20px;
+    }
+
+    /* Columns container */
+    #contact .contact-columns {
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+    }
+
+    /* Top row: Contact Us + Featured in */
+    #contact .contact-top {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Contact main block (address, email, tel, socials) */
+    #contact .contact-main {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    #contact .contact-main h2 {
+      margin: 0 0 4px;
+    }
+
+    #contact .contact-info {
+      margin: 0;
+    }
+
+    /* Social icons row */
+    #contact .social {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 14px;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      color: #000;
+    }
+
+    /* Bottom row wrapper: reviews */
+    #contact .contact-bottom {
+      width: 100%;
+    }
+
+    /* Reviews block (Booking + Google) */
+    .reviews-block {
+      background: transparent;
+      border-radius: 0;
+      border: none;
+      border-top: 1px solid #e4e4e4;
+      padding: 18px 0 0;
+    }
+
+    /* Guest reviews heading + intro */
+    .reviews-block h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .reviews-intro {
+      font-size: 0.95rem;
+      margin: 0 0 10px;
+      color: #333;
+    }
+
+    /* Reviews arranged in two columns on desktop (Booking left, Google right) */
+    .reviews-two-col {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .reviews-left,
+    .reviews-right {
+      flex: 1;
+    }
+
+    /* Booking.com review slider container */
+    .review-slider {
+      position: relative;
+      width: 100%;
+      touch-action: pan-y;
+    }
+
+    /* One review displayed at a time */
+    .review-slide {
+      display: none;
+      position: static;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .review-slide.active {
+      display: block;
+    }
+
+    .review-slide blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      line-height: 1.55;
+      color: #222;
+      margin: 0 0 4px;
+    }
+
+    .review-meta {
+      display: block;
+      margin-top: 2px;
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #555;
+    }
+
+    /* Slider controls under text */
+    .review-controls {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .review-controls button {
+      background: none;
+      border: none;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+      color: #222;
+      transition: opacity .25s ease;
+    }
+
+    .review-controls button:hover {
+      opacity: 0.6;
+    }
+
+    .review-index {
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      color: #555;
+    }
+
+    /* Booking Traveller Award badges under slider */
+    .booking-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 0;
+    }
+
+    .booking-award-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .booking-award-badge img {
+      height: 180px;
+    }
+
+    /* Google widget container on the right */
+    .reviews-right .google-widget-shell {
+      margin-top: 4px;
+    }
+
+    /* Google widget: match Booking style and remove boxes */
+    .reviews-block .google-widget-shell,
+    .reviews-block .google-widget-shell * {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    .reviews-block .google-widget-shell .eapps-widget,
+    .reviews-block .google-widget-shell .eapps-widget-inner,
+    .reviews-block .google-widget-shell .eapps-google-reviews,
+    .reviews-block .google-widget-shell .eapps-google-reviews-list,
+    .reviews-block .google-widget-shell .eapps-google-reviews-item {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      margin: 0 0 10px 0 !important;
+    }
+
+    /* Google reviews text */
+    .reviews-block .google-widget-shell .eapps-google-reviews-item-content,
+    .reviews-block .google-widget-shell .eapps-google-reviews-review-text {
+      font-family: 'Cormorant Garamond', serif !important;
+      font-size: 1rem !important;
+      line-height: 1.55 !important;
+      color: #222 !important;
+      margin: 0 0 4px 0 !important;
+    }
+
+    /* Google author & meta */
+    .reviews-block .google-widget-shell .eapps-google-reviews-author,
+    .reviews-block .google-widget-shell .eapps-google-reviews-review-author,
+    .reviews-block .google-widget-shell .eapps-google-reviews-review-date {
+      display: inline-block !important;
+      font-family: 'Cormorant Garamond', serif !important;
+      font-size: 0.8rem !important;
+      letter-spacing: 0.06em !important;
+      text-transform: uppercase !important;
+      color: #555 !important;
+    }
+
+    .reviews-block .google-widget-shell .eapps-google-reviews-review-footer {
+      margin-top: 2px !important;
+    }
+
+    /* One-column stacked layout for Google items */
+    .reviews-block .google-widget-shell .eapps-google-reviews-list {
+      display: block !important;
+    }
+
+    .reviews-block .google-widget-shell .eapps-google-reviews-item {
+      width: 100% !important;
+    }
+
+    /* Hide extra Google UI elements */
+    .reviews-block .google-widget-shell .eapps-google-reviews-review-rating,
+    .reviews-block .google-widget-shell .eapps-google-reviews-review-rating-stars,
+    .reviews-block .google-widget-shell .eapps-google-reviews-review-source,
+    .reviews-block .google-widget-shell .eapps-google-reviews-logo,
+    .reviews-block .google-widget-shell .eapps-google-reviews-header,
+    .reviews-block .google-widget-shell .eapps-google-reviews-badge,
+    .reviews-block .google-widget-shell .eapps-google-reviews-pagination,
+    .reviews-block .google-widget-shell .eapps-google-reviews-read-more,
+    .reviews-block .google-widget-shell .eapps-google-reviews-author-image {
+      display: none !important;
+    }
+
+    /* --- Featured in block --- */
+    .featured-block {
+      background: transparent;
+      border-radius: 0;
+      border: none;
+      border-top: 1px solid #e4e4e4;
+      padding: 18px 0 0;
+    }
+
+    .featured-block h3 {
+      margin: 0 0 10px;
+      font-size: 1.1rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .featured-logos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .featured-logos a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border-radius: 0;
+      border: none;
+      background: transparent;
+      text-decoration: none;
+    }
+
+    .featured-logos img {
+      display: block;
+      max-height: 46px;
+      width: auto;
+    }
+
+    /* Smaller logos on small phones */
+    @media (max-width: 600px) {
+      .featured-logos img {
+        max-height: 38px;
+      }
+    }
+
+    /* CONTACT FONT FIX – keep Cycladic only on headings */
+    #contact {
+      font-family: 'Cormorant Garamond', serif !important;
+    }
+
+    #contact * {
+      font-family: 'Cormorant Garamond', serif !important;
+    }
+
+    /* These headings stay Cycladic */
+    #contact h2,
+    #contact .featured-block h3,
+    #contact .reviews-block h3 {
+      font-family: 'Cycladic', sans-serif !important;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    /* Slightly larger icon inside location-text cards */
+    .location-text .icon--sm {
+      width: 64px;
+      height: 64px;
+    }
+
+    /* Desktop layout: 2-column grid + full-width reviews row */
+    @media (min-width: 900px) {
+      /* Main contact grid: 2 columns */
+      #contact .contact-columns {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+        column-gap: 26px;
+        row-gap: 26px;
+        align-items: flex-start;
+      }
+
+      /* Let child wrappers just provide content */
+      #contact .contact-top,
+      #contact .contact-bottom {
+        display: contents;
+      }
+
+      /* LEFT TOP: Contact Us */
+      #contact .contact-main {
+        grid-column: 1;
+      }
+
+      /* RIGHT TOP: Featured in block */
+      #contact .contact-top .featured-block {
+        grid-column: 2;
+        align-self: flex-start;
+        border-top: none;
+        padding-top: 0;
+        margin-top: 0;
+      }
+
+      /* Ensure both headings start on the same horizontal line */
+      #contact .contact-main h2,
+      #contact .contact-top .featured-block h3 {
+        margin-top: 0;
+        padding-top: 0;
+        margin-bottom: 8px;
+      }
+
+      /* SECOND ROW: reviews span both columns */
+      #contact .contact-bottom .reviews-block {
+        grid-column: 1 / span 2;
+      }
+
+      /* Reviews in two columns */
+      .reviews-two-col {
+        flex-direction: row;
+        align-items: flex-start;
+      }
+
+      /* Fix slider height so badges don’t “jump” */
+      .reviews-left .review-slider {
+        min-height: 260px;
+        margin-bottom: 16px;
+      }
+    }
+
+    /* Mobile review slider height */
+    @media (max-width: 899px) {
+      .reviews-left .review-slider {
+        min-height: 220px;
+        margin-bottom: 12px;
+      }
+    }
+
+    /* Full-width footer fix */
+    footer.footer-bottom {
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+      padding: 16px 0;
+      position: relative;
+      left: 0;
+      right: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    #contact .wrap footer,
+    footer.footer-bottom {
+      max-width: none;
+    }
   </style>
 </head>
 <body>

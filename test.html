@@ -1385,6 +1385,41 @@
   overflow: visible !important;
   padding-top: var(--nav-h); /* keep it clear of the nav */
 }
+/* MOBILE-ONLY: order guest reviews → badges → Booking slider → Google */
+@media (max-width: 899px) {
+
+  /* Make the left column (title + badges + slider) a flex column */
+  .reviews-left {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .reviews-left h3 {
+    order: 1;
+  }
+
+  /* Booking.com badges come right after the heading on mobile */
+  .booking-badge-row {
+    order: 2;
+    margin-top: 6px;
+    flex-wrap: nowrap;          /* keep them on one line */
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+  /* Then the Booking.com text slider */
+  .review-slider {
+    order: 3;
+    margin-top: 12px;
+  }
+
+  /* Resize badges so two fit nicely in one row */
+  .booking-badge-row .booking-award-badge img {
+    height: 110px;              /* smaller than desktop */
+    max-width: 48vw;            /* each can take ~half the screen */
+    width: auto;
+  }
+}
 
   </style>
 </head>

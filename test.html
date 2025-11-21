@@ -27,1049 +27,1778 @@
   <meta name="twitter:image" content="https://tinostreasures.gr/poster.jpg">
 
   <style>
-    @font-face { font-family:'Cycladic'; src:url('Cycladic-Regular.otf') format('opentype'); font-display:swap; }
-    :root{
-      --glass-bg: rgba(0,0,0,0.35);
-      --glass-bg-scrolled: rgba(0,0,0,0.55);
-      --glass-border: rgba(255,255,255,0.12);
-      --white:#fff; --dark:#111; --accent:#fff;
-      --container-w:1100px; --section-pad:clamp(60px,8vw,100px);
-      --fade-duration:.8s; --nav-h:64px; --footer-h:80px;
-      --sbw: 0px;
-    }
-    html{scrollbar-gutter:stable;}
-    .visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
-    html,body{margin:0;padding:0;height:100%;width:100%;font-family:'Cycladic',sans-serif;color:#f5f5f5;overflow-x:hidden}
-    body{overflow-y:auto;background:#000;scroll-snap-type:y mandatory}
+  @font-face {
+    font-family: 'Cycladic';
+    src: url('Cycladic-Regular.otf') format('opentype');
+    font-display: swap;
+  }
 
-    /* INTRO */
-    #intro{position:fixed;inset:0;height:100svh;background:#000;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:99999;animation:introFadeOut 3.4s ease forwards}
-    #intro img{width:clamp(140px,15vw,220px);filter:brightness(0) invert(1);animation:fadeInOut 3.4s ease forwards}
-    #intro h1{font-family:'Cycladic',sans-serif;font-size:clamp(28px,5vw,48px);color:#fff;margin-top:20px;animation:fadeInOut 3.4s ease forwards}
-    @keyframes fadeInOut{0%{opacity:0}20%{opacity:1}70%{opacity:1}100%{opacity:0}}
-    @keyframes introFadeOut{0%{opacity:1;visibility:visible}90%{opacity:0;visibility:visible}100%{opacity:0;visibility:hidden;display:none}}
-    body.intro-active #bg-video{opacity:0!important}
+  :root {
+    --glass-bg: rgba(0, 0, 0, 0.35);
+    --glass-bg-scrolled: rgba(0, 0, 0, 0.55);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --white: #fff;
+    --dark: #111;
+    --accent: #fff;
+    --container-w: 1100px;
+    --section-pad: clamp(60px, 8vw, 100px);
+    --fade-duration: .8s;
+    --nav-h: 64px;
+    --footer-h: 80px;
+    --sbw: 0px;
+  }
 
-    /* NAV */
-    .nav{
-      position:fixed; top:0; left:0; right:auto; height:64px;
-      width:calc(100vw - var(--sbw, 0px));
-      display:flex; align-items:center; z-index:9999;
-      padding:0 16px;
-      border-bottom:1px solid var(--glass-border);
-      background:transparent;
-      overflow:visible;
-      will-change:transform;
-      transform:translateZ(0);
-    }
-    @supports not (overflow: clip){ .nav{overflow:visible;} }
+  html {
+    scrollbar-gutter: stable;
+    scroll-snap-type: y mandatory;
+    overscroll-behavior-y: contain;
+  }
 
-    .nav::before{
-      content:""; position:absolute; inset:0;
-      background:var(--glass-bg);
-      backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
-      pointer-events:none;
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: 'Cycladic', sans-serif;
+    color: #f5f5f5;
+    overflow-x: hidden
+  }
+
+  body {
+    overflow-y: auto;
+    background: #000;
+  }
+
+  /* INTRO */
+  #intro {
+    position: fixed;
+    inset: 0;
+    height: 100svh;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    animation: introFadeOut 3.4s ease forwards
+  }
+
+  #intro img {
+    width: clamp(140px, 15vw, 220px);
+    filter: brightness(0) invert(1);
+    animation: fadeInOut 3.4s ease forwards
+  }
+
+  #intro h1 {
+    font-family: 'Cycladic', sans-serif;
+    font-size: clamp(28px, 5vw, 48px);
+    color: #fff;
+    margin-top: 20px;
+    animation: fadeInOut 3.4s ease forwards
+  }
+
+  @keyframes fadeInOut {
+    0% {
+      opacity: 0
     }
 
-    .nav-inner{
-      position:relative; z-index:1; width:100%; display:flex; justify-content:space-between; align-items:center; padding:0 3vw; min-width:0;
+    20% {
+      opacity: 1
     }
-    .nav-logo{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:#000}
-    .nav-logo img{width:34px;height:34px;object-fit:contain;filter:none}
-    .nav-logo span{font-size:16px;letter-spacing:.06em;color:#000}
-    .nav-center{flex:1;display:flex;justify-content:center;gap:clamp(20px,5vw,80px)}
-    .nav-link,.nav-drop-toggle{text-decoration:none;letter-spacing:.06em;transition:opacity .2s ease;opacity:.95;color:#000}
-    .nav-link:hover,.nav-drop-toggle:hover{opacity:1}
-    .nav-right{display:flex;justify-content:end}
-    .nav-cta{display:inline-block;padding:10px 20px;border-radius:8px;font-weight:600;letter-spacing:.02em;text-decoration:none;color:#000;background:transparent;border:2px solid #000;transition:all .3s ease;white-space:nowrap}
-    .nav-cta:hover{background:rgba(0,0,0,.06);transform:translateY(-1px)}
-    .hamburger{display:none;width:28px;height:22px;position:relative;cursor:pointer}
-    .hamburger span,.hamburger::before,.hamburger::after{content:"";position:absolute;left:0;right:0;height:2px;background:#000;transition:transform 250ms ease,opacity 200ms ease}
-    .nav-link,.nav-drop-toggle,.nav-dropdown-menu a { font-size:14px; }
-    #nav-toggle{display:none}
-    #nav-toggle:checked + label .hamburger::before{transform:translateY(10px) rotate(45deg)}
-    #nav-toggle:checked + label .hamburger span{opacity:0}
-    #nav-toggle:checked + label .hamburger::after{transform:translateY(-10px) rotate(-45deg)}
-    .nav-mobile{
-      display:none; position:fixed; top:64px; left:0; right:auto;
-      width:calc(100vw - var(--sbw, 0px));
-      padding:14px 18px; border-bottom:1px solid var(--glass-border); z-index:10001;
-      background:var(--glass-bg-scrolled); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
-      transition:background .25s ease,border-color .25s ease
-    }
-    .nav.transparent + .nav-mobile{ background:transparent; border-bottom-color:transparent; }
-    body.menu-open .nav-mobile{display:block}
-    .nav-mobile a{display:block;color:#000;text-decoration:none;padding:10px 0;font-size:16px;border-bottom:1px solid rgba(0,0,0,.12);opacity:.95;transition:opacity .2s ease}
-    .nav-mobile a:hover{opacity:1}
 
-    /* Background video – UPDATED */
-    .video-background{
-      position:fixed;
-      top:0;
-      left:0;
-      width:100%;
-      height:100vh;
-      overflow:hidden;
-      z-index:-1;
-      background:#000;
+    70% {
+      opacity: 1
     }
-    @supports (-webkit-touch-callout:none){
-      .video-background{height:-webkit-fill-available;}
+
+    100% {
+      opacity: 0
     }
-    #bg-video{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      object-position:center;
-      opacity:0;
-      transition:opacity .35s ease;
+  }
+
+  @keyframes introFadeOut {
+    0% {
+      opacity: 1;
+      visibility: visible
     }
-    #bg-video.is-ready{opacity:1}
-    body.no-video::before{content:"";position:fixed;inset:0;background:url('poster.jpg') center center/cover no-repeat;z-index:-2}
 
-    section.anchor-offset{scroll-margin-top:var(--nav-h)}
-    .slide-section,.apt.apt-section{position:relative;height:100svh;min-height:100svh;max-height:100svh;overflow:hidden;scroll-snap-align:start;scroll-snap-stop:always;display:grid;grid-template-columns:1fr}
-    @supports (height: 100dvh){.slide-section,.apt.apt-section{height:100dvh;min-height:100dvh;max-height:100dvh}}
-    #home .container{height:100%;box-sizing:border-box;padding-top:var(--nav-h);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:20px;max-width:900px;margin:auto;padding-inline:40px;text-align:center}
+    90% {
+      opacity: 0;
+      visibility: visible
+    }
 
-    .tagline{position:absolute;left:50%;transform:translateX(-50%);bottom:max(20px, calc(2svh + env(safe-area-inset-bottom)));width:96vw;text-align:center;color:#f5f5f5;line-height:1.35;opacity:0;transition:opacity 1s ease}
-    @supports (height: 100dvh){.tagline{bottom:max(20px, calc(2dvh + env(safe-area-inset-bottom)))} }
-    .tagline.visible{opacity:1}
-    .tagline p{margin:0 4px;display:inline;white-space:nowrap;font-size:clamp(12px,.9vw,22px)}
-    @media (max-width:1024px){.tagline{width:94vw}.tagline p{display:block;white-space:normal;font-size:clamp(11px,3.4vw,18px)}}
-    h1{font-size:calc(clamp(12px,1.8vw,18px) * 3.2);margin:10px 0 12px;background:linear-gradient(180deg,#fff,#ddd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:fadeInUp var(--fade-duration) ease both .1s}
-    @keyframes fadeInUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+    100% {
+      opacity: 0;
+      visibility: hidden;
+      display: none
+    }
+  }
 
-    #apartments.section{padding-block:0;background:#fff;color:#000}
-    .apt.apt-section{margin:0;background:#fff;color:#000}
-    @media (min-width:901px){
-      .apt.apt-section{grid-template-columns:1fr 1fr;align-items:stretch}
-      .apt.apt-section .rotator,.apt.apt-section>img,.apt.apt-section .apt-text{height:calc(100svh - var(--nav-h))}
-      @supports (height:100dvh){
-        .apt.apt-section .rotator,.apt.apt-section>img,.apt.apt-section .apt-text{height:calc(100dvh - var(--nav-h))}
+  body.intro-active #bg-video {
+    opacity: 0 !important
+  }
+
+  /* NAV */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: auto;
+    height: 64px;
+    width: calc(100vw - var(--sbw, 0px));
+    display: flex;
+    align-items: center;
+    z-index: 9999;
+    padding: 0 16px;
+    border-bottom: 1px solid var(--glass-border);
+    background: transparent;
+    overflow: visible;
+    will-change: transform;
+    transform: translateZ(0);
+  }
+
+  @supports not (overflow: clip) {
+    .nav {
+      overflow: visible;
+    }
+  }
+
+  .nav::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    pointer-events: none;
+  }
+
+  .nav-inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 3vw;
+    min-width: 0;
+  }
+
+  .nav-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #000
+  }
+
+  .nav-logo img {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+  }
+
+  .nav-logo span {
+    font-size: 16px;
+    letter-spacing: .06em;
+  }
+
+  .nav-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    gap: clamp(20px, 5vw, 80px)
+  }
+
+  .nav-link,
+  .nav-drop-toggle {
+    text-decoration: none;
+    letter-spacing: .06em;
+    transition: opacity .2s ease;
+    opacity: .95;
+  }
+
+  .nav-link:hover,
+  .nav-drop-toggle:hover {
+    opacity: 1
+  }
+
+  .nav-right {
+    display: flex;
+    justify-content: end
+  }
+
+  .nav-cta {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: .02em;
+    text-decoration: none;
+    background: transparent;
+    border: 2px solid #000;
+    transition: all .3s ease;
+    white-space: nowrap
+  }
+
+  .nav-cta:hover {
+    background: rgba(0, 0, 0, .06);
+    transform: translateY(-1px)
+  }
+
+  .hamburger {
+    display: none;
+    width: 28px;
+    height: 22px;
+    position: relative;
+    cursor: pointer
+  }
+
+  .hamburger span,
+  .hamburger::before,
+  .hamburger::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #000;
+    transition: transform 250ms ease, opacity 200ms ease
+  }
+
+  .nav-link,
+  .nav-drop-toggle,
+  .nav-dropdown-menu a {
+    font-size: 14px;
+  }
+
+  #nav-toggle {
+    display: none
+  }
+
+  #nav-toggle:checked+label .hamburger::before {
+    transform: translateY(10px) rotate(45deg)
+  }
+
+  #nav-toggle:checked+label .hamburger span {
+    opacity: 0
+  }
+
+  #nav-toggle:checked+label .hamburger::after {
+    transform: translateY(-10px) rotate(-45deg)
+  }
+
+  .nav-mobile {
+    display: none;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: auto;
+    width: calc(100vw - var(--sbw, 0px));
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--glass-border);
+    z-index: 10001;
+    background: var(--glass-bg-scrolled);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: background .25s ease, border-color .25s ease
+  }
+
+  .nav.transparent+.nav-mobile {
+    background: transparent;
+    border-bottom-color: transparent;
+  }
+
+  body.menu-open .nav-mobile {
+    display: block
+  }
+
+  .nav-mobile a {
+    display: block;
+    text-decoration: none;
+    padding: 10px 0;
+    font-size: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+    opacity: .95;
+    transition: opacity .2s ease
+  }
+
+  .nav-mobile a:hover {
+    opacity: 1
+  }
+
+  /* Background video */
+  .video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    z-index: -1;
+    background: #000;
+  }
+
+  @supports (-webkit-touch-callout:none) {
+    .video-background {
+      height: -webkit-fill-available;
+    }
+  }
+
+  #bg-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0;
+    transition: opacity .35s ease;
+  }
+
+  #bg-video.is-ready {
+    opacity: 1
+  }
+
+  body.no-video::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: url('poster.jpg') center center / cover no-repeat;
+    z-index: -2
+  }
+
+  section.anchor-offset {
+    scroll-margin-top: var(--nav-h)
+  }
+
+  .slide-section,
+  .apt.apt-section {
+    position: relative;
+    height: 100svh;
+    min-height: 100svh;
+    max-height: 100svh;
+    overflow: hidden;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    display: grid;
+    grid-template-columns: 1fr
+  }
+
+  @supports (height: 100dvh) {
+
+    .slide-section,
+    .apt.apt-section {
+      height: 100dvh;
+      min-height: 100dvh;
+      max-height: 100dvh
+    }
+  }
+
+  #home .container {
+    height: 100%;
+    box-sizing: border-box;
+    padding-top: var(--nav-h);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    max-width: 900px;
+    margin: auto;
+    padding-inline: 40px;
+    text-align: center
+  }
+
+  .tagline {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: max(20px, calc(2svh + env(safe-area-inset-bottom)));
+    width: 96vw;
+    text-align: center;
+    color: #f5f5f5;
+    line-height: 1.35;
+    opacity: 0;
+    transition: opacity 1s ease
+  }
+
+  @supports (height: 100dvh) {
+    .tagline {
+      bottom: max(20px, calc(2dvh + env(safe-area-inset-bottom)))
+    }
+  }
+
+  .tagline.visible {
+    opacity: 1
+  }
+
+  .tagline p {
+    margin: 0 4px;
+    display: inline;
+    white-space: nowrap;
+    font-size: clamp(12px, .9vw, 22px)
+  }
+
+  @media (max-width:1024px) {
+    .tagline {
+      width: 94vw
+    }
+
+    .tagline p {
+      display: block;
+      white-space: normal;
+      font-size: clamp(11px, 3.4vw, 18px)
+    }
+  }
+
+  h1 {
+    font-size: calc(clamp(12px, 1.8vw, 18px) * 3.2);
+    margin: 10px 0 12px;
+    background: linear-gradient(180deg, #fff, #ddd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: fadeInUp var(--fade-duration) ease both .1s
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px)
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0)
+    }
+  }
+
+  #apartments.section {
+    padding-block: 0;
+    background: #fff;
+    color: #000
+  }
+
+  .apt.apt-section {
+    margin: 0;
+    background: #fff;
+    color: #000
+  }
+
+  @media (min-width:901px) {
+    .apt.apt-section {
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch
+    }
+
+    .apt.apt-section .rotator,
+    .apt.apt-section>img,
+    .apt.apt-section .apt-text {
+      height: calc(100svh - var(--nav-h))
+    }
+
+    @supports (height:100dvh) {
+
+      .apt.apt-section .rotator,
+      .apt.apt-section>img,
+      .apt.apt-section .apt-text {
+        height: calc(100dvh - var(--nav-h))
       }
-      .apt.apt-section .apt-text{display:grid;place-items:center;padding:clamp(16px,3vw,48px);transform:translateY(var(--nav-h));box-sizing:border-box}
-      .apt.apt-section .rotator,.apt.apt-section>img{transform:translateY(var(--nav-h))}
     }
-    @media (max-width:900px){
-      .apt.apt-section{grid-template-columns:1fr}
-      .apt.apt-section .rotator,.apt.apt-section>img,.apt.apt-section .apt-text{height:calc(100svh - var(--nav-h));transform:translateY(var(--nav-h));box-sizing:border-box}
-      @supports (height:100dvh){
-        .apt.apt-section .rotator,.apt.apt-section>img,.apt.apt-section .apt-text{height:calc(100dvh - var(--nav-h))}
+
+    .apt.apt-section .apt-text {
+      display: grid;
+      place-items: center;
+      padding: clamp(16px, 3vw, 48px);
+      transform: translateY(var(--nav-h));
+      box-sizing: border-box
+    }
+
+    .apt.apt-section .rotator,
+    .apt.apt-section>img {
+      transform: translateY(var(--nav-h))
+    }
+  }
+
+  @media (max-width:900px) {
+    .apt.apt-section {
+      grid-template-columns: 1fr
+    }
+
+    .apt.apt-section .rotator,
+    .apt.apt-section>img,
+    .apt.apt-section .apt-text {
+      height: calc(100svh - var(--nav-h));
+      transform: translateY(var(--nav-h));
+      box-sizing: border-box
+    }
+
+    @supports (height:100dvh) {
+
+      .apt.apt-section .rotator,
+      .apt.apt-section>img,
+      .apt.apt-section .apt-text {
+        height: calc(100dvh - var(--nav-h))
       }
-      .apt.apt-section .apt-text{display:grid;place-items:center;padding:clamp(18px,6vw,40px);text-align:left}
     }
 
-    /* PARAGRAPH SIZE UPDATED */
-    .apt-text p {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.25rem;
-      line-height: 1.6;
-      color: #222;
+    .apt.apt-section .apt-text {
+      display: grid;
+      place-items: center;
+      padding: clamp(18px, 6vw, 40px);
+      text-align: left
+    }
+  }
+
+  /* Paragraph sizing for apartments & location */
+  .apt-text p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: #222;
+  }
+
+  .rotator {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: transparent
+  }
+
+  .rotator img,
+  .rotator video {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    height: 100% !important;
+    width: auto !important;
+    max-height: 100% !important;
+    max-width: none !important;
+    background: transparent !important;
+    transition: opacity .6s ease
+  }
+
+  .rotator img {
+    opacity: 0
+  }
+
+  .rotator img.is-top {
+    opacity: 1
+  }
+
+  .rotator img.standby {
+    opacity: 0 !important
+  }
+
+  .rotator video.hidden {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    z-index: 0 !important
+  }
+
+  .rotator .controls {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease;
+    z-index: 2
+  }
+
+  @media (hover:hover) {
+    .rotator.slideshow .controls {
+      pointer-events: auto
     }
 
-    .rotator{position:relative;width:100%;overflow:hidden;background:transparent}
-    .rotator img,.rotator video{position:absolute!important;top:50%!important;left:50%!important;transform:translate(-50%,-50%)!important;height:100%!important;width:auto!important;max-height:100%!important;max-width:none!important;background:transparent!important;transition:opacity .6s ease}
-    .rotator img{opacity:0}
-    .rotator img.is-top{opacity:1}
-    .rotator img.standby{opacity:0!important}
-    .rotator video.hidden{opacity:0!important;pointer-events:none!important;z-index:0!important}
-
-    .rotator .controls{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:8px;opacity:0;pointer-events:none;transition:opacity .2s ease;z-index:2}
-    @media (hover:hover){.rotator.slideshow .controls{pointer-events:auto}.rotator.slideshow:hover .controls{opacity:1}}
-    @media (hover:none){.rotator.slideshow .controls{opacity:1;pointer-events:auto}}
-    .rotator .btn{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.25);color:#fff;padding:6px 10px;border-radius:8px;cursor:pointer;font:inherit}
-    .rotator .btn:hover{background:rgba(0,0,0,.5)}
-
-    /* CONTACT wrap (location now has its own layout below) */
-    #contact.section.slide-section .wrap{
-      height:100%;
-      box-sizing:border-box;
-      padding-top:var(--nav-h);
-      display:grid;
-      align-content:flex-start;
-      justify-items:start;
-      text-align:left;
-      padding-inline:clamp(12px,2.5vw,40px);
-      overflow:auto;
+    .rotator.slideshow:hover .controls {
+      opacity: 1
     }
+  }
 
-    #contact.section.slide-section{height:calc(100svh - var(--footer-h));min-height:calc(100svh - var(--footer-h));max-height:calc(100svh - var(--footer-h))}
-    @supports (height:100dvh){#contact.section.slide-section{height:calc(100dvh - var(--footer-h));min-height:calc(100dvh - var(--footer-h));max-height:calc(100dvh - var(--footer-h))}}
-    #contact.anchor-offset{scroll-margin-top:0!important;}
-
-    /* LOCATION anchor should behave like apartments (rotator behind nav) */
-    #location.anchor-offset{scroll-margin-top:0!important;}
-
-    html, body { scroll-snap-type:y mandatory; overscroll-behavior-y:contain }
-
-    .nav-dropdown{position:relative}
-    .nav-drop-toggle{cursor:pointer}
-    .nav-dropdown-menu{
-      position:absolute;top:100%;margin-top:-1px;left:0;min-width:220px;padding:0;margin-left:0;border:1px solid var(--glass-border);border-top:0;border-radius:0;background:rgba(0,0,0,0.35);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:none;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s ease,visibility .2s ease;z-index:10000;
+  @media (hover:none) {
+    .rotator.slideshow .controls {
+      opacity: 1;
+      pointer-events: auto
     }
-    @media (hover:hover){.nav-dropdown:hover .nav-dropdown-menu{opacity:1;visibility:visible;pointer-events:auto}}
-    .nav-dropdown.open .nav-dropdown-menu{opacity:1;visibility:visible;pointer-events:auto}
-    .nav-dropdown-menu a{display:block;padding:12px 18px;text-decoration:none;color:#fff;opacity:.95;transition:opacity .2s ease,background .2s ease;white-space:nowrap}
-    .nav-dropdown-menu a:hover{opacity:1;background:rgba(255,255,255,.12)}
-    .snap{scroll-snap-align:start;scroll-snap-stop:always}
+  }
 
-    .footer-bottom{position:relative;z-index:2;height:var(--footer-h);display:flex;align-items:center;justify-content:center;background:#000;color:#fff;text-align:center;border-top:1px solid rgba(255,255,255,.12);letter-spacing:.04em;padding:0 16px}
-    .social{display:flex;align-items:center;justify-content:flex-start;gap:14px;flex-wrap:nowrap;white-space:nowrap;color:#000}
-    #contact .social a{display:inline-flex;width:28px;height:28px;line-height:0;color:#000;text-decoration:none}
-    #contact .social a:hover{opacity:.8;text-decoration:none}
-    #contact a{color:#000;text-decoration:none}
-    #contact a:hover{text-decoration:underline;opacity:.8}
-    .social svg,.social svg path{fill:currentColor}
-    .social svg{width:100%;height:100%;display:block;fill:currentColor}
-    #contact .social{color:#000}
-    .footer-bottom .social{color:#fff}
-    .footer-bottom a{color:#fff;text-decoration:none}
-    .footer-bottom a:hover{color:#fff;text-decoration:underline}
-    .footer-bottom {
-      text-align: center;
-      background: #000;
-      color: #fff;
-      border-top: 1px solid rgba(255, 255, 255, 0.12);
-      padding: 14px 10px;
-      letter-spacing: 0.04em;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+  .rotator .btn {
+    background: rgba(0, 0, 0, .35);
+    border: 1px solid rgba(255, 255, 255, .25);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font: inherit
+  }
+
+  .rotator .btn:hover {
+    background: rgba(0, 0, 0, .5)
+  }
+
+  /* CONTACT SECTION – height (minus footer), snap behavior */
+  #contact.section.slide-section {
+    height: calc(100svh - var(--footer-h));
+    min-height: calc(100svh - var(--footer-h));
+    max-height: calc(100svh - var(--footer-h));
+    background: #fff;
+    color: #000;
+  }
+
+  @supports (height: 100dvh) {
+    #contact.section.slide-section {
+      height: calc(100dvh - var(--footer-h));
+      min-height: calc(100dvh - var(--footer-h));
+      max-height: calc(100dvh - var(--footer-h));
+    }
+  }
+
+  #contact.anchor-offset {
+    scroll-margin-top: 0 !important;
+  }
+
+  /* LOCATION anchor behaves like apartments (behind nav) */
+  #location.anchor-offset {
+    scroll-margin-top: 0 !important;
+  }
+
+  .nav-dropdown {
+    position: relative
+  }
+
+  .nav-drop-toggle {
+    cursor: pointer
+  }
+
+  .nav-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    margin-top: -1px;
+    left: 0;
+    min-width: 220px;
+    padding: 0;
+    margin-left: 0;
+    border: 1px solid var(--glass-border);
+    border-top: 0;
+    border-radius: 0;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: none;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .2s ease, visibility .2s ease;
+    z-index: 10000;
+  }
+
+  @media (hover:hover) {
+    .nav-dropdown:hover .nav-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto
+    }
+  }
+
+  .nav-dropdown.open .nav-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto
+  }
+
+  .nav-dropdown-menu a {
+    display: block;
+    padding: 12px 18px;
+    text-decoration: none;
+    color: #fff;
+    opacity: .95;
+    transition: opacity .2s ease, background .2s ease;
+    white-space: nowrap
+  }
+
+  .nav-dropdown-menu a:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, .12)
+  }
+
+  .snap {
+    scroll-snap-align: start;
+    scroll-snap-stop: always
+  }
+
+  .footer-bottom {
+    position: relative;
+    z-index: 2;
+    height: var(--footer-h);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    color: #fff;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, .12);
+    letter-spacing: .04em;
+    padding: 0 16px
+  }
+
+  .social {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 14px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+
+  #contact .social a {
+    display: inline-flex;
+    width: 28px;
+    height: 28px;
+    line-height: 0;
+    text-decoration: none
+  }
+
+  #contact .social a:hover {
+    opacity: .8;
+    text-decoration: none
+  }
+
+  #contact a {
+    text-decoration: none
+  }
+
+  #contact a:hover {
+    text-decoration: underline;
+    opacity: .8
+  }
+
+  .social svg,
+  .social svg path {
+    fill: currentColor
+  }
+
+  .social svg {
+    width: 100%;
+    height: 100%;
+    display: block
+  }
+
+  #contact .social {
+    color: #000
+  }
+
+  .footer-bottom .social {
+    color: #fff
+  }
+
+  .footer-bottom a {
+    color: #fff;
+    text-decoration: none
+  }
+
+  .footer-bottom a:hover {
+    color: #fff;
+    text-decoration: underline
+  }
+
+  .footer-bottom {
+    text-align: center;
+    background: #000;
+    color: #fff;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 14px 10px;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .footer-bottom .footer-inner {
+    line-height: 1.6;
+  }
+
+  .footer-bottom p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 900px) {
+    .footer-bottom p {
+      font-size: clamp(0.45rem, 2.6vw, 0.75rem);
     }
 
     .footer-bottom .footer-inner {
-      line-height: 1.6;
+      line-height: 1.4;
+    }
+  }
+
+  /* Make nav white on hero */
+  .nav,
+  .nav * {
+    color: #fff !important;
+    fill: #fff !important
+  }
+
+  .nav-logo img {
+    filter: brightness(0) invert(1)
+  }
+
+  .nav-cta {
+    border-color: #fff;
+    background: transparent;
+  }
+
+  .nav-cta:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px)
+  }
+
+  .hamburger span,
+  .hamburger::before,
+  .hamburger::after {
+    background: #fff
+  }
+
+  .nav-cta--mobile {
+    display: none
+  }
+
+  @media (max-width:900px) {
+
+    .nav-center,
+    .nav-right {
+      display: none !important
     }
 
-    .footer-bottom p {
-      margin: 0;
-      font-size: 0.9rem;
+    .hamburger {
+      display: block !important;
+      width: 28px;
+      height: 22px
     }
 
-    /* Mobile adjustments */
-    @media (max-width: 900px) {
-      .footer-bottom p {
-        font-size: clamp(0.45rem, 2.6vw, 0.75rem);
-      }
-
-      .footer-bottom .footer-inner {
-        line-height: 1.4;
-      }
-    }
-
-    .nav, .nav * { color:#fff!important; fill:#fff!important }
-    .nav-logo img { filter:brightness(0) invert(1) }
-    .nav-cta { border-color:#fff; background:transparent; color:#fff }
-    .nav-cta:hover { background:rgba(255,255,255,0.15); transform:translateY(-1px) }
-    .hamburger span, .hamburger::before, .hamburger::after { background:#fff }
-
-    .nav-cta--mobile{display:none}
-
-    @media (max-width:900px){
-      .nav-center,.nav-right{display:none!important}
-      .hamburger{display:block!important;width:28px;height:22px}
-
-      .nav-inner{
-        display:grid;
-        grid-template-columns:auto 1fr auto;
-        align-items:center;
-        padding-inline:12px;
-        gap:8px;
-      }
-
-      .nav-cta--mobile{
-        display:inline-block;
-        grid-column:2;
-        justify-self:center;
-        border-color:#fff;
-        color:#fff;
-        padding:8px 14px;
-      }
-
-      .nav-logo{
-        grid-column:1;
-        justify-self:start;
-      }
-
-      label[for="nav-toggle"]{
-        grid-column:3;
-        justify-self:end;
-        margin-left:0;
-        padding:8px 10px;
-        display:inline-flex;
-        align-items:center;
-        cursor:pointer;
-        height:var(--nav-h);
-      }
-
-      .nav-mobile{top:var(--nav-h);border-top:1px solid var(--glass-border)}
-      body.menu-open{overflow:hidden;touch-action:none}
-
-      .nav-mobile{background:rgba(0,0,0,0.35);color:#fff!important}
-      .nav-mobile a{color:#fff!important;border-bottom:1px solid rgba(255,255,255,0.12);text-decoration:none}
-      .nav-mobile a:last-child{border-bottom:none}
-
-      .hamburger{position:relative;width:28px;height:22px}
-      .hamburger span,.hamburger::before,.hamburger::after{
-        position:absolute;left:0;right:0;height:2px;background:#fff;transition:transform 250ms ease,opacity 200ms ease
-      }
-      .hamburger::before{top:0}
-      .hamburger span{top:50%;transform:translateY(-50%)}
-      .hamburger::after{bottom:0}
-    }
-
-    .apt .apt-text h2{margin:0 0 6px}
-    .apt .apt-text h3{
-      margin:0 0 10px;
-      font-size: 1.25rem;
-    }
-
-    @media (min-width:901px){
-      #apartments.section{background:transparent!important}
-      .apt.apt-section{background:transparent!important}
-      #apartments .wrap{padding:0!important}
-      #apartments .wrap>h2{display:none!important}
-      .apt.apt-section .apt-text{
-        background:#fff;
-        padding-top:calc(var(--nav-h) + clamp(16px,3vw,32px))!important;
-        padding-right:clamp(16px,3vw,32px);
-        padding-bottom:clamp(12px,2vw,24px);
-        padding-left:clamp(16px,3vw,32px);
-        transform:none!important;
-      }
-      .apt.apt-section .rotator,
-      .apt.apt-section>img{
-        background:#000;height:100vh!important;transform:none!important
-      }
-      #apigania.apt-section{margin-top:0!important}
-    }
-
-    @supports (height:100dvh){
-      @media (min-width:901px){
-        .apt.apt-section .rotator,
-        .apt.apt-section>img,
-        .apt.apt-section .apt-text{height:100dvh!important}
-      }
-    }
-
-    @media (max-width:900px){
-      .apt.apt-section{
-        height:auto !important; min-height:0 !important; max-height:none !important;
-        overflow:visible !important; display:flex !important; flex-direction:column !important; gap:0 !important;
-      }
-      .apt.apt-section .apt-text{
-        order:1 !important;height:auto !important;transform:none !important;
-        padding-top:calc(var(--nav-h) + 8px) !important;
-        padding-right:clamp(18px,6vw,40px) !important;
-        padding-bottom:clamp(18px,6vw,40px) !important;
-        padding-left:clamp(18px,6vw,40px) !important;
-        text-align:left;
-      }
-      .apt.apt-section .rotator,
-      .apt.apt-section > img{
-        order:2 !important;height:100svh !important;min-height:100svh !important;max-height:100svh !important;
-        transform:none !important;background:#000;
-      }
-      @supports (height:100dvh){
-        .apt.apt-section .rotator,
-        .apt.apt-section > img{
-          height:100dvh !important;min-height:100dvh !important;max-height:100dvh !important;
-        }
-      }
-      .apt.apt-section .rotator img,
-      .apt.apt-section .rotator video{
-        height:100% !important;width:auto !important;max-height:100% !important;max-width:none !important;
-      }
-      html, body { scroll-snap-type: y proximity !important; }
-    }
-    @media (max-width:900px){
-      /* Let the LOCATION section grow vertically like apartments */
-      #location.section.slide-section{
-        height:auto !important;
-        min-height:0 !important;
-        max-height:none !important;
-        overflow:visible !important;
-      }
-
-      #location.section.slide-section .wrap{
-        height:auto !important;
-        overflow:visible !important;
-      }
-    }
-
-    #contact .social svg * { fill:none !important; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; vector-effect:non-scaling-stroke; }
-    #contact .social svg .fill { fill:currentColor !important; stroke:none !important; }
-    #contact .social a { transition: color .25s ease, transform .15s ease, opacity .25s ease; }
-    #contact .social a:hover { color:#333; transform:translateY(-1px); opacity:1; text-decoration:none; }
-
-    .footer-bottom .social svg * { fill:none !important; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; vector-effect:non-scaling-stroke; }
-    .footer-bottom .social svg .fill { fill:currentColor !important; stroke:none !important; }
-    .footer-bottom .social a { transition:opacity .25s ease, transform .15s ease; }
-    .footer-bottom .social a:hover { opacity:.85; transform:translateY(-1px); text-decoration:none; }
-
-    @media (min-width:901px){
-      #apartments.section,
-      .apt.apt-section{
-        background: linear-gradient(to right, #000 50%, #fff 50%) !important;
-      }
-    }
-
-    /* Desktop: make the text column a flex column and unify padding/spacing for ALL apartments */
-    @media (min-width:901px){
-      .apt.apt-section .apt-text{
-        display:flex;
-        flex-direction:column;
-        align-items:flex-start;
-        justify-content:flex-start;
-        padding-top:calc(var(--nav-h) + 8px) !important;
-        padding-bottom:16px !important;
-      }
-
-      .apt .apt-amenities-grid{
-        margin-top:10px;
-        flex:0 0 auto;
-        overflow:visible;
-      }
-    }
-
-    .icon {
-      width: 32px;
-      height: 32px;
-      display: inline-block;
-      stroke: currentColor;
-      fill: none;
-    }
-
-    .icon--sm { width: 32px; height: 32px; }
-    .icon--lg { width: 40px; height: 40px; }
-
-    .amenity {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 8px;
-      font-size: 15px;
-    }
-
-    .amenity-label {
-      white-space: nowrap;
-    }
-
-    /* Grid layout for apartment pages */
-    .apt-amenities-grid {
+    .nav-inner {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .apt-amenity-card {
-      padding: 8px 10px;
-      border-radius: 10px;
-      border: 1px solid #e4e4e4;
-      background: none;
-      display: flex;
+      grid-template-columns: auto 1fr auto;
       align-items: center;
-      gap: 10px;
+      padding-inline: 12px;
+      gap: 8px;
     }
 
-    .apt-amenity-card span {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.25rem;
-      line-height: 1.6;
-      color: #222;
-    }
-
-    /* Apartment booking links – Option A + slight text bump */
-    .apigania-link {
+    .nav-cta--mobile {
       display: inline-block;
-      position: relative;
-      margin-top: 6px;
-      margin-bottom: 6px;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
-      line-height: 1.5;
-      color: #222;
-      text-decoration: none;
-      padding-bottom: 2px;
-      border-bottom: none;
-      transition:
-        color .25s ease,
-        border-color .25s ease;
+      grid-column: 2;
+      justify-self: center;
+      border-color: #fff;
+      padding: 8px 14px;
     }
 
-    .apigania-link::before {
-      content: "";
+    .nav-logo {
+      grid-column: 1;
+      justify-self: start;
+    }
+
+    label[for="nav-toggle"] {
+      grid-column: 3;
+      justify-self: end;
+      margin-left: 0;
+      padding: 8px 10px;
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer;
+      height: var(--nav-h);
+    }
+
+    .nav-mobile {
+      top: var(--nav-h);
+      border-top: 1px solid var(--glass-border)
+    }
+
+    body.menu-open {
+      overflow: hidden;
+      touch-action: none
+    }
+
+    .nav-mobile {
+      background: rgba(0, 0, 0, 0.35);
+      color: #fff !important
+    }
+
+    .nav-mobile a {
+      color: #fff !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      text-decoration: none
+    }
+
+    .nav-mobile a:last-child {
+      border-bottom: none
+    }
+
+    .hamburger {
+      position: relative;
+      width: 28px;
+      height: 22px
+    }
+
+    .hamburger span,
+    .hamburger::before,
+    .hamburger::after {
       position: absolute;
       left: 0;
-      bottom: -1px;
-      width: 100%;
-      height: 4px;
-      background: rgba(0, 0, 0, 0.06);
-      border-radius: 4px;
-      transition: background .25s ease;
+      right: 0;
+      height: 2px;
+      background: #fff;
+      transition: transform 250ms ease, opacity 200ms ease
     }
 
-    .apigania-link:hover {
-      color: #000;
-      border-bottom-color: rgba(0, 0, 0, 0.6);
+    .hamburger::before {
+      top: 0
     }
 
-    .apigania-link:hover::before {
-      background: rgba(0, 0, 0, 0.12);
+    .hamburger span {
+      top: 50%;
+      transform: translateY(-50%)
     }
 
-    /* Tighten vertical spacing for ALL apartments */
-    .apt .apt-text h2 {
-      margin-bottom: 4px !important;
+    .hamburger::after {
+      bottom: 0
+    }
+  }
+
+  .apt .apt-text h2 {
+    margin: 0 0 6px
+  }
+
+  .apt .apt-text h3 {
+    margin: 0 0 10px;
+    font-size: 1.25rem;
+  }
+
+  @media (min-width:901px) {
+    #apartments.section {
+      background: transparent !important
     }
 
-    .apt .apt-text h3 {
-      margin-bottom: 6px !important;
+    .apt.apt-section {
+      background: transparent !important
     }
 
-    .apt .apt-text p {
-      margin-bottom: 8px !important;
+    #apartments .wrap {
+      padding: 0 !important
     }
 
-    /* Let ALL apartment blocks auto-resize in height on desktop */
-    @media (min-width:901px){
-      .apt.apt-section{
-        height:auto !important;
-        min-height:100vh !important;
-        max-height:none !important;
-        overflow:visible !important;
-      }
-      .apt.apt-section .apt-text{
-        height:auto !important;
-        min-height:100vh !important;
-        max-height:none !important;
-      }
+    #apartments .wrap>h2 {
+      display: none !important
     }
 
- 
-    /* LOCATION layout: mirror apartment section (rotator left, text right) */
-    #location.section.slide-section .wrap {
-      height: 100%;
-      box-sizing: border-box;
-      padding-top: 0;
-      padding-inline: 0;
-      overflow: hidden;
+    .apt.apt-section .apt-text {
+      background: #fff;
+      padding-top: calc(var(--nav-h) + clamp(16px, 3vw, 32px)) !important;
+      padding-right: clamp(16px, 3vw, 32px);
+      padding-bottom: clamp(12px, 2vw, 24px);
+      padding-left: clamp(16px, 3vw, 32px);
+      transform: none !important;
     }
 
-    @media (min-width: 901px) {
-      #location .location-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        height: 100%;
-      }
-
-      #location #location-rotator {
-        background: #000;
-        height: 100%;
-      }
-
-      #location .location-text {
-        background: #fff;
-        padding: clamp(16px, 3vw, 40px);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-      }
-
-      #location .location-text h2 {
-        margin-bottom: 8px;
-      }
+    .apt.apt-section .rotator,
+    .apt.apt-section>img {
+      background: #000;
+      height: 100vh !important;
+      transform: none !important
     }
 
-    @media (max-width: 900px) {
-      #location .location-grid {
-        display: flex;
-        flex-direction: column;
-        height: auto;
-      }
+    #apigania.apt-section {
+      margin-top: 0 !important
+    }
+  }
 
-      #location .location-text {
-        order: 1;
-        padding-top: calc(var(--nav-h) + 8px);
-        padding-right: clamp(18px, 6vw, 40px);
-        padding-bottom: clamp(18px, 6vw, 40px);
-        padding-left: clamp(18px, 6vw, 40px);
-      }
+  @supports (height:100dvh) {
+    @media (min-width:901px) {
 
-      #location #location-rotator {
-        order: 2;
-        height: 100svh;
-        min-height: 100svh;
-        max-height: 100svh;
-        background:#000;
+      .apt.apt-section .rotator,
+      .apt.apt-section>img,
+      .apt.apt-section .apt-text {
+        height: 100dvh !important
       }
+    }
+  }
 
-      @supports (height: 100dvh) {
-        #location #location-rotator {
-          height: 100dvh;
-          min-height: 100dvh;
-          max-height: 100dvh;
-        }
-      }
+  @media (max-width:900px) {
+    .apt.apt-section {
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      overflow: visible !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 0 !important;
+    }
 
-      #location #location-rotator img {
-        height: 100% !important;
-        width: auto !important;
-        max-height: 100% !important;
-        max-width: none !important;
+    .apt.apt-section .apt-text {
+      order: 1 !important;
+      height: auto !important;
+      transform: none !important;
+      padding-top: calc(var(--nav-h) + 8px) !important;
+      padding-right: clamp(18px, 6vw, 40px) !important;
+      padding-bottom: clamp(18px, 6vw, 40px) !important;
+      padding-left: clamp(18px, 6vw, 40px) !important;
+      text-align: left;
+    }
+
+    .apt.apt-section .rotator,
+    .apt.apt-section>img {
+      order: 2 !important;
+      height: 100svh !important;
+      min-height: 100svh !important;
+      max-height: 100svh !important;
+      transform: none !important;
+      background: #000;
+    }
+
+    @supports (height:100dvh) {
+
+      .apt.apt-section .rotator,
+      .apt.apt-section>img {
+        height: 100dvh !important;
+        min-height: 100dvh !important;
+        max-height: 100dvh !important;
       }
     }
 
-    /* Fade behavior for location slides */
-    #location .location-slide {
-      position: absolute !important;
-      top: 50% !important;
-      left: 50% !important;
-      transform: translate(-50%, -50%) !important;
+    .apt.apt-section .rotator img,
+    .apt.apt-section .rotator video {
       height: 100% !important;
       width: auto !important;
       max-height: 100% !important;
       max-width: none !important;
-      background: transparent !important;
-      opacity: 0;
-      transition: opacity .6s ease;
     }
 
-    #location .location-slide.is-top {
-      opacity: 1;
+    html,
+    body {
+      scroll-snap-type: y proximity !important;
+    }
+  }
+
+  /* LOCATION section – allow auto height on mobile */
+  @media (max-width:900px) {
+    #location.section.slide-section {
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      overflow: visible !important;
     }
 
-    /* FINAL FLOATING BACK TO TOP BUTTON (ALWAYS VISIBLE) */
-    a.back-to-top {
-      position: fixed !important;
-      inset: auto 18px 18px auto !important;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0,0,0,0.85);
-      color: #fff !important;
-      font-size: 24px;
-      text-decoration: none;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.45);
-      z-index: 999999;
+    #location.section.slide-section .wrap {
+      height: auto !important;
+      overflow: visible !important;
     }
+  }
 
-    a.back-to-top:hover {
-      background: rgba(0,0,0,0.98);
-      box-shadow: 0 14px 32px rgba(0,0,0,0.6);
+  #contact .social svg * {
+    fill: none !important;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  #contact .social svg .fill {
+    fill: currentColor !important;
+    stroke: none !important;
+  }
+
+  #contact .social a {
+    transition: color .25s ease, transform .15s ease, opacity .25s ease;
+  }
+
+  #contact .social a:hover {
+    color: #333;
+    transform: translateY(-1px);
+    opacity: 1;
+    text-decoration: none;
+  }
+
+  .footer-bottom .social svg * {
+    fill: none !important;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .footer-bottom .social svg .fill {
+    fill: currentColor !important;
+    stroke: none !important;
+  }
+
+  .footer-bottom .social a {
+    transition: opacity .25s ease, transform .15s ease;
+  }
+
+  .footer-bottom .social a:hover {
+    opacity: .85;
+    transform: translateY(-1px);
+    text-decoration: none;
+  }
+
+  @media (min-width:901px) {
+
+    #apartments.section,
+    .apt.apt-section {
+      background: linear-gradient(to right, #000 50%, #fff 50%) !important;
     }
+  }
 
-    /* === REVIEWS & FEATURED SECTION (CONTACT) === */
-
-    /* Base contact layout */
-    #contact .wrap {
-      width: 100%;
-      max-width: 100%;
-      margin: 0;
-      padding-inline: clamp(12px, 2.5vw, 40px);
-      row-gap: 20px;
-    }
-
-    /* Columns container */
-    #contact .contact-columns {
+  @media (min-width:901px) {
+    .apt.apt-section .apt-text {
       display: flex;
       flex-direction: column;
-      gap: 26px;
-    }
-
-    /* Top row: Contact Us + Featured in */
-    #contact .contact-top {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    /* Contact main block (address, email, tel, socials) */
-    #contact .contact-main {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    #contact .contact-main h2 {
-      margin: 0 0 4px;
-    }
-
-    #contact .contact-info {
-      margin: 0;
-    }
-
-    /* Social icons row */
-    #contact .social {
-      display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: flex-start;
-      gap: 14px;
-      flex-wrap: nowrap;
-      white-space: nowrap;
-      color: #000;
+      padding-top: calc(var(--nav-h) + 8px) !important;
+      padding-bottom: 16px !important;
     }
 
-    /* Bottom row wrapper: reviews */
-    #contact .contact-bottom {
-      width: 100%;
+    .apt .apt-amenities-grid {
+      margin-top: 10px;
+      flex: 0 0 auto;
+      overflow: visible;
+    }
+  }
+
+  .icon {
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    stroke: currentColor;
+    fill: none;
+  }
+
+  .icon--sm {
+    width: 32px;
+    height: 32px;
+  }
+
+  .icon--lg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .amenity {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 15px;
+  }
+
+  .amenity-label {
+    white-space: nowrap;
+  }
+
+  .apt-amenities-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .apt-amenity-card {
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid #e4e4e4;
+    background: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .apt-amenity-card span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: #222;
+  }
+
+  .apigania-link {
+    display: inline-block;
+    position: relative;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    color: #222;
+    text-decoration: none;
+    padding-bottom: 2px;
+    border-bottom: none;
+    transition: color .25s ease, border-color .25s ease;
+  }
+
+  .apigania-link::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 100%;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: 4px;
+    transition: background .25s ease;
+  }
+
+  .apigania-link:hover {
+    color: #000;
+    border-bottom-color: rgba(0, 0, 0, 0.6);
+  }
+
+  .apigania-link:hover::before {
+    background: rgba(0, 0, 0, 0.12);
+  }
+
+  .apt .apt-text h2 {
+    margin-bottom: 4px !important;
+  }
+
+  .apt .apt-text h3 {
+    margin-bottom: 6px !important;
+  }
+
+  .apt .apt-text p {
+    margin-bottom: 8px !important;
+  }
+
+  @media (min-width:901px) {
+    .apt.apt-section {
+      height: auto !important;
+      min-height: 100vh !important;
+      max-height: none !important;
+      overflow: visible !important;
     }
 
-    /* Reviews block (Booking + Google) */
-    .reviews-block {
-      background: transparent;
-      border-radius: 0;
-      border: none;
-      border-top: 1px solid #e4e4e4;
-      padding: 18px 0 0;
+    .apt.apt-section .apt-text {
+      height: auto !important;
+      min-height: 100vh !important;
+      max-height: none !important;
+    }
+  }
+
+  /* LOCATION layout (mirror apartment) */
+  #location.section.slide-section .wrap {
+    height: 100%;
+    box-sizing: border-box;
+    padding-top: 0;
+    padding-inline: 0;
+    overflow: hidden;
+  }
+
+  @media (min-width: 901px) {
+    #location .location-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      height: 100%;
     }
 
-    /* Guest reviews heading + intro */
-    .reviews-block h3 {
-      margin: 0 0 8px;
-      font-size: 1.1rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
+    #location #location-rotator {
+      background: #000;
+      height: 100%;
     }
 
-    .reviews-intro {
-      font-size: 0.95rem;
-      margin: 0 0 10px;
-      color: #333;
-    }
-
-    /* Reviews arranged in two columns on desktop (Booking left, Google right) */
-    .reviews-two-col {
+    #location .location-text {
+      background: #fff;
+      padding: clamp(16px, 3vw, 40px);
       display: flex;
       flex-direction: column;
-      gap: 18px;
-    }
-
-    .reviews-left,
-    .reviews-right {
-      flex: 1;
-    }
-
-    /* Booking.com review slider container */
-    .review-slider {
-      position: relative;
-      width: 100%;
-      touch-action: pan-y;
-    }
-
-    /* One review displayed at a time */
-    .review-slide {
-      display: none;
-      position: static;
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .review-slide.active {
-      display: block;
-    }
-
-    .review-slide blockquote {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
-      line-height: 1.55;
-      color: #222;
-      margin: 0 0 4px;
-    }
-
-    .review-meta {
-      display: block;
-      margin-top: 2px;
-      font-size: 0.8rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: #555;
-    }
-
-    /* Slider controls under text */
-    .review-controls {
-      margin-top: 10px;
-      display: flex;
       justify-content: center;
-      align-items: center;
-      gap: 12px;
-      font-size: 0.9rem;
-      color: #555;
+      align-items: flex-start;
     }
 
-    .review-controls button {
-      background: none;
-      border: none;
-      font-size: 22px;
-      line-height: 1;
-      cursor: pointer;
-      color: #222;
-      transition: opacity .25s ease;
+    #location .location-text h2 {
+      margin-bottom: 8px;
     }
+  }
 
-    .review-controls button:hover {
-      opacity: 0.6;
-    }
-
-    .review-index {
-      font-size: 0.85rem;
-      letter-spacing: 0.06em;
-      color: #555;
-    }
-
-    /* Booking Traveller Award badges under slider */
-    .booking-badge-row {
+  @media (max-width: 900px) {
+    #location .location-grid {
       display: flex;
-      align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-top: 0;
+      flex-direction: column;
+      height: auto;
     }
 
-    .booking-award-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+    #location .location-text {
+      order: 1;
+      padding-top: calc(var(--nav-h) + 8px);
+      padding-right: clamp(18px, 6vw, 40px);
+      padding-bottom: clamp(18px, 6vw, 40px);
+      padding-left: clamp(18px, 6vw, 40px);
     }
 
+    #location #location-rotator {
+      order: 2;
+      height: 100svh;
+      min-height: 100svh;
+      max-height: 100svh;
+      background: #000;
+    }
+
+    @supports (height: 100dvh) {
+      #location #location-rotator {
+        height: 100dvh;
+        min-height: 100dvh;
+        max-height: 100dvh;
+      }
+    }
+
+    #location #location-rotator img {
+      height: 100% !important;
+      width: auto !important;
+      max-height: 100% !important;
+      max-width: none !important;
+    }
+  }
+
+  #location .location-slide {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    height: 100% !important;
+    width: auto !important;
+    max-height: 100% !important;
+    max-width: none !important;
+    background: transparent !important;
+    opacity: 0;
+    transition: opacity .6s ease;
+  }
+
+  #location .location-slide.is-top {
+    opacity: 1;
+  }
+
+  /* Floating back-to-top button */
+  a.back-to-top {
+    position: fixed !important;
+    inset: auto 18px 18px auto !important;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff !important;
+    font-size: 24px;
+    text-decoration: none;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+    z-index: 999999;
+  }
+
+  a.back-to-top:hover {
+    background: rgba(0, 0, 0, 0.98);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.6);
+  }
+
+  /* === CONTACT TYPOGRAPHY & LAYOUT (FINAL CONSOLIDATED) === */
+
+  /* Base typography for Contact section – match Location paragraph */
+  #contact {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: #222;
+  }
+
+  #contact p,
+  #contact a,
+  #contact span,
+  #contact li,
+  #contact blockquote,
+  #contact .review-meta,
+  #contact .review-index,
+  #contact .reviews-intro,
+  #contact .reviews-note,
+  #contact .booking-badge-text,
+  #contact .review-controls button {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: #222;
+  }
+
+  #contact a {
+    text-decoration: none;
+  }
+
+  #contact a:hover {
+    text-decoration: underline;
+  }
+
+  /* Headings: keep Cycladic, uppercase */
+  #contact h2,
+  #contact .featured-block h3,
+  #contact .reviews-block h3 {
+    font-family: 'Cycladic', sans-serif;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    line-height: 1.3;
+    color: #000;
+    margin-top: 0;
+  }
+
+  /* Wrapper layout */
+  #contact .wrap {
+    height: 100%;
+    box-sizing: border-box;
+    padding-top: var(--nav-h);
+    display: grid;
+    align-content: flex-start;
+    justify-items: start;
+    text-align: left;
+    padding-inline: clamp(12px, 2.5vw, 40px);
+    overflow: auto;
+    width: 100%;
+    max-width: 100%;
+    row-gap: 20px;
+    margin: 0;
+  }
+
+  #contact .contact-columns {
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    width: 100%;
+    max-width: none;
+  }
+
+  #contact .contact-main {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  #contact .contact-info {
+    margin: 0;
+  }
+
+  /* TOP ROW container (Contact + Featured) */
+  #contact .contact-top {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+  }
+
+  #contact .contact-bottom {
+    width: 100%;
+  }
+
+  /* Social near contact */
+  #contact .social {
+    font-size: 1.25rem;
+  }
+
+  /* Reviews & Featured blocks base */
+  .reviews-block,
+  .featured-block {
+    background: transparent;
+    border-radius: 0;
+    border: none;
+    border-top: 1px solid #e4e4e4;
+    padding: 18px 0 0;
+  }
+
+  .reviews-block h3,
+  .featured-block h3 {
+    margin: 0 0 8px;
+  }
+
+  .reviews-intro {
+    font-size: 0.95rem;
+    margin: 0 0 10px;
+    color: #333;
+  }
+
+  .reviews-note {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #666;
+  }
+
+  /* Featured logos */
+  .featured-logos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .featured-logos a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background: transparent;
+    text-decoration: none;
+  }
+
+  .featured-logos img {
+    display: block;
+    max-height: 46px;
+    width: auto;
+  }
+
+  @media (max-width: 600px) {
+    .featured-logos img {
+      max-height: 38px;
+    }
+  }
+
+  /* Reviews two-column layout (Booking left, Google right) */
+  .reviews-two-col {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .reviews-left,
+  .reviews-right {
+    flex: 1;
+  }
+
+  /* Review slider: one slide at a time, height locked for no jump */
+  .review-slider {
+    position: relative;
+    width: 100%;
+    touch-action: pan-y;
+  }
+
+  .review-slide {
+    display: none;
+    position: static;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .review-slide.active {
+    display: block;
+  }
+
+  .review-slide blockquote {
+    margin: 0 0 4px;
+  }
+
+  .review-meta {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #555;
+  }
+
+  .review-controls {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.85rem;
+    color: #555;
+  }
+
+  .review-controls button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    transition: opacity .25s ease;
+    font-size: 1.25rem;
+  }
+
+  .review-controls button:hover {
+    opacity: 0.7;
+  }
+
+  @media (min-width: 900px) {
+    .reviews-left .review-slider {
+      min-height: 260px;
+      margin-bottom: 16px;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .reviews-left .review-slider {
+      min-height: 220px;
+      margin-bottom: 12px;
+    }
+  }
+
+  /* Booking.com awards row */
+  .booking-badge-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 0;
+  }
+
+  .booking-award-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (min-width:900px) {
     .booking-award-badge img {
       height: 180px;
     }
+  }
 
-    /* Google widget container on the right */
-    .reviews-right .google-widget-shell {
-      margin-top: 4px;
+  /* Google widget – minimal text-only look, matching Booking style */
+  .reviews-right .google-widget-shell {
+    margin-top: 4px;
+  }
+
+  .reviews-block .google-widget-shell,
+  .reviews-block .google-widget-shell * {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .reviews-block .google-widget-shell .eapps-widget,
+  .reviews-block .google-widget-shell .eapps-widget-inner,
+  .reviews-block .google-widget-shell .eapps-google-reviews,
+  .reviews-block .google-widget-shell .eapps-google-reviews-list,
+  .reviews-block .google-widget-shell .eapps-google-reviews-item {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 0 10px 0 !important;
+  }
+
+  .reviews-block .google-widget-shell .eapps-google-reviews-item-content,
+  .reviews-block .google-widget-shell .eapps-google-reviews-review-text {
+    font: inherit !important;
+    color: inherit !important;
+    margin: 0 0 4px 0 !important;
+  }
+
+  .reviews-block .google-widget-shell .eapps-google-reviews-author,
+  .reviews-block .google-widget-shell .eapps-google-reviews-review-author,
+  .reviews-block .google-widget-shell .eapps-google-reviews-review-date {
+    display: inline-block !important;
+    font: inherit !important;
+  }
+
+  .reviews-block .google-widget-shell .eapps-google-reviews-review-footer {
+    margin-top: 2px !important;
+  }
+
+  .reviews-block .google-widget-shell .eapps-google-reviews-list {
+    display: block !important;
+  }
+
+  .reviews-block .google-widget-shell .eapps-google-reviews-item {
+    width: 100% !important;
+  }
+
+  .reviews-block .google-widget-shell .eapps-google-reviews-review-rating,
+  .reviews-block .google-widget-shell .eapps-google-reviews-review-rating-stars,
+  .reviews-block .google-widget-shell .eapps-google-reviews-review-source,
+  .reviews-block .google-widget-shell .eapps-google-reviews-logo,
+  .reviews-block .google-widget-shell .eapps-google-reviews-header,
+  .reviews-block .google-widget-shell .eapps-google-reviews-badge,
+  .reviews-block .google-widget-shell .eapps-google-reviews-pagination,
+  .reviews-block .google-widget-shell .eapps-google-reviews-read-more,
+  .reviews-block .google-widget-shell .eapps-google-reviews-author-image {
+    display: none !important;
+  }
+
+  /* DESKTOP GRID: Contact / Featured in top row, Reviews full-width below */
+  @media (min-width: 900px) {
+    #contact .contact-columns {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      column-gap: 26px;
+      row-gap: 26px;
+      align-items: flex-start;
     }
 
-    /* Google widget: match Booking style and remove boxes */
-    .reviews-block .google-widget-shell,
-    .reviews-block .google-widget-shell * {
-      background: transparent !important;
-      border: none !important;
-      box-shadow: none !important;
+    #contact .contact-top,
+    #contact .contact-bottom {
+      display: contents;
     }
 
-    .reviews-block .google-widget-shell .eapps-widget,
-    .reviews-block .google-widget-shell .eapps-widget-inner,
-    .reviews-block .google-widget-shell .eapps-google-reviews,
-    .reviews-block .google-widget-shell .eapps-google-reviews-list,
-    .reviews-block .google-widget-shell .eapps-google-reviews-item {
-      background: transparent !important;
-      border: none !important;
-      box-shadow: none !important;
-      padding: 0 !important;
-      margin: 0 0 10px 0 !important;
+    #contact .contact-main {
+      grid-column: 1;
     }
 
-    /* Google reviews text */
-    .reviews-block .google-widget-shell .eapps-google-reviews-item-content,
-    .reviews-block .google-widget-shell .eapps-google-reviews-review-text {
-      font-family: 'Cormorant Garamond', serif !important;
-      font-size: 1rem !important;
-      line-height: 1.55 !important;
-      color: #222 !important;
-      margin: 0 0 4px 0 !important;
+    #contact .contact-top .featured-block {
+      grid-column: 2;
+      align-self: flex-start;
+      border-top: none;
+      padding-top: 0;
+      margin-top: 0;
     }
 
-    /* Google author & meta */
-    .reviews-block .google-widget-shell .eapps-google-reviews-author,
-    .reviews-block .google-widget-shell .eapps-google-reviews-review-author,
-    .reviews-block .google-widget-shell .eapps-google-reviews-review-date {
-      display: inline-block !important;
-      font-family: 'Cormorant Garamond', serif !important;
-      font-size: 0.8rem !important;
-      letter-spacing: 0.06em !important;
-      text-transform: uppercase !important;
-      color: #555 !important;
+    #contact .contact-main h2,
+    #contact .contact-top .featured-block h3 {
+      margin-top: 0 !important;
+      padding-top: 0 !important;
+      margin-bottom: 8px;
     }
 
-    .reviews-block .google-widget-shell .eapps-google-reviews-review-footer {
-      margin-top: 2px !important;
+    #contact .contact-bottom .reviews-block {
+      grid-column: 1 / span 2;
     }
 
-    /* One-column stacked layout for Google items */
-    .reviews-block .google-widget-shell .eapps-google-reviews-list {
-      display: block !important;
+    .reviews-two-col {
+      flex-direction: row;
+      align-items: flex-start;
     }
+  }
 
-    .reviews-block .google-widget-shell .eapps-google-reviews-item {
-      width: 100% !important;
-    }
+  /* FULL-WIDTH FOOTER FIX */
+  footer.footer-bottom {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 16px 0 !important;
+    position: relative;
+    left: 0;
+    right: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
 
-    /* Hide extra Google UI elements */
-    .reviews-block .google-widget-shell .eapps-google-reviews-review-rating,
-    .reviews-block .google-widget-shell .eapps-google-reviews-review-rating-stars,
-    .reviews-block .google-widget-shell .eapps-google-reviews-review-source,
-    .reviews-block .google-widget-shell .eapps-google-reviews-logo,
-    .reviews-block .google-widget-shell .eapps-google-reviews-header,
-    .reviews-block .google-widget-shell .eapps-google-reviews-badge,
-    .reviews-block .google-widget-shell .eapps-google-reviews-pagination,
-    .reviews-block .google-widget-shell .eapps-google-reviews-read-more,
-    .reviews-block .google-widget-shell .eapps-google-reviews-author-image {
-      display: none !important;
-    }
+  #contact .wrap footer,
+  footer.footer-bottom {
+    max-width: none !important;
+  }
+</style>
 
-    /* --- Featured in block --- */
-    .featured-block {
-      background: transparent;
-      border-radius: 0;
-      border: none;
-      border-top: 1px solid #e4e4e4;
-      padding: 18px 0 0;
-    }
-
-    .featured-block h3 {
-      margin: 0 0 10px;
-      font-size: 1.1rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .featured-logos {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      align-items: center;
-    }
-
-    .featured-logos a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0;
-      border-radius: 0;
-      border: none;
-      background: transparent;
-      text-decoration: none;
-    }
-
-    .featured-logos img {
-      display: block;
-      max-height: 46px;
-      width: auto;
-    }
-
-    /* Smaller logos on small phones */
-    @media (max-width: 600px) {
-      .featured-logos img {
-        max-height: 38px;
-      }
-    }
-
-    /* CONTACT FONT FIX – keep Cycladic only on headings */
-    #contact {
-      font-family: 'Cormorant Garamond', serif !important;
-    }
-
-    #contact * {
-      font-family: 'Cormorant Garamond', serif !important;
-    }
-
-    /* These headings stay Cycladic */
-    #contact h2,
-    #contact .featured-block h3,
-    #contact .reviews-block h3 {
-      font-family: 'Cycladic', sans-serif !important;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-    }
-
-    /* Slightly larger icon inside location-text cards */
-    .location-text .icon--sm {
-      width: 64px;
-      height: 64px;
-    }
-
-    /* Desktop layout: 2-column grid + full-width reviews row */
-    @media (min-width: 900px) {
-      /* Main contact grid: 2 columns */
-      #contact .contact-columns {
-        display: grid;
-        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-        column-gap: 26px;
-        row-gap: 26px;
-        align-items: flex-start;
-      }
-
-      /* Let child wrappers just provide content */
-      #contact .contact-top,
-      #contact .contact-bottom {
-        display: contents;
-      }
-
-      /* LEFT TOP: Contact Us */
-      #contact .contact-main {
-        grid-column: 1;
-      }
-
-      /* RIGHT TOP: Featured in block */
-      #contact .contact-top .featured-block {
-        grid-column: 2;
-        align-self: flex-start;
-        border-top: none;
-        padding-top: 0;
-        margin-top: 0;
-      }
-
-      /* Ensure both headings start on the same horizontal line */
-      #contact .contact-main h2,
-      #contact .contact-top .featured-block h3 {
-        margin-top: 0;
-        padding-top: 0;
-        margin-bottom: 8px;
-      }
-
-      /* SECOND ROW: reviews span both columns */
-      #contact .contact-bottom .reviews-block {
-        grid-column: 1 / span 2;
-      }
-
-      /* Reviews in two columns */
-      .reviews-two-col {
-        flex-direction: row;
-        align-items: flex-start;
-      }
-
-      /* Fix slider height so badges don’t “jump” */
-      .reviews-left .review-slider {
-        min-height: 260px;
-        margin-bottom: 16px;
-      }
-    }
-
-    /* Mobile review slider height */
-    @media (max-width: 899px) {
-      .reviews-left .review-slider {
-        min-height: 220px;
-        margin-bottom: 12px;
-      }
-    }
-
-    /* Full-width footer fix */
-    footer.footer-bottom {
-      width: 100%;
-      max-width: 100%;
-      margin: 0;
-      padding: 16px 0;
-      position: relative;
-      left: 0;
-      right: 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.12);
-    }
-
-    #contact .wrap footer,
-    footer.footer-bottom {
-      max-width: none;
-    }
-  </style>
 </head>
 <body>
   <!-- INTRO -->

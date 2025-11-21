@@ -1577,6 +1577,11 @@
   color: #555;
   margin-top: 4px;
 }
+/* Let JS control the exact height of the Booking.com slider */
+.reviews-left .review-slider {
+  min-height: 0 !important;
+}
+
 
   </style>
 </head>
@@ -3820,11 +3825,24 @@
     if (e.key === 'Escape') closeOverlay();
   });
 
-  // Initial slide + height lock
+    // Initial slide
   show(current);
-  setSliderHeight();
+
+  // Lock height AFTER everything is loaded (fonts, images, etc.)
+  function initHeights() {
+    setSliderHeight();
+  }
+
+  if (document.readyState === 'complete') {
+    initHeights();
+  } else {
+    window.addEventListener('load', initHeights);
+  }
+
+  // Recalculate on resize (orientation changes, etc.)
   window.addEventListener('resize', setSliderHeight);
 })();
+
 </script>
 
 

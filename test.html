@@ -2629,7 +2629,7 @@ Lovely beach which is a 3’ walk as well as some very good restaurants.”</blo
 
 
   <!-- VATHI -->
-  <script>
+ <script>
   (function(){
     const sources=[
       "media/vathi_fast/Vathi_LivingRoom_f_1_f_1_1400.webp",
@@ -2657,39 +2657,98 @@ Lovely beach which is a 3’ walk as well as some very good restaurants.”</blo
     const b=document.getElementById('vathi-b');
     if(!rotator||!video||!a||!b) return;
 
-    video.muted = true; video.playsInline = true;
-    video.setAttribute('muted',''); video.setAttribute('playsinline','');
-    video.setAttribute('webkit-playsinline',''); video.setAttribute('autoplay','');
+    video.muted = true;
+    video.playsInline = true;
+    video.setAttribute('muted','');
+    video.setAttribute('playsinline','');
+    video.setAttribute('webkit-playsinline','');
+    video.setAttribute('autoplay','');
 
-    const prevBtn=rotator.querySelector('.btn.prev');
-    const nextBtn=rotator.querySelector('.btn.next');
-    const toggleBtn=rotator.querySelector('.btn.center');
-    const icoPause=toggleBtn.querySelector('.ico-pause');
-    const icoPlay=toggleBtn.querySelector('.ico-play');
+    const prevBtn  = rotator.querySelector('.btn.prev');
+    const nextBtn  = rotator.querySelector('.btn.next');
+    const toggleBtn= rotator.querySelector('.btn.center');
+    const icoPause = toggleBtn.querySelector('.ico-pause');
+    const icoPlay  = toggleBtn.querySelector('.ico-play');
 
-    sources.forEach(src=>{const im=new Image(); im.src=src;});
+    sources.forEach(src=>{ const im=new Image(); im.src=src; });
 
-    let idx=2, topIsA=true;
-    const HOLD_MS=2000;
-    let slideTimer=null;
-    let paused=false;
+    let idx   = 2;
+    let topIsA = true;
+    const HOLD_MS = 2000;
+    let slideTimer = null;
+    let paused     = false;
+    let steps      = 0;
 
-    function clearTimers(){ if(slideTimer){clearTimeout(slideTimer);slideTimer=null} }
-    function whenDecodable(img){ const p=(img.decode?img.decode():Promise.resolve()); return p.catch(()=>{}); }
-    function showInitialFrames(){ a.classList.remove('standby'); b.classList.remove('standby'); a.classList.add('is-top'); b.classList.remove('is-top'); topIsA=true; idx=2; }
-    function scheduleNext(){ if(!paused){ slideTimer=setTimeout(nextFrame,HOLD_MS); } }
+    function clearTimers(){
+      if(slideTimer){
+        clearTimeout(slideTimer);
+        slideTimer=null;
+      }
+    }
+
+    function whenDecodable(img){
+      const p = (img.decode ? img.decode() : Promise.resolve());
+      return p.catch(()=>{});
+    }
+
+    function showInitialFrames(){
+      a.classList.remove('standby');
+      b.classList.remove('standby');
+      a.classList.add('is-top');
+      b.classList.remove('is-top');
+      topIsA = true;
+      idx    = 2;
+      steps  = 0;
+    }
+
+    function scheduleNext(){
+      if(!paused){
+        slideTimer = setTimeout(nextFrame, HOLD_MS);
+      }
+    }
+
+    function returnToVideo(){
+      resetToBeginning();
+      try { video.play().catch(()=>{}); } catch(e){}
+    }
+
     function nextFrame(){
-      const top=topIsA ? a : b, bottom=topIsA ? b : a;
-      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
-      whenDecodable(bottom).then(()=>{ requestAnimationFrame(()=>{ top.classList.remove('is-top'); requestAnimationFrame(()=>{ bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); }); }); });
+      if(steps >= (sources.length - 2)){
+        returnToVideo();
+        return;
+      }
+
+      const top    = topIsA ? a : b;
+      const bottom = topIsA ? b : a;
+
+      bottom.src = sources[idx];
+      idx = (idx + 1) % sources.length;
+      steps++;
+
+      whenDecodable(bottom).then(()=>{
+        requestAnimationFrame(()=>{
+          top.classList.remove('is-top');
+          requestAnimationFrame(()=>{
+            bottom.classList.add('is-top');
+            topIsA = !topIsA;
+            scheduleNext();
+          });
+        });
+      });
     }
+
     function setPaused(p){
-      paused=p;
+      paused = p;
       toggleBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
-      icoPause.style.display = p ? 'none' : 'inline';
-      icoPlay.style.display  = p ? 'inline' : 'none';
-      if(p){ clearTimers(); } else { scheduleNext(); }
+      icoPause.style.display = p ? 'none'  : 'inline';
+      icoPlay.style.display  = p ? 'inline': 'none';
+      if(p){
+        clearTimers();
+      } else {
+        scheduleNext();
+      }
     }
+
     function startSlideshow(){
       if(rotator.classList.contains('slideshow')) return;
       rotator.classList.add('slideshow');
@@ -2697,59 +2756,102 @@ Lovely beach which is a 3’ walk as well as some very good restaurants.”</blo
       video.classList.add('hidden');
       setPaused(false);
     }
+
     function resetToBeginning(){
-      clearTimers(); setPaused(true); topIsA=true; idx=2;
-      a.classList.add('standby'); a.classList.remove('is-top');
-      b.classList.add('standby'); b.classList.remove('is-top');
+      clearTimers();
+      paused  = true;
+      steps   = 0;
+      topIsA  = true;
+      idx     = 2;
+
+      a.classList.add('standby');
+      a.classList.remove('is-top');
+      b.classList.add('standby');
+      b.classList.remove('is-top');
+
       rotator.classList.remove('slideshow');
       video.classList.remove('hidden');
-      try{video.pause()}catch(e){}
-      try{video.currentTime=0}catch(e){}
+
+      try{ video.pause(); }catch(e){}
+      try{ video.currentTime=0; }catch(e){}
+      icoPause.style.display='inline';
+      icoPlay.style.display='none';
     }
 
     const isTouch = window.matchMedia('(hover: none)').matches;
-    const PLAY_T = isTouch ? 0.30 : 0.60;
+    const PLAY_T  = isTouch ? 0.30 : 0.60;
     const RESET_T = 0.10;
 
-    const io = new IntersectionObserver(([e]) => {
-      if (e.intersectionRatio < RESET_T) { resetToBeginning(); return; }
-      if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
-        if (video.ended || nearEnd(video)) { startSlideshow(); }
-        else { video.play().catch(()=>{ startSlideshow(); }); }
+    const io = new IntersectionObserver(([e])=>{
+      if(e.intersectionRatio < RESET_T){
+        resetToBeginning();
+        return;
       }
-    }, { threshold: [0, RESET_T, 0.25, PLAY_T, 1], rootMargin: '0px 0px -10% 0px' });
+      if(e.isIntersecting && e.intersectionRatio >= PLAY_T){
+        if(video.ended || nearEnd(video)){
+          startSlideshow();
+        } else {
+          video.play().catch(()=>{});
+        }
+      }
+    }, { threshold:[0,RESET_T,0.25,PLAY_T,1], rootMargin:'0px 0px -10% 0px' });
+
     io.observe(rotator);
 
     video.addEventListener('ended', startSlideshow);
-    video.addEventListener('timeupdate', () => {
-      if (!rotator.classList.contains('slideshow') && nearEnd(video)) startSlideshow();
+    video.addEventListener('timeupdate', ()=>{
+      if(!rotator.classList.contains('slideshow') && nearEnd(video)){
+        startSlideshow();
+      }
     });
 
     prevBtn.addEventListener('click', ()=>{
-      if(!rotator.classList.contains('slideshow')) return;
+      if(!rotator.classList.contains('slideshow')){
+        startSlideshow();
+        return;
+      }
       clearTimers();
-      const top=topIsA ? a : b, bottom=topIsA ? b : a;
-      idx=(idx-2+sources.length)%sources.length; bottom.src=sources[idx]; idx=(idx+1)%sources.length;
-      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+      const top    = topIsA ? a : b;
+      const bottom = topIsA ? b : a;
+
+      idx = (idx - 2 + sources.length) % sources.length;
+      bottom.src = sources[idx];
+      idx = (idx + 1) % sources.length;
+
+      whenDecodable(bottom).then(()=>{
+        top.classList.remove('is-top');
+        bottom.classList.add('is-top');
+        topIsA = !topIsA;
+        scheduleNext();
+      });
     });
 
     nextBtn.addEventListener('click', ()=>{
-      if(!rotator.classList.contains('slideshow')) return;
+      if(!rotator.classList.contains('slideshow')){
+        startSlideshow();
+        return;
+      }
       clearTimers();
-      const top=topIsA ? a : b, bottom=topIsA ? b : a;
-      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
-      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+      nextFrame();
     });
 
     toggleBtn.addEventListener('click', ()=>{
       if(!rotator.classList.contains('slideshow')){
-        if (video.paused) { video.play().catch(()=>{}); } else { video.pause(); }
+        if(video.paused){
+          video.play().catch(()=>{});
+          icoPause.style.display='inline';
+          icoPlay.style.display='none';
+        } else {
+          video.pause();
+          icoPause.style.display='none';
+          icoPlay.style.display='inline';
+        }
         return;
       }
       setPaused(!paused);
     });
   })();
-  </script>
+</script>
 
   <!-- LIVADA -->
   <script>
@@ -2781,39 +2883,98 @@ Lovely beach which is a 3’ walk as well as some very good restaurants.”</blo
     const b=document.getElementById('livada-b');
     if(!rotator||!video||!a||!b) return;
 
-    video.muted = true; video.playsInline = true;
-    video.setAttribute('muted',''); video.setAttribute('playsinline','');
-    video.setAttribute('webkit-playsinline',''); video.setAttribute('autoplay','');
+    video.muted = true;
+    video.playsInline = true;
+    video.setAttribute('muted','');
+    video.setAttribute('playsinline','');
+    video.setAttribute('webkit-playsinline','');
+    video.setAttribute('autoplay','');
 
-    const prevBtn=rotator.querySelector('.btn.prev');
-    const nextBtn=rotator.querySelector('.btn.next');
-    const toggleBtn=rotator.querySelector('.btn.center');
-    const icoPause=toggleBtn.querySelector('.ico-pause');
-    const icoPlay=toggleBtn.querySelector('.ico-play');
+    const prevBtn  = rotator.querySelector('.btn.prev');
+    const nextBtn  = rotator.querySelector('.btn.next');
+    const toggleBtn= rotator.querySelector('.btn.center');
+    const icoPause = toggleBtn.querySelector('.ico-pause');
+    const icoPlay  = toggleBtn.querySelector('.ico-play');
 
-    sources.forEach(src=>{const im=new Image(); im.src=src;});
+    sources.forEach(src=>{ const im=new Image(); im.src=src; });
 
-    let idx=2, topIsA=true;
-    const HOLD_MS=2000;
-    let slideTimer=null;
-    let paused=false;
+    let idx   = 2;
+    let topIsA = true;
+    const HOLD_MS = 2000;
+    let slideTimer = null;
+    let paused     = false;
+    let steps      = 0;
 
-    function clearTimers(){ if(slideTimer){clearTimeout(slideTimer);slideTimer=null} }
-    function whenDecodable(img){ const p=(img.decode?img.decode():Promise.resolve()); return p.catch(()=>{}); }
-    function showInitialFrames(){ a.classList.remove('standby'); b.classList.remove('standby'); a.classList.add('is-top'); b.classList.remove('is-top'); topIsA=true; idx=2; }
-    function scheduleNext(){ if(!paused){ slideTimer=setTimeout(nextFrame,HOLD_MS); } }
+    function clearTimers(){
+      if(slideTimer){
+        clearTimeout(slideTimer);
+        slideTimer=null;
+      }
+    }
+
+    function whenDecodable(img){
+      const p = (img.decode ? img.decode() : Promise.resolve());
+      return p.catch(()=>{});
+    }
+
+    function showInitialFrames(){
+      a.classList.remove('standby');
+      b.classList.remove('standby');
+      a.classList.add('is-top');
+      b.classList.remove('is-top');
+      topIsA = true;
+      idx    = 2;
+      steps  = 0;
+    }
+
+    function scheduleNext(){
+      if(!paused){
+        slideTimer = setTimeout(nextFrame, HOLD_MS);
+      }
+    }
+
+    function returnToVideo(){
+      resetToBeginning();
+      try { video.play().catch(()=>{}); } catch(e){}
+    }
+
     function nextFrame(){
-      const top=topIsA ? a : b, bottom=topIsA ? b : a;
-      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
-      whenDecodable(bottom).then(()=>{ requestAnimationFrame(()=>{ top.classList.remove('is-top'); requestAnimationFrame(()=>{ bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); }); }); });
+      if(steps >= (sources.length - 2)){
+        returnToVideo();
+        return;
+      }
+
+      const top    = topIsA ? a : b;
+      const bottom = topIsA ? b : a;
+
+      bottom.src = sources[idx];
+      idx = (idx + 1) % sources.length;
+      steps++;
+
+      whenDecodable(bottom).then(()=>{
+        requestAnimationFrame(()=>{
+          top.classList.remove('is-top');
+          requestAnimationFrame(()=>{
+            bottom.classList.add('is-top');
+            topIsA = !topIsA;
+            scheduleNext();
+          });
+        });
+      });
     }
+
     function setPaused(p){
-      paused=p;
+      paused = p;
       toggleBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
-      icoPause.style.display = p ? 'none' : 'inline';
-      icoPlay.style.display  = p ? 'inline' : 'none';
-      if(p){ clearTimers(); } else { scheduleNext(); }
+      icoPause.style.display = p ? 'none'  : 'inline';
+      icoPlay.style.display  = p ? 'inline': 'none';
+      if(p){
+        clearTimers();
+      } else {
+        scheduleNext();
+      }
     }
+
     function startSlideshow(){
       if(rotator.classList.contains('slideshow')) return;
       rotator.classList.add('slideshow');
@@ -2821,59 +2982,103 @@ Lovely beach which is a 3’ walk as well as some very good restaurants.”</blo
       video.classList.add('hidden');
       setPaused(false);
     }
+
     function resetToBeginning(){
-      clearTimers(); setPaused(true); topIsA=true; idx=2;
-      a.classList.add('standby'); a.classList.remove('is-top');
-      b.classList.add('standby'); b.classList.remove('is-top');
+      clearTimers();
+      paused  = true;
+      steps   = 0;
+      topIsA  = true;
+      idx     = 2;
+
+      a.classList.add('standby');
+      a.classList.remove('is-top');
+      b.classList.add('standby');
+      b.classList.remove('is-top');
+
       rotator.classList.remove('slideshow');
       video.classList.remove('hidden');
-      try{video.pause()}catch(e){}
-      try{video.currentTime=0}catch(e){}
+
+      try{ video.pause(); }catch(e){}
+      try{ video.currentTime=0; }catch(e){}
+      icoPause.style.display='inline';
+      icoPlay.style.display='none';
     }
 
     const isTouch = window.matchMedia('(hover: none)').matches;
-    const PLAY_T = isTouch ? 0.30 : 0.60;
+    const PLAY_T  = isTouch ? 0.30 : 0.60;
     const RESET_T = 0.10;
 
-    const io = new IntersectionObserver(([e]) => {
-      if (e.intersectionRatio < RESET_T) { resetToBeginning(); return; }
-      if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
-        if (video.ended || nearEnd(video)) { startSlideshow(); }
-        else { video.play().catch(()=>{ startSlideshow(); }); }
+    const io = new IntersectionObserver(([e])=>{
+      if(e.intersectionRatio < RESET_T){
+        resetToBeginning();
+        return;
       }
-    }, { threshold: [0, RESET_T, 0.25, PLAY_T, 1], rootMargin: '0px 0px -10% 0px' });
+      if(e.isIntersecting && e.intersectionRatio >= PLAY_T){
+        if(video.ended || nearEnd(video)){
+          startSlideshow();
+        } else {
+          video.play().catch(()=>{});
+        }
+      }
+    }, { threshold:[0,RESET_T,0.25,PLAY_T,1], rootMargin:'0px 0px -10% 0px' });
+
     io.observe(rotator);
 
     video.addEventListener('ended', startSlideshow);
-    video.addEventListener('timeupdate', () => {
-      if (!rotator.classList.contains('slideshow') && nearEnd(video)) startSlideshow();
+    video.addEventListener('timeupdate', ()=>{
+      if(!rotator.classList.contains('slideshow') && nearEnd(video)){
+        startSlideshow();
+      }
     });
 
     prevBtn.addEventListener('click', ()=>{
-      if(!rotator.classList.contains('slideshow')) return;
+      if(!rotator.classList.contains('slideshow')){
+        startSlideshow();
+        return;
+      }
       clearTimers();
-      const top=topIsA ? a : b, bottom=topIsA ? b : a;
-      idx=(idx-2+sources.length)%sources.length; bottom.src=sources[idx]; idx=(idx+1)%sources.length;
-      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+      const top    = topIsA ? a : b;
+      const bottom = topIsA ? b : a;
+
+      idx = (idx - 2 + sources.length) % sources.length;
+      bottom.src = sources[idx];
+      idx = (idx + 1) % sources.length;
+
+      whenDecodable(bottom).then(()=>{
+        top.classList.remove('is-top');
+        bottom.classList.add('is-top');
+        topIsA = !topIsA;
+        scheduleNext();
+      });
     });
 
     nextBtn.addEventListener('click', ()=>{
-      if(!rotator.classList.contains('slideshow')) return;
+      if(!rotator.classList.contains('slideshow')){
+        startSlideshow();
+        return;
+      }
       clearTimers();
-      const top=topIsA ? a : b, bottom=topIsA ? b : a;
-      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
-      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+      nextFrame();
     });
 
     toggleBtn.addEventListener('click', ()=>{
       if(!rotator.classList.contains('slideshow')){
-        if (video.paused) { video.play().catch(()=>{}); } else { video.pause(); }
+        if(video.paused){
+          video.play().catch(()=>{});
+          icoPause.style.display='inline';
+          icoPlay.style.display='none';
+        } else {
+          video.pause();
+          icoPause.style.display='none';
+          icoPlay.style.display='inline';
+        }
         return;
       }
       setPaused(!paused);
     });
   })();
-  </script>
+</script>
+
 
   <!-- AMMOS -->
   <script>
@@ -2905,39 +3110,98 @@ Lovely beach which is a 3’ walk as well as some very good restaurants.”</blo
     const b=document.getElementById('ammos-b');
     if(!rotator||!video||!a||!b) return;
 
-    video.muted = true; video.playsInline = true;
-    video.setAttribute('muted',''); video.setAttribute('playsinline','');
-    video.setAttribute('webkit-playsinline',''); video.setAttribute('autoplay','');
+    video.muted = true;
+    video.playsInline = true;
+    video.setAttribute('muted','');
+    video.setAttribute('playsinline','');
+    video.setAttribute('webkit-playsinline','');
+    video.setAttribute('autoplay','');
 
-    const prevBtn=rotator.querySelector('.btn.prev');
-    const nextBtn=rotator.querySelector('.btn.next');
-    const toggleBtn=rotator.querySelector('.btn.center');
-    const icoPause=toggleBtn.querySelector('.ico-pause');
-    const icoPlay=toggleBtn.querySelector('.ico-play');
+    const prevBtn  = rotator.querySelector('.btn.prev');
+    const nextBtn  = rotator.querySelector('.btn.next');
+    const toggleBtn= rotator.querySelector('.btn.center');
+    const icoPause = toggleBtn.querySelector('.ico-pause');
+    const icoPlay  = toggleBtn.querySelector('.ico-play');
 
-    sources.forEach(src=>{const im=new Image(); im.src=src;});
+    sources.forEach(src=>{ const im=new Image(); im.src=src; });
 
-    let idx=2, topIsA=true;
-    const HOLD_MS=2000;
-    let slideTimer=null;
-    let paused=false;
+    let idx   = 2;
+    let topIsA = true;
+    const HOLD_MS = 2000;
+    let slideTimer = null;
+    let paused     = false;
+    let steps      = 0;
 
-    function clearTimers(){ if(slideTimer){clearTimeout(slideTimer);slideTimer=null} }
-    function whenDecodable(img){ const p=(img.decode?img.decode():Promise.resolve()); return p.catch(()=>{}); }
-    function showInitialFrames(){ a.classList.remove('standby'); b.classList.remove('standby'); a.classList.add('is-top'); b.classList.remove('is-top'); topIsA=true; idx=2; }
-    function scheduleNext(){ if(!paused){ slideTimer=setTimeout(nextFrame,HOLD_MS); } }
+    function clearTimers(){
+      if(slideTimer){
+        clearTimeout(slideTimer);
+        slideTimer=null;
+      }
+    }
+
+    function whenDecodable(img){
+      const p = (img.decode ? img.decode() : Promise.resolve());
+      return p.catch(()=>{});
+    }
+
+    function showInitialFrames(){
+      a.classList.remove('standby');
+      b.classList.remove('standby');
+      a.classList.add('is-top');
+      b.classList.remove('is-top');
+      topIsA = true;
+      idx    = 2;
+      steps  = 0;
+    }
+
+    function scheduleNext(){
+      if(!paused){
+        slideTimer = setTimeout(nextFrame, HOLD_MS);
+      }
+    }
+
+    function returnToVideo(){
+      resetToBeginning();
+      try { video.play().catch(()=>{}); } catch(e){}
+    }
+
     function nextFrame(){
-      const top=topIsA ? a : b, bottom=topIsA ? b : a;
-      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
-      whenDecodable(bottom).then(()=>{ requestAnimationFrame(()=>{ top.classList.remove('is-top'); requestAnimationFrame(()=>{ bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); }); }); });
+      if(steps >= (sources.length - 2)){
+        returnToVideo();
+        return;
+      }
+
+      const top    = topIsA ? a : b;
+      const bottom = topIsA ? b : a;
+
+      bottom.src = sources[idx];
+      idx = (idx + 1) % sources.length;
+      steps++;
+
+      whenDecodable(bottom).then(()=>{
+        requestAnimationFrame(()=>{
+          top.classList.remove('is-top');
+          requestAnimationFrame(()=>{
+            bottom.classList.add('is-top');
+            topIsA = !topIsA;
+            scheduleNext();
+          });
+        });
+      });
     }
+
     function setPaused(p){
-      paused=p;
+      paused = p;
       toggleBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
-      icoPause.style.display = p ? 'none' : 'inline';
-      icoPlay.style.display  = p ? 'inline' : 'none';
-      if(p){ clearTimers(); } else { scheduleNext(); }
+      icoPause.style.display = p ? 'none'  : 'inline';
+      icoPlay.style.display  = p ? 'inline': 'none';
+      if(p){
+        clearTimers();
+      } else {
+        scheduleNext();
+      }
     }
+
     function startSlideshow(){
       if(rotator.classList.contains('slideshow')) return;
       rotator.classList.add('slideshow');
@@ -2945,59 +3209,103 @@ Lovely beach which is a 3’ walk as well as some very good restaurants.”</blo
       video.classList.add('hidden');
       setPaused(false);
     }
+
     function resetToBeginning(){
-      clearTimers(); setPaused(true); topIsA=true; idx=2;
-      a.classList.add('standby'); a.classList.remove('is-top');
-      b.classList.add('standby'); b.classList.remove('is-top');
+      clearTimers();
+      paused  = true;
+      steps   = 0;
+      topIsA  = true;
+      idx     = 2;
+
+      a.classList.add('standby');
+      a.classList.remove('is-top');
+      b.classList.add('standby');
+      b.classList.remove('is-top');
+
       rotator.classList.remove('slideshow');
       video.classList.remove('hidden');
-      try{video.pause()}catch(e){}
-      try{video.currentTime=0}catch(e){}
+
+      try{ video.pause(); }catch(e){}
+      try{ video.currentTime=0; }catch(e){}
+      icoPause.style.display='inline';
+      icoPlay.style.display='none';
     }
 
     const isTouch = window.matchMedia('(hover: none)').matches;
-    const PLAY_T = isTouch ? 0.30 : 0.60;
+    const PLAY_T  = isTouch ? 0.30 : 0.60;
     const RESET_T = 0.10;
 
-    const io = new IntersectionObserver(([e]) => {
-      if (e.intersectionRatio < RESET_T) { resetToBeginning(); return; }
-      if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
-        if (video.ended || nearEnd(video)) { startSlideshow(); }
-        else { video.play().catch(()=>{ startSlideshow(); }); }
+    const io = new IntersectionObserver(([e])=>{
+      if(e.intersectionRatio < RESET_T){
+        resetToBeginning();
+        return;
       }
-    }, { threshold: [0, RESET_T, 0.25, PLAY_T, 1], rootMargin: '0px 0px -10% 0px' });
+      if(e.isIntersecting && e.intersectionRatio >= PLAY_T){
+        if(video.ended || nearEnd(video)){
+          startSlideshow();
+        } else {
+          video.play().catch(()=>{});
+        }
+      }
+    }, { threshold:[0,RESET_T,0.25,PLAY_T,1], rootMargin:'0px 0px -10% 0px' });
+
     io.observe(rotator);
 
     video.addEventListener('ended', startSlideshow);
-    video.addEventListener('timeupdate', () => {
-      if (!rotator.classList.contains('slideshow') && nearEnd(video)) startSlideshow();
+    video.addEventListener('timeupdate', ()=>{
+      if(!rotator.classList.contains('slideshow') && nearEnd(video)){
+        startSlideshow();
+      }
     });
 
     prevBtn.addEventListener('click', ()=>{
-      if(!rotator.classList.contains('slideshow')) return;
+      if(!rotator.classList.contains('slideshow')){
+        startSlideshow();
+        return;
+      }
       clearTimers();
-      const top=topIsA ? a : b, bottom=topIsA ? b : a;
-      idx=(idx-2+sources.length)%sources.length; bottom.src=sources[idx]; idx=(idx+1)%sources.length;
-      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+      const top    = topIsA ? a : b;
+      const bottom = topIsA ? b : a;
+
+      idx = (idx - 2 + sources.length) % sources.length;
+      bottom.src = sources[idx];
+      idx = (idx + 1) % sources.length;
+
+      whenDecodable(bottom).then(()=>{
+        top.classList.remove('is-top');
+        bottom.classList.add('is-top');
+        topIsA = !topIsA;
+        scheduleNext();
+      });
     });
 
     nextBtn.addEventListener('click', ()=>{
-      if(!rotator.classList.contains('slideshow')) return;
+      if(!rotator.classList.contains('slideshow')){
+        startSlideshow();
+        return;
+      }
       clearTimers();
-      const top=topIsA ? a : b, bottom=topIsA ? b : a;
-      bottom.src=sources[idx]; idx=(idx+1)%sources.length;
-      whenDecodable(bottom).then(()=>{ top.classList.remove('is-top'); bottom.classList.add('is-top'); topIsA=!topIsA; scheduleNext(); });
+      nextFrame();
     });
 
     toggleBtn.addEventListener('click', ()=>{
       if(!rotator.classList.contains('slideshow')){
-        if (video.paused) { video.play().catch(()=>{}); } else { video.pause(); }
+        if(video.paused){
+          video.play().catch(()=>{});
+          icoPause.style.display='inline';
+          icoPlay.style.display='none';
+        } else {
+          video.pause();
+          icoPause.style.display='none';
+          icoPlay.style.display='inline';
+        }
         return;
       }
       setPaused(!paused);
     });
   })();
-  </script>
+</script>
+
 
     <!-- LOCATION ROTATOR JS -->
  <script>

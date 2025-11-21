@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+the section with the reviews shrinks expands if booking com review is smaller or larger. can we ficx this? <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -1577,47 +1577,6 @@
   color: #555;
   margin-top: 4px;
 }
-/* Let JS control the exact height of the Booking.com slider */
-.reviews-left .review-slider {
-  min-height: 0 !important;
-}
-/* --- BOOKING.COM SLIDER: FIXED HEIGHT, NO JUMPS --- */
-
-/* Slider container: fixed vertical space, children stacked */
-.review-slider {
-  position: relative;
-  overflow: hidden;
-  /* Adjust these values if you need a bit more/less height */
-  min-height: 280px;
-}
-
-/* Slightly taller on desktop */
-@media (min-width: 900px) {
-  .review-slider {
-    min-height: 320px;
-  }
-}
-
-/* Stack all slides on top of each other */
-.review-slide {
-  position: absolute;
-  inset: 0;
-  display: block;          /* always block, we'll hide via opacity/pointer-events */
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* Only the active slide is visible & interactive */
-.review-slide.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* Make sure the text inside still flows normally */
-.review-slide blockquote {
-  position: static;
-}
-
 
   </style>
 </head>
@@ -3861,24 +3820,11 @@
     if (e.key === 'Escape') closeOverlay();
   });
 
-    // Initial slide
+  // Initial slide + height lock
   show(current);
-
-  // Lock height AFTER everything is loaded (fonts, images, etc.)
-  function initHeights() {
-    setSliderHeight();
-  }
-
-  if (document.readyState === 'complete') {
-    initHeights();
-  } else {
-    window.addEventListener('load', initHeights);
-  }
-
-  // Recalculate on resize (orientation changes, etc.)
+  setSliderHeight();
   window.addEventListener('resize', setSliderHeight);
 })();
-
 </script>
 
 

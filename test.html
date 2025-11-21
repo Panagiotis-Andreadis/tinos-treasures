@@ -1373,6 +1373,18 @@
   margin-top: 0;
   margin-bottom: 8px;
 }
+/* CONTACT: let it grow vertically, no inner scroll */
+#contact.section.slide-section {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+}
+
+#contact.section.slide-section .wrap {
+  height: auto !important;
+  overflow: visible !important;
+  padding-top: var(--nav-h); /* keep it clear of the nav */
+}
 
   </style>
 </head>

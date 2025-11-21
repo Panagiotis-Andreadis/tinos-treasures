@@ -1069,6 +1069,298 @@
     footer.footer-bottom {
       max-width: none;
     }
+    /* === CONTACT TYPOGRAPHY + LAYOUT OVERRIDES === */
+/* Match contact text (except headings) to Location paragraph style */
+
+/* Base: everything in #contact gets same typography as .apt-text p */
+#contact {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: #222;
+}
+
+/* All typical text elements inherit the same style */
+#contact p,
+#contact a,
+#contact span,
+#contact li,
+#contact blockquote,
+#contact .review-meta,
+#contact .review-index,
+#contact .reviews-intro,
+#contact .reviews-note,
+#contact .booking-badge-text,
+#contact .review-controls button {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: #222;
+}
+
+/* Make sure links look like text but still show hover underline */
+#contact a {
+  text-decoration: none;
+}
+#contact a:hover {
+  text-decoration: underline;
+}
+
+/* HEADINGS: keep Cycladic + heading-like size, separate from body text */
+#contact h2,
+#contact .featured-block h3,
+#contact .reviews-block h3 {
+  font-family: 'Cycladic', sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  line-height: 1.3;
+  color: #000;
+  margin-top: 0;
+}
+
+/* Social icons stay visually tidy */
+#contact .social {
+  font-size: 1.25rem; /* text near icons stays in harmony */
+}
+
+/* REVIEW SLIDER — keep layout, let text use unified size */
+.review-slider {
+  position: relative;
+  width: 100%;
+  touch-action: pan-y;
+}
+
+.review-slide {
+  display: none;
+  position: static;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.review-slide.active {
+  display: block;
+}
+
+.review-slide blockquote {
+  margin: 0 0 4px;
+}
+
+/* Review controls: arrows + index, still readable but lighter */
+.review-controls {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.85rem; /* small label text, does not fight main copy */
+  color: #555;
+}
+
+.review-controls button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  transition: opacity .25s ease;
+}
+
+.review-controls button:hover {
+  opacity: 0.7;
+}
+
+/* Let the arrows size be tied to body text so they look consistent */
+.review-controls button {
+  font-size: 1.25rem;
+}
+
+/* Desktop: fix slider height so badges don’t jump around */
+@media (min-width: 900px) {
+  .reviews-left .review-slider {
+    min-height: 260px;
+    margin-bottom: 16px;
+  }
+}
+
+@media (max-width: 899px) {
+  .reviews-left .review-slider {
+    min-height: 220px;
+    margin-bottom: 12px;
+  }
+}
+
+/* BOOKING.com badges row */
+.booking-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 0;
+}
+
+.booking-award-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (min-width: 900px) {
+  .booking-award-badge img {
+    height: 180px;
+  }
+}
+
+/* FEATURED IN block stays aligned with Contact Us */
+.featured-block {
+  background: transparent;
+  border: none;
+  border-top: 1px solid #e4e4e4;
+  padding: 18px 0 0;
+}
+
+.featured-logos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
+
+.featured-logos a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  text-decoration: none;
+}
+
+.featured-logos img {
+  display: block;
+  max-height: 46px;
+  width: auto;
+}
+@media (max-width: 600px) {
+  .featured-logos img {
+    max-height: 38px;
+  }
+}
+
+/* REVIEWS BLOCK + GRID LAYOUT (keeps your current look) */
+.reviews-block {
+  background: transparent;
+  border-radius: 0;
+  border: none;
+  border-top: 1px solid #e4e4e4;
+  padding: 18px 0 0;
+}
+
+.reviews-two-col {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.reviews-left,
+.reviews-right {
+  flex: 1;
+}
+
+/* Desktop grid: Contact / Featured top, Reviews full-width bottom */
+@media (min-width: 900px) {
+  #contact .contact-columns {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    column-gap: 26px;
+    row-gap: 26px;
+    align-items: flex-start;
+  }
+
+  #contact .contact-top,
+  #contact .contact-bottom {
+    display: contents;
+  }
+
+  #contact .contact-main {
+    grid-column: 1;
+  }
+
+  #contact .contact-top .featured-block {
+    grid-column: 2;
+    align-self: flex-start;
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
+  }
+
+  #contact .contact-main h2,
+  #contact .contact-top .featured-block h3 {
+    margin-top: 0;
+    padding-top: 0;
+    margin-bottom: 8px;
+  }
+
+  #contact .contact-bottom .reviews-block {
+    grid-column: 1 / span 2;
+  }
+
+  .reviews-two-col {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+/* GOOGLE WIDGET — keep minimalist text styling, no boxes */
+.reviews-right .google-widget-shell {
+  margin-top: 4px;
+}
+
+.reviews-block .google-widget-shell,
+.reviews-block .google-widget-shell * {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.reviews-block .google-widget-shell .eapps-widget,
+.reviews-block .google-widget-shell .eapps-widget-inner,
+.reviews-block .google-widget-shell .eapps-google-reviews,
+.reviews-block .google-widget-shell .eapps-google-reviews-list,
+.reviews-block .google-widget-shell .eapps-google-reviews-item {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 0 10px 0 !important;
+}
+
+/* Let Google review text inherit the same Cormorant styles from #contact */
+.reviews-block .google-widget-shell .eapps-google-reviews-item-content,
+.reviews-block .google-widget-shell .eapps-google-reviews-review-text {
+  font: inherit !important;
+  color: inherit !important;
+}
+
+/* Meta line under each Google quote */
+.reviews-block .google-widget-shell .eapps-google-reviews-author,
+.reviews-block .google-widget-shell .eapps-google-reviews-review-author,
+.reviews-block .google-widget-shell .eapps-google-reviews-review-date {
+  display: inline-block !important;
+  font: inherit !important;
+}
+
+/* Hide extra Google UI chrome */
+.reviews-block .google-widget-shell .eapps-google-reviews-review-rating,
+.reviews-block .google-widget-shell .eapps-google-reviews-review-rating-stars,
+.reviews-block .google-widget-shell .eapps-google-reviews-review-source,
+.reviews-block .google-widget-shell .eapps-google-reviews-logo,
+.reviews-block .google-widget-shell .eapps-google-reviews-header,
+.reviews-block .google-widget-shell .eapps-google-reviews-badge,
+.reviews-block .google-widget-shell .eapps-google-reviews-pagination,
+.reviews-block .google-widget-shell .eapps-google-reviews-read-more,
+.reviews-block .google-widget-shell .eapps-google-reviews-author-image {
+  display: none !important;
+}
+
   </style>
 </head>
 <body>

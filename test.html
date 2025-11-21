@@ -928,18 +928,7 @@
       width: 100% !important;
     }
 
-    /* Hide extra Google UI elements */
-    .reviews-block .google-widget-shell .eapps-google-reviews-review-rating,
-    .reviews-block .google-widget-shell .eapps-google-reviews-review-rating-stars,
-    .reviews-block .google-widget-shell .eapps-google-reviews-review-source,
-    .reviews-block .google-widget-shell .eapps-google-reviews-logo,
-    .reviews-block .google-widget-shell .eapps-google-reviews-header,
-    .reviews-block .google-widget-shell .eapps-google-reviews-badge,
-    .reviews-block .google-widget-shell .eapps-google-reviews-pagination,
-    .reviews-block .google-widget-shell .eapps-google-reviews-read-more,
-    .reviews-block .google-widget-shell .eapps-google-reviews-author-image {
-      display: none !important;
-    }
+    
 
     /* --- Featured in block --- */
     .featured-block {
@@ -1497,24 +1486,25 @@
   color: #555;
 }
 /* Make Google "Read more" look like the Booking.com one */
-.reviews-block .google-widget-shell .eapps-google-reviews-read-more {
+.reviews-block .google-widget-shell .eapps-google-reviews-read-more,
+.reviews-block .google-widget-shell .eapps-google-reviews-read-more:link,
+.reviews-block .google-widget-shell .eapps-google-reviews-read-more:visited,
+.reviews-block .google-widget-shell .eapps-google-reviews-read-more:hover,
+.reviews-block .google-widget-shell .eapps-google-reviews-read-more:active {
   display: inline-block !important;
-  border: none;
-  background: none;
+  border: none !important;
+  background: none !important;
   padding: 0;
   margin-top: 6px;
   font-family: inherit;
   font-size: 0.9rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  text-decoration: underline;
+  text-decoration: underline !important;
   cursor: pointer;
-  color: #555;
+  color: #555 !important;
 }
 
-.reviews-block .google-widget-shell .eapps-google-reviews-read-more:hover {
-  opacity: 0.7;
-}
 
 /* Footer: logo + name centered (under the text, like widget) */
 .booking-review-footer {

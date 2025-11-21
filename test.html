@@ -1581,6 +1581,42 @@
 .reviews-left .review-slider {
   min-height: 0 !important;
 }
+/* --- BOOKING.COM SLIDER: FIXED HEIGHT, NO JUMPS --- */
+
+/* Slider container: fixed vertical space, children stacked */
+.review-slider {
+  position: relative;
+  overflow: hidden;
+  /* Adjust these values if you need a bit more/less height */
+  min-height: 280px;
+}
+
+/* Slightly taller on desktop */
+@media (min-width: 900px) {
+  .review-slider {
+    min-height: 320px;
+  }
+}
+
+/* Stack all slides on top of each other */
+.review-slide {
+  position: absolute;
+  inset: 0;
+  display: block;          /* always block, we'll hide via opacity/pointer-events */
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Only the active slide is visible & interactive */
+.review-slide.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Make sure the text inside still flows normally */
+.review-slide blockquote {
+  position: static;
+}
 
 
   </style>

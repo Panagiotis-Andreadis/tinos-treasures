@@ -3680,7 +3680,14 @@ Lovely beach which is a 3’ walk as well as some very good restaurants.”</blo
   const prevBtn  = slider ? slider.querySelector('.review-prev') : null;
   const nextBtn  = slider ? slider.querySelector('.review-next') : null;
 
-  // Safety: if anything is missing, do nothing
+  // Overlay elements
+  const overlay        = document.getElementById('booking-review-overlay');
+  const overlayText    = overlay ? overlay.querySelector('.booking-review-overlay-text') : null;
+  const overlayMeta    = overlay ? overlay.querySelector('.booking-review-overlay-meta') : null;
+  const overlayClose   = overlay ? overlay.querySelector('.booking-review-overlay-close') : null;
+  const overlayBackdrop= overlay ? overlay.querySelector('.booking-review-overlay-backdrop') : null;
+
+  // Safety: if anything essential is missing, abort
   if (!slider || !slides.length || !indexEl || !prevBtn || !nextBtn) return;
 
   let current = 0;
@@ -3688,8 +3695,9 @@ Lovely beach which is a 3’ walk as well as some very good restaurants.”</blo
 
   function show(i) {
     slides.forEach((s, idx) => {
-      s.classList.toggle('active', idx === i);
-      s.style.display = idx === i ? 'block' : 'none';
+      const active = idx === i;
+      s.classList.toggle('active', active);
+      s.style.display = active ? 'block' : 'none';
     });
     indexEl.textContent = `${i + 1} / ${total}`;
   }
@@ -3750,7 +3758,42 @@ Lovely beach which is a 3’ walk as well as some very good restaurants.”</blo
   slider.addEventListener('touchend', e => {
     const dx = e.changedTouches[0].clientX - startX;
     if (dx > 40) prev();    // swipe right → previous
-    if (dx < -40) next();   // swipe left → next
+    if (dx < -40) next();   // swipe left  → next
+  });
+
+  // === READ MORE -> OVERLAY LOGIC ===
+  function openOverlay(fromSlide) {
+    if (!overlay || !overlayText || !overlayMeta) return;
+
+    const quote = fromSlide.querySelector('blockquote');
+    const meta  = fromSlide.querySelector('.review-meta');
+
+    overlayText.textContent = quote ? quote.textContent.trim() : '';
+    overlayMeta.textContent = meta ? meta.textContent.trim() : '';
+
+    overlay.classList.add('is-open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeOverlay() {
+    if (!overlay) return;
+    overlay.classList.remove('is-open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  // Attach click handlers to all "Read more" buttons
+  slides.forEach(slide => {
+    const btn = slide.querySelector('.booking-read-more');
+    if (!btn) return;
+    btn.addEventListener('click', () => openOverlay(slide));
+  });
+
+  if (overlayClose)    overlayClose.addEventListener('click', closeOverlay);
+  if (overlayBackdrop) overlayBackdrop.addEventListener('click', closeOverlay);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeOverlay();
   });
 
   // Initial slide + height lock
@@ -3759,6 +3802,7 @@ Lovely beach which is a 3’ walk as well as some very good restaurants.”</blo
   window.addEventListener('resize', setSliderHeight);
 })();
 </script>
+
 
 
 

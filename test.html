@@ -1420,6 +1420,16 @@
     width: auto;
   }
 }
+@media (max-width: 900px) {
+  html, body {
+    scroll-snap-type: none !important;
+  }
+  .slide-section,
+  .apt.apt-section {
+    scroll-snap-align: none;
+    scroll-snap-stop: normal;
+  }
+}
 
   </style>
 </head>

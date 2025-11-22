@@ -2514,19 +2514,31 @@
 <!-- Put the floating button here, outside any flex layout -->
 <a href="#home" class="back-to-top" aria-label="Back to top">↑</a>
 <script>
-  (function(){
-    function markFontsReady() {
-      document.documentElement.classList.add('fonts-ready');
-    }
+(function(){
+  const root = document.documentElement;
+  let done = false;
 
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(markFontsReady).catch(markFontsReady);
-    } else {
-      // Older browsers: just assume fonts are ready
-      markFontsReady();
-    }
-  })();
+  function markFontsReady() {
+    if (done) return;
+    done = true;
+    root.classList.add('fonts-ready');
+  }
+
+  // If the browser supports font loading
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready
+      .then(markFontsReady)
+      .catch(markFontsReady);
+
+    // SAFETY TIMEOUT — ensures intro text always shows
+    setTimeout(markFontsReady, 1200); // 1.2 seconds fallback
+  } else {
+    // Older browsers: trigger immediately
+    markFontsReady();
+  }
+})();
 </script>
+
 
 
   <script>

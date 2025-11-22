@@ -2698,219 +2698,272 @@
   </script>
 
 <script>
-(function(){
-  const sources=[
-    "media/apigania_fast/Apigania_LivingRoom_f_1_1400.webp",
-    "media/apigania_fast/Apigania_LivingRoom_f_2_1400.webp",
-    "media/apigania_fast/Apigania_LivingRoom_f_3_1400.webp",
-    "media/apigania_fast/Apigania_Outdoor_f_1_1400.webp",
-    "media/apigania_fast/Apigania_Outdoor_f_2_1400.webp",
-    "media/apigania_fast/Apigania_Outdoor_f_3_1400.webp",
-    "media/apigania_fast/Apigania_Kichen_f_1_1400.webp",
-    "media/apigania_fast/Apigania_Kichen_f_2_1400.webp",
-    "media/apigania_fast/Apigania_Kichen_f_3_1400.webp",
-    "media/apigania_fast/Apigania_MainBedroom_f_1_1400.webp",
-    "media/apigania_fast/Apigania_MainBedroom_f_2_1400.webp",
-    "media/apigania_fast/Apigania_MainBedroom_f_3_1400.webp",
-    "media/apigania_fast/Apigani_SecondBedroom_f_1_1400.webp",
-    "media/apigani_fast/Apigani_SecondBedroom_f_2_1400.webp",
-    "media/apigani_fast/Apigani_SecondBedroom_f_3_1400.webp",
-    "media/apigania_fast/Apigania_Bathroom_f_1_1400.webp",
-    "media/apigania_fast/Apigania_Bathroom_f_2_1400.webp",
-    "media/apigania_fast/Apigania_Bathroom_f_3_1400.webp"
-  ];
+  (function(){
+    const sources=[
+      "media/apigania_fast/Apigania_LivingRoom_f_1_1400.webp",
+      "media/apigania_fast/Apigania_LivingRoom_f_2_1400.webp",
+      "media/apigania_fast/Apigania_LivingRoom_f_3_1400.webp",
+      "media/apigania_fast/Apigania_Outdoor_f_1_1400.webp",
+      "media/apigania_fast/Apigania_Outdoor_f_2_1400.webp",
+      "media/apigania_fast/Apigania_Outdoor_f_3_1400.webp",
+      "media/apigania_fast/Apigania_Kichen_f_1_1400.webp",
+      "media/apigania_fast/Apigania_Kichen_f_2_1400.webp",
+      "media/apigania_fast/Apigania_Kichen_f_3_1400.webp",
+      "media/apigania_fast/Apigania_MainBedroom_f_1_1400.webp",
+      "media/apigania_fast/Apigania_MainBedroom_f_2_1400.webp",
+      "media/apigania_fast/Apigania_MainBedroom_f_3_1400.webp",
+      "media/apigania_fast/Apigani_SecondBedroom_f_1_1400.webp",
+      "media/apigania_fast/Apigani_SecondBedroom_f_2_1400.webp",
+      "media/apigania_fast/Apigani_SecondBedroom_f_3_1400.webp",
+      "media/apigania_fast/Apigania_Bathroom_f_1_1400.webp",
+      "media/apigania_fast/Apigania_Bathroom_f_2_1400.webp",
+      "media/apigania_fast/Apigania_Bathroom_f_3_1400.webp"
+    ];
 
-  const rotator=document.getElementById('apigania-rotator');
-  const video=document.getElementById('apigania-video');
-  const a=document.getElementById('apigania-a');
-  const b=document.getElementById('apigania-b');
-  if(!rotator||!video||!a||!b) return;
+    const rotator=document.getElementById('apigania-rotator');
+    const video=document.getElementById('apigania-video');
+    const a=document.getElementById('apigania-a');
+    const b=document.getElementById('apigania-b');
+    if(!rotator||!video||!a||!b) return;
 
-  let imagesPreloaded = false;
-  function preloadImagesOnce() {
-    if (imagesPreloaded) return;
-    imagesPreloaded = true;
-    sources.forEach(src => { const im=new Image(); im.src=src; });
-  }
+    video.muted = true; 
+    video.playsInline = true;
+    video.setAttribute('muted',''); 
+    video.setAttribute('playsinline','');
+    video.setAttribute('webkit-playsinline',''); 
+    video.setAttribute('autoplay','');
 
-  video.muted = true; 
-  video.playsInline = true;
-  video.setAttribute('muted',''); 
-  video.setAttribute('playsinline','');
-  video.setAttribute('webkit-playsinline',''); 
+    const prevBtn = rotator.querySelector('.btn.prev');
+    const nextBtn = rotator.querySelector('.btn.next');
+    const toggleBtn = rotator.querySelector('.btn.center');
+    const icoPause = toggleBtn.querySelector('.ico-pause');
+    const icoPlay  = toggleBtn.querySelector('.ico-play');
 
-  const prevBtn = rotator.querySelector('.btn.prev');
-  const nextBtn = rotator.querySelector('.btn.next');
-  const toggleBtn = rotator.querySelector('.btn.center');
-  const icoPause = toggleBtn.querySelector('.ico-pause');
-  const icoPlay  = toggleBtn.querySelector('.ico-play');
+    // Preload images
+    sources.forEach(src=>{ const im=new Image(); im.src=src; });
 
-  let idx=2, topIsA=true, paused=false, slideTimer=null, HOLD_MS=2000;
+    let idx=2;          // 0 & 1 are already on <img> a & b
+    let topIsA=true;
+    const HOLD_MS=2000;
+    let slideTimer=null;
+    let paused=false;
 
-  // NEW: guard to cancel stale transitions
-  let transitionId = 0;
+    // NEW: token to kill stale transitions
+    let transitionId = 0;
 
-  function whenDecodable(img){
-    return (img.decode ? img.decode() : Promise.resolve()).catch(()=>{});
-  }
-  function clearTimers(){
-    if(slideTimer){
-      clearTimeout(slideTimer);
-      slideTimer=null;
+    function clearTimers(){
+      if(slideTimer){
+        clearTimeout(slideTimer);
+        slideTimer=null;
+      }
     }
-  }
 
-  function showInitial(){
-    a.classList.remove('standby');
-    b.classList.remove('standby');
-    a.classList.add('is-top');
-    b.classList.remove('is-top');
-    idx=2;
-    topIsA=true;
-  }
-  function scheduleNext(){
-    if(!paused) slideTimer=setTimeout(nextFrame,HOLD_MS);
-  }
+    function whenDecodable(img){
+      const p = (img.decode ? img.decode() : Promise.resolve());
+      return p.catch(()=>{});
+    }
 
-  function reset(){
-    clearTimers();
-    paused=true;
-    idx=2;
-    topIsA=true;
+    function showInitialFrames(){
+      a.classList.remove('standby');
+      b.classList.remove('standby');
+      a.classList.add('is-top');
+      b.classList.remove('is-top');
+      topIsA = true;
+      idx = 2;
+    }
 
-    // invalidate any pending fades
-    transitionId++;
+    function scheduleNext(){
+      if(!paused){
+        slideTimer = setTimeout(nextFrame, HOLD_MS);
+      }
+    }
 
-    rotator.classList.remove('slideshow');
-    a.classList.add('standby');
-    a.classList.remove('is-top');
-    b.classList.add('standby');
-    b.classList.remove('is-top');
-    video.classList.remove('hidden');
+    // When all pictures have been shown once, go back to the video
+    function returnToVideo(){
+      resetToBeginning();
+      try {
+        video.play().catch(()=>{});
+      } catch(e){}
+    }
 
-    try{video.pause(); video.currentTime=0;}catch{}
-    icoPause.style.display='inline';
-    icoPlay.style.display='none';
-  }
+    function nextFrame(){
+      // Start a new logical transition – invalidate older ones
+      transitionId++;
+      const myId = transitionId;
 
-  function start(){
-    if(rotator.classList.contains('slideshow')) return;
+      // idx goes 2..N-1, then 0,1,2...
+      // When we are about to wrap to 0, it means we’ve shown all images once
+      if(idx === 0){
+        returnToVideo();
+        return;
+      }
 
-    // invalidate any previous transition
-    transitionId++;
+      const top    = topIsA ? a : b;
+      const bottom = topIsA ? b : a;
 
-    rotator.classList.add('slideshow');
-    showInitial();
-    video.classList.add('hidden');
-    paused=false;
-    scheduleNext();
-  }
+      bottom.src = sources[idx];
+      idx = (idx + 1) % sources.length;
 
-  function nextFrame(){
-    // bump token – anything older becomes stale
-    transitionId++;
-    const myId = transitionId;
+      whenDecodable(bottom).then(()=>{
+        // If something else changed state meanwhile, bail out
+        if (myId !== transitionId) return;
 
-    const top=topIsA?a:b;
-    const bottom=topIsA?b:a;
-    bottom.src=sources[idx];
-    idx=(idx+1)%sources.length;
-
-    whenDecodable(bottom).then(()=>{
-      // if reset/start happened meanwhile, ignore this transition
-      if (myId !== transitionId) return;
-
-      requestAnimationFrame(()=>{
-        top.classList.remove('is-top');
         requestAnimationFrame(()=>{
-          bottom.classList.add('is-top');
-          topIsA=!topIsA;
-          scheduleNext();
+          top.classList.remove('is-top');
+          requestAnimationFrame(()=>{
+            bottom.classList.add('is-top');
+            topIsA = !topIsA;
+            scheduleNext();
+          });
         });
       });
-    });
-  }
-
-  const PLAY_T=window.matchMedia('(hover:none)').matches?0.30:0.60;
-  const RESET_T=0.10;
-
-  const io=new IntersectionObserver(([e])=>{
-    if(e.intersectionRatio<RESET_T){
-      reset();
-      return;
     }
 
-    if(e.isIntersecting && e.intersectionRatio>=PLAY_T){
-      preloadImagesOnce();
-
-      if(video.ended){
-        start();
+    function setPaused(p){
+      paused = p;
+      toggleBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
+      icoPause.style.display = p ? 'none'  : 'inline';
+      icoPlay.style.display  = p ? 'inline': 'none';
+      if(p){
+        clearTimers();
       } else {
-        video.play().catch(()=>{});
+        scheduleNext();
       }
     }
-  },{threshold:[0,RESET_T,0.25,PLAY_T,1],rootMargin:'0px 0px -10% 0px'});
 
-  io.observe(rotator);
+    function startSlideshow(){
+      if(rotator.classList.contains('slideshow')) return;
 
-  video.addEventListener('ended',start);
+      // invalidate any pending transitions from video mode
+      transitionId++;
 
-  prevBtn.addEventListener('click',()=>{
-    if(!rotator.classList.contains('slideshow')){
-      start();
-      return;
+      rotator.classList.add('slideshow');
+      showInitialFrames();
+      video.classList.add('hidden');
+      setPaused(false);
     }
-    clearTimers();
 
-    transitionId++;
-    const myId = transitionId;
+    function resetToBeginning(){
+      clearTimers();
+      setPaused(true);
+      topIsA = true;
+      idx = 2;
 
-    const top=topIsA?a:b;
-    const bottom=topIsA?b:a;
-    idx=(idx-2+sources.length)%sources.length;
-    bottom.src=sources[idx];
-    idx=(idx+1)%sources.length;
+      // New state → kill any pending decode callbacks
+      transitionId++;
 
-    whenDecodable(bottom).then(()=>{
-      if (myId !== transitionId) return;
+      a.classList.add('standby');
+      a.classList.remove('is-top');
+      b.classList.add('standby');
+      b.classList.remove('is-top');
 
-      top.classList.remove('is-top');
-      bottom.classList.add('is-top');
-      topIsA=!topIsA;
-      scheduleNext();
-    });
-  });
+      rotator.classList.remove('slideshow');
+      video.classList.remove('hidden');
 
-  nextBtn.addEventListener('click',()=>{
-    if(!rotator.classList.contains('slideshow')){
-      start();
-      return;
+      try{ video.pause(); }catch(e){}
+      try{ video.currentTime = 0; }catch(e){}
+      // Icon default for video (playing from start)
+      icoPause.style.display = 'inline';
+      icoPlay.style.display  = 'none';
     }
-    clearTimers();
-    nextFrame();
-  });
 
-  toggleBtn.addEventListener('click',()=>{
-    if(!rotator.classList.contains('slideshow')){
-      if(video.paused){
-        video.play().catch(()=>{});
-        icoPause.style.display='inline';
-        icoPlay.style.display='none';
-      } else {
-        video.pause();
-        icoPause.style.display='none';
-        icoPlay.style.display='inline';
+    const isTouch = window.matchMedia('(hover: none)').matches;
+    const PLAY_T  = isTouch ? 0.30 : 0.60;
+    const RESET_T = 0.10;
+
+    const io = new IntersectionObserver(([e]) => {
+      if (e.intersectionRatio < RESET_T) {
+        // Completely out of view → reset to video
+        resetToBeginning();
+        return;
       }
-      return;
-    }
-    paused=!paused;
-    toggleBtn.setAttribute('aria-pressed',paused?'true':'false');
-    icoPause.style.display=paused?'none':'inline';
-    icoPlay.style.display=paused?'inline':'none';
-    if(!paused) scheduleNext(); else clearTimers();
-  });
-})();
+
+      if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
+        if (video.ended || nearEnd(video)) {
+          // If video already done → start slideshow
+          startSlideshow();
+        } else {
+          // Otherwise play video
+          video.play().catch(()=>{
+            // Optionally: startSlideshow() on autoplay failure
+          });
+        }
+      }
+    }, { threshold: [0, RESET_T, 0.25, PLAY_T, 1], rootMargin: '0px 0px -10% 0px' });
+
+    io.observe(rotator);
+
+    // If video ends naturally → enter slideshow
+    video.addEventListener('ended', startSlideshow);
+    video.addEventListener('timeupdate', () => {
+      if (!rotator.classList.contains('slideshow') && nearEnd(video)) {
+        startSlideshow();
+      }
+    });
+
+    // PREV: if on video → jump into slideshow, else normal prev
+    prevBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')){
+        startSlideshow();
+        return;
+      }
+
+      clearTimers();
+
+      // New manual transition
+      transitionId++;
+      const myId = transitionId;
+
+      const top    = topIsA ? a : b;
+      const bottom = topIsA ? b : a;
+
+      idx = (idx - 2 + sources.length) % sources.length;
+      bottom.src = sources[idx];
+      idx = (idx + 1) % sources.length;
+
+      whenDecodable(bottom).then(()=>{
+        if (myId !== transitionId) return;
+
+        top.classList.remove('is-top');
+        bottom.classList.add('is-top');
+        topIsA = !topIsA;
+        scheduleNext();
+      });
+    });
+
+    // NEXT: if on video → jump into slideshow, else advance & possibly go back to video at the end
+    nextBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')){
+        startSlideshow();
+        return;
+      }
+
+      clearTimers();
+      nextFrame();
+    });
+
+    // Center button:
+    //   • In VIDEO mode → play/pause video
+    //   • In SLIDESHOW mode → pause/resume slideshow
+    toggleBtn.addEventListener('click', ()=>{
+      if(!rotator.classList.contains('slideshow')){
+        if (video.paused) {
+          video.play().catch(()=>{});
+          icoPause.style.display = 'inline';
+          icoPlay.style.display  = 'none';
+        } else {
+          video.pause();
+          icoPause.style.display = 'none';
+          icoPlay.style.display  = 'inline';
+        }
+        return;
+      }
+
+      setPaused(!paused);
+    });
+  })();
 </script>
+
 
 
 

@@ -4012,7 +4012,39 @@
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 
- 
+ <script>
+function showFirstFrame(video) {
+  if (!video) return;
+
+  // Ensure autoplay does NOT start the full video
+  try { video.pause(); } catch(e) {}
+
+  // Once metadata is ready, we can seek
+  video.addEventListener('loadedmetadata', () => {
+    // Go to the first real frame
+    video.currentTime = 0.05; // slightly past 0 to avoid black frame
+
+    video.addEventListener('seeked', () => {
+      // Freeze the video so it displays the first frame
+      try { video.pause(); } catch(e) {}
+
+      // Make sure opacity applies so it becomes visible
+      video.classList.add('is-ready');
+    }, { once: true });
+  }, { once: true });
+
+  // Make sure it doesn’t auto-start
+  video.removeAttribute('autoplay');
+  video.preload = "auto";
+}
+
+// Apply to all apartment videos
+showFirstFrame(document.getElementById('apigania-video'));
+showFirstFrame(document.getElementById('vathi-video'));
+showFirstFrame(document.getElementById('livada-video'));
+showFirstFrame(document.getElementById('ammos-video'));
+</script>
+
 
 </body>
 </html>

@@ -3542,8 +3542,8 @@
 </script>
 
 
-    <!-- LOCATION ROTATOR JS -->
- <script>
+<!-- LOCATION ROTATOR JS -->
+<script>
   (function () {
     const sources = [
       "media/location_fast/location_1_1400.webp",
@@ -3574,11 +3574,12 @@
     // Preload all images
     sources.forEach(src => { const im = new Image(); im.src = src; });
 
-    let idx = 2;          // 0 & 1 are the first two slides
-    let topIsA = true;
-    const HOLD_MS = 2500;
-    let slideTimer = null;
-    let paused = false;
+    let idx          = 2;       // 0 & 1 are the first two slides
+    let topIsA       = true;
+    const HOLD_MS    = 2500;
+    let slideTimer   = null;
+    let paused       = false;
+    let transitionId = 0;       // token to ignore stale transitions
 
     function clearTimers() {
       if (slideTimer) {
@@ -3599,13 +3600,20 @@
     }
 
     function nextFrame() {
-      const top = topIsA ? a : b;
+      // Start a new transition → bump token
+      transitionId++;
+      const myId = transitionId;
+
+      const top    = topIsA ? a : b;
       const bottom = topIsA ? b : a;
 
       bottom.src = sources[idx];
       idx = (idx + 1) % sources.length;
 
       whenDecodable(bottom).then(() => {
+        // If something else started a newer transition, bail out
+        if (myId !== transitionId) return;
+
         requestAnimationFrame(() => {
           top.classList.remove('is-top');
           requestAnimationFrame(() => {
@@ -3633,7 +3641,9 @@
     // Reset to first slide
     function goToFirstSlide() {
       clearTimers();
-      idx = 2;
+      transitionId++;      // invalidate any in-flight transitions
+
+      idx    = 2;
       topIsA = true;
 
       a.src = sources[0];
@@ -3650,7 +3660,10 @@
     // Controls
     prevBtn.addEventListener('click', () => {
       clearTimers();
-      const top = topIsA ? a : b;
+      transitionId++;
+      const myId = transitionId;
+
+      const top    = topIsA ? a : b;
       const bottom = topIsA ? b : a;
 
       idx = (idx - 2 + sources.length) % sources.length;
@@ -3658,10 +3671,16 @@
       idx = (idx + 1) % sources.length;
 
       whenDecodable(bottom).then(() => {
-        top.classList.remove('is-top');
-        bottom.classList.add('is-top');
-        topIsA = !topIsA;
-        scheduleNext();
+        if (myId !== transitionId) return;
+
+        requestAnimationFrame(() => {
+          top.classList.remove('is-top');
+          requestAnimationFrame(() => {
+            bottom.classList.add('is-top');
+            topIsA = !topIsA;
+            scheduleNext();
+          });
+        });
       });
     });
 
@@ -3674,7 +3693,7 @@
       setPaused(!paused);
     });
 
-    // Intersection observer now watches the ROTATOR itself
+    // Intersection observer watches the ROTATOR itself
     const io = new IntersectionObserver(([entry]) => {
       // Mostly out of view → reset and pause
       if (entry.intersectionRatio < 0.15) {
@@ -3696,6 +3715,7 @@
     io.observe(rotator);
   })();
 </script>
+
 <script>
 (function(){
   const slider   = document.querySelector('.review-slider');

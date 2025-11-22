@@ -3344,7 +3344,7 @@
 
 
   <!-- AMMOS -->
-  <script>
+<script>
   (function(){
     const sources=[
       "media/ammos_fast/Ammos_LivingRoom_f_1_1400.webp",
@@ -3373,6 +3373,14 @@
     const b=document.getElementById('ammos-b');
     if(!rotator||!video||!a||!b) return;
 
+    /* 🔹 NEW: lazy preload instead of preloading on page load */
+    let imagesPreloaded = false;
+    function preloadImagesOnce() {
+      if (imagesPreloaded) return;
+      imagesPreloaded = true;
+      sources.forEach(src => { const im = new Image(); im.src = src; });
+    }
+
     video.muted = true;
     video.playsInline = true;
     video.setAttribute('muted','');
@@ -3386,7 +3394,8 @@
     const icoPause = toggleBtn.querySelector('.ico-pause');
     const icoPlay  = toggleBtn.querySelector('.ico-play');
 
-    sources.forEach(src=>{ const im=new Image(); im.src=src; });
+    // ⛔️ REMOVED:
+    // sources.forEach(src=>{ const im=new Image(); im.src=src; });
 
     let idx   = 2;
     let topIsA = true;
@@ -3467,6 +3476,10 @@
 
     function startSlideshow(){
       if(rotator.classList.contains('slideshow')) return;
+
+      // ensure images are ready when slideshow starts
+      preloadImagesOnce();
+
       rotator.classList.add('slideshow');
       showInitialFrames();
       video.classList.add('hidden');
@@ -3504,6 +3517,10 @@
         return;
       }
       if(e.isIntersecting && e.intersectionRatio >= PLAY_T){
+
+        // 🔹 PRELOAD when user actually scrolls near Ammos
+        preloadImagesOnce();
+
         if(video.ended || nearEnd(video)){
           startSlideshow();
         } else {
@@ -3568,6 +3585,7 @@
     });
   })();
 </script>
+
 
 
 <!-- LOCATION ROTATOR JS -->

@@ -45,7 +45,17 @@
     /* INTRO */
     #intro{position:fixed;inset:0;height:100svh;background:#000;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:99999;animation:introFadeOut 3.4s ease forwards}
     #intro img{width:clamp(140px,15vw,220px);filter:brightness(0) invert(1);animation:fadeInOut 3.4s ease forwards}
-    #intro h1{font-family:'Cycladic',sans-serif;font-size:clamp(28px,5vw,48px);color:#fff;margin-top:20px;animation:fadeInOut 3.4s ease forwards}
+#intro h1{
+  font-family:'Cycladic',sans-serif;
+  font-size:clamp(28px,5vw,48px);
+  color:#fff;
+  margin-top:20px;
+  opacity:0;            /* start hidden */
+}
+    .fonts-ready #intro h1 {
+  animation:fadeInOut 3.4s ease forwards;
+}
+
     @keyframes fadeInOut{0%{opacity:0}20%{opacity:1}70%{opacity:1}100%{opacity:0}}
     @keyframes introFadeOut{0%{opacity:1;visibility:visible}90%{opacity:0;visibility:visible}100%{opacity:0;visibility:hidden;display:none}}
     body.intro-active #bg-video{opacity:0!important}
@@ -2480,6 +2490,20 @@
 
 <!-- Put the floating button here, outside any flex layout -->
 <a href="#home" class="back-to-top" aria-label="Back to top">↑</a>
+<script>
+  (function(){
+    function markFontsReady() {
+      document.documentElement.classList.add('fonts-ready');
+    }
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(markFontsReady).catch(markFontsReady);
+    } else {
+      // Older browsers: just assume fonts are ready
+      markFontsReady();
+    }
+  })();
+</script>
 
 
   <script>

@@ -2607,52 +2607,73 @@
   </script>
 
   <script>
-    (function(){
-      const intro=document.getElementById('intro');
-      const videoBg=document.getElementById('bg-video');
-      const tagline=document.getElementById('tagline');
-      const INTRO_MS=3400;document.body.classList.add('intro-active');
+(function(){
+  const INTRO_MS   = 3400; // intro duration
+  const intro      = document.getElementById('intro');
+  const video      = document.getElementById('bg-video');
+  const tagline    = document.getElementById('tagline');
 
-      if(videoBg){
-        try{videoBg.pause()}catch{};
-        try{videoBg.currentTime=0}catch{};
-        const onMeta=()=>{try{videoBg.currentTime=0}catch{}};
-        videoBg.addEventListener('loadedmetadata',onMeta,{once:true});
-        videoBg.addEventListener('error',()=>{
-          document.body.classList.add('no-video');
-          videoBg.setAttribute('poster','poster.jpg')
-        },{once:true});
+  document.body.classList.add('intro-active');
+
+  let introFinished = false;
+  let videoReady    = false;
+
+  // Only start video when BOTH intro is finished AND video is ready
+  function maybeStartVideo() {
+    if (!video || !introFinished || !videoReady) return;
+
+    try { video.currentTime = 0; } catch(e) {}
+
+    video.play()
+      .then(() => {
+        video.classList.add('is-ready'); // fades in via CSS
+      })
+      .catch(() => {
+        document.body.classList.add('no-video');
+        video.setAttribute('poster', 'poster.jpg');
+        video.classList.add('is-ready');
+      });
+  }
+
+  if (video) {
+    // Make sure it doesn't start on its own
+    try { video.pause(); } catch(e) {}
+    try { video.currentTime = 0; } catch(e) {}
+
+    // When metadata is loaded, we consider the video "ready"
+    video.addEventListener('loadedmetadata', () => {
+      videoReady = true;
+      maybeStartVideo();
+    }, { once:true });
+
+    // Fallback if metadata never fires (edge cases / buggy browsers)
+    setTimeout(() => {
+      if (!videoReady) {
+        videoReady = true;
+        maybeStartVideo();
       }
+    }, 2000);
 
-      function startFromZeroAndPlay(){
-        if(!videoBg) return;
-        const seekToZero=()=>new Promise((resolve)=>{
-          let done=false;const finish=()=>{if(!done){done=true;resolve()}};
-          try{videoBg.currentTime=0}catch{};
-          if(videoBg.currentTime<0.05) return finish();
-          const onSeeked=()=>{videoBg.removeEventListener('seeked',onSeeked);finish()};
-          videoBg.addEventListener('seeked',onSeeked);
-          setTimeout(finish,250);
-        });
-        seekToZero().then(()=>{
-          videoBg.play()
-            .then(()=>{videoBg.classList.add('is-ready')})
-            .catch(()=>{
-              document.body.classList.add('no-video');
-              videoBg.setAttribute('poster','poster.jpg');
-              videoBg.classList.add('is-ready')
-            });
-        });
-      }
+    // Error → fallback to poster
+    video.addEventListener('error', () => {
+      document.body.classList.add('no-video');
+      video.setAttribute('poster', 'poster.jpg');
+    }, { once:true });
+  }
 
-      setTimeout(()=>{
-        if(intro) intro.style.display='none';
-        document.body.classList.remove('intro-active');
-        tagline?.classList.add('visible');
-        startFromZeroAndPlay();
-      },INTRO_MS);
-    })();
-  </script>
+  // Intro finishes after 3.4s
+  setTimeout(() => {
+    introFinished = true;
+
+    if (intro) intro.style.display = 'none';
+    document.body.classList.remove('intro-active');
+    if (tagline) tagline.classList.add('visible');
+
+    maybeStartVideo();
+  }, INTRO_MS);
+})();
+</script>
+
 
 
   <script>

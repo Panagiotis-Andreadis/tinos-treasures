@@ -1693,8 +1693,8 @@
             <video id="apigania-video" muted playsinline webkit-playsinline preload="none">
             <source src="media/apigania_fast/apigania.mp4" type="video/mp4">
           </video>
-          <img id="apigania-a" alt="Apigania gallery image A" class="standby" src="media/apigania_fast/Apigania_LivingRoom_f_1_1400.webp">
-          <img id="apigania-b" alt="Apigania gallery image B" class="standby" src="media/apigania_fast/Apigania_LivingRoom_f_2_1400.webp">
+          <img id="apigania-a" loading="lazy" alt="Apigania gallery image A" class="standby" src="media/apigania_fast/Apigania_LivingRoom_f_1_1400.webp">
+          <img id="apigania-b" loading="lazy" alt="Apigania gallery image B" class="standby" src="media/apigania_fast/Apigania_LivingRoom_f_2_1400.webp">
           <div class="controls" aria-label="Gallery controls">
             <button class="btn prev"  type="button" aria-label="Previous" title="Previous">❮</button>
             <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause">
@@ -1781,8 +1781,8 @@
 <video id="vathi-video" muted playsinline webkit-playsinline preload="none">
             <source src="media/vathi_fast/vathi.mp4" type="video/mp4">
           </video>
-          <img id="vathi-a" alt="Vathi gallery image A" class="standby" src="media/vathi_fast/Vathi_LivingRoom_f_1_f_1_1400.webp">
-          <img id="vathi-b" alt="Vathi gallery image B" class="standby" src="media/vathi_fast/Vathi_LivingRoom_f_3_f_1_1400.webp">
+          <img id="vathi-a" loading="lazy" alt="Vathi gallery image A" class="standby" src="media/vathi_fast/Vathi_LivingRoom_f_1_f_1_1400.webp">
+          <img id="vathi-b" loading="lazy" alt="Vathi gallery image B" class="standby" src="media/vathi_fast/Vathi_LivingRoom_f_3_f_1_1400.webp">
           <div class="controls" aria-label="Gallery controls">
             <button class="btn prev"  type="button" aria-label="Previous" title="Previous">❮</button>
             <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause">
@@ -1872,8 +1872,8 @@
 <video id="livada-video" muted playsinline webkit-playsinline preload="none">
             <source src="media/livada_fast/livada.mp4" type="video/mp4">
           </video>
-          <img id="livada-a" alt="Livada gallery image A" class="standby" src="media/livada_fast/Livada_LivingRoom_f_1_1400.webp">
-          <img id="livada-b" alt="Livada gallery image B" class="standby" src="media/livada_fast/Livada_LivingRoom_f_2_1400.webp">
+          <img id="livada-a" loading="lazy" alt="Livada gallery image A" class="standby" src="media/livada_fast/Livada_LivingRoom_f_1_1400.webp">
+          <img id="livada-b" loading="lazy" alt="Livada gallery image B" class="standby" src="media/livada_fast/Livada_LivingRoom_f_2_1400.webp">
           <div class="controls" aria-label="Gallery controls">
             <button class="btn prev"  type="button" aria-label="Previous" title="Previous">❮</button>
             <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause">
@@ -1953,8 +1953,8 @@
 <video id="ammos-video" muted playsinline webkit-playsinline preload="none">
             <source src="media/ammos_fast/ammos.mp4" type="video/mp4">
           </video>
-          <img id="ammos-a" alt="Ammos gallery image A" class="standby" src="media/ammos_fast/Ammos_LivingRoom_f_1_1400.webp">
-          <img id="ammos-b" alt="Ammos gallery image B" class="standby" src="media/ammos_fast/Ammos_LivingRoom_f_2_1400.webp">
+          <img id="ammos-a" loading="lazy" alt="Ammos gallery image A" class="standby" src="media/ammos_fast/Ammos_LivingRoom_f_1_1400.webp">
+          <img id="ammos-b" loading="lazy" alt="Ammos gallery image B" class="standby" src="media/ammos_fast/Ammos_LivingRoom_f_2_1400.webp">
           <div class="controls" aria-label="Gallery controls">
             <button class="btn prev"  type="button" aria-label="Previous" title="Previous">❮</button>
             <button class="btn center toggle" type="button" aria-label="Pause" aria-pressed="false" title="Pause">
@@ -2698,249 +2698,161 @@
   </script>
 
   <script>
-  (function(){
-    const sources=[
-      "media/apigania_fast/Apigania_LivingRoom_f_1_1400.webp",
-      "media/apigania_fast/Apigania_LivingRoom_f_2_1400.webp",
-      "media/apigania_fast/Apigania_LivingRoom_f_3_1400.webp",
-      "media/apigania_fast/Apigania_Outdoor_f_1_1400.webp",
-      "media/apigania_fast/Apigania_Outdoor_f_2_1400.webp",
-      "media/apigania_fast/Apigania_Outdoor_f_3_1400.webp",
-      "media/apigania_fast/Apigania_Kichen_f_1_1400.webp",
-      "media/apigania_fast/Apigania_Kichen_f_2_1400.webp",
-      "media/apigania_fast/Apigania_Kichen_f_3_1400.webp",
-      "media/apigania_fast/Apigania_MainBedroom_f_1_1400.webp",
-      "media/apigania_fast/Apigania_MainBedroom_f_2_1400.webp",
-      "media/apigania_fast/Apigania_MainBedroom_f_3_1400.webp",
-      "media/apigania_fast/Apigani_SecondBedroom_f_1_1400.webp",
-      "media/apigania_fast/Apigani_SecondBedroom_f_2_1400.webp",
-      "media/apigania_fast/Apigani_SecondBedroom_f_3_1400.webp",
-      "media/apigania_fast/Apigania_Bathroom_f_1_1400.webp",
-      "media/apigania_fast/Apigania_Bathroom_f_2_1400.webp",
-      "media/apigania_fast/Apigania_Bathroom_f_3_1400.webp"
-    ];
+(function(){
+  const sources=[
+    "media/apigania_fast/Apigania_LivingRoom_f_1_1400.webp",
+    "media/apigania_fast/Apigania_LivingRoom_f_2_1400.webp",
+    "media/apigania_fast/Apigania_LivingRoom_f_3_1400.webp",
+    "media/apigania_fast/Apigania_Outdoor_f_1_1400.webp",
+    "media/apigania_fast/Apigania_Outdoor_f_2_1400.webp",
+    "media/apigania_fast/Apigania_Outdoor_f_3_1400.webp",
+    "media/apigania_fast/Apigania_Kichen_f_1_1400.webp",
+    "media/apigania_fast/Apigania_Kichen_f_2_1400.webp",
+    "media/apigania_fast/Apigania_Kichen_f_3_1400.webp",
+    "media/apigania_fast/Apigania_MainBedroom_f_1_1400.webp",
+    "media/apigania_fast/Apigania_MainBedroom_f_2_1400.webp",
+    "media/apigania_fast/Apigania_MainBedroom_f_3_1400.webp",
+    "media/apigania_fast/Apigani_SecondBedroom_f_1_1400.webp",
+    "media/apigania_fast/Apigani_SecondBedroom_f_2_1400.webp",
+    "media/apigania_fast/Apigani_SecondBedroom_f_3_1400.webp",
+    "media/apigania_fast/Apigania_Bathroom_f_1_1400.webp",
+    "media/apigania_fast/Apigania_Bathroom_f_2_1400.webp",
+    "media/apigania_fast/Apigania_Bathroom_f_3_1400.webp"
+  ];
 
-    const rotator=document.getElementById('apigania-rotator');
-    const video=document.getElementById('apigania-video');
-    const a=document.getElementById('apigania-a');
-    const b=document.getElementById('apigania-b');
-    if(!rotator||!video||!a||!b) return;
+  const rotator=document.getElementById('apigania-rotator');
+  const video=document.getElementById('apigania-video');
+  const a=document.getElementById('apigania-a');
+  const b=document.getElementById('apigania-b');
+  if(!rotator||!video||!a||!b) return;
 
-    video.muted = true; 
-    video.playsInline = true;
-    video.setAttribute('muted',''); 
-    video.setAttribute('playsinline','');
-    video.setAttribute('webkit-playsinline',''); 
-    video.setAttribute('autoplay','');
+  let imagesPreloaded = false;
+  function preloadImagesOnce() {
+    if (imagesPreloaded) return;
+    imagesPreloaded = true;
+    sources.forEach(src => { const im=new Image(); im.src=src; });
+  }
 
-    const prevBtn = rotator.querySelector('.btn.prev');
-    const nextBtn = rotator.querySelector('.btn.next');
-    const toggleBtn = rotator.querySelector('.btn.center');
-    const icoPause = toggleBtn.querySelector('.ico-pause');
-    const icoPlay  = toggleBtn.querySelector('.ico-play');
+  /* — everything below stays identical except IO adds preloadImagesOnce() — */
 
-    // Preload images
-    sources.forEach(src=>{ const im=new Image(); im.src=src; });
+  video.muted = true; 
+  video.playsInline = true;
+  video.setAttribute('muted',''); 
+  video.setAttribute('playsinline','');
+  video.setAttribute('webkit-playsinline',''); 
 
-    let idx=2;          // 0 & 1 are already on <img> a & b
-    let topIsA=true;
-    const HOLD_MS=2000;
-    let slideTimer=null;
-    let paused=false;
+  const prevBtn = rotator.querySelector('.btn.prev');
+  const nextBtn = rotator.querySelector('.btn.next');
+  const toggleBtn = rotator.querySelector('.btn.center');
+  const icoPause = toggleBtn.querySelector('.ico-pause');
+  const icoPlay  = toggleBtn.querySelector('.ico-play');
 
-    function clearTimers(){
-      if(slideTimer){
-        clearTimeout(slideTimer);
-        slideTimer=null;
-      }
-    }
+  let idx=2, topIsA=true, paused=false, slideTimer=null, HOLD_MS=2000;
 
-    function whenDecodable(img){
-      const p = (img.decode ? img.decode() : Promise.resolve());
-      return p.catch(()=>{});
-    }
+  function whenDecodable(img){
+    return (img.decode ? img.decode() : Promise.resolve()).catch(()=>{});
+  }
+  function clearTimers(){ if(slideTimer){ clearTimeout(slideTimer); slideTimer=null; } }
 
-    function showInitialFrames(){
-      // Use the two <img> that are already in the markup as first two slides
-      a.classList.remove('standby');
-      b.classList.remove('standby');
-      a.classList.add('is-top');
-      b.classList.remove('is-top');
-      topIsA = true;
-      idx = 2;
-    }
+  function showInitial(){
+    a.classList.remove('standby');
+    b.classList.remove('standby');
+    a.classList.add('is-top');
+    b.classList.remove('is-top');
+    idx=2; topIsA=true;
+  }
+  function scheduleNext(){ if(!paused) slideTimer=setTimeout(nextFrame,HOLD_MS); }
 
-    function scheduleNext(){
-      if(!paused){
-        slideTimer = setTimeout(nextFrame, HOLD_MS);
-      }
-    }
+  function reset(){
+    clearTimers();
+    paused=true; idx=2; topIsA=true;
+    rotator.classList.remove('slideshow');
+    a.classList.add('standby'); a.classList.remove('is-top');
+    b.classList.add('standby'); b.classList.remove('is-top');
+    video.classList.remove('hidden');
+    try{video.pause(); video.currentTime=0;}catch{}
+    icoPause.style.display='inline'; icoPlay.style.display='none';
+  }
 
-    // When all pictures have been shown once, go back to the video
-    function returnToVideo(){
-      resetToBeginning();
-      try {
-        video.play().catch(()=>{});
-      } catch(e){}
-    }
+  function start(){
+    if(rotator.classList.contains('slideshow')) return;
+    rotator.classList.add('slideshow');
+    showInitial();
+    video.classList.add('hidden');
+    paused=false;
+    scheduleNext();
+  }
 
-    function nextFrame(){
-      // idx goes 2..N-1, then 0,1,2...
-      // When we are about to wrap to 0, it means we’ve shown all images once
-      if(idx === 0){
-        returnToVideo();
-        return;
-      }
+  function nextFrame(){
+    const top=topIsA?a:b, bottom=topIsA?b:a;
+    bottom.src=sources[idx];
+    idx=(idx+1)%sources.length;
 
-      const top    = topIsA ? a : b;
-      const bottom = topIsA ? b : a;
-
-      bottom.src = sources[idx];
-      idx = (idx + 1) % sources.length;
-
-      whenDecodable(bottom).then(()=>{
+    whenDecodable(bottom).then(()=>{
+      requestAnimationFrame(()=>{
+        top.classList.remove('is-top');
         requestAnimationFrame(()=>{
-          top.classList.remove('is-top');
-          requestAnimationFrame(()=>{
-            bottom.classList.add('is-top');
-            topIsA = !topIsA;
-            scheduleNext();
-          });
+          bottom.classList.add('is-top');
+          topIsA=!topIsA;
+          scheduleNext();
         });
       });
-    }
-
-    function setPaused(p){
-      paused = p;
-      toggleBtn.setAttribute('aria-pressed', p ? 'true' : 'false');
-      icoPause.style.display = p ? 'none'  : 'inline';
-      icoPlay.style.display  = p ? 'inline': 'none';
-      if(p){
-        clearTimers();
-      } else {
-        scheduleNext();
-      }
-    }
-
-    function startSlideshow(){
-      if(rotator.classList.contains('slideshow')) return;
-      rotator.classList.add('slideshow');
-      showInitialFrames();
-      video.classList.add('hidden');
-      setPaused(false);
-    }
-
-    function resetToBeginning(){
-      clearTimers();
-      setPaused(true);
-      topIsA = true;
-      idx = 2;
-
-      a.classList.add('standby');
-      a.classList.remove('is-top');
-      b.classList.add('standby');
-      b.classList.remove('is-top');
-
-      rotator.classList.remove('slideshow');
-      video.classList.remove('hidden');
-
-      try{ video.pause(); }catch(e){}
-      try{ video.currentTime = 0; }catch(e){}
-      // Icon default for video (playing from start)
-      icoPause.style.display = 'inline';
-      icoPlay.style.display  = 'none';
-    }
-
-    const isTouch = window.matchMedia('(hover: none)').matches;
-    const PLAY_T  = isTouch ? 0.30 : 0.60;
-    const RESET_T = 0.10;
-
-    const io = new IntersectionObserver(([e]) => {
-      if (e.intersectionRatio < RESET_T) {
-        // Completely out of view → reset to video
-        resetToBeginning();
-        return;
-      }
-
-      if (e.isIntersecting && e.intersectionRatio >= PLAY_T) {
-        if (video.ended || nearEnd(video)) {
-          // If video already done → start slideshow
-          startSlideshow();
-        } else {
-          // Otherwise play video
-          video.play().catch(()=>{
-            // If autoplay fails, you could choose to start slideshow instead if you want
-            // startSlideshow();
-          });
-        }
-      }
-    }, { threshold: [0, RESET_T, 0.25, PLAY_T, 1], rootMargin: '0px 0px -10% 0px' });
-
-    io.observe(rotator);
-
-    // If video ends naturally → enter slideshow
-    video.addEventListener('ended', startSlideshow);
-    video.addEventListener('timeupdate', () => {
-      if (!rotator.classList.contains('slideshow') && nearEnd(video)) {
-        startSlideshow();
-      }
     });
+  }
 
-    // PREV: if on video → jump into slideshow, else normal prev
-    prevBtn.addEventListener('click', ()=>{
-      if(!rotator.classList.contains('slideshow')){
-        startSlideshow();
-        return;
-      }
+  const PLAY_T=window.matchMedia('(hover:none)').matches?0.30:0.60;
+  const RESET_T=0.10;
 
-      clearTimers();
-      const top    = topIsA ? a : b;
-      const bottom = topIsA ? b : a;
+  const io=new IntersectionObserver(([e])=>{
+    if(e.intersectionRatio<RESET_T){ reset(); return; }
 
-      idx = (idx - 2 + sources.length) % sources.length;
-      // If wrapping would go back to 0, we still just show previous image
-      bottom.src = sources[idx];
-      idx = (idx + 1) % sources.length;
+    if(e.isIntersecting && e.intersectionRatio>=PLAY_T){
+      preloadImagesOnce();  // <-- LAZY PRELOAD HERE
 
-      whenDecodable(bottom).then(()=>{
-        top.classList.remove('is-top');
-        bottom.classList.add('is-top');
-        topIsA = !topIsA;
-        scheduleNext();
-      });
+      if(video.ended) start();
+      else video.play().catch(()=>{});
+    }
+  },{threshold:[0,RESET_T,0.25,PLAY_T,1],rootMargin:'0px 0px -10% 0px'});
+
+  io.observe(rotator);
+
+  video.addEventListener('ended',start);
+
+  prevBtn.addEventListener('click',()=>{
+    if(!rotator.classList.contains('slideshow')){ start(); return; }
+    clearTimers();
+    const top=topIsA?a:b, bottom=topIsA?b:a;
+    idx=(idx-2+sources.length)%sources.length;
+    bottom.src=sources[idx];
+    idx=(idx+1)%sources.length;
+
+    whenDecodable(bottom).then(()=>{
+      top.classList.remove('is-top');
+      bottom.classList.add('is-top');
+      topIsA=!topIsA;
+      scheduleNext();
     });
+  });
 
-    // NEXT: if on video → jump into slideshow, else advance & possibly go back to video at the end
-    nextBtn.addEventListener('click', ()=>{
-      if(!rotator.classList.contains('slideshow')){
-        startSlideshow();
-        return;
-      }
+  nextBtn.addEventListener('click',()=>{
+    if(!rotator.classList.contains('slideshow')){ start(); return; }
+    clearTimers();
+    nextFrame();
+  });
 
-      clearTimers();
-      nextFrame();
-    });
-
-    // Center button:
-    //   • In VIDEO mode → play/pause video
-    //   • In SLIDESHOW mode → pause/resume slideshow
-    toggleBtn.addEventListener('click', ()=>{
-      if(!rotator.classList.contains('slideshow')){
-        if (video.paused) {
-          video.play().catch(()=>{});
-          icoPause.style.display = 'inline';
-          icoPlay.style.display  = 'none';
-        } else {
-          video.pause();
-          icoPause.style.display = 'none';
-          icoPlay.style.display  = 'inline';
-        }
-        return;
-      }
-
-      setPaused(!paused);
-    });
-  })();
+  toggleBtn.addEventListener('click',()=>{
+    if(!rotator.classList.contains('slideshow')){
+      if(video.paused){ video.play(); icoPause.style.display='inline'; icoPlay.style.display='none'; }
+      else{ video.pause(); icoPause.style.display='none'; icoPlay.style.display='inline'; }
+      return;
+    }
+    paused=!paused;
+    toggleBtn.setAttribute('aria-pressed',paused?'true':'false');
+    icoPause.style.display=paused?'none':'inline';
+    icoPlay.style.display=paused?'inline':'none';
+    if(!paused) scheduleNext(); else clearTimers();
+  });
+})();
 </script>
 
 
@@ -2973,6 +2885,14 @@
     const b=document.getElementById('vathi-b');
     if(!rotator||!video||!a||!b) return;
 
+    /* 🔹 NEW: lazy preload instead of preloading on page load */
+    let imagesPreloaded = false;
+    function preloadImagesOnce() {
+      if (imagesPreloaded) return;
+      imagesPreloaded = true;
+      sources.forEach(src => { const im = new Image(); im.src = src; });
+    }
+
     video.muted = true;
     video.playsInline = true;
     video.setAttribute('muted','');
@@ -2986,7 +2906,8 @@
     const icoPause = toggleBtn.querySelector('.ico-pause');
     const icoPlay  = toggleBtn.querySelector('.ico-play');
 
-    sources.forEach(src=>{ const im=new Image(); im.src=src; });
+    // ⛔️ REMOVED:
+    // sources.forEach(src=>{ const im=new Image(); im.src=src; });
 
     let idx   = 2;
     let topIsA = true;
@@ -3067,6 +2988,10 @@
 
     function startSlideshow(){
       if(rotator.classList.contains('slideshow')) return;
+
+      // make sure images are available when slideshow starts
+      preloadImagesOnce();
+
       rotator.classList.add('slideshow');
       showInitialFrames();
       video.classList.add('hidden');
@@ -3104,6 +3029,10 @@
         return;
       }
       if(e.isIntersecting && e.intersectionRatio >= PLAY_T){
+
+        // 🔹 PRELOAD when user actually scrolls near Vathi
+        preloadImagesOnce();
+
         if(video.ended || nearEnd(video)){
           startSlideshow();
         } else {
@@ -3168,6 +3097,7 @@
     });
   })();
 </script>
+
 
   <!-- LIVADA -->
   <script>

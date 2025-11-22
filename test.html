@@ -2697,7 +2697,7 @@
     }
   </script>
 
-  <script>
+<script>
 (function(){
   const sources=[
     "media/apigania_fast/Apigania_LivingRoom_f_1_1400.webp",
@@ -2713,8 +2713,8 @@
     "media/apigania_fast/Apigania_MainBedroom_f_2_1400.webp",
     "media/apigania_fast/Apigania_MainBedroom_f_3_1400.webp",
     "media/apigania_fast/Apigani_SecondBedroom_f_1_1400.webp",
-    "media/apigania_fast/Apigani_SecondBedroom_f_2_1400.webp",
-    "media/apigania_fast/Apigani_SecondBedroom_f_3_1400.webp",
+    "media/apigani_fast/Apigani_SecondBedroom_f_2_1400.webp",
+    "media/apigani_fast/Apigani_SecondBedroom_f_3_1400.webp",
     "media/apigania_fast/Apigania_Bathroom_f_1_1400.webp",
     "media/apigania_fast/Apigania_Bathroom_f_2_1400.webp",
     "media/apigania_fast/Apigania_Bathroom_f_3_1400.webp"
@@ -2733,8 +2733,6 @@
     sources.forEach(src => { const im=new Image(); im.src=src; });
   }
 
-  /* — everything below stays identical except IO adds preloadImagesOnce() — */
-
   video.muted = true; 
   video.playsInline = true;
   video.setAttribute('muted',''); 
@@ -2749,33 +2747,58 @@
 
   let idx=2, topIsA=true, paused=false, slideTimer=null, HOLD_MS=2000;
 
+  // NEW: guard to cancel stale transitions
+  let transitionId = 0;
+
   function whenDecodable(img){
     return (img.decode ? img.decode() : Promise.resolve()).catch(()=>{});
   }
-  function clearTimers(){ if(slideTimer){ clearTimeout(slideTimer); slideTimer=null; } }
+  function clearTimers(){
+    if(slideTimer){
+      clearTimeout(slideTimer);
+      slideTimer=null;
+    }
+  }
 
   function showInitial(){
     a.classList.remove('standby');
     b.classList.remove('standby');
     a.classList.add('is-top');
     b.classList.remove('is-top');
-    idx=2; topIsA=true;
+    idx=2;
+    topIsA=true;
   }
-  function scheduleNext(){ if(!paused) slideTimer=setTimeout(nextFrame,HOLD_MS); }
+  function scheduleNext(){
+    if(!paused) slideTimer=setTimeout(nextFrame,HOLD_MS);
+  }
 
   function reset(){
     clearTimers();
-    paused=true; idx=2; topIsA=true;
+    paused=true;
+    idx=2;
+    topIsA=true;
+
+    // invalidate any pending fades
+    transitionId++;
+
     rotator.classList.remove('slideshow');
-    a.classList.add('standby'); a.classList.remove('is-top');
-    b.classList.add('standby'); b.classList.remove('is-top');
+    a.classList.add('standby');
+    a.classList.remove('is-top');
+    b.classList.add('standby');
+    b.classList.remove('is-top');
     video.classList.remove('hidden');
+
     try{video.pause(); video.currentTime=0;}catch{}
-    icoPause.style.display='inline'; icoPlay.style.display='none';
+    icoPause.style.display='inline';
+    icoPlay.style.display='none';
   }
 
   function start(){
     if(rotator.classList.contains('slideshow')) return;
+
+    // invalidate any previous transition
+    transitionId++;
+
     rotator.classList.add('slideshow');
     showInitial();
     video.classList.add('hidden');
@@ -2784,11 +2807,19 @@
   }
 
   function nextFrame(){
-    const top=topIsA?a:b, bottom=topIsA?b:a;
+    // bump token – anything older becomes stale
+    transitionId++;
+    const myId = transitionId;
+
+    const top=topIsA?a:b;
+    const bottom=topIsA?b:a;
     bottom.src=sources[idx];
     idx=(idx+1)%sources.length;
 
     whenDecodable(bottom).then(()=>{
+      // if reset/start happened meanwhile, ignore this transition
+      if (myId !== transitionId) return;
+
       requestAnimationFrame(()=>{
         top.classList.remove('is-top');
         requestAnimationFrame(()=>{
@@ -2804,13 +2835,19 @@
   const RESET_T=0.10;
 
   const io=new IntersectionObserver(([e])=>{
-    if(e.intersectionRatio<RESET_T){ reset(); return; }
+    if(e.intersectionRatio<RESET_T){
+      reset();
+      return;
+    }
 
     if(e.isIntersecting && e.intersectionRatio>=PLAY_T){
-      preloadImagesOnce();  // <-- LAZY PRELOAD HERE
+      preloadImagesOnce();
 
-      if(video.ended) start();
-      else video.play().catch(()=>{});
+      if(video.ended){
+        start();
+      } else {
+        video.play().catch(()=>{});
+      }
     }
   },{threshold:[0,RESET_T,0.25,PLAY_T,1],rootMargin:'0px 0px -10% 0px'});
 
@@ -2819,14 +2856,24 @@
   video.addEventListener('ended',start);
 
   prevBtn.addEventListener('click',()=>{
-    if(!rotator.classList.contains('slideshow')){ start(); return; }
+    if(!rotator.classList.contains('slideshow')){
+      start();
+      return;
+    }
     clearTimers();
-    const top=topIsA?a:b, bottom=topIsA?b:a;
+
+    transitionId++;
+    const myId = transitionId;
+
+    const top=topIsA?a:b;
+    const bottom=topIsA?b:a;
     idx=(idx-2+sources.length)%sources.length;
     bottom.src=sources[idx];
     idx=(idx+1)%sources.length;
 
     whenDecodable(bottom).then(()=>{
+      if (myId !== transitionId) return;
+
       top.classList.remove('is-top');
       bottom.classList.add('is-top');
       topIsA=!topIsA;
@@ -2835,15 +2882,25 @@
   });
 
   nextBtn.addEventListener('click',()=>{
-    if(!rotator.classList.contains('slideshow')){ start(); return; }
+    if(!rotator.classList.contains('slideshow')){
+      start();
+      return;
+    }
     clearTimers();
     nextFrame();
   });
 
   toggleBtn.addEventListener('click',()=>{
     if(!rotator.classList.contains('slideshow')){
-      if(video.paused){ video.play(); icoPause.style.display='inline'; icoPlay.style.display='none'; }
-      else{ video.pause(); icoPause.style.display='none'; icoPlay.style.display='inline'; }
+      if(video.paused){
+        video.play().catch(()=>{});
+        icoPause.style.display='inline';
+        icoPlay.style.display='none';
+      } else {
+        video.pause();
+        icoPause.style.display='none';
+        icoPlay.style.display='inline';
+      }
       return;
     }
     paused=!paused;
@@ -2854,6 +2911,7 @@
   });
 })();
 </script>
+
 
 
   <!-- VATHI -->

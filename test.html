@@ -54,8 +54,15 @@
   justify-content:center;
   align-items:center;
   z-index:99999;
-  animation:introFadeOut 3.4s ease forwards;
+  opacity:1;
+  transition:opacity .6s ease;
 }
+/* When intro is done, fade it out smoothly */
+body.intro-done #intro{
+  opacity:0;
+  pointer-events:none;
+}
+
 
 /* start hidden; animation will be attached only when fonts are ready */
 #intro img{
@@ -75,12 +82,18 @@
 /* once fonts are loaded, animate both */
 .fonts-ready #intro img,
 .fonts-ready #intro h1{
-  animation:fadeInOut 3.4s ease forwards;
+  animation:fadeInOut 4s ease forwards;
 }
 
 
-    @keyframes fadeInOut{0%{opacity:0}20%{opacity:1}70%{opacity:1}100%{opacity:0}}
-    @keyframes introFadeOut{0%{opacity:1;visibility:visible}90%{opacity:0;visibility:visible}100%{opacity:0;visibility:hidden;display:none}}
+    @keyframes fadeInOut{
+  0%{opacity:0}
+  15%{opacity:1}
+  85%{opacity:1}
+  100%{opacity:0}
+}
+/* introFadeOut no longer needed – removed */
+
     body.intro-active #bg-video{opacity:0!important}
 
     /* NAV */

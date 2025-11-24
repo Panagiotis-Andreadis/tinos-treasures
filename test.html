@@ -54,15 +54,8 @@
   justify-content:center;
   align-items:center;
   z-index:99999;
-  opacity:1;
-  transition:opacity .6s ease;
+  animation:introFadeOut 3.4s ease forwards;
 }
-/* When intro is done, fade it out smoothly */
-body.intro-done #intro{
-  opacity:0;
-  pointer-events:none;
-}
-
 
 /* start hidden; animation will be attached only when fonts are ready */
 #intro img{
@@ -82,18 +75,12 @@ body.intro-done #intro{
 /* once fonts are loaded, animate both */
 .fonts-ready #intro img,
 .fonts-ready #intro h1{
-  animation:fadeInOut 4s ease forwards;
+  animation:fadeInOut 3.4s ease forwards;
 }
 
 
-    @keyframes fadeInOut{
-  0%{opacity:0}
-  15%{opacity:1}
-  85%{opacity:1}
-  100%{opacity:0}
-}
-/* introFadeOut no longer needed – removed */
-
+    @keyframes fadeInOut{0%{opacity:0}20%{opacity:1}70%{opacity:1}100%{opacity:0}}
+    @keyframes introFadeOut{0%{opacity:1;visibility:visible}90%{opacity:0;visibility:visible}100%{opacity:0;visibility:hidden;display:none}}
     body.intro-active #bg-video{opacity:0!important}
 
     /* NAV */
@@ -217,34 +204,10 @@ body.intro-done #intro{
     }
 
     .rotator{position:relative;width:100%;overflow:hidden;background:transparent}
-/* Layout for slideshow images + video (NOT the poster) */
-.rotator img:not(.apt-poster),
-.rotator video{
-  position:absolute!important;
-  top:50%!important;
-  left:50%!important;
-  transform:translate(-50%,-50%)!important;
-  height:100%!important;
-  width:auto!important;
-  max-height:100%!important;
-  max-width:none!important;
-  background:transparent!important;
-  transition:opacity .6s ease;
-}
-
-/* Only non-poster images start hidden */
-.rotator img:not(.apt-poster) {
-  opacity: 0;
-}
-
-.rotator img.is-top{
-  opacity:1;
-}
-
-.rotator img.standby{
-  opacity:0!important;
-}
-
+    .rotator img,.rotator video{position:absolute!important;top:50%!important;left:50%!important;transform:translate(-50%,-50%)!important;height:100%!important;width:auto!important;max-height:100%!important;max-width:none!important;background:transparent!important;transition:opacity .6s ease}
+    .rotator img{opacity:0}
+    .rotator img.is-top{opacity:1}
+    .rotator img.standby{opacity:0!important}
     .rotator video.hidden{opacity:0!important;pointer-events:none!important;z-index:0!important}
 
     .rotator .controls{
@@ -276,39 +239,6 @@ body.intro-done #intro{
 
     .rotator .btn{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.25);color:#fff;padding:6px 10px;border-radius:8px;cursor:pointer;font:inherit}
     .rotator .btn:hover{background:rgba(0,0,0,.5)}
-/* Base: apartment rotator uses an explicit poster layer under the video */
-.apt .rotator {
-  position: relative;
-  background: #000;
-  overflow: hidden;
-}
-
-/* Poster layer: what you see before the video fades in */
-.apt .rotator .apt-poster {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  z-index: 0;
-}
-
-/* Video + slideshow images sit above the poster */
-.apt .rotator video,
-.apt .rotator img:not(.apt-poster) {
-  z-index: 1;
-}
-
-/* Video starts invisible, fades in when playing */
-.apt .rotator video {
-  opacity: 0;
-  transition: opacity .35s ease;
-}
-
-.apt .rotator video.is-playing {
-  opacity: 1;
-}
 
     /* CONTACT wrap (location now has its own layout below) */
     #contact.section.slide-section .wrap{
@@ -1689,7 +1619,7 @@ body.intro-done #intro{
 
   <!-- Background video -->
   <div class="video-background">
-<video id="bg-video" muted loop playsinline preload="auto" poster="poster.jpg">
+<video id="bg-video" muted loop playsinline preload="metadata" poster="poster.jpg">
       <source src="tinos_treasures_background.mp4" type="video/mp4" />
     </video>
   </div>
@@ -1760,17 +1690,9 @@ body.intro-done #intro{
       <!-- APIGANIA -->
       <div id="apigania" class="apt apt-section snap">
         <div class="rotator" id="apigania-rotator">
-          <!--    <img
-    class="apt-poster"
-    src="media/apigania_fast/apigania_fallback_1400.jpg"
-    alt="Apigania — seaside apartment preview"
-  > -->
-
-  <video id="apigania-video" muted playsinline webkit-playsinline preload="auto"
-         poster="media/apigania_fast/apigania_fallback_1400.jpg">
-    <source src="media/apigania_fast/apigania.mp4" type="video/mp4">
-  </video>
-
+            <video id="apigania-video" muted playsinline webkit-playsinline preload="none" poster="media/apigania_fast/apigania_fallback_1400.jpg">
+            <source src="media/apigania_fast/apigania.mp4" type="video/mp4">
+          </video>
           <img id="apigania-a" loading="lazy" alt="Apigania gallery image A" class="standby" src="media/apigania_fast/Apigania_LivingRoom_f_1_1400.webp">
           <img id="apigania-b" loading="lazy" alt="Apigania gallery image B" class="standby" src="media/apigania_fast/Apigania_LivingRoom_f_2_1400.webp">
           <div class="controls" aria-label="Gallery controls">
@@ -1856,12 +1778,9 @@ body.intro-done #intro{
       <!-- VATHI -->
       <div id="vathi" class="apt apt-section snap">
         <div class="rotator" id="vathi-rotator">
-
-
-  <video id="vathi-video" muted playsinline webkit-playsinline preload="auto"
-         poster="media/vathi_fast/vathi_fallback_1400.jpg">
-    <source src="media/vathi_fast/vathi.mp4" type="video/mp4">
-  </video>
+<video id="vathi-video" muted playsinline webkit-playsinline preload="none" poster="media/vathi_fast/vathi_fallback_1400.jpg">
+            <source src="media/vathi_fast/vathi.mp4" type="video/mp4">
+          </video>
           <img id="vathi-a" loading="lazy" alt="Vathi gallery image A" class="standby" src="media/vathi_fast/Vathi_LivingRoom_f_1_f_1_1400.webp">
           <img id="vathi-b" loading="lazy" alt="Vathi gallery image B" class="standby" src="media/vathi_fast/Vathi_LivingRoom_f_3_f_1_1400.webp">
           <div class="controls" aria-label="Gallery controls">
@@ -1950,12 +1869,9 @@ body.intro-done #intro{
       <!-- LIVADA -->
       <div id="livada" class="apt apt-section snap">
         <div class="rotator" id="livada-rotator">
-  
-
-  <video id="livada-video" muted playsinline webkit-playsinline preload="auto"
-         poster="media/livada_fast/livada_fallback_1400.jpg">
-    <source src="media/livada_fast/livada.mp4" type="video/mp4">
-  </video>
+<video id="livada-video" muted playsinline webkit-playsinline preload="none" poster="media/livada_fast/livada_fallback_1400.jpg">
+            <source src="media/livada_fast/livada.mp4" type="video/mp4">
+          </video>
           <img id="livada-a" loading="lazy" alt="Livada gallery image A" class="standby" src="media/livada_fast/Livada_LivingRoom_f_1_1400.webp">
           <img id="livada-b" loading="lazy" alt="Livada gallery image B" class="standby" src="media/livada_fast/Livada_LivingRoom_f_2_1400.webp">
           <div class="controls" aria-label="Gallery controls">
@@ -2034,11 +1950,9 @@ body.intro-done #intro{
       <!-- AMMOS -->
       <div id="ammos" class="apt apt-section snap">
         <div class="rotator" id="ammos-rotator">
-
-  <video id="ammos-video" muted playsinline webkit-playsinline preload="auto"
-         poster="media/ammos_fast/ammos_fallback_1400.jpg">
-    <source src="media/ammos_fast/ammos.mp4" type="video/mp4">
-  </video>
+<video id="ammos-video" muted playsinline webkit-playsinline preload="none" poster="media/ammos_fast/ammos_fallback_1400.jpg">
+            <source src="media/ammos_fast/ammos.mp4" type="video/mp4">
+          </video>
           <img id="ammos-a" loading="lazy" alt="Ammos gallery image A" class="standby" src="media/ammos_fast/Ammos_LivingRoom_f_1_1400.webp">
           <img id="ammos-b" loading="lazy" alt="Ammos gallery image B" class="standby" src="media/ammos_fast/Ammos_LivingRoom_f_2_1400.webp">
           <div class="controls" aria-label="Gallery controls">
@@ -2808,8 +2722,6 @@ body.intro-done #intro{
 
     const rotator=document.getElementById('apigania-rotator');
     const video=document.getElementById('apigania-video');
-
-
     const a=document.getElementById('apigania-a');
     const b=document.getElementById('apigania-b');
     if(!rotator||!video||!a||!b) return;
@@ -2820,10 +2732,6 @@ body.intro-done #intro{
     video.setAttribute('playsinline','');
     video.setAttribute('webkit-playsinline',''); 
     video.setAttribute('autoplay','');
-    // When video starts playing, fade it in (avoid black flash)
-    video.addEventListener('playing', () => {
-      video.classList.add('is-playing');
-    });
 
     const prevBtn = rotator.querySelector('.btn.prev');
     const nextBtn = rotator.querySelector('.btn.next');
@@ -2951,7 +2859,7 @@ body.intro-done #intro{
 
       rotator.classList.remove('slideshow');
       video.classList.remove('hidden');
-video.classList.remove('is-playing');
+
       try{ video.pause(); }catch(e){}
       try{ video.currentTime = 0; }catch(e){}
       // Icon default for video (playing from start)
@@ -3084,9 +2992,6 @@ video.classList.remove('is-playing');
 
     const rotator=document.getElementById('vathi-rotator');
     const video=document.getElementById('vathi-video');
-    // Fix Safari black flash:
-
-
     const a=document.getElementById('vathi-a');
     const b=document.getElementById('vathi-b');
     if(!rotator||!video||!a||!b) return;
@@ -3105,10 +3010,6 @@ video.classList.remove('is-playing');
     video.setAttribute('playsinline','');
     video.setAttribute('webkit-playsinline','');
     video.setAttribute('autoplay','');
-    // When video starts playing, fade it in (avoid black flash)
-    video.addEventListener('playing', () => {
-      video.classList.add('is-playing');
-    });
 
     const prevBtn  = rotator.querySelector('.btn.prev');
     const nextBtn  = rotator.querySelector('.btn.next');
@@ -3222,7 +3123,7 @@ video.classList.remove('is-playing');
 
       rotator.classList.remove('slideshow');
       video.classList.remove('hidden');
-video.classList.remove('is-playing');
+
       try{ video.pause(); }catch(e){}
       try{ video.currentTime=0; }catch(e){}
       icoPause.style.display='inline';
@@ -3335,8 +3236,6 @@ video.classList.remove('is-playing');
 
     const rotator=document.getElementById('livada-rotator');
     const video=document.getElementById('livada-video');
-   
-
     const a=document.getElementById('livada-a');
     const b=document.getElementById('livada-b');
     if(!rotator||!video||!a||!b) return;
@@ -3355,10 +3254,6 @@ video.classList.remove('is-playing');
     video.setAttribute('playsinline','');
     video.setAttribute('webkit-playsinline','');
     video.setAttribute('autoplay','');
-    // When video starts playing, fade it in (avoid black flash)
-    video.addEventListener('playing', () => {
-      video.classList.add('is-playing');
-    });
 
     const prevBtn  = rotator.querySelector('.btn.prev');
     const nextBtn  = rotator.querySelector('.btn.next');
@@ -3472,7 +3367,7 @@ video.classList.remove('is-playing');
 
       rotator.classList.remove('slideshow');
       video.classList.remove('hidden');
-video.classList.remove('is-playing');
+
       try{ video.pause(); }catch(e){}
       try{ video.currentTime=0; }catch(e){}
       icoPause.style.display='inline';
@@ -3585,8 +3480,6 @@ video.classList.remove('is-playing');
 
     const rotator=document.getElementById('ammos-rotator');
     const video=document.getElementById('ammos-video');
-    
-
     const a=document.getElementById('ammos-a');
     const b=document.getElementById('ammos-b');
     if(!rotator||!video||!a||!b) return;
@@ -3605,10 +3498,6 @@ video.classList.remove('is-playing');
     video.setAttribute('playsinline','');
     video.setAttribute('webkit-playsinline','');
     video.setAttribute('autoplay','');
-    // When video starts playing, fade it in (avoid black flash)
-    video.addEventListener('playing', () => {
-      video.classList.add('is-playing');
-    });
 
     const prevBtn  = rotator.querySelector('.btn.prev');
     const nextBtn  = rotator.querySelector('.btn.next');
@@ -3722,7 +3611,7 @@ video.classList.remove('is-playing');
 
       rotator.classList.remove('slideshow');
       video.classList.remove('hidden');
-video.classList.remove('is-playing');
+
       try{ video.pause(); }catch(e){}
       try{ video.currentTime=0; }catch(e){}
       icoPause.style.display='inline';

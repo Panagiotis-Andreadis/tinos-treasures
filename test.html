@@ -252,6 +252,40 @@ body.intro-done #intro{
 
     .rotator .btn{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.25);color:#fff;padding:6px 10px;border-radius:8px;cursor:pointer;font:inherit}
     .rotator .btn:hover{background:rgba(0,0,0,.5)}
+/* Avoid black flash on first play of apartment videos */
+.apt .rotator {
+  background-color: #000;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* Per-apartment fallback image underneath the video */
+#apigania-rotator {
+  background-image: url("media/apigania_fast/apigania_fallback_1400.jpg");
+}
+
+#vathi-rotator {
+  background-image: url("media/vathi_fast/vathi_fallback_1400.jpg");
+}
+
+#livada-rotator {
+  background-image: url("media/livada_fast/livada_fallback_1400.jpg");
+}
+
+#ammos-rotator {
+  background-image: url("media/ammos_fast/ammos_fallback_1400.jpg");
+}
+
+/* Fade apartment videos in once they are actually playing */
+.apt .rotator video {
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+
+.apt .rotator video.is-playing {
+  opacity: 1;
+}
 
     /* CONTACT wrap (location now has its own layout below) */
     #contact.section.slide-section .wrap{
@@ -2747,6 +2781,10 @@ body.intro-done #intro{
     video.setAttribute('playsinline','');
     video.setAttribute('webkit-playsinline',''); 
     video.setAttribute('autoplay','');
+    // When video starts playing, fade it in (avoid black flash)
+    video.addEventListener('playing', () => {
+      video.classList.add('is-playing');
+    });
 
     const prevBtn = rotator.querySelector('.btn.prev');
     const nextBtn = rotator.querySelector('.btn.next');
@@ -2874,7 +2912,7 @@ body.intro-done #intro{
 
       rotator.classList.remove('slideshow');
       video.classList.remove('hidden');
-
+video.classList.remove('is-playing');
       try{ video.pause(); }catch(e){}
       try{ video.currentTime = 0; }catch(e){}
       // Icon default for video (playing from start)
@@ -3028,6 +3066,10 @@ body.intro-done #intro{
     video.setAttribute('playsinline','');
     video.setAttribute('webkit-playsinline','');
     video.setAttribute('autoplay','');
+    // When video starts playing, fade it in (avoid black flash)
+    video.addEventListener('playing', () => {
+      video.classList.add('is-playing');
+    });
 
     const prevBtn  = rotator.querySelector('.btn.prev');
     const nextBtn  = rotator.querySelector('.btn.next');
@@ -3141,7 +3183,7 @@ body.intro-done #intro{
 
       rotator.classList.remove('slideshow');
       video.classList.remove('hidden');
-
+video.classList.remove('is-playing');
       try{ video.pause(); }catch(e){}
       try{ video.currentTime=0; }catch(e){}
       icoPause.style.display='inline';
@@ -3274,6 +3316,10 @@ body.intro-done #intro{
     video.setAttribute('playsinline','');
     video.setAttribute('webkit-playsinline','');
     video.setAttribute('autoplay','');
+    // When video starts playing, fade it in (avoid black flash)
+    video.addEventListener('playing', () => {
+      video.classList.add('is-playing');
+    });
 
     const prevBtn  = rotator.querySelector('.btn.prev');
     const nextBtn  = rotator.querySelector('.btn.next');
@@ -3387,7 +3433,7 @@ body.intro-done #intro{
 
       rotator.classList.remove('slideshow');
       video.classList.remove('hidden');
-
+video.classList.remove('is-playing');
       try{ video.pause(); }catch(e){}
       try{ video.currentTime=0; }catch(e){}
       icoPause.style.display='inline';
@@ -3520,6 +3566,10 @@ body.intro-done #intro{
     video.setAttribute('playsinline','');
     video.setAttribute('webkit-playsinline','');
     video.setAttribute('autoplay','');
+    // When video starts playing, fade it in (avoid black flash)
+    video.addEventListener('playing', () => {
+      video.classList.add('is-playing');
+    });
 
     const prevBtn  = rotator.querySelector('.btn.prev');
     const nextBtn  = rotator.querySelector('.btn.next');
@@ -3633,7 +3683,7 @@ body.intro-done #intro{
 
       rotator.classList.remove('slideshow');
       video.classList.remove('hidden');
-
+video.classList.remove('is-playing');
       try{ video.pause(); }catch(e){}
       try{ video.currentTime=0; }catch(e){}
       icoPause.style.display='inline';

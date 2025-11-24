@@ -1610,6 +1610,15 @@
   color: #555;
   margin-top: 4px;
 }
+/* === APIGANIA — remove black flicker before video starts === */
+#apigania-rotator video {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+#apigania-rotator.video-ready video {
+  opacity: 1;
+}
 
   </style>
 </head>
@@ -2725,6 +2734,16 @@
     const a=document.getElementById('apigania-a');
     const b=document.getElementById('apigania-b');
     if(!rotator||!video||!a||!b) return;
+// --- Prevent black flicker: only fade in when video has a real frame ---
+video.addEventListener('loadeddata', () => {
+  rotator.classList.add('video-ready');
+});
+video.addEventListener('playing', () => {
+  rotator.classList.add('video-ready');
+});
+video.addEventListener('loadedmetadata', () => {
+  rotator.classList.add('video-ready');
+});
 
     video.muted = true; 
     video.playsInline = true;

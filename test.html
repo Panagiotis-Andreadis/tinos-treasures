@@ -1610,13 +1610,13 @@
   color: #555;
   margin-top: 4px;
 }
-/* === APIGANIA — remove black flicker before video starts === */
-#apigania-rotator video {
+/* === GLOBAL: remove black flicker for all apartment videos === */
+.rotator video {
   opacity: 0;
   transition: opacity 0.35s ease;
 }
 
-#apigania-rotator.video-ready video {
+.rotator.video-ready video {
   opacity: 1;
 }
 
@@ -3014,6 +3014,15 @@ video.addEventListener('loadedmetadata', () => {
     const a=document.getElementById('vathi-a');
     const b=document.getElementById('vathi-b');
     if(!rotator||!video||!a||!b) return;
+video.addEventListener('loadeddata', () => {
+  rotator.classList.add('video-ready');
+});
+video.addEventListener('playing', () => {
+  rotator.classList.add('video-ready');
+});
+video.addEventListener('loadedmetadata', () => {
+  rotator.classList.add('video-ready');
+});
 
     /* 🔹 NEW: lazy preload instead of preloading on page load */
     let imagesPreloaded = false;
@@ -3258,6 +3267,15 @@ video.addEventListener('loadedmetadata', () => {
     const a=document.getElementById('livada-a');
     const b=document.getElementById('livada-b');
     if(!rotator||!video||!a||!b) return;
+video.addEventListener('loadeddata', () => {
+  rotator.classList.add('video-ready');
+});
+video.addEventListener('playing', () => {
+  rotator.classList.add('video-ready');
+});
+video.addEventListener('loadedmetadata', () => {
+  rotator.classList.add('video-ready');
+});
 
     /* 🔹 NEW: lazy preload instead of preloading on page load */
     let imagesPreloaded = false;
@@ -3502,6 +3520,15 @@ video.addEventListener('loadedmetadata', () => {
     const a=document.getElementById('ammos-a');
     const b=document.getElementById('ammos-b');
     if(!rotator||!video||!a||!b) return;
+video.addEventListener('loadeddata', () => {
+  rotator.classList.add('video-ready');
+});
+video.addEventListener('playing', () => {
+  rotator.classList.add('video-ready');
+});
+video.addEventListener('loadedmetadata', () => {
+  rotator.classList.add('video-ready');
+});
 
     /* 🔹 NEW: lazy preload instead of preloading on page load */
     let imagesPreloaded = false;

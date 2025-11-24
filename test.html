@@ -2788,6 +2788,15 @@
     const a=document.getElementById('apigania-a');
     const b=document.getElementById('apigania-b');
     if(!rotator||!video||!a||!b) return;
+const wrapper = video.parentElement;
+const posterEl = wrapper ? wrapper.querySelector('.video-poster') : null;
+
+if (posterEl) {
+  video.addEventListener('loadeddata', () => {
+    video.classList.add('is-ready');      // triggers fade-in
+    posterEl.classList.add('is-hidden');  // poster fades out
+  }, { once: true });
+}
 
     video.muted = true; 
     video.playsInline = true;
@@ -3058,6 +3067,15 @@
     const a=document.getElementById('vathi-a');
     const b=document.getElementById('vathi-b');
     if(!rotator||!video||!a||!b) return;
+const wrapper = video.parentElement;
+const posterEl = wrapper ? wrapper.querySelector('.video-poster') : null;
+
+if (posterEl) {
+  video.addEventListener('loadeddata', () => {
+    video.classList.add('is-ready');      // triggers fade-in
+    posterEl.classList.add('is-hidden');  // poster fades out
+  }, { once: true });
+}
 
     /* 🔹 NEW: lazy preload instead of preloading on page load */
     let imagesPreloaded = false;
@@ -3302,6 +3320,15 @@
     const a=document.getElementById('livada-a');
     const b=document.getElementById('livada-b');
     if(!rotator||!video||!a||!b) return;
+const wrapper = video.parentElement;
+const posterEl = wrapper ? wrapper.querySelector('.video-poster') : null;
+
+if (posterEl) {
+  video.addEventListener('loadeddata', () => {
+    video.classList.add('is-ready');      // triggers fade-in
+    posterEl.classList.add('is-hidden');  // poster fades out
+  }, { once: true });
+}
 
     /* 🔹 NEW: lazy preload instead of preloading on page load */
     let imagesPreloaded = false;
@@ -3546,6 +3573,15 @@
     const a=document.getElementById('ammos-a');
     const b=document.getElementById('ammos-b');
     if(!rotator||!video||!a||!b) return;
+const wrapper = video.parentElement;
+const posterEl = wrapper ? wrapper.querySelector('.video-poster') : null;
+
+if (posterEl) {
+  video.addEventListener('loadeddata', () => {
+    video.classList.add('is-ready');      // triggers fade-in
+    posterEl.classList.add('is-hidden');  // poster fades out
+  }, { once: true });
+}
 
     /* 🔹 NEW: lazy preload instead of preloading on page load */
     let imagesPreloaded = false;

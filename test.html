@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-39EZK3QC8Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+
+  gtag('js', new Date());
+
+  // Replace with your real GA4 Measurement ID
+  gtag('config', 'G-39EZK3QC8Q');
+</script>
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tinos Treasures | Luxury Seaside Apartments in Tinos, Greece</title>
@@ -1680,7 +1692,7 @@
   </div>
 
   <!-- HERO -->
-  <section id="home" class="anchor-offset snap slide-section">
+  <section id="home" class="anchor-offset snap slide-section" data-ga-section="home">
     <div class="container">
       <h1 class="visually-hidden">Luxury Seaside Apartments in Isternia Bay, Tinos</h1>
       <main>
@@ -1694,10 +1706,10 @@
   </section>
 
   <!-- APARTMENTS -->
-  <section id="apartments" class="section anchor-offset">
+  <section id="apartments" class="section anchor-offset" data-ga-section="apartments">
     <div class="wrap">
       <!-- APIGANIA -->
-      <div id="apigania" class="apt apt-section snap">
+      <div id="apigania" class="apt apt-section snap" data-ga-section="apigania">
         <div class="rotator" id="apigania-rotator">
             <video id="apigania-video" muted playsinline webkit-playsinline preload="none" poster="media/apigania_fast/apigania_fallback_1400.jpg">
             <source src="media/apigania_fast/apigania.mp4" type="video/mp4">
@@ -1785,7 +1797,7 @@
       </div>
 
       <!-- VATHI -->
-      <div id="vathi" class="apt apt-section snap">
+      <div id="vathi" class="apt apt-section snap" data-ga-section="vathi">
         <div class="rotator" id="vathi-rotator">
 <video id="vathi-video" muted playsinline webkit-playsinline preload="none" poster="media/vathi_fast/vathi_fallback_1400.jpg">
             <source src="media/vathi_fast/vathi.mp4" type="video/mp4">
@@ -1876,7 +1888,7 @@
       </div>
 
       <!-- LIVADA -->
-      <div id="livada" class="apt apt-section snap">
+      <div id="livada" class="apt apt-section snap" data-ga-section="livada">
         <div class="rotator" id="livada-rotator">
 <video id="livada-video" muted playsinline webkit-playsinline preload="none" poster="media/livada_fast/livada_fallback_1400.jpg">
             <source src="media/livada_fast/livada.mp4" type="video/mp4">
@@ -1957,7 +1969,7 @@
       </div>
 
       <!-- AMMOS -->
-      <div id="ammos" class="apt apt-section snap">
+      <div id="ammos" class="apt apt-section snap" data-ga-section="ammos">
         <div class="rotator" id="ammos-rotator">
 <video id="ammos-video" muted playsinline webkit-playsinline preload="none" poster="media/ammos_fast/ammos_fallback_1400.jpg">
             <source src="media/ammos_fast/ammos.mp4" type="video/mp4">
@@ -2041,7 +2053,7 @@
   </section>
 
      <!-- LOCATION -->
-  <section id="location" class="section anchor-offset snap slide-section" style="background:#fff;color:#000">
+  <section id="location" class="section anchor-offset snap slide-section" style="background:#fff;color:#000" data-ga-section="location">
     <div class="wrap">
       <div class="location-grid">
         <!-- Left: image rotator -->
@@ -2133,7 +2145,7 @@
   </section>
 
      <!-- CONTACT -->
-<section id="contact" class="section anchor-offset snap slide-section" style="background:#fff;color:#000">
+<section id="contact" class="section anchor-offset snap slide-section" style="background:#fff;color:#000" data-ga-section="contact">
   <div class="wrap">
     <div class="contact-columns">
 
@@ -4057,6 +4069,46 @@ video.addEventListener('loadedmetadata', () => {
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
+<script>
+(function () {
+  // All the sections we want to track
+  const trackedSections = document.querySelectorAll('[data-ga-section]');
+  if (!trackedSections.length) return;
+
+  // Keep track of what we've already sent to GA so we don't spam
+  const seen = new Set();
+
+  function sendSectionEvent(sectionName) {
+    if (!window.gtag || typeof gtag !== 'function') return; // GA not loaded yet
+    if (seen.has(sectionName)) return; // only once per pageview
+    seen.add(sectionName);
+
+    gtag('event', 'section_view', {
+      section_name: sectionName,
+      // You can add more params if you want:
+      // page_path: location.pathname,
+      // page_location: location.href,
+    });
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+
+      const el = entry.target;
+      const name = el.getAttribute('data-ga-section');
+      if (!name) return;
+
+      // You can tweak this if you want "50% visible" etc.
+      sendSectionEvent(name);
+    });
+  }, {
+    threshold: 0.4 // fire when 40% of the section is visible
+  });
+
+  trackedSections.forEach(sec => observer.observe(sec));
+})();
+</script>
 
 
 

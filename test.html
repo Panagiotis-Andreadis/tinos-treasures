@@ -217,10 +217,34 @@ body.intro-done #intro{
     }
 
     .rotator{position:relative;width:100%;overflow:hidden;background:transparent}
-    .rotator img,.rotator video{position:absolute!important;top:50%!important;left:50%!important;transform:translate(-50%,-50%)!important;height:100%!important;width:auto!important;max-height:100%!important;max-width:none!important;background:transparent!important;transition:opacity .6s ease}
-    .rotator img{opacity:0}
-    .rotator img.is-top{opacity:1}
-    .rotator img.standby{opacity:0!important}
+/* Layout for slideshow images + video (NOT the poster) */
+.rotator img:not(.apt-poster),
+.rotator video{
+  position:absolute!important;
+  top:50%!important;
+  left:50%!important;
+  transform:translate(-50%,-50%)!important;
+  height:100%!important;
+  width:auto!important;
+  max-height:100%!important;
+  max-width:none!important;
+  background:transparent!important;
+  transition:opacity .6s ease;
+}
+
+/* Only non-poster images start hidden */
+.rotator img:not(.apt-poster) {
+  opacity: 0;
+}
+
+.rotator img.is-top{
+  opacity:1;
+}
+
+.rotator img.standby{
+  opacity:0!important;
+}
+
     .rotator video.hidden{opacity:0!important;pointer-events:none!important;z-index:0!important}
 
     .rotator .controls{

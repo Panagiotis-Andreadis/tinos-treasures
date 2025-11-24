@@ -222,6 +222,14 @@
   transition:opacity .2s ease;
   z-index:2;
 }
+/* Prevent Safari/Chrome black flash */
+.rotator video {
+  opacity: 0;
+  transition: opacity .25s linear;
+}
+.rotator video.video-ready {
+  opacity: 1;
+}
 
 /* Desktop: show controls on hover over the rotator (video OR slideshow) */
 @media (hover:hover){
@@ -2722,6 +2730,11 @@
 
     const rotator=document.getElementById('apigania-rotator');
     const video=document.getElementById('apigania-video');
+    // Fix Safari black flash:
+video.addEventListener('loadeddata', () => {
+  video.classList.add('video-ready');
+});
+
     const a=document.getElementById('apigania-a');
     const b=document.getElementById('apigania-b');
     if(!rotator||!video||!a||!b) return;
@@ -2992,6 +3005,11 @@
 
     const rotator=document.getElementById('vathi-rotator');
     const video=document.getElementById('vathi-video');
+    // Fix Safari black flash:
+video.addEventListener('loadeddata', () => {
+  video.classList.add('video-ready');
+});
+
     const a=document.getElementById('vathi-a');
     const b=document.getElementById('vathi-b');
     if(!rotator||!video||!a||!b) return;
@@ -3236,6 +3254,11 @@
 
     const rotator=document.getElementById('livada-rotator');
     const video=document.getElementById('livada-video');
+    // Fix Safari black flash:
+video.addEventListener('loadeddata', () => {
+  video.classList.add('video-ready');
+});
+
     const a=document.getElementById('livada-a');
     const b=document.getElementById('livada-b');
     if(!rotator||!video||!a||!b) return;
@@ -3480,6 +3503,11 @@
 
     const rotator=document.getElementById('ammos-rotator');
     const video=document.getElementById('ammos-video');
+    // Fix Safari black flash:
+video.addEventListener('loadeddata', () => {
+  video.classList.add('video-ready');
+});
+
     const a=document.getElementById('ammos-a');
     const b=document.getElementById('ammos-b');
     if(!rotator||!video||!a||!b) return;

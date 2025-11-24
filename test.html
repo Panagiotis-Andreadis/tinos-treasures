@@ -239,6 +239,40 @@
 
     .rotator .btn{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.25);color:#fff;padding:6px 10px;border-radius:8px;cursor:pointer;font:inherit}
     .rotator .btn:hover{background:rgba(0,0,0,.5)}
+/* === Fix Safari black flash for apartment videos === */
+.video-wrapper{
+  position:relative;
+  width:100%;
+  height:100%;
+}
+
+.video-wrapper .video-poster,
+.video-wrapper video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+/* Poster must be visible even though .rotator img sets opacity:0 */
+.video-wrapper .video-poster{
+  opacity:1;
+  transition:opacity .4s ease;
+}
+
+/* Video starts hidden; we fade it in once ready */
+.video-wrapper video{
+  opacity:0;
+  transition:opacity .4s ease;
+}
+
+.video-wrapper video.is-ready{
+  opacity:1;
+}
+
+.video-wrapper .video-poster.is-hidden{
+  opacity:0;
+}
 
     /* CONTACT wrap (location now has its own layout below) */
     #contact.section.slide-section .wrap{
@@ -1689,10 +1723,16 @@
     <div class="wrap">
       <!-- APIGANIA -->
       <div id="apigania" class="apt apt-section snap">
-        <div class="rotator" id="apigania-rotator">
-            <video id="apigania-video" muted playsinline webkit-playsinline preload="none" poster="media/apigania_fast/apigania_fallback_1400.jpg">
-            <source src="media/apigania_fast/apigania.mp4" type="video/mp4">
-          </video>
+         <div class="video-wrapper">
+    <img
+      class="video-poster"
+      src="media/apigania_fast/apigania_fallback_1400.webp"
+      alt="Apigania apartment entrance"
+    >
+    <video id="apigania-video" muted playsinline webkit-playsinline preload="none">
+      <source src="media/apigania_fast/apigania.mp4" type="video/mp4">
+    </video>
+  </div>
           <img id="apigania-a" loading="lazy" alt="Apigania gallery image A" class="standby" src="media/apigania_fast/Apigania_LivingRoom_f_1_1400.webp">
           <img id="apigania-b" loading="lazy" alt="Apigania gallery image B" class="standby" src="media/apigania_fast/Apigania_LivingRoom_f_2_1400.webp">
           <div class="controls" aria-label="Gallery controls">
@@ -1778,9 +1818,17 @@
       <!-- VATHI -->
       <div id="vathi" class="apt apt-section snap">
         <div class="rotator" id="vathi-rotator">
-<video id="vathi-video" muted playsinline webkit-playsinline preload="none" poster="media/vathi_fast/vathi_fallback_1400.jpg">
-            <source src="media/vathi_fast/vathi.mp4" type="video/mp4">
-          </video>
+<div class="rotator" id="vathi-rotator">
+  <div class="video-wrapper">
+    <img
+      class="video-poster"
+      src="media/vathi_fast/vathi_fallback_1400.webp"
+      alt="Vathi apartment entrance"
+    >
+    <video id="vathi-video" muted playsinline webkit-playsinline preload="none">
+      <source src="media/vathi_fast/vathi.mp4" type="video/mp4">
+    </video>
+  </div>
           <img id="vathi-a" loading="lazy" alt="Vathi gallery image A" class="standby" src="media/vathi_fast/Vathi_LivingRoom_f_1_f_1_1400.webp">
           <img id="vathi-b" loading="lazy" alt="Vathi gallery image B" class="standby" src="media/vathi_fast/Vathi_LivingRoom_f_3_f_1_1400.webp">
           <div class="controls" aria-label="Gallery controls">
@@ -1869,9 +1917,16 @@
       <!-- LIVADA -->
       <div id="livada" class="apt apt-section snap">
         <div class="rotator" id="livada-rotator">
-<video id="livada-video" muted playsinline webkit-playsinline preload="none" poster="media/livada_fast/livada_fallback_1400.jpg">
-            <source src="media/livada_fast/livada.mp4" type="video/mp4">
-          </video>
+ <div class="video-wrapper">
+    <img
+      class="video-poster"
+      src="media/livada_fast/livada_fallback_1400.webp"
+      alt="Livada apartment entrance"
+    >
+    <video id="livada-video" muted playsinline webkit-playsinline preload="none">
+      <source src="media/livada_fast/livada.mp4" type="video/mp4">
+    </video>
+  </div>
           <img id="livada-a" loading="lazy" alt="Livada gallery image A" class="standby" src="media/livada_fast/Livada_LivingRoom_f_1_1400.webp">
           <img id="livada-b" loading="lazy" alt="Livada gallery image B" class="standby" src="media/livada_fast/Livada_LivingRoom_f_2_1400.webp">
           <div class="controls" aria-label="Gallery controls">
@@ -1950,9 +2005,17 @@
       <!-- AMMOS -->
       <div id="ammos" class="apt apt-section snap">
         <div class="rotator" id="ammos-rotator">
-<video id="ammos-video" muted playsinline webkit-playsinline preload="none" poster="media/ammos_fast/ammos_fallback_1400.jpg">
-            <source src="media/ammos_fast/ammos.mp4" type="video/mp4">
-          </video>
+<div class="rotator" id="ammos-rotator">
+  <div class="video-wrapper">
+    <img
+      class="video-poster"
+      src="media/ammos_fast/ammos_fallback_1400.webp"
+      alt="Ammos apartment entrance"
+    >
+    <video id="ammos-video" muted playsinline webkit-playsinline preload="none">
+      <source src="media/ammos_fast/ammos.mp4" type="video/mp4">
+    </video>
+  </div>
           <img id="ammos-a" loading="lazy" alt="Ammos gallery image A" class="standby" src="media/ammos_fast/Ammos_LivingRoom_f_1_1400.webp">
           <img id="ammos-b" loading="lazy" alt="Ammos gallery image B" class="standby" src="media/ammos_fast/Ammos_LivingRoom_f_2_1400.webp">
           <div class="controls" aria-label="Gallery controls">

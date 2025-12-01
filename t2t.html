@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>T2T – Tinos to Tinos | Non-Profit Pop-Up Canteen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --blue: #0f3c78;
+      --blue-light: #e6effa;
+      --sand: #f7f3e9;
+      --dark: #1d1d1d;
+      --accent: #f4b942;
+      --white: #ffffff;
+      --max-width: 1100px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: var(--sand);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      background: radial-gradient(circle at top, #ffffff 0, var(--blue-light) 45%, var(--sand) 100%);
+      padding: 20px 16px 60px;
+      border-bottom: 1px solid rgba(15,60,120,0.08);
+    }
+
+    .nav {
+      max-width: var(--max-width);
+      margin: 0 auto 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blue);
+      font-size: 0.9rem;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      border: 2px solid var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a {
+      opacity: 0.8;
+    }
+
+    .nav-links a:hover {
+      opacity: 1;
+    }
+
+    .cta-button {
+      background-color: var(--blue);
+      color: var(--white);
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.15s ease;
+      box-shadow: 0 8px 18px rgba(15,60,120,0.25);
+      white-space: nowrap;
+    }
+
+    .cta-button:hover {
+      background-color: #0b2e5b;
+      transform: translateY(-1px);
+      box-shadow: 0 12px 26px rgba(15,60,120,0.3);
+    }
+
+    .hero {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 32px;
+      align-items: center;
+    }
+
+    .hero-kicker {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.75rem;
+      color: var(--blue);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 3vw + 1rem, 3.1rem);
+      line-height: 1.1;
+      color: var(--blue);
+      margin-bottom: 16px;
+    }
+
+    .hero h1 span {
+      color: var(--accent);
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+      max-width: 32rem;
+      margin-bottom: 18px;
+    }
+
+    .hero-tagline {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--blue);
+      margin-bottom: 22px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .ghost-link {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(15,60,120,0.2);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--blue);
+      background-color: rgba(255,255,255,0.7);
+    }
+
+    .hero-meta {
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+
+    .hero-card {
+      background-color: var(--white);
+      border-radius: 18px;
+      padding: 18px 18px 16px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+      border: 1px solid rgba(15,60,120,0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .hero-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hero-pill {
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background-color: var(--blue-light);
+      color: var(--blue);
+      font-weight: 600;
+    }
+
+    .hero-card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--blue);
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .stat {
+      padding: 8px 10px;
+      border-radius: 12px;
+      background-color: var(--sand);
+      text-align: left;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      opacity: 0.7;
+      margin-bottom: 2px;
+    }
+
+    .stat-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--blue);
+    }
+
+    .quote-block {
+      border-left: 3px solid var(--blue);
+      padding-left: 10px;
+      margin-top: 10px;
+      font-size: 0.85rem;
+      font-style: italic;
+    }
+
+    main {
+      padding: 40px 16px 60px;
+    }
+
+    section {
+      max-width: var(--max-width);
+      margin: 0 auto 40px;
+    }
+
+    .section-label {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.7rem;
+      color: var(--blue);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .section-title {
+      font-size: 1.6rem;
+      margin-bottom: 16px;
+      color: var(--dark);
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 26px;
+      align-items: flex-start;
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 8px 0 16px;
+    }
+
+    .pill {
+      font-size: 0.8rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(15,60,120,0.18);
+      background-color: rgba(255,255,255,0.65);
+    }
+
+    p {
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+    }
+
+    .highlight-box {
+      background-color: var(--white);
+      border-radius: 16px;
+      padding: 16px 18px;
+      border: 1px solid rgba(15,60,120,0.06);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+      font-size: 0.9rem;
+    }
+
+    .highlight-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--blue);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    ul {
+      padding-left: 18px;
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+    }
+
+    .quote-large {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--blue);
+      margin-bottom: 10px;
+    }
+
+    .centered {
+      text-align: center;
+    }
+
+    .cta-banner {
+      background-color: var(--blue);
+      color: var(--white);
+      border-radius: 18px;
+      padding: 26px 20px;
+      text-align: center;
+      box-shadow: 0 14px 30px rgba(0,0,0,0.15);
+    }
+
+    .cta-banner h2 {
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+    }
+
+    .cta-banner p {
+      margin-bottom: 14px;
+      font-size: 0.95rem;
+      opacity: 0.92;
+    }
+
+    .cta-inline {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .cta-inline small {
+      font-size: 0.8rem;
+      opacity: 0.85;
+    }
+
+    footer {
+      border-top: 1px solid rgba(15,60,120,0.12);
+      padding: 18px 16px 26px;
+      background-color: rgba(255,255,255,0.8);
+      font-size: 0.8rem;
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .section-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .two-col {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      header {
+        padding-bottom: 40px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <div class="logo">
+      <div class="logo-mark">T2T</div>
+      <div>Tinos to Tinos</div>
+    </div>
+    <div class="nav-links">
+      <a href="#story">Story</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#impact">Impact</a>
+      <a href="#support">Support</a>
+    </div>
+    <button class="cta-button">Support the Project</button>
+  </nav>
+
+  <div class="hero">
+    <div>
+      <div class="hero-kicker">Non-profit sunset pop-up canteen</div>
+      <h1>T2T – <span>Tinos to Tinos</span></h1>
+      <p class="hero-subtitle">
+        A one–month, non-profit pop-up canteen in Tinos where every sandwich
+        and every cocktail helps strengthen the island’s healthcare.
+      </p>
+      <p class="hero-tagline">
+        <strong>Eat Good. Do Good. For Tinos.</strong>
+      </p>
+      <div class="hero-actions">
+        <button class="cta-button">Join the Crowdfunding</button>
+        <a href="#story" class="ghost-link">Read the story</a>
+      </div>
+      <p class="hero-meta">
+        Operating July 20 – August 20, 2026 • Plakiani, Tinos • All net profits donated to the Tinos Health Centre
+      </p>
+    </div>
+
+    <div class="hero-card">
+      <div class="hero-card-header">
+        <div class="hero-pill">From Tinos → To Tinos</div>
+        <div class="hero-card-title">A circular island project</div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-label">Duration</div>
+          <div class="stat-value">30 days</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Location</div>
+          <div class="stat-value">Tinos, GR</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Goal</div>
+          <div class="stat-value">€10,000+ to health</div>
+        </div>
+      </div>
+      <div class="quote-block">
+        “Tourism alone is not enough. Islands need depth, character and permanent life –
+        and that begins with healthcare.”
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Story -->
+  <section id="story">
+    <div class="section-label">The story</div>
+    <h2 class="section-title">Why T2T exists</h2>
+    <div class="section-grid">
+      <div>
+        <p>
+          I’ve always believed that the development model of the Greek islands —
+          based almost entirely on tourism and real estate — is not truly sustainable.
+          Tourism brings income, yes. But it does not create depth. It does not create
+          character. It does not create the conditions for a vibrant, permanent population
+          that keeps an island authentic and alive all year long.
+        </p>
+        <p>
+          For islands to remain <em>places</em> and not just <em>products</em>,
+          they need something deeper:
+          <strong>infrastructure that offers quality of life, safety and long-term stability.</strong>
+          At the heart of this lie two essential pillars: <strong>healthcare and education</strong>.
+          We decided to start with healthcare.
+        </p>
+        <p>
+          I am a Naval Architect and Mechanical Engineer working in the private sector,
+          but with a deep passion for giving back, for hospitality culture, and for cooking.
+          One of my strange but very real dreams has always been to work for a while
+          in a small souvlaki shop: wrapping pitas, sweating, laughing with customers, living
+          the authenticity of everyday food.
+        </p>
+      </div>
+      <div class="highlight-box">
+        <div class="highlight-title">From an idea to a social act</div>
+        <p>
+          I love hard work. I love being around people. And I feel a genuine
+          need to contribute.
+        </p>
+        <p>
+          This is how the idea of a canteen was born. Not as a business move,
+          but as a <strong>social act</strong>.
+        </p>
+        <p>
+          A one–month pop-up canteen that:
+        </p>
+        <ul>
+          <li>works with local ingredients and local people,</li>
+          <li>creates a shared sunset experience in Tinos, and</li>
+          <li><strong>donates 100% of net profits to the Tinos Health Centre.</strong></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section id="how-it-works">
+    <div class="section-label">How it works</div>
+    <h2 class="section-title">A sunset canteen with a purpose</h2>
+
+    <div class="two-col">
+      <div>
+        <p class="quote-large">“Every sandwich and every cocktail helps fund better healthcare in Tinos.”</p>
+        <p>
+          T2T is a non-profit, sunset pop-up canteen operating from
+          <strong>17:00 to 22:00</strong> in Plakiani, Tinos, from
+          <strong>20 July to 20 August 2026</strong>.
+        </p>
+        <p>
+          We keep the menu intentionally simple and local:
+        </p>
+        <ul>
+          <li><strong>3 signature sandwiches</strong> with local bread, smoked meats, capers, artichoke, sun-dried tomatoes, and island-inspired sauces like Kariki cream, Petro sauce and tomato jam.</li>
+          <li><strong>4 drinks & cocktails</strong> including a margarita with local citrus, a tsipouro-based cocktail, a mastiha spritz and a herbal lemonade.</li>
+        </ul>
+        <p>
+          Behind the counter there is hard work, sweat, laughter and conversation.
+          In front of it, there is a view of the Aegean sunset — and the knowledge that
+          what you’re enjoying is directly helping the island.
+        </p>
+      </div>
+      <div class="highlight-box">
+        <div class="highlight-title">What makes T2T different?</div>
+        <ul>
+          <li><strong>Non-profit:</strong> all net earnings are donated to the Tinos Health Centre.</li>
+          <li><strong>Local-first:</strong> we source as locally as possible and give back locally.</li>
+          <li><strong>Transparent:</strong> audited results, clearly communicated impact.</li>
+          <li><strong>Cultural:</strong> Greek alternative/90s music, Cycladic minimal design, authentic hospitality.</li>
+        </ul>
+        <p>
+          This is a project about food, yes. But even more than that, it is about
+          <strong>place, people and future.</strong>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Impact -->
+  <section id="impact">
+    <div class="section-label">Impact</div>
+    <h2 class="section-title">From Tinos → To Tinos</h2>
+    <div class="section-grid">
+      <div>
+        <p>
+          T2T is designed as a circular island project: we source from Tinos,
+          we operate in Tinos, and we give back to Tinos.
+        </p>
+        <p>
+          The goal is to donate at least <strong>€10,000 net</strong> to the Tinos Health Centre
+          after one month of operation. Beyond this number, the true impact is about:
+        </p>
+        <ul>
+          <li>strengthening healthcare as a basic condition for year-round life on the island,</li>
+          <li>raising awareness that tourism alone is not enough, and</li>
+          <li>showing that small, focused projects can create real change.</li>
+        </ul>
+        <p>
+          A stronger health system makes it easier for families and young people
+          to choose Tinos not just for a week in August — but as a place to live.
+        </p>
+      </div>
+      <div class="highlight-box">
+        <div class="highlight-title">Why healthcare?</div>
+        <p>
+          For an island to have a future, it needs more than visitors.
+          It needs permanent residents who feel safe, supported and able
+          to raise families there.
+        </p>
+        <p>
+          Healthcare is a non-negotiable foundation.
+          By supporting the Tinos Health Centre, we are investing in:
+        </p>
+        <ul>
+          <li>the dignity and safety of the local community,</li>
+          <li>the resilience of the island, and</li>
+          <li>a healthier, more sustainable model of tourism.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Support -->
+  <section id="support">
+    <div class="section-label">Support</div>
+    <h2 class="section-title">How you can be part of it</h2>
+    <div class="centered">
+      <p>
+        T2T is funded by a mix of personal contribution, local partners and people
+        who simply care about the future of the Greek islands.
+      </p>
+      <p>
+        We are launching a crowdfunding campaign to bring this project to life
+        and to maximise the donation to the Tinos Health Centre.
+      </p>
+    </div>
+    <br />
+    <div class="cta-banner">
+      <h2>Eat Good. Do Good. For Tinos.</h2>
+      <p>
+        Help us turn one month of sandwiches, cocktails and sunsets
+        into a meaningful contribution to healthcare on the island.
+      </p>
+      <div class="cta-inline">
+        <button class="cta-button">Join the Crowdfunding</button>
+        <small>or scroll back up to read the full story.</small>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>© T2T – Tinos to Tinos. All net profits donated to the Tinos Health Centre.</div>
+    <div>Made with love, hard work and a lot of Tinian sunsets.</div>
+  </div>
+</footer>
+
+</body>
+</html>

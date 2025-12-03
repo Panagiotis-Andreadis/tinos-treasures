@@ -7,10 +7,10 @@
   <style>
     :root {
       --blue: #0f3c78;
-      --blue-light: #e6effa;
-      --sand: #f7f3e9;
+      --blue-light: #dde7fa;
+      --terracotta: #c87952;
+      --sand: #fff7f2;      /* very light terracotta tint */
       --dark: #1d1d1d;
-      --accent: #f4b942;
       --white: #ffffff;
       --max-width: 1100px;
     }
@@ -34,9 +34,9 @@
     }
 
     header {
-      background: radial-gradient(circle at top, #ffffff 0, var(--blue-light) 45%, var(--sand) 100%);
+      background: radial-gradient(circle at top, #ffffff 0, var(--blue-light) 40%, var(--sand) 100%);
       padding: 20px 16px 60px;
-      border-bottom: 1px solid rgba(15,60,120,0.08);
+      border-bottom: 1px solid rgba(15,60,120,0.15);
     }
 
     .nav {
@@ -51,33 +51,23 @@
     .logo {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--blue);
-      font-size: 0.9rem;
     }
 
-    .logo-mark {
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
-      border: 2px solid var(--blue);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
+    .logo-image {
+      height: 112px;
+      width: auto;
+      display: block;
     }
 
     .nav-links {
       display: flex;
       gap: 18px;
       font-size: 0.9rem;
+      color: var(--blue);
     }
 
     .nav-links a {
-      opacity: 0.8;
+      opacity: 0.85;
     }
 
     .nav-links a:hover {
@@ -130,7 +120,7 @@
     }
 
     .hero h1 span {
-      color: var(--accent);
+      color: var(--terracotta);
     }
 
     .hero-subtitle {
@@ -157,16 +147,24 @@
     .ghost-link {
       padding: 8px 14px;
       border-radius: 999px;
-      border: 1px solid rgba(15,60,120,0.2);
+      border: 1px solid rgba(15,60,120,0.3);
       font-size: 0.85rem;
       font-weight: 500;
       color: var(--blue);
-      background-color: rgba(255,255,255,0.7);
+      background-color: rgba(255,255,255,0.9);
     }
 
     .hero-meta {
       font-size: 0.85rem;
-      opacity: 0.8;
+      opacity: 0.85;
+      color: var(--blue);
+    }
+
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: stretch;
     }
 
     .hero-card {
@@ -174,10 +172,11 @@
       border-radius: 18px;
       padding: 18px 18px 16px;
       box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-      border: 1px solid rgba(15,60,120,0.06);
+      border: 1px solid rgba(15,60,120,0.12);
       display: flex;
       flex-direction: column;
       gap: 12px;
+      width: 100%;
     }
 
     .hero-card-header {
@@ -192,8 +191,8 @@
       text-transform: uppercase;
       padding: 4px 10px;
       border-radius: 999px;
-      background-color: var(--blue-light);
-      color: var(--blue);
+      background-color: var(--terracotta);
+      color: var(--white);
       font-weight: 600;
     }
 
@@ -215,6 +214,7 @@
       border-radius: 12px;
       background-color: var(--sand);
       text-align: left;
+      border: 1px solid rgba(200,121,82,0.25);
     }
 
     .stat-label {
@@ -232,11 +232,12 @@
     }
 
     .quote-block {
-      border-left: 3px solid var(--blue);
+      border-left: 3px solid var(--terracotta);
       padding-left: 10px;
       margin-top: 10px;
       font-size: 0.85rem;
       font-style: italic;
+      color: var(--blue);
     }
 
     main {
@@ -252,7 +253,7 @@
       text-transform: uppercase;
       letter-spacing: 0.16em;
       font-size: 0.7rem;
-      color: var(--blue);
+      color: var(--terracotta);
       font-weight: 600;
       margin-bottom: 6px;
     }
@@ -260,7 +261,7 @@
     .section-title {
       font-size: 1.6rem;
       margin-bottom: 16px;
-      color: var(--dark);
+      color: var(--blue);
     }
 
     .section-grid {
@@ -268,21 +269,6 @@
       grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
       gap: 26px;
       align-items: flex-start;
-    }
-
-    .pill-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 8px 0 16px;
-    }
-
-    .pill {
-      font-size: 0.8rem;
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(15,60,120,0.18);
-      background-color: rgba(255,255,255,0.65);
     }
 
     p {
@@ -294,7 +280,7 @@
       background-color: var(--white);
       border-radius: 16px;
       padding: 16px 18px;
-      border: 1px solid rgba(15,60,120,0.06);
+      border: 1px solid rgba(15,60,120,0.12);
       box-shadow: 0 6px 18px rgba(0,0,0,0.04);
       font-size: 0.9rem;
     }
@@ -303,7 +289,7 @@
       font-size: 1rem;
       font-weight: 600;
       margin-bottom: 8px;
-      color: var(--blue);
+      color: var(--terracotta);
     }
 
     .two-col {
@@ -330,7 +316,7 @@
     }
 
     .cta-banner {
-      background-color: var(--blue);
+      background-color: var(--terracotta);
       color: var(--white);
       border-radius: 18px;
       padding: 26px 20px;
@@ -346,7 +332,7 @@
     .cta-banner p {
       margin-bottom: 14px;
       font-size: 0.95rem;
-      opacity: 0.92;
+      opacity: 0.96;
     }
 
     .cta-inline {
@@ -360,14 +346,15 @@
 
     .cta-inline small {
       font-size: 0.8rem;
-      opacity: 0.85;
+      opacity: 0.9;
     }
 
     footer {
-      border-top: 1px solid rgba(15,60,120,0.12);
+      border-top: 1px solid rgba(15,60,120,0.18);
       padding: 18px 16px 26px;
-      background-color: rgba(255,255,255,0.8);
+      background-color: #ffffff;
       font-size: 0.8rem;
+      color: var(--blue);
     }
 
     .footer-inner {
@@ -393,6 +380,9 @@
       header {
         padding-bottom: 40px;
       }
+      .hero-right {
+        margin-top: 20px;
+      }
     }
 
     @media (max-width: 700px) {
@@ -411,8 +401,8 @@
 <header>
   <nav class="nav">
     <div class="logo">
-      <div class="logo-mark">T2T</div>
-      <div>Tinos to Tinos</div>
+      <!-- LOGO TOP LEFT -->
+      <img src="mediat2t/t2t-logo.png" alt="T2T Canteen Logo" class="logo-image">
     </div>
     <div class="nav-links">
       <a href="#story">Story</a>
@@ -443,28 +433,30 @@
       </p>
     </div>
 
-    <div class="hero-card">
-      <div class="hero-card-header">
-        <div class="hero-pill">From Tinos → To Tinos</div>
-        <div class="hero-card-title">A circular island project</div>
-      </div>
-      <div class="hero-stats">
-        <div class="stat">
-          <div class="stat-label">Duration</div>
-          <div class="stat-value">30 days</div>
+    <div class="hero-right">
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <div class="hero-pill">From Tinos → To Tinos</div>
+          <div class="hero-card-title">A circular island project</div>
         </div>
-        <div class="stat">
-          <div class="stat-label">Location</div>
-          <div class="stat-value">Tinos, GR</div>
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-label">Duration</div>
+            <div class="stat-value">30 days</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Location</div>
+            <div class="stat-value">Tinos, GR</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Goal</div>
+            <div class="stat-value">€10,000+ to health</div>
+          </div>
         </div>
-        <div class="stat">
-          <div class="stat-label">Goal</div>
-          <div class="stat-value">€10,000+ to health</div>
+        <div class="quote-block">
+          “Tourism alone is not enough. Islands need depth, character and permanent life –
+          and that begins with healthcare.”
         </div>
-      </div>
-      <div class="quote-block">
-        “Tourism alone is not enough. Islands need depth, character and permanent life –
-        and that begins with healthcare.”
       </div>
     </div>
   </div>
